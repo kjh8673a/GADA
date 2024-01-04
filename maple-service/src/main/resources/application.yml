@@ -3,3 +3,9 @@ server:
 spring:
   application:
     name: maple-service
+  profiles:
+    include: API-KEY
+
+  datasource:
+    url:
+    driver-class-name:
