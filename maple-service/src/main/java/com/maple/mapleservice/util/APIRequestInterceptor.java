@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 @RequiredArgsConstructor
 public class APIRequestInterceptor implements RequestInterceptor {
-    @Value("${api-key}")
+    @Value("${feign.maple.api-key}")
     private String apiKey;
 
     @Override

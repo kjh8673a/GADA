@@ -4,8 +4,7 @@ spring:
   application:
     name: maple-service
   profiles:
-    include: API-KEY
-
+    include: infra
   datasource:
     url:
     driver-class-name:

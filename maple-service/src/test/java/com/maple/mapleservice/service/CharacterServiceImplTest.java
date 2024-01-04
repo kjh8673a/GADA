@@ -13,7 +13,6 @@ class CharacterServiceImplTest {
     @Test
     void getOcidKey() {
         String key = characterService.getOcidKey("아델");
-        System.out.println("key = " + key);
         Assertions.assertThat(key).isEqualTo("e0a4f439e53c369866b55297d2f5f4eb");
     }
 
