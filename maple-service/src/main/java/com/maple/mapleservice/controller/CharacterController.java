@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/maple-service/character")
 public class CharacterController {
     private final CharacterService characterService;
 
-    @RequestMapping("ocid")
+    @RequestMapping("/ocid")
     public String getOcid(@RequestParam String characterName){
         return characterService.getOcidKey(characterName);
     }
