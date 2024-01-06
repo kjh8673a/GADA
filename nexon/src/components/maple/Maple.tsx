@@ -1,10 +1,12 @@
-import React from "react";
+import Character from "./character/Character";
 
 const Maple = () => {
-
-    return {
-        
-    }
-}
+  return (
+    <div>
+      <Character />
+    </div>
+  );
+};
 
 export default Maple;
+
