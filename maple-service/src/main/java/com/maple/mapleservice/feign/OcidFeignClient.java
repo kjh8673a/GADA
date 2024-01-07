@@ -4,11 +4,13 @@ import com.maple.mapleservice.config.FeignConfig;
 
 import com.maple.mapleservice.dto.feign.character.CharacterOcidDto;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name="ocid",url="${feign.maple.url}", configuration = FeignConfig.class)
+@FeignClient(name="ocid-api",url="${feign.maple.url}", configuration = FeignConfig.class)
 public interface OcidFeignClient {
-    @GetMapping(value = "/v1/id")
+    @RequestMapping(method= RequestMethod.GET,
+                    value = "/id")
     CharacterOcidDto getOcidDTO(@RequestParam("character_name") String characterName);
 }
