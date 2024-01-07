@@ -1,9 +1,6 @@
 package com.maple.mapleservice.service;
 
-import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
-import com.maple.mapleservice.dto.feign.character.CharacterHyperStatDto;
-import com.maple.mapleservice.dto.feign.character.CharacterPopularityDto;
-import com.maple.mapleservice.dto.feign.character.CharacterStatDto;
+import com.maple.mapleservice.dto.feign.character.*;
 import com.maple.mapleservice.entity.character.HyperStat;
 import com.maple.mapleservice.feign.CharacterFeignClient;
 import com.maple.mapleservice.feign.OcidFeignClient;
@@ -64,6 +61,29 @@ public class CharacterServiceImpl implements CharacterService{
             }
         }
         //깔끔하게 바꾸고싶음
+    }
+
+    @Override
+    @Cacheable(value="character-ability", key= "#ocid")
+    public CharacterAbilityDto getCharacterAbility(String ocid) {
+        return characterFeignClient.getCharacterAbilityDto(ocid,date);
+    }
+
+    @Override
+    @Cacheable(value="character-item", key= "#ocid")
+    public CharacterItemDto getCharacterItem(String ocid) {
+        return characterFeignClient.getCharacterItemDto(ocid,date);
+    }
+
+    @Override
+    @Cacheable(value="character-cashitem", key= "#ocid")
+    public CharacterCashItemDto getCharacterCashItem(String ocid) {
+        return characterFeignClient.getCharacterCashItemDto(ocid,date);
+    }
+    @Override
+    @Cacheable(value="character-pet", key= "#ocid")
+    public CharacterPetDto getCharacterPet(String ocid) {
+        return characterFeignClient.getCharacterPetDto(ocid,date);
     }
 
 }
