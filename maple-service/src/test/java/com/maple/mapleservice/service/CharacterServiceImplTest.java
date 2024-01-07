@@ -1,7 +1,6 @@
 package com.maple.mapleservice.service;
 
-import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
-import com.maple.mapleservice.dto.feign.character.CharacterStatDto;
+import com.maple.mapleservice.dto.feign.character.*;
 import com.maple.mapleservice.entity.character.HyperStat;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +49,29 @@ class CharacterServiceImplTest {
     @Test
     void 하이퍼스탯_조회_테스트(){
         List<HyperStat> characterHyperStat = characterService.getCharacterHyperStat(ocid);
-        for (HyperStat hyperStat : characterHyperStat) {
-            System.out.println(hyperStat.getStat_type()+": "+hyperStat.getStat_level()+" :"+hyperStat.getStat_increase());
-        }
+        assertThat(characterHyperStat.size()).isEqualTo(17);
     }
+
+    @Test
+    void 어빌리티_조회_테스트(){
+        CharacterAbilityDto characterAbility = characterService.getCharacterAbility(ocid);
+        assertThat(characterAbility.getAbility_info().size()).isEqualTo(3);
+    }
+
+    @Test
+    void 아이템_조회_테스트(){
+        CharacterItemDto characterItem = characterService.getCharacterItem(ocid);
+        //int 테스트
+        assertThat(characterItem.getItem_equipment().get(0).getItem_total_option().getIntValue()).isNotNull();
+    }
+
+    @Test
+    void 캐시아이템_조회_테스트(){
+        CharacterCashItemDto characterCashItem = characterService.getCharacterCashItem(ocid);
+    }
+    @Test
+    void 펫_조회_테스트(){
+        CharacterPetDto characterPet = characterService.getCharacterPet(ocid);
+    }
+
 }
