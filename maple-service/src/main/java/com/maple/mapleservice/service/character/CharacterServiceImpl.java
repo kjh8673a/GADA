@@ -7,4 +7,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CharacterServiceImpl implements CharacterService{
     private final CharacterApiService characterApiService;
+
+
 }

@@ -85,7 +85,7 @@ public class CharacterApiServiceImpl implements CharacterApiService {
 
     @Override
     @Cacheable(value = "character-symbol", key = "#ocid")
-    public CharacaterSymbolDto getCharacterSymbol(String ocid) {
+    public CharacterSymbolDto getCharacterSymbol(String ocid) {
         return characterFeignClient.getCharacterSymbolDto(ocid, date);
     }
 

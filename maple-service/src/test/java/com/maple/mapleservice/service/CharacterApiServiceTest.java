@@ -73,7 +73,7 @@ public class CharacterApiServiceTest {
 
     @Test
     void 심볼_조회_테스트() {
-        CharacaterSymbolDto characterSymbol = characterApiService.getCharacterSymbol(ocid);
+        CharacterSymbolDto characterSymbol = characterApiService.getCharacterSymbol(ocid);
     }
 
     @Test
