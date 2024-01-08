@@ -13,6 +13,8 @@ public interface CharacterApiService {
 
     Integer getCharacterPopularity(String ocid);
 
+    String getCharacterCombatPower(String ocid);
+
     CharacterStatDto getCharacterStat(String ocid);
 
     List<HyperStat> getCharacterHyperStat(String ocid);

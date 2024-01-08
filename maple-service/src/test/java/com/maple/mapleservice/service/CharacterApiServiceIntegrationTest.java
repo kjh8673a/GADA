@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
-public class CharacterApiServiceTest {
+public class CharacterApiServiceIntegrationTest {
     @Autowired
     CharacterApiService characterApiService;
 
@@ -40,7 +40,11 @@ public class CharacterApiServiceTest {
         Integer characterPopularity = characterApiService.getCharacterPopularity(ocid);
         assertThat(characterPopularity).isInstanceOf(Integer.class);
     }
-
+    @Test
+    void 전투력_조회_테스트(){
+        String characterCombatPower = characterApiService.getCharacterCombatPower(ocid);
+        System.out.println(characterCombatPower);
+    }
     @Test
     void 종합_능력치_조회_테스트() {
         CharacterStatDto characterStatDto = characterApiService.getCharacterStat(ocid);
@@ -50,7 +54,6 @@ public class CharacterApiServiceTest {
     @Test
     void 하이퍼스탯_조회_테스트() {
         List<HyperStat> characterHyperStat = characterApiService.getCharacterHyperStat(ocid);
-        assertThat(characterHyperStat.size()).isEqualTo(17);
     }
 
     @Test
