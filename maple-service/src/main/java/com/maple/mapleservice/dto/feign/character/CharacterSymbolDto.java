@@ -6,6 +6,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CharacaterSymbolDto {
+public class CharacterSymbolDto {
     List<Symbol> symbol;
 }

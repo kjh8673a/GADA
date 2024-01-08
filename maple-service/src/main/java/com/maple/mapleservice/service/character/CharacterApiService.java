@@ -23,7 +23,7 @@ public interface CharacterApiService {
 
     CharacterCashItemDto getCharacterCashItem(String ocid);
 
-    CharacaterSymbolDto getCharacterSymbol(String ocid);
+    CharacterSymbolDto getCharacterSymbol(String ocid);
 
     CharacterPetDto getCharacterPet(String ocid);
 }
