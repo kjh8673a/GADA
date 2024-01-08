@@ -1,8 +1,8 @@
 package com.maple.mapleservice.dto.model.character.cashitem;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class CashItemOption {
     String option_type;
     String option_value;

@@ -1,8 +1,8 @@
 package com.maple.mapleservice.dto.model.character;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class Symbol {
     String symbol_name;
     String symbol_icon;

@@ -1,8 +1,8 @@
 package com.maple.mapleservice.dto.model.character;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class HyperStat {
     String stat_type;
     Integer stat_point;

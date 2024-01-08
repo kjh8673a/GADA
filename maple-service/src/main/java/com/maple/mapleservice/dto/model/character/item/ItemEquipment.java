@@ -1,8 +1,8 @@
 package com.maple.mapleservice.dto.model.character.item;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class ItemEquipment {
     String item_equipment_part;
     String item_equipment_slot;

@@ -1,8 +1,8 @@
 package com.maple.mapleservice.dto.model.character.item;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class ItemTitle {
     String title_name;
     String title_icon;

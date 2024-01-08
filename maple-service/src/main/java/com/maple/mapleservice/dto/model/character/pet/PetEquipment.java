@@ -1,11 +1,11 @@
 package com.maple.mapleservice.dto.model.character.pet;
 
 import com.maple.mapleservice.dto.model.character.cashitem.CashItemOption;
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.List;
 
-@Data
+@Getter
 public class PetEquipment {
     String item_name;
     String item_icon;

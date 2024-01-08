@@ -1,8 +1,8 @@
 package com.maple.mapleservice.dto.model.character.cashitem;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class CashItemColoring {
     String color_range;
     Integer hue;
