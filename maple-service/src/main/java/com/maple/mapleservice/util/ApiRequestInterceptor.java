@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 
 @RequiredArgsConstructor
-public class APIRequestInterceptor implements RequestInterceptor {
+public class ApiRequestInterceptor implements RequestInterceptor {
     @Value("${feign.maple.api-key}")
     private String apiKey;
 

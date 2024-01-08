@@ -1,6 +1,6 @@
 package com.maple.mapleservice.controller;
 
-import com.maple.mapleservice.service.CharacterService;
+import com.maple.mapleservice.service.character.CharacterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class CharacterController {
     private final CharacterService characterService;
 
-    @RequestMapping("/ocid")
-    public String getOcid(@RequestParam String characterName){
-        return characterService.getOcidKey(characterName);
+    @RequestMapping("/basic")
+    public String getBasicInfo(@RequestParam String characterName) {
+        return null;
     }
+
 }
