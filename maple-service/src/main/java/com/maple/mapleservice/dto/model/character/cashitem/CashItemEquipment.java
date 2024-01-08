@@ -1,10 +1,10 @@
 package com.maple.mapleservice.dto.model.character.cashitem;
 
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.List;
 
-@Data
+@Getter
 public class CashItemEquipment {
     String cash_item_equipment_part;
     String cash_item_equipment_slot;

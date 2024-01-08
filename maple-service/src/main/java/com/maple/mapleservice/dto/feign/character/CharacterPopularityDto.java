@@ -1,8 +1,8 @@
 package com.maple.mapleservice.dto.feign.character;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class CharacterPopularityDto {
     Integer popularity;
 }

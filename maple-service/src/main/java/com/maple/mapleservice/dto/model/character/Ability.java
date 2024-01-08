@@ -1,8 +1,8 @@
 package com.maple.mapleservice.dto.model.character;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class Ability {
     String ability_no;
     String ability_grade;

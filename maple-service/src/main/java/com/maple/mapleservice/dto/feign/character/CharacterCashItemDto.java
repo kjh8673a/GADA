@@ -1,10 +1,11 @@
 package com.maple.mapleservice.dto.feign.character;
 
 import com.maple.mapleservice.dto.model.character.cashitem.CashItemEquipment;
-import lombok.Data;
+import lombok.Getter;
+
 import java.util.List;
 
-@Data
+@Getter
 public class CharacterCashItemDto {
     String character_gender;
     String character_class;

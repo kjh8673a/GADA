@@ -1,11 +1,11 @@
 package com.maple.mapleservice.dto.feign.character;
 
 import com.maple.mapleservice.dto.model.character.pet.PetEquipment;
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.List;
 
-@Data
+@Getter
 public class CharacterPetDto {
     String pet_1_name;
     String pet_1_nickname;
