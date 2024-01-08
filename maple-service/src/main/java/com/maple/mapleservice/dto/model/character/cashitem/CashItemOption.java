@@ -1,4 +1,4 @@
-package com.maple.mapleservice.entity.character.cashitem;
+package com.maple.mapleservice.dto.model.character.cashitem;
 
 import lombok.Data;
 

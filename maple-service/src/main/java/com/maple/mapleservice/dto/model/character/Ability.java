@@ -1,4 +1,4 @@
-package com.maple.mapleservice.entity.character;
+package com.maple.mapleservice.dto.model.character;
 
 import lombok.Data;
 

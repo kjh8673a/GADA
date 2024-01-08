@@ -1,6 +1,6 @@
 package com.maple.mapleservice.dto.feign.character;
 
-import com.maple.mapleservice.entity.character.pet.PetEquipment;
+import com.maple.mapleservice.dto.model.character.pet.PetEquipment;
 import lombok.Data;
 
 import java.util.List;

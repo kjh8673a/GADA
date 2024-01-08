@@ -1,6 +1,6 @@
 package com.maple.mapleservice.dto.feign.character;
 
-import com.maple.mapleservice.entity.character.cashitem.CashItemEquipment;
+import com.maple.mapleservice.dto.model.character.cashitem.CashItemEquipment;
 import lombok.Data;
 import java.util.List;
 

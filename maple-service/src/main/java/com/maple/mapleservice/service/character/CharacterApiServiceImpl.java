@@ -1,7 +1,7 @@
 package com.maple.mapleservice.service.character;
 
 import com.maple.mapleservice.dto.feign.character.*;
-import com.maple.mapleservice.entity.character.HyperStat;
+import com.maple.mapleservice.dto.model.character.HyperStat;
 import com.maple.mapleservice.feign.CharacterFeignClient;
 import com.maple.mapleservice.feign.OcidFeignClient;
 import lombok.RequiredArgsConstructor;

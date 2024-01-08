@@ -1,6 +1,6 @@
-package com.maple.mapleservice.entity.character.pet;
+package com.maple.mapleservice.dto.model.character.pet;
 
-import com.maple.mapleservice.entity.character.cashitem.CashItemOption;
+import com.maple.mapleservice.dto.model.character.cashitem.CashItemOption;
 import lombok.Data;
 
 import java.util.List;

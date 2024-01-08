@@ -1,4 +1,4 @@
-package com.maple.mapleservice.entity.character.item;
+package com.maple.mapleservice.dto.model.character.item;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

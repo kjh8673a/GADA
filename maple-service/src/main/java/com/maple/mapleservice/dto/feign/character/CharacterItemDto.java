@@ -1,7 +1,7 @@
 package com.maple.mapleservice.dto.feign.character;
 
-import com.maple.mapleservice.entity.character.item.ItemEquipment;
-import com.maple.mapleservice.entity.character.item.ItemTitle;
+import com.maple.mapleservice.dto.model.character.item.ItemEquipment;
+import com.maple.mapleservice.dto.model.character.item.ItemTitle;
 import lombok.Data;
 
 import java.util.List;
