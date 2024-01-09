@@ -19,7 +19,7 @@ class CharacterControllerTest {
 
 	@Test
 	void 본캐_찾기_통합_테스트() {
-		String characterName = "큐브충";
+		String characterName = "젠오팡";
 		ResponseEntity<SuccessResponse> response = characterController.findMyCharacter(characterName);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 	}
