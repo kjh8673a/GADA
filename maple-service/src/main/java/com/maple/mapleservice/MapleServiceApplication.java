@@ -10,5 +10,4 @@ public class MapleServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MapleServiceApplication.class, args);
 	}
-
 }
