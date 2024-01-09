@@ -4,18 +4,21 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "characters")
 public class Character {
 
 	@Id
-	@Column(name = "ocid", columnDefinition = "VARCHAR(50)")
+	@Column(name = "ocid", columnDefinition = "VARCHAR(200)")
 	private String ocid;
 
 	@Column(name = "date", columnDefinition = "VARCHAR(20)")
@@ -33,13 +36,13 @@ public class Character {
 	@Column(name = "guild_name", columnDefinition = "VARCHAR(20)")
 	private String guild_name;
 
-	@Column(name = "parent_ocid", columnDefinition = "VARCHAR(50)")
+	@Column(name = "parent_ocid", columnDefinition = "VARCHAR(200)")
 	private String parent_ocid;
 
 	@Column(name = "prev_name", columnDefinition = "VARCHAR(20)")
 	private String prev_name;
 
-	@Column(name = "oguild_id", columnDefinition = "VARCHAR(50)")
+	@Column(name = "oguild_id", columnDefinition = "VARCHAR(200)")
 	private String oguild_id;
 
 	@Builder

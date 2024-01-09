@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
 import com.maple.mapleservice.dto.model.ranking.Union;
+import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 import com.maple.mapleservice.entity.Character;
 import com.maple.mapleservice.repository.character.CharacterRepository;
 import com.maple.mapleservice.service.ranking.RankingApiService;
@@ -25,6 +27,9 @@ class CharacterServiceTest {
 	RankingApiService rankingApiService;
 
 	@Autowired
+	CharacterService characterService;
+
+	@Autowired
 	CharacterServiceImpl characterServiceImpl;
 
 	@Autowired
@@ -32,6 +37,31 @@ class CharacterServiceTest {
 
 	private CommonUtil commonUtil = new CommonUtil();
 
+	@Test
+	void 본캐_찾기_테스트() {
+		String parent_ocid = "e0a4f439e53c369866b55297d2f5f4eb";
+		List<CharacterResponseDto> characterResponseDtoList = characterRepository.findByParentOcid(parent_ocid).stream()
+			.map(CharacterResponseDto::of)
+			.collect(Collectors.toList());
+
+		assertThat(characterResponseDtoList.size()).isEqualTo(3);
+	}
+
+	@Test
+	void 캐릭터_정보_DB_조회_테스트() {
+		String ocid = "45a15799827229de6694e3086160d615efe8d04e6d233bd35cf2fabdeb93fb0d";
+		assertThat(characterRepository.findByOcid(ocid).getOcid()).isEqualTo(ocid);
+	}
+
+	@Test
+	void 캐릭터_DB에_저장_통합_테스트() {
+		characterService.AddCharacterInformationToDB("아델");
+
+		String ocid = characterApiService.getOcidKey("아델");
+		Character character = characterRepository.findByOcid(ocid);
+
+		assertThat(ocid).isEqualTo(character.getOcid());
+	}
 
 	@Test
 	void 길드명없을때_null로_들어가는지_테스트() {
@@ -58,19 +88,115 @@ class CharacterServiceTest {
 
 	@Test
 	void 대표ocid_갱신_테스트() {
-		characterServiceImpl.updateParentOcid("f678322aa0932f4ec472798aa6a35c67", "e0a4f439e53c369866b55297d2f5f4eb", "3a7535b853b41574db55d045a91d56a6efe8d04e6d233bd35cf2fabdeb93fb0d");
+		// ocid가 a가 아니면서 parent_ocid가 qwerty인것을 갱신한다
+		characterServiceImpl.updateParentOcid("a", "qwerty", "e0a4f439e53c369866b55297d2f5f4eb");
+
+		assertThat(characterRepository.findByParentOcid("qwerty")).isEmpty();
 	}
 
 	@Test
-	void 캐릭터_DB에_저장_테스트() {
-		characterServiceImpl.AddCharacterInformationToDB("태주");
+	void 이전_닉네임_저장_테스트() {
+		String ocid = characterApiService.getOcidKey("큐브충");
+		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+		String combatPower = characterApiService.getCharacterCombatPower(ocid);
 
-		String ocid = characterApiService.getOcidKey("태주");
+		Character character = characterRepository.findByOcid(ocid);
+		String old_name = character.getCharacter_name();
+
+		String date = character.getDate();
+
+		// 조회 기준일
+		character.setDate(commonUtil.date);
+		// 월드 명
+		character.setWorld_name(characterBasicDto.getWorld_name());
+		// 캐릭터 이름 + 이전 캐릭터 이름
+		if(!character.getCharacter_name().equals(characterBasicDto.getCharacter_name())) {
+			character.setPrev_name(character.getCharacter_name());
+			character.setCharacter_name(characterBasicDto.getCharacter_name());
+		}
+		// 전투력
+		character.setCombat_power(Long.parseLong(combatPower));
+		// 길드명 + 길드식별자
+		if(characterBasicDto.getCharacter_guild_name() != null && !characterBasicDto.getCharacter_guild_name().equals(character.getGuild_name())) {
+			character.setGuild_name(characterBasicDto.getCharacter_guild_name());
+			// 길드ocid 조회하는 api 필요
+			character.setOguild_id("oguild_name");
+		}
+
+		characterRepository.save(character);
+
+		assertThat(characterRepository.finndByCharacterName("큐브충").getPrev_name()).isEqualTo(old_name);
+	}
+
+	@Test
+	void 캐릭터_정보_없는_경우_DB에_저장_테스트() {
+		String ocid = characterApiService.getOcidKey("큐브충");
+		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+		String combatPower = characterApiService.getCharacterCombatPower(ocid);
+		String parent_ocid = "e0a4f439e53c369866b55297d2f5f4eb"; // 아델
+
+		Character characterForInsert = Character.builder()
+			.ocid(ocid)
+			.date(commonUtil.date)
+			.world_name(characterBasicDto.getWorld_name())
+			.character_name(characterBasicDto.getCharacter_name())
+			.combat_power(Long.parseLong(combatPower))
+			.guild_name(characterBasicDto.getCharacter_guild_name())
+			.parent_ocid(parent_ocid)
+			// 길드ocid 조회하는 api 필요
+			.oguild_id("oguild_id")
+			.build();
+
+		characterRepository.save(characterForInsert);
+
+		assertThat(characterRepository.finndByCharacterName("큐브충").getCharacter_name()).isEqualTo("큐브충");
+	}
+	
+	@Test
+	void 캐릭터_정보_있는데_날짜_다를_경우_갱신_테스트() {
+		String ocid = "45a15799827229de6694e3086160d615efe8d04e6d233bd35cf2fabdeb93fb0d"; // 핵불닭푸딩
+		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+		String combatPower = characterApiService.getCharacterCombatPower(ocid);
+
 		Character character = characterRepository.findByOcid(ocid);
 
-		System.out.println(character);
+		String date = character.getDate();
 
-		assertThat(ocid).isEqualTo(character.getOcid());
+		// 조회 기준일
+		character.setDate(commonUtil.date);
+		// 월드 명
+		character.setWorld_name(characterBasicDto.getWorld_name());
+		// 캐릭터 이름 + 이전 캐릭터 이름
+		if(!character.getCharacter_name().equals(characterBasicDto.getCharacter_name())) {
+			character.setPrev_name(character.getCharacter_name());
+			character.setCharacter_name(characterBasicDto.getCharacter_name());
+		}
+		// 전투력
+		character.setCombat_power(Long.parseLong(combatPower));
+		// 길드명 + 길드식별자
+		if(characterBasicDto.getCharacter_guild_name() != null && !characterBasicDto.getCharacter_guild_name().equals(character.getGuild_name())) {
+			character.setGuild_name(characterBasicDto.getCharacter_guild_name());
+			// 길드ocid 조회하는 api 필요
+			character.setOguild_id("oguild_name");
+		}
+
+		characterRepository.save(character);
+
+		assertThat(characterRepository.finndByCharacterName("핵불닭푸딩").getDate()).isEqualTo(commonUtil.date).isNotEqualTo(date);
+	}
+
+	@Test
+	void 유니온_랭킹에서_가져온_DB에_없는_캐릭터들_DB에_저장_테스트() {
+		String ocid = "1f692fbc745a850242aba54bfd001d89"; // 다래푸딩
+		String world_name = "루나";
+		// 유니온 랭킹 조회 -> 핵불닭푸딩이 나옴
+		List<Union> unionList = rankingApiService.getRankingUnion(ocid, world_name);
+		Collections.sort(unionList, (o1, o2) -> Long.compare(o2.getUnion_level(), o1.getUnion_level()));
+		String parent_ocid = characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
+
+		characterServiceImpl.AddChacterInformationToDbFromUnionRanking("다래푸딩", parent_ocid, unionList);
+
+		assertThat(characterRepository.finndByCharacterName("핵불닭푸딩")).isNotNull();
 	}
 
 	@Test
