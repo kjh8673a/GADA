@@ -2,13 +2,13 @@ package com.maple.mapleservice.service.character;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,9 +17,11 @@ import org.springframework.stereotype.Service;
 import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
 import com.maple.mapleservice.dto.model.ranking.Union;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
-import com.maple.mapleservice.dto.response.ResponseDto;
 import com.maple.mapleservice.entity.Character;
+import com.maple.mapleservice.exception.CustomException;
+import com.maple.mapleservice.exception.ErrorCode;
 import com.maple.mapleservice.repository.character.CharacterRepository;
+import com.maple.mapleservice.service.guild.GuildApiService;
 import com.maple.mapleservice.service.ranking.RankingApiService;
 import com.maple.mapleservice.util.CommonUtil;
 
@@ -27,6 +29,7 @@ import com.maple.mapleservice.util.CommonUtil;
 @RequiredArgsConstructor
 public class CharacterServiceImpl implements CharacterService{
     private final CharacterApiService characterApiService;
+    private final GuildApiService guildApiService;
     private final RankingApiService rankingApiService;
 
     private final CharacterRepository characterRepository;
@@ -36,17 +39,18 @@ public class CharacterServiceImpl implements CharacterService{
     private CommonUtil commonUtil = new CommonUtil();
 
     @Override
-    public void AddCharacterInformationToDB(String characterName) {
+    public void addCharacterInformationToDB(String characterName) {
         String ocid = characterApiService.getOcidKey(characterName);
         CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
         String combatPower = characterApiService.getCharacterCombatPower(ocid);
+        String oguildId = guildApiService.getOguildIdKey(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
         List<Union> unionList = rankingApiService.getRankingUnion(ocid, characterBasicDto.getWorld_name());
         Collections.sort(unionList, (o1, o2) -> Long.compare(o2.getUnion_level(), o1.getUnion_level()));
 
         String parent_ocid = characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
 
         // 유니온 랭킹으로 가져온 캐릭터들 정보 넣기
-        AddChacterInformationToDbFromUnionRanking(characterName, parent_ocid, unionList);
+        addChacterInformationToDbFromUnionRanking(characterName, parent_ocid, unionList);
 
         Character character = characterRepository.findByOcid(ocid);
         if(character != null) {
@@ -69,12 +73,12 @@ public class CharacterServiceImpl implements CharacterService{
             // 길드명 + 길드식별자
             if(characterBasicDto.getCharacter_guild_name() != null && !characterBasicDto.getCharacter_guild_name().equals(character.getGuild_name())) {
                 character.setGuild_name(characterBasicDto.getCharacter_guild_name());
-                // 길드ocid 조회하는 api 필요
-                character.setOguild_id("oguild_name");
+                character.setOguild_id(oguildId);
             }
             // 대표ocid
             if(!character.getParent_ocid().equals(parent_ocid)) {
-                // 대표ocid변경될 경우 다른 캐릭터들도 바꿔주기
+                // 대표ocid변경될 경우 다른 캐릭터들도 바꿔주기 + 캐시 삭제
+                deleteFindMainCharacterCache(character.getParent_ocid());
                 updateParentOcid(ocid, character.getParent_ocid(), parent_ocid);
                 character.setParent_ocid(parent_ocid);
             }
@@ -89,46 +93,50 @@ public class CharacterServiceImpl implements CharacterService{
                 .combat_power(Long.parseLong(combatPower))
                 .guild_name(characterBasicDto.getCharacter_guild_name())
                 .parent_ocid(parent_ocid)
-                // 길드ocid 조회하는 api 필요
-                .oguild_id("oguild_id")
+                .oguild_id(oguildId)
                 .build();
 
             characterRepository.save(characterForInsert);
+
+            deleteFindMainCharacterCache(parent_ocid);
         }
     }
 
     @Override
     @Cacheable(value = "character-information-from-DB", key = "#ocid")
-    public ResponseDto GetCharacterFromDB(String ocid) {
+    public CharacterResponseDto getCharacterFromDB(String ocid) {
         Character character = characterRepository.findByOcid(ocid);
         if(character == null) {
-            throw new IllegalStateException("존재하지 않는 캐릭터입니다.");
+            throw new CustomException(ErrorCode.CHARACATER_NOT_FOUND);
         }
 
-        ResponseDto responseDto = new ResponseDto<>();
-        responseDto.setData(CharacterResponseDto.of(character));
-
-        return responseDto;
+        return CharacterResponseDto.of(character);
     }
 
     @Override
-    public ResponseDto FindMainCharacter(String ocid) {
+    @Cacheable(value = "character-get-parent-ocid", key = "#characterName")
+    public String getParentOcidByCharacterName(String characterName) {
+        String ocid = characterApiService.getOcidKey(characterName);
         Character character = characterRepository.findByOcid(ocid);
         if(character == null) {
-            throw new IllegalStateException("존재하지 않는 캐릭터입니다.");
+            throw new CustomException(ErrorCode.CHARACATER_NOT_FOUND);
         }
+        String parentOcid = character.getParent_ocid();
 
-        String parent_ocid = character.getParent_ocid();
+        return parentOcid;
+    }
 
-        List<CharacterResponseDto> characterResponseDtoList = characterRepository.findByParentOcid(parent_ocid).stream()
+    @Override
+    @Cacheable(value = "character-find-main-character", key = "#parentOcid")
+    public List<CharacterResponseDto> findMainCharacter(String parentOcid) {
+
+        return characterRepository.findByParentOcid(parentOcid).stream()
             .map(CharacterResponseDto::of)
             .collect(Collectors.toList());
-
-        ResponseDto responseDto = new ResponseDto<>();
-        responseDto.setData(characterResponseDtoList);
-
-        return responseDto;
     }
+
+    @CacheEvict(value = "character-find-main-character", key = "#parentOcid")
+    public void deleteFindMainCharacterCache(String parentOcid) {}
 
     /**
      * 유니온 랭킹으로 가져온 캐릭터들 정보 넣기
@@ -136,7 +144,7 @@ public class CharacterServiceImpl implements CharacterService{
      * @param parentOcid
      * @param unionList
      */
-    public void AddChacterInformationToDbFromUnionRanking(String characterName, String parentOcid, List<Union> unionList) {
+    public void addChacterInformationToDbFromUnionRanking(String characterName, String parentOcid, List<Union> unionList) {
         List<Union> unionListToBeAdded = unionList.stream().filter(u -> characterRepository.finndByCharacterName(u.getCharacter_name()) == null)
             .filter(u -> !u.getCharacter_name().equals(characterName))
             .collect(Collectors.toList());
@@ -151,6 +159,7 @@ public class CharacterServiceImpl implements CharacterService{
                 String ocid = characterApiService.getOcidKey(union.getCharacter_name());
                 CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
                 String combatPower = characterApiService.getCharacterCombatPower(ocid);
+                String oguildId = guildApiService.getOguildIdKey(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 
                 ps.setString(1, ocid);
                 ps.setString(2, commonUtil.date);
@@ -159,8 +168,7 @@ public class CharacterServiceImpl implements CharacterService{
                 ps.setLong(5, Long.parseLong(combatPower));
                 ps.setString(6, characterBasicDto.getCharacter_guild_name());
                 ps.setString(7, parentOcid);
-                // 길드ocid 조회하는 api 필요
-                ps.setString(8, "oguild_id");
+                ps.setString(8, oguildId);
             }
 
             @Override

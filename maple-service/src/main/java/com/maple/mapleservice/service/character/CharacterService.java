@@ -1,11 +1,15 @@
 package com.maple.mapleservice.service.character;
 
-import com.maple.mapleservice.dto.response.ResponseDto;
+import java.util.List;
+
+import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 
 public interface CharacterService {
-    void AddCharacterInformationToDB(String characterName);
+    void addCharacterInformationToDB(String characterName);
 
-    ResponseDto GetCharacterFromDB(String ocid);
+    CharacterResponseDto getCharacterFromDB(String ocid);
 
-    ResponseDto FindMainCharacter(String ocid);
+    String getParentOcidByCharacterName(String characterName);
+
+    List<CharacterResponseDto> findMainCharacter(String parentOcid);
 }

@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,24 +37,34 @@ class CharacterServiceTest {
 	private CommonUtil commonUtil = new CommonUtil();
 
 	@Test
-	void 본캐_찾기_테스트() {
+	void 본캐_찾기_캐시에서_삭제() {
 		String parent_ocid = "e0a4f439e53c369866b55297d2f5f4eb";
-		List<CharacterResponseDto> characterResponseDtoList = characterRepository.findByParentOcid(parent_ocid).stream()
-			.map(CharacterResponseDto::of)
-			.collect(Collectors.toList());
+		characterServiceImpl.deleteFindMainCharacterCache(parent_ocid);
+	}
+
+	@Test
+	void 본캐_찾기_테스트() {
+		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
+		List<CharacterResponseDto> characterResponseDtoList = characterService.findMainCharacter(ocid);
 
 		assertThat(characterResponseDtoList.size()).isEqualTo(3);
 	}
 
 	@Test
+	void 캐릭터_이름으로_parent_ocid_찾기_테스트() {
+		String characterName = "아델";
+		assertThat(characterService.getParentOcidByCharacterName(characterName)).isEqualTo("e0a4f439e53c369866b55297d2f5f4eb");
+	}
+
+	@Test
 	void 캐릭터_정보_DB_조회_테스트() {
-		String ocid = "45a15799827229de6694e3086160d615efe8d04e6d233bd35cf2fabdeb93fb0d";
+		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
 		assertThat(characterRepository.findByOcid(ocid).getOcid()).isEqualTo(ocid);
 	}
 
 	@Test
 	void 캐릭터_DB에_저장_통합_테스트() {
-		characterService.AddCharacterInformationToDB("아델");
+		characterService.addCharacterInformationToDB("아델");
 
 		String ocid = characterApiService.getOcidKey("아델");
 		Character character = characterRepository.findByOcid(ocid);
@@ -194,7 +203,7 @@ class CharacterServiceTest {
 		Collections.sort(unionList, (o1, o2) -> Long.compare(o2.getUnion_level(), o1.getUnion_level()));
 		String parent_ocid = characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
 
-		characterServiceImpl.AddChacterInformationToDbFromUnionRanking("다래푸딩", parent_ocid, unionList);
+		characterServiceImpl.addChacterInformationToDbFromUnionRanking("다래푸딩", parent_ocid, unionList);
 
 		assertThat(characterRepository.finndByCharacterName("핵불닭푸딩")).isNotNull();
 	}
