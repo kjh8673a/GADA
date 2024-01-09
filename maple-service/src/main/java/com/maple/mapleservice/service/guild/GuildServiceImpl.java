@@ -1,6 +1,8 @@
 package com.maple.mapleservice.service.guild;
 
 import com.maple.mapleservice.dto.feign.guild.GuildBasicDto;
+import com.maple.mapleservice.exception.CustomException;
+import com.maple.mapleservice.exception.ErrorCode;
 import com.maple.mapleservice.util.WorldName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,6 @@ public class GuildServiceImpl implements GuildService{
         for(WorldName worldName : WorldName.values()){
             Optional<String> oguildId = Optional.ofNullable(guildApiService.getOguildIdKey(guildName, worldName.name()));
             oguildId.ifPresent(oguildIdList::add);
-
         }
 
         return oguildIdList;

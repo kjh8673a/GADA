@@ -7,4 +7,6 @@ import java.util.List;
 public interface GuildService {
 
     List<GuildBasicDto> getGuildBasicInfosByServer(String guildName);
+
+    List<String> getAllOguildIdByGuildName(String guildName);
 }
