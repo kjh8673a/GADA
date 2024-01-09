@@ -2,11 +2,11 @@ package com.maple.mapleservice.service.guild;
 
 import com.maple.mapleservice.dto.feign.guild.GuildBasicDto;
 import com.maple.mapleservice.util.WorldName;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class GuildApiServiceIntegrationTest {
 
@@ -17,7 +17,7 @@ class GuildApiServiceIntegrationTest {
     @Test
     void getServerOguildIdKey() {
         String key = guildApiService.getOguildIdKey("훈장교", WorldName.스카니아.name());
-        Assertions.assertThat(key).isEqualTo(oguildId);
+        assertThat(key).isEqualTo(oguildId);
     }
 
     @Test
