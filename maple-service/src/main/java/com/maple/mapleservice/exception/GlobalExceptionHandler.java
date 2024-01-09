@@ -1,7 +1,6 @@
 package com.maple.mapleservice.exception;
 
 import com.maple.mapleservice.dto.response.ErrorResponse;
-import com.maple.mapleservice.util.ResponseUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,14 +15,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RequiredArgsConstructor
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private final ResponseUtil<ErrorResponse> responseUtil;
+
 
     @ExceptionHandler(value = {CustomException.class})
     public ResponseEntity<ErrorResponse> handleCustomException(CustomException e, HttpServletRequest request){
         log.error("CustomException : {}", e.getErrorCode());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
-                .body(responseUtil.buildErrorResponse(e.getErrorCode(), request.getRequestURI()));
+                .body(ErrorResponse.of(e.getErrorCode(), request.getRequestURI()));
     }
 
     @ExceptionHandler(value = {Exception.class})
@@ -31,6 +30,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.error("ServerError : {}", e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(responseUtil.buildErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR, request.getRequestURI()));
+                .body(ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR, request.getRequestURI()));
     }
 }
