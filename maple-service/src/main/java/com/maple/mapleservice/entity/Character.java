@@ -45,8 +45,19 @@ public class Character {
 	@Column(name = "oguild_id", columnDefinition = "VARCHAR(200)")
 	private String oguild_id;
 
+	@Column(name = "character_class", columnDefinition = "VARCHAR(20)")
+	private String character_class;
+
+	@Column(name = "character_class_level", columnDefinition = "VARCHAR(20)")
+	private String character_class_level;
+
+	@Column(name = "character_level", columnDefinition = "INT")
+	private Long character_level;
+
 	@Builder
-	public Character(String ocid, String date, String world_name, String character_name, Long combat_power, String guild_name, String parent_ocid, String prev_name, String oguild_id) {
+	public Character(String ocid, String date, String world_name, String character_name, Long combat_power,
+		String guild_name, String parent_ocid, String prev_name, String oguild_id, String character_class,
+		String character_class_level, Long character_level) {
 		this.ocid = ocid;
 		this.date = date;
 		this.world_name = world_name;
@@ -56,6 +67,9 @@ public class Character {
 		this.parent_ocid = parent_ocid;
 		this.prev_name = prev_name;
 		this.oguild_id = oguild_id;
+		this.character_class = character_class;
+		this.character_class_level = character_class_level;
+		this.character_level = character_level;
 	}
 
 }
