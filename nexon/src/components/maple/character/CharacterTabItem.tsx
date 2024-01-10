@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import useCharacterTab from "../../../hooks/maple/useCharacterTab";
+import { TabNameType } from "../../../@types/maple/TabTypes";
 
 const StyledTabItem = styled.div<{ selected: boolean }>`
   height: 100%;
@@ -18,8 +19,8 @@ const StyledTabItem = styled.div<{ selected: boolean }>`
 
 interface Props {
   children: React.ReactNode;
-  value: string;
-  clickHandler: (param: string) => void;
+  value: TabNameType;
+  clickHandler: (param: TabNameType) => void;
 }
 
 const CharacterTabItem: React.FC<Props> = ({ children, value, clickHandler }) => {
