@@ -38,79 +38,91 @@ public class CharacterServiceImpl implements CharacterService {
 
 	private CommonUtil commonUtil = new CommonUtil();
 
-    @Override
-    public void addCharacterInformationToDB(String characterName) {
-        String ocid = characterApiService.getOcidKey(characterName);
-        CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-        String combatPower = characterApiService.getCharacterCombatPower(ocid);
-        String oguildId = guildApiService.getOguildIdKey(characterBasicDto.getCharacter_guild_name(),
-            characterBasicDto.getWorld_name());
-        List<Union> unionList = rankingApiService.getRankingUnion(ocid, characterBasicDto.getWorld_name());
-        Collections.sort(unionList, (o1, o2) -> Long.compare(o2.getUnion_level(), o1.getUnion_level()));
+	@Override
+	public void addCharacterInformationToDB(String characterName) {
+		String ocid = characterApiService.getOcidKey(characterName);
+		if(ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
 
-        String parent_ocid = characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
+		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+		String combatPower = characterApiService.getCharacterCombatPower(ocid);
+		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 
-        // 유니온 랭킹으로 가져온 캐릭터들 정보 넣기
-        addChacterInformationToDbFromUnionRanking(characterName, parent_ocid, unionList);
+		List<Union> unionList = rankingApiService.getRankingUnion(ocid, characterBasicDto.getWorld_name());
+		Collections.sort(unionList, (o1, o2) -> Long.compare(o2.getUnion_level(), o1.getUnion_level()));
 
-        Character character = characterRepository.findByOcid(ocid);
-        if (character != null) {
-            // 조회 기준일 같으면 갱신안함
-            if (character.getDate().equals(commonUtil.date)) {
-                return;
-            }
+		String parent_ocid = characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
 
-            // 조회 기준일
-            character.setDate(commonUtil.date);
-            // 월드 명
-            character.setWorld_name(characterBasicDto.getWorld_name());
-            // 캐릭터 이름 + 이전 캐릭터 이름
-            if (!character.getCharacter_name().equals(characterBasicDto.getCharacter_name())) {
-                character.setPrev_name(character.getCharacter_name());
-                character.setCharacter_name(characterBasicDto.getCharacter_name());
-            }
-            // 전투력
-            character.setCombat_power(Long.parseLong(combatPower));
-            // 길드명 + 길드식별자
-            if (characterBasicDto.getCharacter_guild_name() != null && !characterBasicDto.getCharacter_guild_name()
-                .equals(character.getGuild_name())) {
-                character.setGuild_name(characterBasicDto.getCharacter_guild_name());
-                character.setOguild_id(oguildId);
-            }
-            // 대표ocid
-            if (!character.getParent_ocid().equals(parent_ocid)) {
-                // 대표ocid변경될 경우 다른 캐릭터들도 바꿔주기 + 캐시 삭제
-                deleteFindMainCharacterCache(character.getParent_ocid());
-                updateParentOcid(ocid, character.getParent_ocid(), parent_ocid);
-                character.setParent_ocid(parent_ocid);
-            }
+		// 유니온 랭킹으로 가져온 캐릭터들 정보 넣기
+		addChacterInformationToDbFromUnionRanking(characterName, parent_ocid, unionList);
 
-            // 직업 + 전직차수 + 레벨
-            character.setCharacter_class(characterBasicDto.getCharacter_class());
-            character.setCharacter_class_level(characterBasicDto.getCharacter_class_level());
-            character.setCharacter_level(Long.valueOf(characterBasicDto.getCharacter_level()));
+		Character character = characterRepository.findByOcid(ocid);
+		if (character != null) {
+			// 조회 기준일 같으면 갱신안함
+			if (character.getDate().equals(commonUtil.date)) {
+				return;
+			}
 
-            characterRepository.save(character);
-        } else {
-            Character characterForInsert = Character.builder()
-                .ocid(ocid)
-                .date(commonUtil.date)
-                .world_name(characterBasicDto.getWorld_name())
-                .character_name(characterBasicDto.getCharacter_name())
-                .combat_power(Long.parseLong(combatPower))
-                .guild_name(characterBasicDto.getCharacter_guild_name())
-                .parent_ocid(parent_ocid)
-                .oguild_id(oguildId)
-                .character_class(characterBasicDto.getCharacter_class())
-                .character_class_level(characterBasicDto.getCharacter_class_level())
-                .character_level(Long.valueOf(characterBasicDto.getCharacter_level()))
-                .build();
+			// 조회 기준일
+			character.setDate(commonUtil.date);
+			// 월드 명
+			character.setWorld_name(characterBasicDto.getWorld_name());
+			// 캐릭터 이름 + 이전 캐릭터 이름
+			if (!character.getCharacter_name().equals(characterBasicDto.getCharacter_name())) {
+				character.setPrev_name(character.getCharacter_name());
+				character.setCharacter_name(characterBasicDto.getCharacter_name());
+			}
+			// 전투력
+			character.setCombat_power(Long.parseLong(combatPower));
+			// 길드명 + 길드식별자
+			if (characterBasicDto.getCharacter_guild_name() != null && !characterBasicDto.getCharacter_guild_name()
+				.equals(character.getGuild_name())) {
+				character.setGuild_name(characterBasicDto.getCharacter_guild_name());
+				character.setOguild_id(oguildId);
+			}
+			// 대표ocid
+			if (!character.getParent_ocid().equals(parent_ocid)) {
+				// 대표ocid변경될 경우 다른 캐릭터들도 바꿔주기 + 캐시 삭제
+				deleteFindMainCharacterCache(character.getParent_ocid());
+				updateParentOcid(ocid, character.getParent_ocid(), parent_ocid);
+				character.setParent_ocid(parent_ocid);
+			}
 
-            characterRepository.save(characterForInsert);
+			// 직업 + 전직차수 + 레벨
+			character.setCharacter_class(characterBasicDto.getCharacter_class());
+			character.setCharacter_class_level(characterBasicDto.getCharacter_class_level());
+			character.setCharacter_level(Long.valueOf(characterBasicDto.getCharacter_level()));
 
-            deleteFindMainCharacterCache(parent_ocid);
-        }
-    }
+			characterRepository.save(character);
+		} else {
+			Character characterForInsert = Character.builder()
+				.ocid(ocid)
+				.date(commonUtil.date)
+				.world_name(characterBasicDto.getWorld_name())
+				.character_name(characterBasicDto.getCharacter_name())
+				.combat_power(Long.parseLong(combatPower))
+				.guild_name(characterBasicDto.getCharacter_guild_name())
+				.parent_ocid(parent_ocid)
+				.oguild_id(oguildId)
+				.character_class(characterBasicDto.getCharacter_class())
+				.character_class_level(characterBasicDto.getCharacter_class_level())
+				.character_level(Long.valueOf(characterBasicDto.getCharacter_level()))
+				.build();
+
+			characterRepository.save(characterForInsert);
+
+			deleteFindMainCharacterCache(parent_ocid);
+		}
+	}
+
+	// 길드명 체크해서 oguildid가져오기
+	private String getOguildId(String guildName, String worldName) {
+		if (guildName == null || guildName.isBlank()) {
+			return "";
+		}
+		return guildApiService.getOguildIdKey(guildName, worldName);
+	}
 
 	@Override
 	@Cacheable(value = "character-information-from-DB", key = "#ocid")
@@ -144,6 +156,49 @@ public class CharacterServiceImpl implements CharacterService {
 			.collect(Collectors.toList());
 	}
 
+	/**
+	 * DB 구축. 순수 캐릭터 정보만 넣기. 유니온, 본캐 정보 X
+	 * @param characterName
+	 */
+	@Override
+	public void addCharactersFromRanking(String characterName) {
+		Character character = characterRepository.finndByCharacterName(characterName);
+		if (character != null) {
+			return;
+		}
+
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+
+		String ocid = characterApiService.getOcidKey(characterName);
+		if(ocid == null || ocid.isBlank()) {
+			return;
+		}
+
+		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+		String combatPower = characterApiService.getCharacterCombatPower(ocid);
+		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
+
+		Character characterForInsert = Character.builder()
+			.ocid(ocid)
+			.date(commonUtil.date)
+			.world_name(characterBasicDto.getWorld_name())
+			.character_name(characterBasicDto.getCharacter_name())
+			.combat_power(Long.parseLong(combatPower))
+			.guild_name(characterBasicDto.getCharacter_guild_name())
+			.parent_ocid(ocid)
+			.oguild_id(oguildId)
+			.character_class(characterBasicDto.getCharacter_class())
+			.character_class_level(characterBasicDto.getCharacter_class_level())
+			.character_level(Long.valueOf(characterBasicDto.getCharacter_level()))
+			.build();
+
+		characterRepository.save(characterForInsert);
+	}
+
 	@CacheEvict(value = "character-find-main-character", key = "#parentOcid")
 	public void deleteFindMainCharacterCache(String parentOcid) {
 	}
@@ -159,6 +214,9 @@ public class CharacterServiceImpl implements CharacterService {
 		List<Union> unionListToBeAdded = unionList.stream()
 			.filter(u -> characterRepository.finndByCharacterName(u.getCharacter_name()) == null)
 			.filter(u -> !u.getCharacter_name().equals(characterName))
+			.filter(
+				u -> characterApiService.getOcidKey(u.getCharacter_name()) != null && !characterApiService.getOcidKey(
+					u.getCharacter_name()).isBlank())
 			.collect(Collectors.toList());
 
 		String sql =
@@ -172,7 +230,7 @@ public class CharacterServiceImpl implements CharacterService {
 				String ocid = characterApiService.getOcidKey(union.getCharacter_name());
 				CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
 				String combatPower = characterApiService.getCharacterCombatPower(ocid);
-				String oguildId = guildApiService.getOguildIdKey(characterBasicDto.getCharacter_guild_name(),
+				String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(),
 					characterBasicDto.getWorld_name());
 
 				ps.setString(1, ocid);

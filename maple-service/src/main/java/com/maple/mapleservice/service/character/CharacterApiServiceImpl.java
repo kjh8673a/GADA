@@ -6,10 +6,13 @@ import com.maple.mapleservice.feign.CharacterFeignClient;
 import com.maple.mapleservice.feign.OcidFeignClient;
 import com.maple.mapleservice.util.CommonUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CharacterApiServiceImpl implements CharacterApiService {
@@ -21,7 +24,15 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     @Override
     @Cacheable(value = "character-ocid", key = "#characterName")
     public String getOcidKey(String characterName) {
-        return ocidFeignClient.getOcidDTO(characterName).getOcid();
+        String ocid = "";
+        try {
+            ocid = ocidFeignClient.getOcidDTO(characterName).getOcid();
+        }catch (Exception e) {
+            e.printStackTrace();
+            log.error("Exception ERROR: {} ", e.getMessage());
+        }
+
+        return ocid;
     }
 
     @Override
