@@ -124,7 +124,6 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@Cacheable(value = "character-get-parent-ocid", key = "#characterName")
 	public String getParentOcidByCharacterName(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		Character character = characterRepository.findByOcid(ocid);
