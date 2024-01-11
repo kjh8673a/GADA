@@ -94,6 +94,9 @@ public class CharacterServiceImpl implements CharacterService {
 			character.setCharacter_class_level(characterBasicDto.getCharacter_class_level());
 			character.setCharacter_level(Long.valueOf(characterBasicDto.getCharacter_level()));
 
+			// 캐릭터 이미지
+			character.setCharacter_image(characterBasicDto.getCharacter_image());
+
 			characterRepository.save(character);
 		} else {
 			Character characterForInsert = Character.builder()
@@ -108,6 +111,7 @@ public class CharacterServiceImpl implements CharacterService {
 				.character_class(characterBasicDto.getCharacter_class())
 				.character_class_level(characterBasicDto.getCharacter_class_level())
 				.character_level(Long.valueOf(characterBasicDto.getCharacter_level()))
+				.character_image(characterBasicDto.getCharacter_image())
 				.build();
 
 			characterRepository.save(characterForInsert);
@@ -194,6 +198,7 @@ public class CharacterServiceImpl implements CharacterService {
 			.character_class(characterBasicDto.getCharacter_class())
 			.character_class_level(characterBasicDto.getCharacter_class_level())
 			.character_level(Long.valueOf(characterBasicDto.getCharacter_level()))
+			.character_image(characterBasicDto.getCharacter_image())
 			.build();
 
 		characterRepository.save(characterForInsert);
@@ -220,8 +225,8 @@ public class CharacterServiceImpl implements CharacterService {
 			.collect(Collectors.toList());
 
 		String sql =
-			"INSERT INTO characters (ocid, date, world_name, character_name, combat_power, guild_name, parent_ocid, oguild_id, character_class, character_class_level, character_level) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO characters (ocid, date, world_name, character_name, combat_power, guild_name, parent_ocid, oguild_id, character_class, character_class_level, character_level, character_image) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
 			@Override
@@ -244,6 +249,7 @@ public class CharacterServiceImpl implements CharacterService {
 				ps.setString(9, characterBasicDto.getCharacter_class());
 				ps.setString(10, characterBasicDto.getCharacter_class_level());
 				ps.setLong(11, Long.valueOf(characterBasicDto.getCharacter_level()));
+				ps.setString(12, characterBasicDto.getCharacter_image());
 			}
 
 			@Override

@@ -16,4 +16,7 @@ public interface CharacterRepository extends JpaRepository<Character, Long> {
 
 	@Query(value = "select c from Character c where c.character_name = :character_name")
 	Character finndByCharacterName(@Param("character_name") String character_name);
+
+	@Query(value = "select c from Character c where c.character_image is null")
+	List<Character> findNotHaveCharacterImage();
 }

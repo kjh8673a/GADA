@@ -54,10 +54,13 @@ public class Character {
 	@Column(name = "character_level", columnDefinition = "INT")
 	private Long character_level;
 
+	@Column(name = "character_image", columnDefinition = "VARCHAR(512)")
+	private String character_image;
+
 	@Builder
 	public Character(String ocid, String date, String world_name, String character_name, Long combat_power,
 		String guild_name, String parent_ocid, String prev_name, String oguild_id, String character_class,
-		String character_class_level, Long character_level) {
+		String character_class_level, Long character_level, String character_image) {
 		this.ocid = ocid;
 		this.date = date;
 		this.world_name = world_name;
@@ -70,6 +73,7 @@ public class Character {
 		this.character_class = character_class;
 		this.character_class_level = character_class_level;
 		this.character_level = character_level;
+		this.character_image = character_image;
 	}
 
 }

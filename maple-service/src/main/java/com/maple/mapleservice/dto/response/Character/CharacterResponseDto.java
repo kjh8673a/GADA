@@ -23,6 +23,10 @@ public class CharacterResponseDto {
 	private String parent_ocid;
 	private String prev_name;
 	private String oguild_id;
+	private String character_class;
+	private String character_class_level;
+	private Long character_level;
+	private String character_image;
 
 	public static CharacterResponseDto of(Character character) {
 		return CharacterResponseDto.builder()
@@ -35,6 +39,10 @@ public class CharacterResponseDto {
 			.parent_ocid(character.getParent_ocid())
 			.prev_name(character.getPrev_name())
 			.oguild_id(character.getOguild_id())
+			.character_class(character.getCharacter_class())
+			.character_class_level(character.getCharacter_class_level())
+			.character_level(character.getCharacter_level())
+			.character_image(character.getCharacter_image())
 			.build();
 	}
 }
