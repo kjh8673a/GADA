@@ -10,6 +10,11 @@ import org.springframework.context.annotation.Configuration;
 public class FeignConfig {
     @Bean
     public ApiRequestInterceptor feignInterceptor() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return new ApiRequestInterceptor();
     }
     @Bean

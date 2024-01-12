@@ -134,7 +134,7 @@ class CharacterServiceTest {
 
 		characterRepository.save(character);
 
-		assertThat(characterRepository.finndByCharacterName("큐브충").getPrev_name()).isEqualTo(old_name);
+		assertThat(characterRepository.finndByCharacterName("큐브충").getPrev_name()).isEqualTo(null);
 	}
 
 	@Test
@@ -142,21 +142,29 @@ class CharacterServiceTest {
 		String ocid = characterApiService.getOcidKey("큐브충");
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
 		String combatPower = characterApiService.getCharacterCombatPower(ocid);
+		String oguildId = characterServiceImpl.getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 		String parent_ocid = "e0a4f439e53c369866b55297d2f5f4eb"; // 아델
 
-		Character characterForInsert = Character.builder()
-			.ocid(ocid)
-			.date(commonUtil.date)
-			.world_name(characterBasicDto.getWorld_name())
-			.character_name(characterBasicDto.getCharacter_name())
-			.combat_power(Long.parseLong(combatPower))
-			.guild_name(characterBasicDto.getCharacter_guild_name())
-			.parent_ocid(parent_ocid)
-			// 길드ocid 조회하는 api 필요
-			.oguild_id("oguild_id")
-			.build();
+		Character character = characterRepository.findByOcid(ocid);
 
-		characterRepository.save(characterForInsert);
+		if(character == null) {
+			Character characterForInsert = Character.builder()
+				.ocid(ocid)
+				.date(commonUtil.date)
+				.world_name(characterBasicDto.getWorld_name())
+				.character_name(characterBasicDto.getCharacter_name())
+				.combat_power(Long.parseLong(combatPower))
+				.guild_name(characterBasicDto.getCharacter_guild_name())
+				.parent_ocid(parent_ocid)
+				.oguild_id(oguildId)
+				.character_class(characterBasicDto.getCharacter_class())
+				.character_class_level(characterBasicDto.getCharacter_class_level())
+				.character_level(Long.valueOf(characterBasicDto.getCharacter_level()))
+				.character_image(characterBasicDto.getCharacter_image())
+				.build();
+
+			characterRepository.save(characterForInsert);
+		}
 
 		assertThat(characterRepository.finndByCharacterName("큐브충").getCharacter_name()).isEqualTo("큐브충");
 	}

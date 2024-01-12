@@ -12,4 +12,6 @@ public interface CharacterService {
     String getParentOcidByCharacterName(String characterName);
 
     List<CharacterResponseDto> findMainCharacter(String parentOcid);
+
+    void addCharactersFromRanking(String characterName);
 }
