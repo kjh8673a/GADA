@@ -13,4 +13,7 @@ public interface CharacterExpHistoryRepository extends JpaRepository<CharacterEx
 
 	@Query(value = "select c from CharacterExpHistory c where c.ocid = :ocid order by c.date desc limit 7")
 	List<CharacterExpHistoryResponseDto> getExpHistory(String ocid);
+
+	@Query(value = "select c.date from CharacterExpHistory c where c.ocid = :ocid order by c.date desc limit 1")
+	String getLatestExpDate(String ocid);
 }

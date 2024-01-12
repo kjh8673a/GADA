@@ -42,6 +42,13 @@ class CharacterServiceTest {
 	CharacterExpHistoryRepository characterExpHistoryRepository;
 
 	@Test
+	void 경험치_히스토리_최근_날짜_꺼내기_테스트() {
+		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
+		String date = characterExpHistoryRepository.getLatestExpDate(ocid);
+		System.out.println(date);
+	}
+
+	@Test
 	void 경험치_히스토리_DB_조회_테스트() {
 		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
 		List<CharacterExpHistoryResponseDto> characterExpHistoryResponseDtos = characterExpHistoryRepository.getExpHistory(ocid);

@@ -234,7 +234,7 @@ public class CharacterServiceImpl implements CharacterService {
 		long count = characterExpHistoryRepository.countByOcid(ocid);
 		if (count == 0) {
 			addCharacterExpHistoryFirstTime(ocid);
-		}else {
+		}else if (!characterExpHistoryRepository.getLatestExpDate(ocid).equals(commonUtil.date)){
 			addCharacterExpHistoryToday(ocid);
 		}
 
