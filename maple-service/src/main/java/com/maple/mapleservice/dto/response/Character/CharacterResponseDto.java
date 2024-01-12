@@ -7,11 +7,13 @@ import com.maple.mapleservice.entity.Character;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Data
 public class CharacterResponseDto {
 	private String ocid;
