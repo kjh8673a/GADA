@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CharacterCombatPowerRankingResponseDto {
+	private Long rank;
 	private String ocid;
 	private String world_name;
 	private String character_name;
