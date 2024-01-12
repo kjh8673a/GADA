@@ -121,7 +121,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	// 길드명 체크해서 oguildid가져오기
-	private String getOguildId(String guildName, String worldName) {
+	public String getOguildId(String guildName, String worldName) {
 		if (guildName == null || guildName.isBlank()) {
 			return "";
 		}

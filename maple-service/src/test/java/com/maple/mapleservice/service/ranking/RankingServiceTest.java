@@ -2,11 +2,15 @@ package com.maple.mapleservice.service.ranking;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+
+import com.maple.mapleservice.dto.response.Ranking.CharacterCombatPowerRankingResponseDto;
 
 @SpringBootTest
 class RankingServiceTest {
@@ -27,10 +31,30 @@ class RankingServiceTest {
 	// }
 
 	@Test
-	void 페이징_테스트() {
-		PageRequest pageable = PageRequest.of(1, 20);
+	void 전투력_랭킹_페이징_통합_테스트() {
+		PageRequest pageable = PageRequest.of(0, 20);
 
-		rankingService.getCombatPowerRanking("크로아", "듀얼블레이더", pageable);
+		Page<CharacterCombatPowerRankingResponseDto> list = rankingService.getCombatPowerRanking("스카니아", "듀얼블레이더", pageable);
+
+		assertThat(list.getContent().size()).isEqualTo(20);
+	}
+
+	@Test
+	void 전투력_랭킹_페이징_직업X_테스트() {
+		PageRequest pageable = PageRequest.of(0, 20);
+
+		Page<CharacterCombatPowerRankingResponseDto> list = rankingService.getCombatPowerRanking("스카니아", "", pageable);
+
+		assertThat(list.getContent().size()).isEqualTo(20);
+	}
+
+	@Test
+	void 전투력_랭킹_페이징_월드X_테스트() {
+		PageRequest pageable = PageRequest.of(0, 20);
+
+		Page<CharacterCombatPowerRankingResponseDto> list = rankingService.getCombatPowerRanking("", "듀얼블레이더", pageable);
+
+		assertThat(list.getContent().size()).isEqualTo(20);
 	}
 
 }

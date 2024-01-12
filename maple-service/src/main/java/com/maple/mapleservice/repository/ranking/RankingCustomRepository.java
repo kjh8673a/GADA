@@ -77,7 +77,7 @@ public class RankingCustomRepository {
 	}
 
 	private BooleanExpression characterClassEq(String characterClass) {
-		return StringUtils.hasText(characterClass) ? character.world_name.eq(characterClass) : null;
+		return StringUtils.hasText(characterClass) ? character.character_class.eq(characterClass) : null;
 	}
 
 	private BooleanExpression worldNameEq(String worldName) {
