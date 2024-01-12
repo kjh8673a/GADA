@@ -113,4 +113,9 @@ public class CharacterApiServiceImpl implements CharacterApiService {
         return characterFeignClient.getCharacterPetDto(ocid, commonUtil.date);
     }
 
+    @Override
+    public CharacterBasicDto getCharacterBasicCustomDate(String ocid, String date) {
+        return characterFeignClient.getCharacterBasicDto(ocid, date);
+    }
+
 }

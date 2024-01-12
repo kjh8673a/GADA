@@ -28,4 +28,6 @@ public interface CharacterApiService {
     CharacterSymbolDto getCharacterSymbol(String ocid);
 
     CharacterPetDto getCharacterPet(String ocid);
+
+    CharacterBasicDto getCharacterBasicCustomDate(String ocid, String date);
 }
