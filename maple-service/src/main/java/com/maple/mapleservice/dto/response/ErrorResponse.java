@@ -2,10 +2,12 @@ package com.maple.mapleservice.dto.response;
 
 import com.maple.mapleservice.exception.ErrorCode;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Builder
+@Getter
 public class ErrorResponse {
 
     private LocalDateTime timestamp;
