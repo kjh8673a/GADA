@@ -45,7 +45,7 @@ public class RankingCustomRepository {
 		JPASQLQuery<?> query = new JPASQLQuery<Void>(entityManager, sqlTemplates);
 		List<CharacterCombatPowerRankingResponseDto> content = query
 			.select(Projections.constructor(CharacterCombatPowerRankingResponseDto.class,
-				Expressions.asNumber(SQLExpressions.rowNumber().over().orderBy(character.combat_power.desc())).add(pageable.getPageNumber() * 20),
+				Expressions.asNumber(SQLExpressions.rank().over().orderBy(character.combat_power.desc())),
 				character.ocid,
 				character.world_name,
 				character.character_name,
