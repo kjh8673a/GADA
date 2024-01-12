@@ -22,7 +22,7 @@ public class RankingController {
 
 	@RequestMapping("/combatPowerRanking")
 	public ResponseEntity<SuccessResponse> getCombatPowerRanking(@RequestParam(defaultValue = "1") int page,
-		@RequestParam String world_name, @RequestParam String character_class) {
+		@RequestParam(required = false) String world_name, @RequestParam(required = false) String character_class) {
 
 		PageRequest pageable = PageRequest.of(page - 1, 20);
 		Page<CharacterCombatPowerRankingResponseDto> combatPowerRanking = rankingService.getCombatPowerRanking(
