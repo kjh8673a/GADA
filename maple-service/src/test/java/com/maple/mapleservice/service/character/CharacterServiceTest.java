@@ -90,6 +90,10 @@ class CharacterServiceTest {
 			.combat_power(Long.parseLong(combatPower))
 			.guild_name(characterBasicDto.getCharacter_guild_name())
 			.parent_ocid(parent_ocid)
+			.character_class(characterBasicDto.getCharacter_class())
+			.character_class_level(characterBasicDto.getCharacter_class_level())
+			.character_level(Long.valueOf(characterBasicDto.getCharacter_level()))
+			.character_image(characterBasicDto.getCharacter_image())
 			.build();
 
 		assertThat(characterForInsert.getGuild_name()).isNull();
@@ -108,6 +112,7 @@ class CharacterServiceTest {
 		String ocid = characterApiService.getOcidKey("큐브충");
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
 		String combatPower = characterApiService.getCharacterCombatPower(ocid);
+		String oguildId = characterServiceImpl.getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 
 		Character character = characterRepository.findByOcid(ocid);
 		String old_name = character.getCharacter_name();
@@ -129,7 +134,7 @@ class CharacterServiceTest {
 		if(characterBasicDto.getCharacter_guild_name() != null && !characterBasicDto.getCharacter_guild_name().equals(character.getGuild_name())) {
 			character.setGuild_name(characterBasicDto.getCharacter_guild_name());
 			// 길드ocid 조회하는 api 필요
-			character.setOguild_id("oguild_name");
+			character.setOguild_id(oguildId);
 		}
 
 		characterRepository.save(character);
