@@ -2,10 +2,9 @@ import React, { useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { atomCharacterExp } from "../../../../atoms/maple/characterExpState";
+import { drawExpBar, drawLevelLine, drawXScale, getXCoords, initCanvasSize } from "../../../../hooks/maple/useExpGraph";
 
 const GraphCanvas = styled.canvas`
-  width: 85%;
-  height: 85%;
   border-radius: 20px;
 `;
 
@@ -16,36 +15,24 @@ const Graph = () => {
   useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement;
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-    const [w, h] = [canvas.width, canvas.height];
 
-    // 그래프 테두리
+    const [w, h] = initCanvasSize(canvas, 0.8, 0.8);
     const m = 20;
-    ctx.beginPath();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "black";
-    ctx.moveTo(m, h - m);
-    ctx.lineTo(w - m, h - m);
-    ctx.stroke();
+    
+    const xCoords = getXCoords(w, m, datas.dates.length);
 
-    // 기본 설정
-    let startX = w - m;
-    let startY = h - m;
-    const totalWidth = w - 2 * m;
-    const totalHeight = h - 2 * m;
-    const barWidth = 20;
-    const intervalX = totalWidth / (datas.dates.length + 1);
+    const expArr = datas.dates.map((v) => +v.character_exp_rate);
+    const barWidth = 24;
+    drawExpBar(ctx, xCoords, h, m, barWidth, expArr, "green");
 
-    // 경험치 퍼센트 막대 그래프 그리기
-    ctx.fillStyle = "green";
-    for (const data of datas.dates) {
-      startX -= intervalX;
-      let barHeight = totalHeight * 0.01 * +data.character_exp_rate;
-      ctx.fillRect(startX - barWidth / 2, startY - barHeight, barWidth, barHeight);
-    }
+    const levelArr = datas.dates.map((v) => v.character_level);
+    const lineWidth = 3;
+    const radius = 4;
+    drawLevelLine(ctx, xCoords, h, m, lineWidth, radius, levelArr, "orange");
 
-    // 경험치 꺾은 선 그래프 그리기
-    ctx.fillStyle = "blue";
-    startX = w - m;
+    const dateArr = datas.dates.map((v) => v.date.slice(5, 10));
+    const fontSize = 13;
+    drawXScale(ctx, w, h, m, xCoords, lineWidth, fontSize, dateArr, "black");
 
     return (() => {
       ctx.clearRect(0, 0, w, h);

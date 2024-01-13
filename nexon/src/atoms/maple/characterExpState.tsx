@@ -1,8 +1,14 @@
 import { atom } from "recoil";
-import { CharacterExpArrType } from "../../@types/maple/CharacterExpTypes";
+import { CharacterExpType } from "../../@types/maple/CharacterExpTypes";
 
 const DUMMY = {
   dates: [
+    {
+      date: "2023-12-24T00:00+09:00",
+      character_level: 3,
+      character_exp: 30,
+      character_exp_rate: "10.000",
+    },
     {
       date: "2023-12-23T00:00+09:00",
       character_level: 2,
@@ -24,7 +30,7 @@ const DUMMY = {
   ]
 };
 
-export const atomCharacterExp = atom<CharacterExpArrType>({
+export const atomCharacterExp = atom<CharacterExpType>({
   key: "atomCharacterExp",
   default: DUMMY,
 });

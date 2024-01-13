@@ -5,6 +5,6 @@ export type CharacterExpItemType = {
   character_exp_rate: string;
 }
 
-export type CharacterExpArrType = {
+export type CharacterExpType = {
   dates: CharacterExpItemType[];
 };
