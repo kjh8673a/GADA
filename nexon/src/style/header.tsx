@@ -1,14 +1,5 @@
 import styled from "styled-components";
 
-//헤더의 전체 컨테이너
-export const HeaderContainer = styled.div`
-    display : flex;
-    flex-direction : column;
-    height : 64px;
-    position : fixed;
-    width : 100%;
-    top : 0;
-`
 //헤더의 도메인 이름
 export const Domain = styled.a`
     text-decoration-line: none;

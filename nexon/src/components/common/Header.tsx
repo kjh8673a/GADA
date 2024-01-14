@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {
-    Domain, DownConatiner, HeaderContainer,
+    Domain, DownConatiner,
     InputHeaderName, UpContainer, PageHeader
 } from '../../style/header';
+
 import { useNavigate } from 'react-router-dom';
 
 
@@ -28,7 +29,7 @@ const Header = () => {
 
     
     return (
-        <HeaderContainer>
+        <>
             <UpContainer>
                 <Domain href='/'>GADA</Domain>
                 <InputHeaderName placeholder='닉네임 또는 길드명 입력'
@@ -42,7 +43,7 @@ const Header = () => {
                 {/* <PageHeader>재획 타이머</PageHeader>
                 <PageHeader>파티구성</PageHeader> */}
             </DownConatiner>
-        </HeaderContainer>
+        </>
     )
 }
 
