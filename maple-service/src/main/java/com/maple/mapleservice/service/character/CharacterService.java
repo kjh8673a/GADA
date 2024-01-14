@@ -5,16 +5,28 @@ import java.util.List;
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 
+import com.maple.mapleservice.dto.response.CharacterBasicInfoDto;
+import com.maple.mapleservice.dto.response.CharacterItemAndStatDto;
+
+import java.util.List;
+
+import com.maple.mapleservice.dto.response.CharacterBasicInfoDto;
+import com.maple.mapleservice.dto.response.CharacterItemAndStatDto;
+
 public interface CharacterService {
-    void addCharacterInformationToDB(String characterName);
+	CharacterBasicInfoDto getCharacterBasicInfo(String characterName);
 
-    CharacterResponseDto getCharacterFromDB(String ocid);
+	CharacterItemAndStatDto getCharacterItemAndStat(String characterName);
 
-    String getParentOcidByCharacterName(String characterName);
+	void addCharacterInformationToDB(String characterName);
 
-    List<CharacterResponseDto> findMainCharacter(String parentOcid);
+	CharacterResponseDto getCharacterFromDB(String ocid);
 
-    void addCharactersFromRanking(String characterName);
+	String getParentOcidByCharacterName(String characterName);
 
-    List<CharacterExpHistoryResponseDto> getCharacterExpHistory(String ocid);
+	List<CharacterResponseDto> findMainCharacter(String parentOcid);
+
+	void addCharactersFromRanking(String characterName);
+
+	List<CharacterExpHistoryResponseDto> getCharacterExpHistory(String ocid);
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
+import com.maple.mapleservice.dto.response.CharacterBasicInfoDto;
+import com.maple.mapleservice.dto.response.CharacterItemAndStatDto;
 import com.maple.mapleservice.dto.response.SuccessResponse;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.maple.mapleservice.service.character.CharacterService;
@@ -45,6 +47,24 @@ public class CharacterController {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(SuccessResponse.of(characterExpHistoryResponseDtoList));
+    }
+
+    @RequestMapping("/getCharacterBasicInfo")
+    public ResponseEntity<SuccessResponse> getCharacterBasicInfo(@RequestParam String characterName) {
+        CharacterBasicInfoDto characterBasicInfoDto = characterService.getCharacterBasicInfo(characterName);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.of(characterBasicInfoDto));
+    }
+
+    @RequestMapping("/getCharacterItemAndStat")
+    public ResponseEntity<SuccessResponse> getCharacterItemAndStat(@RequestParam String characterName) {
+        CharacterItemAndStatDto characterItemAndStatDto = characterService.getCharacterItemAndStat(characterName);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.of(characterItemAndStatDto));
     }
 
 }

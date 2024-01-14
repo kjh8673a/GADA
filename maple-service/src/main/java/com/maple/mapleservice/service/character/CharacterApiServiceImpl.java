@@ -55,9 +55,7 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     @Override
     @Cacheable(value = "character-combat-power", key = "#ocid")
     public String getCharacterCombatPower(String ocid) {
-        String combatPower = getCharacterStat(ocid).getFinal_stat().stream()
-                .filter(x -> "전투력".equals(x.getStat_name()))
-                .findFirst().get().getStat_value();
+        String combatPower = getCharacterStat(ocid).getFinal_stat().get(42).getStat_value();
         return combatPower;
     }
 

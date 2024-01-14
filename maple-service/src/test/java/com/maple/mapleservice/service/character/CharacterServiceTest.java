@@ -42,6 +42,12 @@ class CharacterServiceTest {
 	CharacterExpHistoryRepository characterExpHistoryRepository;
 
 	@Test
+	void 캐릭터_기본정보_조회_테스트() {
+		String characterName = "아델";
+		assertThat(characterService.getCharacterBasicInfo(characterName).getCharacter_name()).isEqualTo(characterName);
+	}
+
+	@Test
 	void 경험치_히스토리_최근_날짜_꺼내기_테스트() {
 		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
 		String date = characterExpHistoryRepository.getLatestExpDate(ocid);
@@ -60,7 +66,7 @@ class CharacterServiceTest {
 	@Test
 	void 경험치_히스토리_삽입_테스트() {
 		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
-		if (!characterExpHistoryRepository.getLatestExpDate(ocid).equals(commonUtil.date)){
+		if (characterExpHistoryRepository.countByOcid(ocid) == 0){
 			characterServiceImpl.addCharacterExpHistoryFirstTime(ocid);
 		}
 
