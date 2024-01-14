@@ -2,6 +2,7 @@ package com.maple.mapleservice.service.character;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,6 +43,25 @@ class CharacterServiceTest {
 	CharacterExpHistoryRepository characterExpHistoryRepository;
 
 	@Test
+	void 경험치_히스토리_조회_안될때_테스트() {
+		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
+
+		List<CharacterBasicDto> listForExp = new ArrayList<>();
+
+			CharacterBasicDto basicDto = characterApiService.getCharacterBasicCustomDate(ocid, commonUtil.customDate(300));
+			if(basicDto.getCharacter_exp() == null) {
+				CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+				characterBasicDto.setCharacter_level(0);
+				characterBasicDto.setCharacter_exp(0L);
+				characterBasicDto.setCharacter_exp_rate("0");
+				listForExp.add(characterBasicDto);
+			}else {
+				listForExp.add(basicDto);
+			}
+
+		assertThat(listForExp.get(0).getCharacter_level()).isEqualTo(0);
+  }
+  
 	void 캐릭터_기본정보_조회_테스트() {
 		String characterName = "아델";
 		assertThat(characterService.getCharacterBasicInfo(characterName).getCharacter_name()).isEqualTo(characterName);

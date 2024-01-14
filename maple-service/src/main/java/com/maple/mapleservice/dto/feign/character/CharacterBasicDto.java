@@ -1,8 +1,10 @@
 package com.maple.mapleservice.dto.feign.character;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class CharacterBasicDto {
     String character_name;
     String world_name;
