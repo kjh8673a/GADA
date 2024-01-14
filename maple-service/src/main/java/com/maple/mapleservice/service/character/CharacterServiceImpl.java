@@ -265,7 +265,16 @@ public class CharacterServiceImpl implements CharacterService {
 	public void addCharacterExpHistoryFirstTime(String ocid) {
 		List<CharacterBasicDto> listForExp = new ArrayList<>();
 		for (int i = 0; i < 7; i++) {
-			listForExp.add(characterApiService.getCharacterBasicCustomDate(ocid, commonUtil.customDate(i)));
+			CharacterBasicDto basicDto = characterApiService.getCharacterBasicCustomDate(ocid, commonUtil.customDate(i));
+			if(basicDto.getCharacter_exp() == null) {
+				CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+				characterBasicDto.setCharacter_level(0);
+				characterBasicDto.setCharacter_exp(0L);
+				characterBasicDto.setCharacter_exp_rate("0");
+				listForExp.add(characterBasicDto);
+			}else {
+				listForExp.add(basicDto);
+			}
 		}
 		addExpHistoryFromList(ocid, listForExp);
 	}
@@ -279,7 +288,7 @@ public class CharacterServiceImpl implements CharacterService {
 				CharacterBasicDto characterBasicDto = list.get(i);
 
 				ps.setString(1, ocid);
-				ps.setString(2, commonUtil.customDate(i));
+				ps.setString(2, characterBasicDto.getCharacter_level() == 0 ? "2099-12-31" : commonUtil.customDate(i));
 				ps.setLong(3, characterBasicDto.getCharacter_level());
 				ps.setLong(4, characterBasicDto.getCharacter_exp());
 				ps.setString(5, characterBasicDto.getCharacter_exp_rate());
