@@ -60,7 +60,7 @@ class CharacterServiceTest {
 	@Test
 	void 경험치_히스토리_삽입_테스트() {
 		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
-		if (!characterExpHistoryRepository.getLatestExpDate(ocid).equals(commonUtil.date)){
+		if (characterExpHistoryRepository.countByOcid(ocid) == 0){
 			characterServiceImpl.addCharacterExpHistoryFirstTime(ocid);
 		}
 
