@@ -44,7 +44,6 @@ public class CharacterServiceImpl implements CharacterService {
 	private final CharacterApiService characterApiService;
 	private final GuildApiService guildApiService;
 	private final RankingApiService rankingApiService;
-
 	private final CharacterRepository characterRepository;
 
 	private final JdbcTemplate jdbcTemplate;
@@ -243,7 +242,7 @@ public class CharacterServiceImpl implements CharacterService {
 		long count = characterExpHistoryRepository.countByOcid(ocid);
 		if (count == 0) {
 			addCharacterExpHistoryFirstTime(ocid);
-		}else if (!characterExpHistoryRepository.getLatestExpDate(ocid).equals(commonUtil.date)){
+		} else if (!characterExpHistoryRepository.getLatestExpDate(ocid).equals(commonUtil.date)) {
 			addCharacterExpHistoryToday(ocid);
 		}
 
@@ -381,27 +380,28 @@ public class CharacterServiceImpl implements CharacterService {
 		});
 	}
 
-    @Override
-    @Cacheable(value = "character-basic-info", key = "#characterName")
-    public CharacterBasicInfoDto getCharacterBasicInfo(String characterName) {
-        String ocid = characterApiService.getOcidKey(characterName);
-        CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-        Integer popularity = characterApiService.getCharacterPopularity(ocid);
-        String characterCombatPower = characterApiService.getCharacterCombatPower(ocid);
-        return CharacterBasicInfoDto.of(ocid, characterBasicDto, popularity, characterCombatPower);
-    }
+	@Override
+	@Cacheable(value = "character-basic-info", key = "#characterName")
+	public CharacterBasicInfoDto getCharacterBasicInfo(String characterName) {
+		String ocid = characterApiService.getOcidKey(characterName);
+		addCharacterInformationToDB(characterName);
+		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+		Integer popularity = characterApiService.getCharacterPopularity(ocid);
+		String characterCombatPower = characterApiService.getCharacterCombatPower(ocid);
+		return CharacterBasicInfoDto.of(ocid, characterBasicDto, popularity, characterCombatPower);
+	}
 
-    @Override
-    @Cacheable(value = "character-item-and-stat", key = "#characterName")
-    public CharacterItemAndStatDto getCharacterItemAndStat(String characterName) {
-        String ocid = characterApiService.getOcidKey(characterName);
-        List<FinalStat> final_stats = characterApiService.getCharacterStat(ocid).getFinal_stat();
-        List<HyperStat> hyper_stats = characterApiService.getCharacterHyperStat(ocid);
-        CharacterAbilityDto ability = characterApiService.getCharacterAbility(ocid);
-        CharacterItemDto item = characterApiService.getCharacterItem(ocid);
-        CharacterCashItemDto cash_item = characterApiService.getCharacterCashItem(ocid);
-        CharacterPetDto pet = characterApiService.getCharacterPet(ocid);
-        List<Symbol> symbols = characterApiService.getCharacterSymbol(ocid).getSymbol();
-        return CharacterItemAndStatDto.of(final_stats, hyper_stats, ability, item, cash_item, pet, symbols);
-    }
+	@Override
+	@Cacheable(value = "character-item-and-stat", key = "#characterName")
+	public CharacterItemAndStatDto getCharacterItemAndStat(String characterName) {
+		String ocid = characterApiService.getOcidKey(characterName);
+		List<FinalStat> final_stats = characterApiService.getCharacterStat(ocid).getFinal_stat();
+		List<HyperStat> hyper_stats = characterApiService.getCharacterHyperStat(ocid);
+		CharacterAbilityDto ability = characterApiService.getCharacterAbility(ocid);
+		CharacterItemDto item = characterApiService.getCharacterItem(ocid);
+		CharacterCashItemDto cash_item = characterApiService.getCharacterCashItem(ocid);
+		CharacterPetDto pet = characterApiService.getCharacterPet(ocid);
+		List<Symbol> symbols = characterApiService.getCharacterSymbol(ocid).getSymbol();
+		return CharacterItemAndStatDto.of(final_stats, hyper_stats, ability, item, cash_item, pet, symbols);
+	}
 }
