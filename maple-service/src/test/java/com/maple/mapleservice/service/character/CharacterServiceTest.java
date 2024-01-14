@@ -60,6 +60,11 @@ class CharacterServiceTest {
 			}
 
 		assertThat(listForExp.get(0).getCharacter_level()).isEqualTo(0);
+  }
+  
+	void 캐릭터_기본정보_조회_테스트() {
+		String characterName = "아델";
+		assertThat(characterService.getCharacterBasicInfo(characterName).getCharacter_name()).isEqualTo(characterName);
 	}
 
 	@Test
