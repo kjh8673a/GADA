@@ -23,4 +23,11 @@ class CharacterControllerTest {
 		ResponseEntity<SuccessResponse> response = characterController.findMyCharacter(characterName);
 		// assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 	}
+
+	@Test
+	void 경험치_히스토리_통합_테스트() {
+		String characterName = "도적";
+		ResponseEntity<SuccessResponse> response = characterController.getExpHistory(characterName);
+	}
+
 }
