@@ -2,6 +2,8 @@ package com.maple.mapleservice.service.character;
 
 import com.maple.mapleservice.dto.feign.character.*;
 import com.maple.mapleservice.dto.model.character.HyperStat;
+import com.maple.mapleservice.exception.CustomException;
+import com.maple.mapleservice.exception.ErrorCode;
 import com.maple.mapleservice.feign.CharacterFeignClient;
 import com.maple.mapleservice.feign.OcidFeignClient;
 import com.maple.mapleservice.util.CommonUtil;
@@ -27,6 +29,9 @@ public class CharacterApiServiceImpl implements CharacterApiService {
         String ocid = "";
         try {
             ocid = ocidFeignClient.getOcidDTO(characterName).getOcid();
+            if (ocid == null || ocid.isBlank()) {
+                throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+            }
         }catch (Exception e) {
             e.printStackTrace();
             log.error("Exception ERROR: {} ", e.getMessage());
@@ -111,6 +116,11 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     @Cacheable(value = "character-pet", key = "#ocid")
     public CharacterPetDto getCharacterPet(String ocid) {
         return characterFeignClient.getCharacterPetDto(ocid, commonUtil.date);
+    }
+
+    @Override
+    public CharacterBasicDto getCharacterBasicCustomDate(String ocid, String date) {
+        return characterFeignClient.getCharacterBasicDto(ocid, date);
     }
 
 }
