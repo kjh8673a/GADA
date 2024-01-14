@@ -34,7 +34,7 @@ class RankingServiceTest {
 	void 전투력_랭킹_페이징_통합_테스트() {
 		PageRequest pageable = PageRequest.of(0, 20);
 
-		Page<CharacterCombatPowerRankingResponseDto> list = rankingService.getCombatPowerRanking("스카니아", "듀얼블레이더", pageable);
+		Page<CharacterCombatPowerRankingResponseDto> list = rankingService.getCombatPowerRanking(null, null, pageable);
 
 		assertThat(list.getContent().size()).isEqualTo(20);
 	}

@@ -2,6 +2,7 @@ package com.maple.mapleservice.service.character;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,8 +17,11 @@ import org.springframework.stereotype.Service;
 
 import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
 import com.maple.mapleservice.dto.model.ranking.Union;
+import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 import com.maple.mapleservice.entity.Character;
+import com.maple.mapleservice.entity.CharacterExpHistory;
+import com.maple.mapleservice.repository.character.CharacterExpHistoryRepository;
 import com.maple.mapleservice.exception.CustomException;
 import com.maple.mapleservice.exception.ErrorCode;
 import com.maple.mapleservice.repository.character.CharacterRepository;
@@ -37,11 +41,16 @@ public class CharacterServiceImpl implements CharacterService {
 	private final JdbcTemplate jdbcTemplate;
 
 	private CommonUtil commonUtil = new CommonUtil();
+	private final CharacterExpHistoryRepository characterExpHistoryRepository;
 
+	/**
+	 * 캐릭터 정보 DB에 입력
+	 * @param characterName
+	 */
 	@Override
 	public void addCharacterInformationToDB(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
-		if(ocid == null || ocid.isBlank()) {
+		if (ocid == null || ocid.isBlank()) {
 			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
 		}
 
@@ -139,6 +148,11 @@ public class CharacterServiceImpl implements CharacterService {
 		return CharacterResponseDto.of(character);
 	}
 
+	/**
+	 * 본캐 ocid 캐릭터이름으로 찾아오기
+	 * @param characterName
+	 * @return
+	 */
 	@Override
 	public String getParentOcidByCharacterName(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
@@ -151,6 +165,11 @@ public class CharacterServiceImpl implements CharacterService {
 		return parentOcid;
 	}
 
+	/**
+	 * 본캐 찾기
+	 * @param parentOcid
+	 * @return
+	 */
 	@Override
 	@Cacheable(value = "character-find-main-character", key = "#parentOcid")
 	public List<CharacterResponseDto> findMainCharacter(String parentOcid) {
@@ -178,7 +197,7 @@ public class CharacterServiceImpl implements CharacterService {
 		}
 
 		String ocid = characterApiService.getOcidKey(characterName);
-		if(ocid == null || ocid.isBlank()) {
+		if (ocid == null || ocid.isBlank()) {
 			return;
 		}
 
@@ -204,6 +223,71 @@ public class CharacterServiceImpl implements CharacterService {
 		characterRepository.save(characterForInsert);
 	}
 
+	/**
+	 * 경험치 히스토리 반환
+	 * @param ocid
+	 * @return
+	 */
+	@Override
+	@Cacheable(value = "character-exp-history", key = "#ocid")
+	public List<CharacterExpHistoryResponseDto> getCharacterExpHistory(String ocid) {
+		long count = characterExpHistoryRepository.countByOcid(ocid);
+		if (count == 0) {
+			addCharacterExpHistoryFirstTime(ocid);
+		}else if (!characterExpHistoryRepository.getLatestExpDate(ocid).equals(commonUtil.date)){
+			addCharacterExpHistoryToday(ocid);
+		}
+
+		return characterExpHistoryRepository.getExpHistory(ocid);
+	}
+
+	private void addCharacterExpHistoryToday(String ocid) {
+		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+		CharacterExpHistory characterExpHistory = CharacterExpHistory.builder()
+			.ocid(ocid)
+			.date(commonUtil.date)
+			.character_level(Long.valueOf(characterBasicDto.getCharacter_level()))
+			.exp(characterBasicDto.getCharacter_exp())
+			.character_exp_rate(characterBasicDto.getCharacter_exp_rate())
+			.build();
+
+		characterExpHistoryRepository.save(characterExpHistory);
+	}
+
+	public void addCharacterExpHistoryFirstTime(String ocid) {
+		List<CharacterBasicDto> listForExp = new ArrayList<>();
+		for (int i = 0; i < 7; i++) {
+			listForExp.add(characterApiService.getCharacterBasicCustomDate(ocid, commonUtil.customDate(i)));
+		}
+		addExpHistoryFromList(ocid, listForExp);
+	}
+
+	public void addExpHistoryFromList(String ocid, List<CharacterBasicDto> list) {
+		String sql = "INSERT INTO character_exp_history (ocid, date, character_level, exp, character_exp_rate) VALUES (?, ?, ?, ?, ?)";
+
+		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				CharacterBasicDto characterBasicDto = list.get(i);
+
+				ps.setString(1, ocid);
+				ps.setString(2, commonUtil.customDate(i));
+				ps.setLong(3, characterBasicDto.getCharacter_level());
+				ps.setLong(4, characterBasicDto.getCharacter_exp());
+				ps.setString(5, characterBasicDto.getCharacter_exp_rate());
+			}
+
+			@Override
+			public int getBatchSize() {
+				return list.size();
+			}
+		});
+	}
+
+	/**
+	 * 본캐찾기 캐시에서 삭제
+	 * @param parentOcid
+	 */
 	@CacheEvict(value = "character-find-main-character", key = "#parentOcid")
 	public void deleteFindMainCharacterCache(String parentOcid) {
 	}

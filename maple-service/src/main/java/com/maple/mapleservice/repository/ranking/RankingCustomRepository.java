@@ -16,14 +16,22 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.querydsl.jpa.sql.JPASQLQuery;
 import com.querydsl.sql.SQLExpressions;
+import com.querydsl.sql.SQLTemplates;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
 public class RankingCustomRepository {
 	private final QuerydslConfig querydslConfig;
+	private final SQLTemplates sqlTemplates;
+
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	public Page<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String worldName, String characterClass, Pageable pageable) {
 		List<CharacterCombatPowerRankingResponseDto> content = getCharacterCombatPowerRankingResponseDto(worldName, characterClass, pageable);
@@ -34,12 +42,10 @@ public class RankingCustomRepository {
 	}
 
 	private List<CharacterCombatPowerRankingResponseDto> getCharacterCombatPowerRankingResponseDto(String worldName, String characterClass, Pageable pageable) {
-		JPAQueryFactory query = querydslConfig.jpaQueryFactory();
-
+		JPASQLQuery<?> query = new JPASQLQuery<Void>(entityManager, sqlTemplates);
 		List<CharacterCombatPowerRankingResponseDto> content = query
 			.select(Projections.constructor(CharacterCombatPowerRankingResponseDto.class,
-				// Expressions.asNumber(SQLExpressions.rank().over().orderBy(character.combat_power.desc())).add(pageable.getOffset() * 20).as("rank"),
-				// SQLExpressions.rank().over().orderBy(character.combat_power.desc()).as("rank"),
+				Expressions.asNumber(SQLExpressions.rank().over().orderBy(character.combat_power.desc())),
 				character.ocid,
 				character.world_name,
 				character.character_name,

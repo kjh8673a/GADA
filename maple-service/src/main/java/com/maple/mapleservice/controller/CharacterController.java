@@ -2,6 +2,7 @@ package com.maple.mapleservice.controller;
 
 import java.util.List;
 
+import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 import com.maple.mapleservice.dto.response.SuccessResponse;
 import com.maple.mapleservice.service.character.CharacterApiService;
@@ -34,6 +35,16 @@ public class CharacterController {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(SuccessResponse.of(characterResponseDtoList));
+    }
+
+    @RequestMapping("/getExpHistory")
+    public ResponseEntity<SuccessResponse> getExpHistory(@RequestParam String characterName) {
+        String ocid = characterApiService.getOcidKey(characterName);
+        List<CharacterExpHistoryResponseDto> characterExpHistoryResponseDtoList = characterService.getCharacterExpHistory(ocid);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.of(characterExpHistoryResponseDtoList));
     }
 
 }

@@ -11,14 +11,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
 import com.maple.mapleservice.dto.model.ranking.Union;
+import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 import com.maple.mapleservice.entity.Character;
+import com.maple.mapleservice.repository.character.CharacterExpHistoryRepository;
 import com.maple.mapleservice.repository.character.CharacterRepository;
 import com.maple.mapleservice.service.ranking.RankingApiService;
 import com.maple.mapleservice.util.CommonUtil;
 
 @SpringBootTest
 class CharacterServiceTest {
+	private CommonUtil commonUtil = new CommonUtil();
+
 	@Autowired
 	CharacterApiService characterApiService;
 
@@ -34,7 +38,40 @@ class CharacterServiceTest {
 	@Autowired
 	CharacterRepository characterRepository;
 
-	private CommonUtil commonUtil = new CommonUtil();
+	@Autowired
+	CharacterExpHistoryRepository characterExpHistoryRepository;
+
+	@Test
+	void 경험치_히스토리_최근_날짜_꺼내기_테스트() {
+		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
+		String date = characterExpHistoryRepository.getLatestExpDate(ocid);
+		System.out.println(date);
+	}
+
+	@Test
+	void 경험치_히스토리_DB_조회_테스트() {
+		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
+		List<CharacterExpHistoryResponseDto> characterExpHistoryResponseDtos = characterExpHistoryRepository.getExpHistory(ocid);
+
+		assertThat(characterExpHistoryResponseDtos.size()).isEqualTo(7);
+	}
+
+
+	@Test
+	void 경험치_히스토리_삽입_테스트() {
+		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
+		characterServiceImpl.addCharacterExpHistoryFirstTime(ocid);
+
+		assertThat(characterExpHistoryRepository.countByOcid(ocid)).isEqualTo(7);
+	}
+
+	@Test
+	void 경험치_히스토리_개수_테스트() {
+		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
+		Long expCount = characterExpHistoryRepository.countByOcid(ocid);
+
+		System.out.println(expCount);
+	}
 
 	@Test
 	void 본캐_찾기_캐시에서_삭제() {
@@ -90,6 +127,10 @@ class CharacterServiceTest {
 			.combat_power(Long.parseLong(combatPower))
 			.guild_name(characterBasicDto.getCharacter_guild_name())
 			.parent_ocid(parent_ocid)
+			.character_class(characterBasicDto.getCharacter_class())
+			.character_class_level(characterBasicDto.getCharacter_class_level())
+			.character_level(Long.valueOf(characterBasicDto.getCharacter_level()))
+			.character_image(characterBasicDto.getCharacter_image())
 			.build();
 
 		assertThat(characterForInsert.getGuild_name()).isNull();
@@ -108,6 +149,7 @@ class CharacterServiceTest {
 		String ocid = characterApiService.getOcidKey("큐브충");
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
 		String combatPower = characterApiService.getCharacterCombatPower(ocid);
+		String oguildId = characterServiceImpl.getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 
 		Character character = characterRepository.findByOcid(ocid);
 		String old_name = character.getCharacter_name();
@@ -129,7 +171,7 @@ class CharacterServiceTest {
 		if(characterBasicDto.getCharacter_guild_name() != null && !characterBasicDto.getCharacter_guild_name().equals(character.getGuild_name())) {
 			character.setGuild_name(characterBasicDto.getCharacter_guild_name());
 			// 길드ocid 조회하는 api 필요
-			character.setOguild_id("oguild_name");
+			character.setOguild_id(oguildId);
 		}
 
 		characterRepository.save(character);
