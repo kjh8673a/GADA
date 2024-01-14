@@ -1,35 +1,28 @@
-import { useRecoilState } from "recoil";
-import { atomTabName } from "../../../atoms/maple/characterTabState";
-import { TAB_LIST, TabNameType } from "../../../@types/maple/TabTypes";
-import useCharacterTab from "../../../hooks/maple/useCharacterTab";
+import styled from "styled-components";
+import CenteredBox from "../../../style/CenteredBox";
+import CharacterDetail from "./CharacterDetail";
+import CharacterSummary from "./summary/CharacterSummary";
+import CharacterTab from "./CharacterTab";
+
+/* 헤더에 h2가 가려져서 임시로 넣어놓은 빈 박스 */
+const BlankDiv = styled.div`
+  height: 64px;
+`;
 
 const Character = () => {
-  const [tabName] = useRecoilState<TabNameType>(atomTabName);
-  const { selectTab } = useCharacterTab();
-
   return (
-    <div>
+    <CenteredBox>
+      {/* 헤더에 h2가 가려져서 임시로 넣어놓은 빈 박스 */}
+      <BlankDiv />
       <h2>캐릭터 조회 후 넘어오는 페이지</h2>
       {/* 여기에 조회된 캐릭터 정보 표시 */}
+      <CharacterSummary />
       {/* 아래에는 탭 표시 */}
-      <span>현재 탭 : {tabName}</span>
-      <select
-        value={tabName}
-        onChange={(e) => {
-          selectTab(e.target.value);
-        }}
-      >
-        {TAB_LIST.map((tabName, idx) => (
-          <option key={idx} value={tabName}>
-            {tabName}
-          </option>
-        ))}
-        <option value="dfs">dfs</option>
-      </select>
-      {/* 그 아래에는 탭 내용 표시 */}
-    </div>
+      <CharacterTab />
+      {/* 아래에는 데이터 표시 */}
+      <CharacterDetail />
+    </CenteredBox>
   );
 };
 
 export default Character;
-
