@@ -15,10 +15,19 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.maple.mapleservice.dto.feign.character.CharacterAbilityDto;
 import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
+import com.maple.mapleservice.dto.feign.character.CharacterCashItemDto;
+import com.maple.mapleservice.dto.feign.character.CharacterItemDto;
+import com.maple.mapleservice.dto.feign.character.CharacterPetDto;
+import com.maple.mapleservice.dto.model.character.FinalStat;
+import com.maple.mapleservice.dto.model.character.HyperStat;
+import com.maple.mapleservice.dto.model.character.Symbol;
 import com.maple.mapleservice.dto.model.ranking.Union;
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
+import com.maple.mapleservice.dto.response.CharacterBasicInfoDto;
+import com.maple.mapleservice.dto.response.CharacterItemAndStatDto;
 import com.maple.mapleservice.entity.Character;
 import com.maple.mapleservice.entity.CharacterExpHistory;
 import com.maple.mapleservice.repository.character.CharacterExpHistoryRepository;
@@ -35,7 +44,6 @@ public class CharacterServiceImpl implements CharacterService {
 	private final CharacterApiService characterApiService;
 	private final GuildApiService guildApiService;
 	private final RankingApiService rankingApiService;
-
 	private final CharacterRepository characterRepository;
 
 	private final JdbcTemplate jdbcTemplate;
@@ -234,7 +242,7 @@ public class CharacterServiceImpl implements CharacterService {
 		long count = characterExpHistoryRepository.countByOcid(ocid);
 		if (count == 0) {
 			addCharacterExpHistoryFirstTime(ocid);
-		}else if (!characterExpHistoryRepository.getLatestExpDate(ocid).equals(commonUtil.date)){
+		} else if (!characterExpHistoryRepository.getLatestExpDate(ocid).equals(commonUtil.date)) {
 			addCharacterExpHistoryToday(ocid);
 		}
 
@@ -370,5 +378,30 @@ public class CharacterServiceImpl implements CharacterService {
 				return characterList.size();
 			}
 		});
+	}
+
+	@Override
+	@Cacheable(value = "character-basic-info", key = "#characterName")
+	public CharacterBasicInfoDto getCharacterBasicInfo(String characterName) {
+		String ocid = characterApiService.getOcidKey(characterName);
+		addCharacterInformationToDB(characterName);
+		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+		Integer popularity = characterApiService.getCharacterPopularity(ocid);
+		String characterCombatPower = characterApiService.getCharacterCombatPower(ocid);
+		return CharacterBasicInfoDto.of(ocid, characterBasicDto, popularity, characterCombatPower);
+	}
+
+	@Override
+	@Cacheable(value = "character-item-and-stat", key = "#characterName")
+	public CharacterItemAndStatDto getCharacterItemAndStat(String characterName) {
+		String ocid = characterApiService.getOcidKey(characterName);
+		List<FinalStat> final_stats = characterApiService.getCharacterStat(ocid).getFinal_stat();
+		List<HyperStat> hyper_stats = characterApiService.getCharacterHyperStat(ocid);
+		CharacterAbilityDto ability = characterApiService.getCharacterAbility(ocid);
+		CharacterItemDto item = characterApiService.getCharacterItem(ocid);
+		CharacterCashItemDto cash_item = characterApiService.getCharacterCashItem(ocid);
+		CharacterPetDto pet = characterApiService.getCharacterPet(ocid);
+		List<Symbol> symbols = characterApiService.getCharacterSymbol(ocid).getSymbol();
+		return CharacterItemAndStatDto.of(final_stats, hyper_stats, ability, item, cash_item, pet, symbols);
 	}
 }
