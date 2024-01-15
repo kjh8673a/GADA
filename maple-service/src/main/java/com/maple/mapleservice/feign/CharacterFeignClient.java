@@ -36,4 +36,15 @@ public interface CharacterFeignClient {
     @GetMapping("/pet-equipment")
     CharacterPetDto getCharacterPetDto(@RequestParam String ocid, @RequestParam String date);
 
+    @GetMapping("/vmatrix")
+    CharacterVMatrixDto getCharacterVMatrixDto(@RequestParam String ocid, @RequestParam String date);
+
+    @GetMapping("/skill")
+    CharacterHyperPassiveDto getCharacterHyperPassiveDto(@RequestParam String ocid, @RequestParam String date, @RequestParam String character_skill_grade);
+
+    @GetMapping("/link-skill")
+    CharacterLinkSkillDto getCharacterLinkSkillDto(@RequestParam String ocid, @RequestParam String date);
+
+    @GetMapping("/hexamatrix")
+    CharacterHexaMatrixDto getCharacterHexaMatrixDto(@RequestParam String ocid, @RequestParam String date);
 }

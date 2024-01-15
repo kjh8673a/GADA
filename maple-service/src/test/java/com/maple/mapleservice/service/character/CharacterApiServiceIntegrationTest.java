@@ -81,4 +81,25 @@ public class CharacterApiServiceIntegrationTest {
     void 펫_조회_테스트() {
         CharacterPetDto characterPet = characterApiService.getCharacterPet(ocid);
     }
+
+    @Test
+    void V_스킬_조회_테스트() {
+        CharacterVMatrixDto characterVMatrixDto = characterApiService.getCharacterVMatrixDto(ocid);
+    }
+    
+    @Test
+    void 하이퍼_패시브_조회_테스트() {
+        CharacterHyperPassiveDto characterHyperPassiveDto = characterApiService.getCharacterHyperPassive(ocid);
+    }
+
+    @Test
+    void 링크_스킬_조회_테스트() {
+        CharacterLinkSkillDto characterLinkSkillDto = characterApiService.getCharacterLinkSkill(ocid);
+    }
+
+    @Test
+    void 헥사_스킬_조회_테스트() {
+        CharacterHexaMatrixDto characterHexaMatrixDto = characterApiService.getCharacterHexaMatrix(ocid);
+        System.out.println(characterHexaMatrixDto.getCharacter_hexa_core_equipment().size());
+    }
 }
