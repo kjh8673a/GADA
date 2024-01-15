@@ -1,6 +1,7 @@
 package com.maple.mapleservice.service.character;
 
 import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterHexaMatrixResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterItemAndStatDto;
 import com.maple.mapleservice.dto.response.Character.CharacterItemResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterStatsResponseDto;
@@ -28,6 +29,11 @@ public class CharacterServiceIntegrationTest {
     @Test
     void 스탯_조회_테스트(){
         CharacterStatsResponseDto characterStatsResponseDto = characterService.getCharacterStats(characterName);
+    }
+
+    @Test
+    void 헥사_매트릭스_조회_테스트() {
+        CharacterHexaMatrixResponseDto characterHexaMatrixResponseDto = characterService.getCharacterHexaMatrix(characterName);
     }
 
 

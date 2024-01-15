@@ -2,7 +2,11 @@ package com.maple.mapleservice.controller;
 
 import java.util.List;
 
+import com.maple.mapleservice.dto.feign.character.CharacterHyperPassiveDto;
+import com.maple.mapleservice.dto.feign.character.CharacterLinkSkillDto;
+import com.maple.mapleservice.dto.feign.character.CharacterVMatrixDto;
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterHexaMatrixResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterItemResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
@@ -76,6 +80,42 @@ public class CharacterController {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(SuccessResponse.of(characterStatsResponseDto));
+    }
+
+    @RequestMapping("/getCharacterVMatrix")
+    public ResponseEntity<SuccessResponse> getCharacterVmatrix(@RequestParam String characterName) {
+        CharacterVMatrixDto characterVMatrixDto = characterService.getCharacterVMatrix(characterName);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.of(characterVMatrixDto));
+    }
+
+    @RequestMapping("/getCharacterHyperPassive")
+    public ResponseEntity<SuccessResponse> getCharacterHyperPassive(@RequestParam String characterName) {
+        CharacterHyperPassiveDto characterHyperPassiveDto = characterService.getCharacterHyperPassive(characterName);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.of(characterHyperPassiveDto));
+    }
+
+    @RequestMapping("/getCharacterLinkSkill")
+    public ResponseEntity<SuccessResponse> getCharacterLinkSkill(@RequestParam String characrterName) {
+        CharacterLinkSkillDto characterLinkSkillDto = characterService.getCharacterLinkSkill(characrterName);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.of(characterLinkSkillDto));
+    }
+
+    @RequestMapping("/getCharacterHexaMatrix")
+    public ResponseEntity<SuccessResponse> getCharacterHexamatrix(@RequestParam String characterName) {
+        CharacterHexaMatrixResponseDto characterHexaMatrixResponseDto = characterService.getCharacterHexaMatrix(characterName);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.of(characterHexaMatrixResponseDto));
     }
 
 }

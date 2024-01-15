@@ -1,10 +1,8 @@
 package com.maple.mapleservice.service.character;
 
 import com.maple.mapleservice.dto.feign.character.*;
-import com.maple.mapleservice.dto.model.character.HyperStat;
 import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
 import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
-import com.maple.mapleservice.service.character.CharacterApiService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -80,5 +78,26 @@ public class CharacterApiServiceIntegrationTest {
     @Test
     void 펫_조회_테스트() {
         CharacterPetDto characterPet = characterApiService.getCharacterPet(ocid);
+    }
+
+    @Test
+    void V_스킬_조회_테스트() {
+        CharacterVMatrixDto characterVMatrixDto = characterApiService.getCharacterVMatrixDto(ocid);
+    }
+    
+    @Test
+    void 하이퍼_패시브_조회_테스트() {
+        CharacterHyperPassiveDto characterHyperPassiveDto = characterApiService.getCharacterHyperPassive(ocid);
+    }
+
+    @Test
+    void 링크_스킬_조회_테스트() {
+        CharacterLinkSkillDto characterLinkSkillDto = characterApiService.getCharacterLinkSkill(ocid);
+    }
+
+    @Test
+    void 헥사_스킬_조회_테스트() {
+        CharacterHexaMatrixDto characterHexaMatrixDto = characterApiService.getCharacterHexaMatrix(ocid);
+        System.out.println(characterHexaMatrixDto.getCharacter_hexa_core_equipment().size());
     }
 }
