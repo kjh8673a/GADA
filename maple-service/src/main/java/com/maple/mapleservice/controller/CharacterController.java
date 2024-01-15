@@ -101,8 +101,8 @@ public class CharacterController {
     }
 
     @RequestMapping("/getCharacterLinkSkill")
-    public ResponseEntity<SuccessResponse> getCharacterLinkSkill(@RequestParam String characrterName) {
-        CharacterLinkSkillDto characterLinkSkillDto = characterService.getCharacterLinkSkill(characrterName);
+    public ResponseEntity<SuccessResponse> getCharacterLinkSkill(@RequestParam String characterName) {
+        CharacterLinkSkillDto characterLinkSkillDto = characterService.getCharacterLinkSkill(characterName);
 
         return ResponseEntity
             .status(HttpStatus.OK)
