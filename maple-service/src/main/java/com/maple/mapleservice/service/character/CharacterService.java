@@ -2,7 +2,11 @@ package com.maple.mapleservice.service.character;
 
 import java.util.List;
 
+import com.maple.mapleservice.dto.feign.character.CharacterHyperPassiveDto;
+import com.maple.mapleservice.dto.feign.character.CharacterLinkSkillDto;
+import com.maple.mapleservice.dto.feign.character.CharacterVMatrixDto;
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterHexaMatrixResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterItemResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 
@@ -28,4 +32,12 @@ public interface CharacterService {
 	CharacterItemResponseDto getCharacterItem(String characterName);
 
 	CharacterStatsResponseDto getCharacterStats(String characterName);
+
+	CharacterVMatrixDto getCharacterVMatrix(String characterName);
+
+	CharacterHyperPassiveDto getCharacterHyperPassive(String characterName);
+
+	CharacterLinkSkillDto getCharacterLinkSkill(String characterName);
+
+	CharacterHexaMatrixResponseDto getCharacterHexaMatrix(String characterName);
 }

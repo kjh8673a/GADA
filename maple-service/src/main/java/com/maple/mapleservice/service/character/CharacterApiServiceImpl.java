@@ -27,7 +27,7 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     private CommonUtil commonUtil = new CommonUtil();
 
     @Override
-    @Cacheable(value = "character-ocid", key = "#characterName")
+    @Cacheable(value = "character-api-ocid", key = "#characterName")
     public String getOcidKey(String characterName) {
         String ocid = "";
         try {
@@ -44,19 +44,19 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     }
 
     @Override
-    @Cacheable(value = "character-basic", key = "#ocid")
+    @Cacheable(value = "character-api-basic", key = "#ocid")
     public CharacterBasicDto getCharacterBasic(String ocid) {
         return characterFeignClient.getCharacterBasicDto(ocid, commonUtil.date);
     }
 
     @Override
-    @Cacheable(value = "character-popularity", key = "#ocid")
+    @Cacheable(value = "character-api-popularity", key = "#ocid")
     public Integer getCharacterPopularity(String ocid) {
         return characterFeignClient.getCharacterPopularityDto(ocid, commonUtil.date).getPopularity();
     }
 
     @Override
-    @Cacheable(value = "character-final-stat", key = "#ocid")
+    @Cacheable(value = "character-api-final-stat", key = "#ocid")
     public CharacterFinalStatDto getCharacterStat(String ocid) {
         List<FinalStat> finalStats = characterFeignClient.getCharacterStatDto(ocid, commonUtil.date).getFinal_stat();
 
@@ -202,7 +202,7 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     }
 
     @Override
-    @Cacheable(value = "character-hyper-stat", key = "#ocid")
+    @Cacheable(value = "character-api-hyper-stat", key = "#ocid")
     public CharacterHyperStatsDto getCharacterHyperStat(String ocid) {
         List<HyperStat> hyperStats = getSelectedHyperStat(ocid);
 
@@ -285,31 +285,31 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     }
 
     @Override
-    @Cacheable(value = "character-ability", key = "#ocid")
+    @Cacheable(value = "character-api-ability", key = "#ocid")
     public CharacterAbilityDto getCharacterAbility(String ocid) {
         return characterFeignClient.getCharacterAbilityDto(ocid, commonUtil.date);
     }
 
     @Override
-    @Cacheable(value = "character-item", key = "#ocid")
+    @Cacheable(value = "character-api-item", key = "#ocid")
     public CharacterItemDto getCharacterItem(String ocid) {
         return characterFeignClient.getCharacterItemDto(ocid, commonUtil.date);
     }
 
     @Override
-    @Cacheable(value = "character-cashitem", key = "#ocid")
+    @Cacheable(value = "character-api-cashitem", key = "#ocid")
     public CharacterCashItemDto getCharacterCashItem(String ocid) {
         return characterFeignClient.getCharacterCashItemDto(ocid, commonUtil.date);
     }
 
     @Override
-    @Cacheable(value = "character-symbol", key = "#ocid")
+    @Cacheable(value = "character-api-symbol", key = "#ocid")
     public CharacterSymbolDto getCharacterSymbol(String ocid) {
         return characterFeignClient.getCharacterSymbolDto(ocid, commonUtil.date);
     }
 
     @Override
-    @Cacheable(value = "character-pet", key = "#ocid")
+    @Cacheable(value = "character-api-pet", key = "#ocid")
     public CharacterPetDto getCharacterPet(String ocid) {
         return characterFeignClient.getCharacterPetDto(ocid, commonUtil.date);
     }
@@ -317,6 +317,30 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     @Override
     public CharacterBasicDto getCharacterBasicCustomDate(String ocid, String date) {
         return characterFeignClient.getCharacterBasicDto(ocid, date);
+    }
+
+    @Override
+    @Cacheable(value = "character-api-vmatrix", key = "#ocid")
+    public CharacterVMatrixDto getCharacterVMatrixDto(String ocid) {
+        return characterFeignClient.getCharacterVMatrixDto(ocid, commonUtil.date);
+    }
+
+    @Override
+    @Cacheable(value = "character-api-hyper-passive", key = "#ocid")
+    public CharacterHyperPassiveDto getCharacterHyperPassive(String ocid) {
+        return characterFeignClient.getCharacterHyperPassiveDto(ocid, commonUtil.date, "hyperpassive");
+    }
+
+    @Override
+    @Cacheable(value = "character-api-link-skill", key = "#ocid")
+    public CharacterLinkSkillDto getCharacterLinkSkill(String ocid) {
+        return characterFeignClient.getCharacterLinkSkillDto(ocid, commonUtil.date);
+    }
+
+    @Override
+    @Cacheable(value = "character-api-hexa-matrix", key = "#ocid")
+    public CharacterHexaMatrixDto getCharacterHexaMatrix(String ocid) {
+        return characterFeignClient.getCharacterHexaMatrixDto(ocid, commonUtil.date);
     }
 
 }

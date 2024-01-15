@@ -18,19 +18,22 @@ import org.springframework.stereotype.Service;
 import com.maple.mapleservice.dto.feign.character.CharacterAbilityDto;
 import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
 import com.maple.mapleservice.dto.feign.character.CharacterCashItemDto;
+import com.maple.mapleservice.dto.feign.character.CharacterHyperPassiveDto;
 import com.maple.mapleservice.dto.feign.character.CharacterItemDto;
+import com.maple.mapleservice.dto.feign.character.CharacterLinkSkillDto;
 import com.maple.mapleservice.dto.feign.character.CharacterPetDto;
-import com.maple.mapleservice.dto.model.character.FinalStat;
-import com.maple.mapleservice.dto.model.character.HyperStat;
+import com.maple.mapleservice.dto.feign.character.CharacterVMatrixDto;
+import com.maple.mapleservice.util.HexaCoreTable;
 import com.maple.mapleservice.dto.model.character.Symbol;
+import com.maple.mapleservice.dto.model.character.skill.HexaMatrix;
 import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
 import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
 import com.maple.mapleservice.dto.model.ranking.Union;
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterHexaMatrixResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterItemResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
-import com.maple.mapleservice.dto.response.Character.CharacterItemAndStatDto;
 import com.maple.mapleservice.dto.response.Character.CharacterStatsResponseDto;
 import com.maple.mapleservice.entity.Character;
 import com.maple.mapleservice.entity.CharacterExpHistory;
@@ -49,11 +52,12 @@ public class CharacterServiceImpl implements CharacterService {
 	private final GuildApiService guildApiService;
 	private final RankingApiService rankingApiService;
 	private final CharacterRepository characterRepository;
+	private final CharacterExpHistoryRepository characterExpHistoryRepository;
 
 	private final JdbcTemplate jdbcTemplate;
 
+	private HexaCoreTable hexaCoreTable = new HexaCoreTable();
 	private CommonUtil commonUtil = new CommonUtil();
-	private final CharacterExpHistoryRepository characterExpHistoryRepository;
 
 	/**
 	 * 캐릭터 정보 DB에 입력
@@ -427,5 +431,104 @@ public class CharacterServiceImpl implements CharacterService {
 		CharacterAbilityDto ability = characterApiService.getCharacterAbility(ocid);
 
 		return CharacterStatsResponseDto.of(characterFinalStatDto, characterHyperStatsDto, ability);
+	}
+
+	@Override
+	@Cacheable(value = "character-vmatrix", key = "#characterName")
+	public CharacterVMatrixDto getCharacterVMatrix(String characterName) {
+		String ocid = characterApiService.getOcidKey(characterName);
+		return characterApiService.getCharacterVMatrixDto(ocid);
+	}
+
+	@Override
+	@Cacheable(value = "character-hyper-passive", key = "#characterName")
+	public CharacterHyperPassiveDto getCharacterHyperPassive(String characterName) {
+		String ocid = characterApiService.getOcidKey(characterName);
+		return characterApiService.getCharacterHyperPassive(ocid);
+	}
+
+	@Override
+	@Cacheable(value = "character-link-skill", key = "#characterName")
+	public CharacterLinkSkillDto getCharacterLinkSkill(String characterName) {
+		String ocid = characterApiService.getOcidKey(characterName);
+		return characterApiService.getCharacterLinkSkill(ocid);
+	}
+
+	@Override
+	public CharacterHexaMatrixResponseDto getCharacterHexaMatrix(String characterName) {
+		String ocid = characterApiService.getOcidKey(characterName);
+		List<HexaMatrix> character_hexa_core_equipment = characterApiService.getCharacterHexaMatrix(ocid).getCharacter_hexa_core_equipment();
+
+		Long used_sol_erda_energy = 0L;
+		Long used_sol_erda_fragment = 0L;
+		for(HexaMatrix hexaMatrix : character_hexa_core_equipment) {
+			int[][] usedCount = new int[1][2];
+			switch (hexaMatrix.getHexa_core_type()) {
+				case "스킬 코어":
+					usedCount = calculateSkillCore(hexaMatrix.getHexa_core_level());
+					break;
+				case "마스터리 코어":
+					usedCount = calculateMasteryCore(hexaMatrix.getHexa_core_level());
+					break;
+				case "강화 코어":
+					usedCount = calculateEnhanceCore(hexaMatrix.getHexa_core_level());
+					break;
+				case "공용 코어":
+					usedCount = calculateCommonCore(hexaMatrix.getHexa_core_level());
+					break;
+			}
+			used_sol_erda_energy += usedCount[0][0];
+			used_sol_erda_fragment += usedCount[0][1];
+		}
+
+		return CharacterHexaMatrixResponseDto.of(character_hexa_core_equipment, used_sol_erda_energy, used_sol_erda_fragment);
+	}
+
+	private int[][] calculateSkillCore(int hexaCoreLevel) {
+		int[][] skill_core = hexaCoreTable.getSkill_core();
+		int sol_erda = 0;
+		int sol_erda_fragment = 0;
+		for(int i = 0; i < hexaCoreLevel; i++) {
+			sol_erda += skill_core[i][0];
+			sol_erda_fragment += skill_core[i][1];
+		}
+
+		return new int[][] {{sol_erda, sol_erda_fragment}};
+	}
+
+	private int[][] calculateMasteryCore(int hexaCoreLevel) {
+		int[][] mastery_core = hexaCoreTable.getMastery_core();
+		int sol_erda = 0;
+		int sol_erda_fragment = 0;
+		for(int i = 0; i < hexaCoreLevel; i++) {
+			sol_erda += mastery_core[i][0];
+			sol_erda_fragment += mastery_core[i][1];
+		}
+
+		return new int[][] {{sol_erda, sol_erda_fragment}};
+	}
+
+	private int[][] calculateEnhanceCore(int hexaCoreLevel) {
+		int[][] enhance_core = hexaCoreTable.getEnhance_core();
+		int sol_erda = 0;
+		int sol_erda_fragment = 0;
+		for(int i = 0; i < hexaCoreLevel; i++) {
+			sol_erda += enhance_core[i][0];
+			sol_erda_fragment += enhance_core[i][1];
+		}
+
+		return new int[][] {{sol_erda, sol_erda_fragment}};
+	}
+
+	private int[][] calculateCommonCore(int hexaCoreLevel) {
+		int[][] common_core = hexaCoreTable.getCommon_core();
+		int sol_erda = 0;
+		int sol_erda_fragment = 0;
+		for(int i = 0; i < hexaCoreLevel; i++) {
+			sol_erda += common_core[i][0];
+			sol_erda_fragment += common_core[i][1];
+		}
+
+		return new int[][] {{sol_erda, sol_erda_fragment}};
 	}
 }

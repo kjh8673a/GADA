@@ -30,4 +30,12 @@ public interface CharacterApiService {
     CharacterPetDto getCharacterPet(String ocid);
 
     CharacterBasicDto getCharacterBasicCustomDate(String ocid, String date);
+
+    CharacterVMatrixDto getCharacterVMatrixDto(String ocid);
+
+    CharacterHyperPassiveDto getCharacterHyperPassive(String ocid);
+
+    CharacterLinkSkillDto getCharacterLinkSkill(String ocid);
+
+    CharacterHexaMatrixDto getCharacterHexaMatrix(String ocid);
 }
