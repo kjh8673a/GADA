@@ -1,13 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import SkillBox from './SkillBox';
 
 
-
 const SixSkill = () => {
+
     return (
         <SkillBox>
             6차스킬
-            <hr />
             
         </SkillBox>
     )

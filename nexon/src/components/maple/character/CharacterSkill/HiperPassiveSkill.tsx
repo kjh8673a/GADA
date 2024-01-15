@@ -1,6 +1,7 @@
 import React from 'react';
 import SkillBox from './SkillBox';
 
+
 const HiperPassiveSkill = () => {
     return (
         <SkillBox>
