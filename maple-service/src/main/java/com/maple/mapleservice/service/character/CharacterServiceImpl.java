@@ -23,11 +23,15 @@ import com.maple.mapleservice.dto.feign.character.CharacterPetDto;
 import com.maple.mapleservice.dto.model.character.FinalStat;
 import com.maple.mapleservice.dto.model.character.HyperStat;
 import com.maple.mapleservice.dto.model.character.Symbol;
+import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
+import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
 import com.maple.mapleservice.dto.model.ranking.Union;
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterItemResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
-import com.maple.mapleservice.dto.response.CharacterBasicInfoDto;
-import com.maple.mapleservice.dto.response.CharacterItemAndStatDto;
+import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterItemAndStatDto;
+import com.maple.mapleservice.dto.response.Character.CharacterStatsResponseDto;
 import com.maple.mapleservice.entity.Character;
 import com.maple.mapleservice.entity.CharacterExpHistory;
 import com.maple.mapleservice.repository.character.CharacterExpHistoryRepository;
@@ -63,7 +67,7 @@ public class CharacterServiceImpl implements CharacterService {
 		}
 
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		String combatPower = characterApiService.getCharacterCombatPower(ocid);
+		String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
 		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 
 		List<Union> unionList = rankingApiService.getRankingUnion(ocid, characterBasicDto.getWorld_name());
@@ -210,7 +214,7 @@ public class CharacterServiceImpl implements CharacterService {
 		}
 
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		String combatPower = characterApiService.getCharacterCombatPower(ocid);
+		String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
 		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 
 		Character characterForInsert = Character.builder()
@@ -335,7 +339,7 @@ public class CharacterServiceImpl implements CharacterService {
 				Union union = unionListToBeAdded.get(i);
 				String ocid = characterApiService.getOcidKey(union.getCharacter_name());
 				CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-				String combatPower = characterApiService.getCharacterCombatPower(ocid);
+				String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
 				String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(),
 					characterBasicDto.getWorld_name());
 
@@ -391,26 +395,37 @@ public class CharacterServiceImpl implements CharacterService {
 
 	@Override
 	@Cacheable(value = "character-basic-info", key = "#characterName")
-	public CharacterBasicInfoDto getCharacterBasicInfo(String characterName) {
+	public CharacterBasicInfoResponseDto getCharacterBasicInfo(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		addCharacterInformationToDB(characterName);
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+		String prevName = characterRepository.findByOcid(ocid).getPrev_name();
+		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 		Integer popularity = characterApiService.getCharacterPopularity(ocid);
-		String characterCombatPower = characterApiService.getCharacterCombatPower(ocid);
-		return CharacterBasicInfoDto.of(ocid, characterBasicDto, popularity, characterCombatPower);
+		String characterCombatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
+		return CharacterBasicInfoResponseDto.of(ocid, characterBasicDto, popularity, characterCombatPower, prevName, oguildId);
 	}
 
 	@Override
-	@Cacheable(value = "character-item-and-stat", key = "#characterName")
-	public CharacterItemAndStatDto getCharacterItemAndStat(String characterName) {
+	@Cacheable(value = "character-item", key = "#characterName")
+	public CharacterItemResponseDto getCharacterItem(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
-		List<FinalStat> final_stats = characterApiService.getCharacterStat(ocid).getFinal_stat();
-		List<HyperStat> hyper_stats = characterApiService.getCharacterHyperStat(ocid);
-		CharacterAbilityDto ability = characterApiService.getCharacterAbility(ocid);
 		CharacterItemDto item = characterApiService.getCharacterItem(ocid);
 		CharacterCashItemDto cash_item = characterApiService.getCharacterCashItem(ocid);
 		CharacterPetDto pet = characterApiService.getCharacterPet(ocid);
 		List<Symbol> symbols = characterApiService.getCharacterSymbol(ocid).getSymbol();
-		return CharacterItemAndStatDto.of(final_stats, hyper_stats, ability, item, cash_item, pet, symbols);
+
+		return CharacterItemResponseDto.of(item, cash_item, pet, symbols);
+	}
+
+	@Override
+	@Cacheable(value = "character-stats", key = "#characterName")
+	public CharacterStatsResponseDto getCharacterStats(String characterName) {
+		String ocid = characterApiService.getOcidKey(characterName);
+		CharacterFinalStatDto characterFinalStatDto = characterApiService.getCharacterStat(ocid);
+		CharacterHyperStatsDto characterHyperStatsDto = characterApiService.getCharacterHyperStat(ocid);
+		CharacterAbilityDto ability = characterApiService.getCharacterAbility(ocid);
+
+		return CharacterStatsResponseDto.of(characterFinalStatDto, characterHyperStatsDto, ability);
 	}
 }

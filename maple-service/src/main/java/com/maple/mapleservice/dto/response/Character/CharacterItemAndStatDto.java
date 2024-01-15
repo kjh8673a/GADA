@@ -1,4 +1,4 @@
-package com.maple.mapleservice.dto.response;
+package com.maple.mapleservice.dto.response.Character;
 
 import com.maple.mapleservice.dto.feign.character.CharacterAbilityDto;
 import com.maple.mapleservice.dto.feign.character.CharacterCashItemDto;

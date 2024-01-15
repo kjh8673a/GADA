@@ -3,9 +3,11 @@ package com.maple.mapleservice.controller;
 import java.util.List;
 
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterItemResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
-import com.maple.mapleservice.dto.response.CharacterBasicInfoDto;
-import com.maple.mapleservice.dto.response.CharacterItemAndStatDto;
+import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterItemAndStatDto;
+import com.maple.mapleservice.dto.response.Character.CharacterStatsResponseDto;
 import com.maple.mapleservice.dto.response.SuccessResponse;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.maple.mapleservice.service.character.CharacterService;
@@ -51,20 +53,29 @@ public class CharacterController {
 
     @RequestMapping("/getCharacterBasicInfo")
     public ResponseEntity<SuccessResponse> getCharacterBasicInfo(@RequestParam String characterName) {
-        CharacterBasicInfoDto characterBasicInfoDto = characterService.getCharacterBasicInfo(characterName);
+        CharacterBasicInfoResponseDto characterBasicInfoDto = characterService.getCharacterBasicInfo(characterName);
 
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(SuccessResponse.of(characterBasicInfoDto));
     }
 
-    @RequestMapping("/getCharacterItemAndStat")
-    public ResponseEntity<SuccessResponse> getCharacterItemAndStat(@RequestParam String characterName) {
-        CharacterItemAndStatDto characterItemAndStatDto = characterService.getCharacterItemAndStat(characterName);
+    @RequestMapping("/getCharacterItem")
+    public ResponseEntity<SuccessResponse> getCharacterItem(@RequestParam String characterName) {
+        CharacterItemResponseDto characterItemResponseDto = characterService.getCharacterItem(characterName);
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(SuccessResponse.of(characterItemAndStatDto));
+            .body(SuccessResponse.of(characterItemResponseDto));
+    }
+
+    @RequestMapping("/getCharacterStats")
+    public ResponseEntity<SuccessResponse> getCharacterStats(@RequestParam String characterName) {
+        CharacterStatsResponseDto characterStatsResponseDto = characterService.getCharacterStats(characterName);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.of(characterStatsResponseDto));
     }
 
 }

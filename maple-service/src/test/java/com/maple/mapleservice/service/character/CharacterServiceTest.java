@@ -47,7 +47,6 @@ class CharacterServiceTest {
 		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
 
 		List<CharacterBasicDto> listForExp = new ArrayList<>();
-
 			CharacterBasicDto basicDto = characterApiService.getCharacterBasicCustomDate(ocid, commonUtil.customDate(300));
 			if(basicDto.getCharacter_exp() == null) {
 				CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
@@ -61,7 +60,7 @@ class CharacterServiceTest {
 
 		assertThat(listForExp.get(0).getCharacter_level()).isEqualTo(0);
   }
-  
+
 	void 캐릭터_기본정보_조회_테스트() {
 		String characterName = "아델";
 		assertThat(characterService.getCharacterBasicInfo(characterName).getCharacter_name()).isEqualTo(characterName);
@@ -77,7 +76,8 @@ class CharacterServiceTest {
 	@Test
 	void 경험치_히스토리_DB_조회_테스트() {
 		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
-		List<CharacterExpHistoryResponseDto> characterExpHistoryResponseDtos = characterExpHistoryRepository.getExpHistory(ocid);
+		List<CharacterExpHistoryResponseDto> characterExpHistoryResponseDtos = characterExpHistoryRepository.getExpHistory(
+			ocid);
 
 		assertThat(characterExpHistoryResponseDtos.size()).isEqualTo(7);
 	}
@@ -86,7 +86,7 @@ class CharacterServiceTest {
 	@Test
 	void 경험치_히스토리_삽입_테스트() {
 		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
-		if (characterExpHistoryRepository.countByOcid(ocid) == 0){
+		if (characterExpHistoryRepository.countByOcid(ocid) == 0) {
 			characterServiceImpl.addCharacterExpHistoryFirstTime(ocid);
 		}
 
@@ -141,7 +141,7 @@ class CharacterServiceTest {
 	void 길드명없을때_null로_들어가는지_테스트() {
 		String ocid = characterApiService.getOcidKey("태주");
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		String combatPower = characterApiService.getCharacterCombatPower(ocid);
+		String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
 		List<Union> unionList = rankingApiService.getRankingUnion(ocid, characterBasicDto.getWorld_name());
 		Collections.sort(unionList, (o1, o2) -> Long.compare(o2.getUnion_level(), o1.getUnion_level()));
 
@@ -176,7 +176,7 @@ class CharacterServiceTest {
 	void 이전_닉네임_저장_테스트() {
 		String ocid = characterApiService.getOcidKey("큐브충");
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		String combatPower = characterApiService.getCharacterCombatPower(ocid);
+		String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
 		String oguildId = characterServiceImpl.getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 
 		Character character = characterRepository.findByOcid(ocid);
@@ -211,7 +211,7 @@ class CharacterServiceTest {
 	void 캐릭터_정보_없는_경우_DB에_저장_테스트() {
 		String ocid = characterApiService.getOcidKey("큐브충");
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		String combatPower = characterApiService.getCharacterCombatPower(ocid);
+		String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
 		String oguildId = characterServiceImpl.getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 		String parent_ocid = "e0a4f439e53c369866b55297d2f5f4eb"; // 아델
 
@@ -243,7 +243,7 @@ class CharacterServiceTest {
 	void 캐릭터_정보_있는데_날짜_다를_경우_갱신_테스트() {
 		String ocid = "45a15799827229de6694e3086160d615efe8d04e6d233bd35cf2fabdeb93fb0d"; // 핵불닭푸딩
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		String combatPower = characterApiService.getCharacterCombatPower(ocid);
+		String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
 
 		Character character = characterRepository.findByOcid(ocid);
 
@@ -291,5 +291,5 @@ class CharacterServiceTest {
 		String key = characterApiService.getOcidKey("아델");
 		assertThat(key).isEqualTo("e0a4f439e53c369866b55297d2f5f4eb");
 	}
-	
+
 }
