@@ -2,11 +2,8 @@ package com.maple.mapleservice.service.character;
 
 
 import com.maple.mapleservice.dto.feign.character.*;
-import com.maple.mapleservice.dto.model.character.HyperStat;
 import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
 import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
-
-import java.util.List;
 
 public interface CharacterApiService {
     String getOcidKey(String characterName);

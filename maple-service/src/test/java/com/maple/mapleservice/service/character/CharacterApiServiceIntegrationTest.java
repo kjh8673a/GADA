@@ -1,10 +1,8 @@
 package com.maple.mapleservice.service.character;
 
 import com.maple.mapleservice.dto.feign.character.*;
-import com.maple.mapleservice.dto.model.character.HyperStat;
 import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
 import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
-import com.maple.mapleservice.service.character.CharacterApiService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

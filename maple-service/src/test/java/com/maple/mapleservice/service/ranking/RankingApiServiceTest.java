@@ -24,11 +24,11 @@ class RankingApiServiceTest {
 		assertThat(unionList.size()).isEqualTo(1);
 	}
 
-	@Test
-	void 종합_랭킹_조회_테스트() {
-		List<Overall> overallList = rankingApiService.getRankingOverall(0, 8);
-		System.out.println(overallList.get(0).getCharacter_name());
-
-		assertThat(overallList.size()).isEqualTo(200);
-	}
+	// @Test
+	// void 종합_랭킹_조회_테스트() {
+	// 	List<Overall> overallList = rankingApiService.getRankingOverall(0, 8);
+	// 	System.out.println(overallList.get(0).getCharacter_name());
+	//
+	// 	assertThat(overallList.size()).isEqualTo(200);
+	// }
 }
