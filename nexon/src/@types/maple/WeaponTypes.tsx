@@ -43,6 +43,28 @@ export type WEAPON_GRADE_TYPE = (typeof WEAPON_GRADE_LIST)[number];
 
 export type WEAPON_TYPE = (typeof WEAPON_SLOT_LIST)[number];
 
+export interface IWeaponOption {
+  str?: string;
+  dex?: string;
+  int?: string;
+  luk?: string;
+  max_hp?: string;
+  max_mp?: string;
+  attack_power?: string;
+  magic_power?: string;
+  armor?: string;
+  speed?: string;
+  jump?: string;
+  boss_damage?: string;
+  ignore_monster_armor?: string;
+  all_stat?: string;
+  damage?: string;
+  equipment_level_decrease?: number;
+  max_hp_rate?: string;
+  max_mp_rate?: string;
+  base_equipment_level?: number;
+}
+
 export interface IWeaponData {
   item_equipment_part: string;
   item_equipment_slot: string;
@@ -52,45 +74,8 @@ export interface IWeaponData {
   item_shape_name: string;
   item_shape_icon: string;
   item_gender: string | null;
-  item_total_option: {
-    str: string;
-    dex: string;
-    int: string;
-    luk: string;
-    max_hp: string;
-    max_mp: string;
-    attack_power: string;
-    magic_power: string;
-    armor: string;
-    speed: string;
-    jump: string;
-    boss_damage: string;
-    ignore_monster_armor: string;
-    all_stat: string;
-    damage: string;
-    equipment_level_decrease: number;
-    max_hp_rate: string;
-    max_mp_rate: string;
-  };
-  item_base_option: {
-    str: string;
-    dex: string;
-    int: string;
-    luk: string;
-    max_hp: string;
-    max_mp: string;
-    attack_power: string;
-    magic_power: string;
-    armor: string;
-    speed: string;
-    jump: string;
-    boss_damage: string;
-    ignore_monster_armor: string;
-    all_stat: string;
-    max_hp_rate: string;
-    max_mp_rate: string;
-    base_equipment_level: number;
-  };
+  item_total_option: IWeaponOption;
+  item_base_option: IWeaponOption;
   potential_option_grade: string | null;
   additional_potential_option_grade: string | null;
   potential_option_1: string | null;
@@ -100,33 +85,8 @@ export interface IWeaponData {
   additional_potential_option_2: string | null;
   additional_potential_option_3: string | null;
   equipment_level_increase: number;
-  item_exceptional_option: {
-    str: string;
-    dex: string;
-    int: string;
-    luk: string;
-    max_hp: string;
-    max_mp: string;
-    attack_power: string;
-    magic_power: string;
-  };
-  item_add_option: {
-    str: string;
-    dex: string;
-    int: string;
-    luk: string;
-    max_hp: string;
-    max_mp: string;
-    attack_power: string;
-    magic_power: string;
-    armor: string;
-    speed: string;
-    jump: string;
-    boss_damage: string;
-    damage: string;
-    all_stat: string;
-    equipment_level_decrease: number;
-  };
+  item_exceptional_option: IWeaponOption;
+  item_add_option: IWeaponOption;
   growth_exp: number;
   growth_level: number;
   scroll_upgrade: string;
@@ -136,35 +96,10 @@ export interface IWeaponData {
   scroll_upgradeable_count: string;
   soul_name: string | null;
   soul_option: string | null;
-  item_etc_option: {
-    str?: string;
-    dex?: string;
-    int?: string;
-    luk?: string;
-    max_hp?: string;
-    max_mp?: string;
-    attack_power?: string;
-    magic_power?: string;
-    armor?: string;
-    speed?: string;
-    jump?: string;
-  };
+  item_etc_option: IWeaponOption;
   starforce: string;
   starforce_scroll_flag: string;
-  item_starforce_option: {
-    str: string;
-    dex: string;
-    int: string;
-    luk: string;
-    max_hp: string;
-    max_mp: string;
-    attack_power: string;
-    magic_power: string;
-    armor: string;
-    speed: string;
-    jump: string;
-  };
+  item_starforce_option: IWeaponOption;
   special_ring_level: number;
   date_expire: string | null;
 }
-

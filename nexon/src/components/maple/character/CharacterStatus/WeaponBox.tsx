@@ -61,4 +61,3 @@ const WeaponBox: React.FC<Props> = ({ data }) => {
 };
 
 export default WeaponBox;
-
