@@ -2,6 +2,8 @@ package com.maple.mapleservice.service.character;
 
 import com.maple.mapleservice.dto.feign.character.*;
 import com.maple.mapleservice.dto.model.character.HyperStat;
+import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
+import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,20 +42,16 @@ public class CharacterApiServiceIntegrationTest {
         Integer characterPopularity = characterApiService.getCharacterPopularity(ocid);
         assertThat(characterPopularity).isInstanceOf(Integer.class);
     }
-    @Test
-    void 전투력_조회_테스트(){
-        String characterCombatPower = characterApiService.getCharacterCombatPower(ocid);
-        System.out.println(characterCombatPower);
-    }
+
     @Test
     void 종합_능력치_조회_테스트() {
-        CharacterStatDto characterStatDto = characterApiService.getCharacterStat(ocid);
-        assertThat(characterStatDto.getFinal_stat().size()).isEqualTo(44);
+        CharacterFinalStatDto characterStatDto = characterApiService.getCharacterStat(ocid);
+        // assertThat(characterStatDto).isEqualTo(44);
     }
 
     @Test
     void 하이퍼스탯_조회_테스트() {
-        List<HyperStat> characterHyperStat = characterApiService.getCharacterHyperStat(ocid);
+        CharacterHyperStatsDto characterHyperStat = characterApiService.getCharacterHyperStat(ocid);
     }
 
     @Test

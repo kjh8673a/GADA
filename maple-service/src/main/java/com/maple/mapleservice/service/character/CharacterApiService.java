@@ -3,6 +3,8 @@ package com.maple.mapleservice.service.character;
 
 import com.maple.mapleservice.dto.feign.character.*;
 import com.maple.mapleservice.dto.model.character.HyperStat;
+import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
+import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
 
 import java.util.List;
 
@@ -13,11 +15,9 @@ public interface CharacterApiService {
 
     Integer getCharacterPopularity(String ocid);
 
-    String getCharacterCombatPower(String ocid);
+    CharacterFinalStatDto getCharacterStat(String ocid);
 
-    CharacterStatDto getCharacterStat(String ocid);
-
-    List<HyperStat> getCharacterHyperStat(String ocid);
+    CharacterHyperStatsDto getCharacterHyperStat(String ocid);
 
     CharacterAbilityDto getCharacterAbility(String ocid);
 
