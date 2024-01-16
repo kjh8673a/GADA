@@ -18,11 +18,12 @@ import org.springframework.stereotype.Service;
 import com.maple.mapleservice.dto.feign.character.CharacterAbilityDto;
 import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
 import com.maple.mapleservice.dto.feign.character.CharacterCashItemDto;
-import com.maple.mapleservice.dto.feign.character.CharacterHyperPassiveDto;
 import com.maple.mapleservice.dto.feign.character.CharacterItemDto;
 import com.maple.mapleservice.dto.feign.character.CharacterLinkSkillDto;
 import com.maple.mapleservice.dto.feign.character.CharacterPetDto;
+import com.maple.mapleservice.dto.feign.character.CharacterSkillDto;
 import com.maple.mapleservice.dto.feign.character.CharacterVMatrixDto;
+import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
 import com.maple.mapleservice.util.HexaCoreTable;
 import com.maple.mapleservice.dto.model.character.Symbol;
 import com.maple.mapleservice.dto.model.character.skill.HexaMatrix;
@@ -273,14 +274,15 @@ public class CharacterServiceImpl implements CharacterService {
 	public void addCharacterExpHistoryFirstTime(String ocid) {
 		List<CharacterBasicDto> listForExp = new ArrayList<>();
 		for (int i = 0; i < 7; i++) {
-			CharacterBasicDto basicDto = characterApiService.getCharacterBasicCustomDate(ocid, commonUtil.customDate(i));
-			if(basicDto.getCharacter_exp() == null) {
+			CharacterBasicDto basicDto = characterApiService.getCharacterBasicCustomDate(ocid,
+				commonUtil.customDate(i));
+			if (basicDto.getCharacter_exp() == null) {
 				CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
 				characterBasicDto.setCharacter_level(0);
 				characterBasicDto.setCharacter_exp(0L);
 				characterBasicDto.setCharacter_exp_rate("0");
 				listForExp.add(characterBasicDto);
-			}else {
+			} else {
 				listForExp.add(basicDto);
 			}
 		}
@@ -407,7 +409,8 @@ public class CharacterServiceImpl implements CharacterService {
 		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 		Integer popularity = characterApiService.getCharacterPopularity(ocid);
 		String characterCombatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
-		return CharacterBasicInfoResponseDto.of(ocid, characterBasicDto, popularity, characterCombatPower, prevName, oguildId);
+		return CharacterBasicInfoResponseDto.of(ocid, characterBasicDto, popularity, characterCombatPower, prevName,
+			oguildId);
 	}
 
 	@Override
@@ -434,17 +437,21 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@Cacheable(value = "character-vmatrix", key = "#characterName")
-	public CharacterVMatrixDto getCharacterVMatrix(String characterName) {
+	@Cacheable(value = "character-v-matrix", key = "#characterName")
+	public CharacterVMatrixResponseDto getCharacterVMatrix(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
-		return characterApiService.getCharacterVMatrixDto(ocid);
+		CharacterVMatrixDto characterVMatrixDto = characterApiService.getCharacterVMatrixDto(ocid);
+		CharacterSkillDto characterSkillDto = characterApiService.getCharacterSkill(ocid, "5");
+
+		return CharacterVMatrixResponseDto.of(characterVMatrixDto.getCharacter_v_core_equipment(),
+			characterSkillDto.getCharacter_skill());
 	}
 
 	@Override
 	@Cacheable(value = "character-hyper-passive", key = "#characterName")
-	public CharacterHyperPassiveDto getCharacterHyperPassive(String characterName) {
+	public CharacterSkillDto getCharacterHyperPassive(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
-		return characterApiService.getCharacterHyperPassive(ocid);
+		return characterApiService.getCharacterSkill(ocid, "hyperpassive");
 	}
 
 	@Override
@@ -455,13 +462,15 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
+	@Cacheable(value = "character-hexa-matrix", key = "#characterName")
 	public CharacterHexaMatrixResponseDto getCharacterHexaMatrix(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
-		List<HexaMatrix> character_hexa_core_equipment = characterApiService.getCharacterHexaMatrix(ocid).getCharacter_hexa_core_equipment();
+		List<HexaMatrix> character_hexa_core_equipment = characterApiService.getCharacterHexaMatrix(ocid)
+			.getCharacter_hexa_core_equipment();
 
 		Long used_sol_erda_energy = 0L;
 		Long used_sol_erda_fragment = 0L;
-		for(HexaMatrix hexaMatrix : character_hexa_core_equipment) {
+		for (HexaMatrix hexaMatrix : character_hexa_core_equipment) {
 			int[][] usedCount = new int[1][2];
 			switch (hexaMatrix.getHexa_core_type()) {
 				case "스킬 코어":
@@ -481,14 +490,17 @@ public class CharacterServiceImpl implements CharacterService {
 			used_sol_erda_fragment += usedCount[0][1];
 		}
 
-		return CharacterHexaMatrixResponseDto.of(character_hexa_core_equipment, used_sol_erda_energy, used_sol_erda_fragment);
+		CharacterSkillDto characterSkillDto = characterApiService.getCharacterSkill(ocid, "6");
+
+		return CharacterHexaMatrixResponseDto.of(character_hexa_core_equipment, used_sol_erda_energy,
+			used_sol_erda_fragment, characterSkillDto.getCharacter_skill());
 	}
 
 	private int[][] calculateSkillCore(int hexaCoreLevel) {
 		int[][] skill_core = hexaCoreTable.getSkill_core();
 		int sol_erda = 0;
 		int sol_erda_fragment = 0;
-		for(int i = 0; i < hexaCoreLevel; i++) {
+		for (int i = 0; i < hexaCoreLevel; i++) {
 			sol_erda += skill_core[i][0];
 			sol_erda_fragment += skill_core[i][1];
 		}
@@ -500,7 +512,7 @@ public class CharacterServiceImpl implements CharacterService {
 		int[][] mastery_core = hexaCoreTable.getMastery_core();
 		int sol_erda = 0;
 		int sol_erda_fragment = 0;
-		for(int i = 0; i < hexaCoreLevel; i++) {
+		for (int i = 0; i < hexaCoreLevel; i++) {
 			sol_erda += mastery_core[i][0];
 			sol_erda_fragment += mastery_core[i][1];
 		}
@@ -512,7 +524,7 @@ public class CharacterServiceImpl implements CharacterService {
 		int[][] enhance_core = hexaCoreTable.getEnhance_core();
 		int sol_erda = 0;
 		int sol_erda_fragment = 0;
-		for(int i = 0; i < hexaCoreLevel; i++) {
+		for (int i = 0; i < hexaCoreLevel; i++) {
 			sol_erda += enhance_core[i][0];
 			sol_erda_fragment += enhance_core[i][1];
 		}
@@ -524,7 +536,7 @@ public class CharacterServiceImpl implements CharacterService {
 		int[][] common_core = hexaCoreTable.getCommon_core();
 		int sol_erda = 0;
 		int sol_erda_fragment = 0;
-		for(int i = 0; i < hexaCoreLevel; i++) {
+		for (int i = 0; i < hexaCoreLevel; i++) {
 			sol_erda += common_core[i][0];
 			sol_erda_fragment += common_core[i][1];
 		}

@@ -87,7 +87,7 @@ public class CharacterApiServiceIntegrationTest {
     
     @Test
     void 하이퍼_패시브_조회_테스트() {
-        CharacterHyperPassiveDto characterHyperPassiveDto = characterApiService.getCharacterHyperPassive(ocid);
+        CharacterSkillDto characterSkillDto = characterApiService.getCharacterSkill(ocid, "hyperpassive");
     }
 
     @Test
@@ -98,6 +98,16 @@ public class CharacterApiServiceIntegrationTest {
     @Test
     void 헥사_스킬_조회_테스트() {
         CharacterHexaMatrixDto characterHexaMatrixDto = characterApiService.getCharacterHexaMatrix(ocid);
-        System.out.println(characterHexaMatrixDto.getCharacter_hexa_core_equipment().size());
     }
+
+    @Test
+    void 오차_스킬_조회_테스트() {
+        CharacterSkillDto characterSkillDto = characterApiService.getCharacterSkill(ocid, "5");
+    }
+
+    @Test
+    void 육차_스킬_조회_테스트() {
+        CharacterSkillDto characterSkillDto = characterApiService.getCharacterSkill(ocid, "6");
+    }
+
 }
