@@ -2,16 +2,15 @@ package com.maple.mapleservice.controller;
 
 import java.util.List;
 
-import com.maple.mapleservice.dto.feign.character.CharacterHyperPassiveDto;
 import com.maple.mapleservice.dto.feign.character.CharacterLinkSkillDto;
-import com.maple.mapleservice.dto.feign.character.CharacterVMatrixDto;
+import com.maple.mapleservice.dto.feign.character.CharacterSkillDto;
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterHexaMatrixResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterItemResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
-import com.maple.mapleservice.dto.response.Character.CharacterItemAndStatDto;
 import com.maple.mapleservice.dto.response.Character.CharacterStatsResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
 import com.maple.mapleservice.dto.response.SuccessResponse;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.maple.mapleservice.service.character.CharacterService;
@@ -84,16 +83,16 @@ public class CharacterController {
 
     @RequestMapping("/getCharacterVMatrix")
     public ResponseEntity<SuccessResponse> getCharacterVmatrix(@RequestParam String characterName) {
-        CharacterVMatrixDto characterVMatrixDto = characterService.getCharacterVMatrix(characterName);
+        CharacterVMatrixResponseDto characterVMatrixResponseDto  = characterService.getCharacterVMatrix(characterName);
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(SuccessResponse.of(characterVMatrixDto));
+            .body(SuccessResponse.of(characterVMatrixResponseDto));
     }
 
     @RequestMapping("/getCharacterHyperPassive")
     public ResponseEntity<SuccessResponse> getCharacterHyperPassive(@RequestParam String characterName) {
-        CharacterHyperPassiveDto characterHyperPassiveDto = characterService.getCharacterHyperPassive(characterName);
+        CharacterSkillDto characterHyperPassiveDto = characterService.getCharacterHyperPassive(characterName);
 
         return ResponseEntity
             .status(HttpStatus.OK)

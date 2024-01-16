@@ -30,7 +30,7 @@ public interface CharacterApiService {
 
     CharacterVMatrixDto getCharacterVMatrixDto(String ocid);
 
-    CharacterHyperPassiveDto getCharacterHyperPassive(String ocid);
+    CharacterSkillDto getCharacterSkill(String ocid, String character_skill_grade);
 
     CharacterLinkSkillDto getCharacterLinkSkill(String ocid);
 

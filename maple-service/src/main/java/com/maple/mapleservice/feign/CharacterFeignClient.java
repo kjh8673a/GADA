@@ -40,7 +40,7 @@ public interface CharacterFeignClient {
     CharacterVMatrixDto getCharacterVMatrixDto(@RequestParam String ocid, @RequestParam String date);
 
     @GetMapping("/skill")
-    CharacterHyperPassiveDto getCharacterHyperPassiveDto(@RequestParam String ocid, @RequestParam String date, @RequestParam String character_skill_grade);
+    CharacterSkillDto getCharacterSkillDto(@RequestParam String ocid, @RequestParam String date, @RequestParam String character_skill_grade);
 
     @GetMapping("/link-skill")
     CharacterLinkSkillDto getCharacterLinkSkillDto(@RequestParam String ocid, @RequestParam String date);
