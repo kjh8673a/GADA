@@ -1,10 +1,20 @@
 import React from 'react';
 import SkillBox from './SkillBox';
+import { skillType } from './CharacterSkill';
+import SkillSquare from './SkillSquare';
 
-const HiperPassiveSkill = () => {
+interface Props {
+    skillList: skillType[];
+}
+
+
+const HiperPassiveSkill: React.FC<Props> = ({skillList}) => {
     return (
         <SkillBox>
-            하이퍼패시브스킬.
+            {skillList?.map((_, index) => (
+                <SkillSquare skillImg={skillList[index].skill_icon}
+                    skillLevel={skillList[index].skill_level} />
+            ))}
         </SkillBox>
     )
 }

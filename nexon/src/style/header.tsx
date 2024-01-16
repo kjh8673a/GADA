@@ -19,7 +19,7 @@ export const UpContainer = styled.div`
     justify-content : space-around;
     align-items : center;
     background-color : #757575;
-    height : 50%;
+    height : 40px;
 `
 
 export const Container = styled.div`
@@ -31,7 +31,7 @@ export const DownConatiner = styled.div`
     display : flex;
     jutify-content : center;
     background-color : #D8D8D8;
-    height : 50%;
+    height : 32px;
 `
 
 export const PageHeader = styled.a`
