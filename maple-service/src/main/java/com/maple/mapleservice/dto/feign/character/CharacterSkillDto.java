@@ -7,7 +7,7 @@ import com.maple.mapleservice.dto.model.character.skill.SkillDesc;
 import lombok.Getter;
 
 @Getter
-public class CharacterHyperPassiveDto {
+public class CharacterSkillDto {
 	String character_class;
 	List<SkillDesc> character_skill;
 }
