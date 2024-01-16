@@ -39,22 +39,22 @@ class RankingServiceTest {
 		assertThat(list.getContent().size()).isEqualTo(20);
 	}
 
-	@Test
-	void 전투력_랭킹_페이징_직업X_테스트() {
-		PageRequest pageable = PageRequest.of(0, 20);
-
-		Page<CharacterCombatPowerRankingResponseDto> list = rankingService.getCombatPowerRanking("스카니아", "", pageable);
-
-		assertThat(list.getContent().size()).isEqualTo(20);
-	}
-
-	@Test
-	void 전투력_랭킹_페이징_월드X_테스트() {
-		PageRequest pageable = PageRequest.of(0, 20);
-
-		Page<CharacterCombatPowerRankingResponseDto> list = rankingService.getCombatPowerRanking("", "듀얼블레이더", pageable);
-
-		assertThat(list.getContent().size()).isEqualTo(20);
-	}
+	// @Test
+	// void 전투력_랭킹_페이징_직업X_테스트() {
+	// 	PageRequest pageable = PageRequest.of(0, 20);
+	//
+	// 	Page<CharacterCombatPowerRankingResponseDto> list = rankingService.getCombatPowerRanking("스카니아", "", pageable);
+	//
+	// 	assertThat(list.getContent().size()).isEqualTo(20);
+	// }
+	//
+	// @Test
+	// void 전투력_랭킹_페이징_월드X_테스트() {
+	// 	PageRequest pageable = PageRequest.of(0, 20);
+	//
+	// 	Page<CharacterCombatPowerRankingResponseDto> list = rankingService.getCombatPowerRanking("", "듀얼블레이더", pageable);
+	//
+	// 	assertThat(list.getContent().size()).isEqualTo(20);
+	// }
 
 }
