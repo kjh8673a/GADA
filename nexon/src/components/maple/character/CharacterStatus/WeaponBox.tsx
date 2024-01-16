@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import { IWeaponData, WEAPON_GRADE_TYPE } from "../../../../@types/maple/WeaponTypes";
+import { IWeaponData, MATCH_BGCOLOR, MATCH_COLOR } from "../../../../@types/maple/WeaponTypes";
+import WeaponBoxDetail from "./WeaponBoxDetail";
 
 interface StylesProps {
   img: string;
@@ -11,17 +12,9 @@ interface Props {
   data?: IWeaponData | undefined;
 }
 
-const MATCH_COLOR: { [key in WEAPON_GRADE_TYPE]: string } = {
-  에픽: "rgb(76, 2, 145)",
-  유니크: "rgb(254, 199, 99)",
-  레전드리: "rgb(83, 182, 0)",
-};
-
-const MATCH_BGCOLOR: { [key in WEAPON_GRADE_TYPE]: string } = {
-  에픽: "rgba(76, 2, 145, 0.2)", // 연한 보라색
-  유니크: "rgba(254, 199, 99, 0.2)", // 연한 노란색
-  레전드리: "rgba(83, 182, 0, 0.2)", // 연한 녹색
-};
+const BoxContainer = styled.div`
+  position: relative;
+`;
 
 const VoidBox = styled.div`
   width: 56px;
@@ -40,22 +33,35 @@ const ItemBox = styled.div<StylesProps>`
   border: 1px solid ${(props) => (!props.grade ? "#777" : MATCH_COLOR[props.grade])};
   background-color: ${(props) => (!props.grade ? "#555" : MATCH_BGCOLOR[props.grade])};
   margin-bottom: 4px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const WeaponBox: React.FC<Props> = ({ data }) => {
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+
+  const hoverInHandler = useCallback(() => {
+    setIsHovered(true);
+  }, []);
+
+  const hoverOutHandler = useCallback(() => {
+    setIsHovered(false);
+  }, []);
+
   if (data === undefined) return <VoidBox />;
   return (
-    <>
+    <BoxContainer>
       <ItemBox
-        onMouseEnter={() => {
-          console.log(data);
-        }}
+        onMouseEnter={hoverInHandler}
+        onMouseLeave={hoverOutHandler}
         img={data.item_shape_icon}
         grade={data.potential_option_grade}
       />
-    </>
+      {isHovered && <WeaponBoxDetail data={data} />}
+    </BoxContainer>
   );
 };
 
 export default WeaponBox;
-

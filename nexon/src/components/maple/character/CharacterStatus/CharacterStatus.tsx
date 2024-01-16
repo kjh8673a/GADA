@@ -5,6 +5,7 @@ import PetWeapons from "./PetWeapons";
 
 const StyledBox = styled.div`
   width: 1140px;
+  min-height: 800px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
