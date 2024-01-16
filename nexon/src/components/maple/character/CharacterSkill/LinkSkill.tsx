@@ -9,14 +9,9 @@ interface Props {
 
 
 const LinkSkill: React.FC<Props> = ({ skillList }) => {
-    useEffect(() => {
-        console.log(skillList);
-        console.log(skillList[0].skill_icon);
-        
-    },[])
     return (
         <SkillBox>
-            {skillList.map((_, index) => (
+            {skillList?.map((_, index) => (
                 <SkillSquare skillImg={skillList[index].skill_icon}
                     skillLevel={skillList[index].skill_level} />
             ))}

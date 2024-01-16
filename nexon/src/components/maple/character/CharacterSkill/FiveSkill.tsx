@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SkillBox from './SkillBox';
 import { skillType } from './CharacterSkill';
+import SkillSquare from './SkillSquare';
 
 
 interface Props {
@@ -8,13 +9,13 @@ interface Props {
 }
 
 const FiveSkill: React.FC<Props> = ({ skillList }) => {
-    useEffect(() => {
-        console.log(skillList);   
-    },[])
 
     return (
         <SkillBox>
-            5차스킬이 들어갈 공간입니다.
+            {skillList?.map((_, index) => (
+                <SkillSquare skillImg={skillList[index].skill_icon}
+                    skillLevel={skillList[index].skill_level} />
+            ))}
         </SkillBox>
         )
 }
