@@ -6,7 +6,6 @@ const StyledBox = styled.div`
   padding: 16px;
   box-sizing: border-box;
   display: flex;
-  border-bottom: 1px dashed #777;
 `;
 
 interface WeaponPreviewProps {

@@ -8,11 +8,14 @@ interface Props {
   add?: string | undefined;
   starforce?: string | undefined;
   unit?: string;
+  logo?: string;
   desc?: string | undefined;
+  highlight?: string;
 }
 
 interface StyledOptionProps {
   $enhanced?: boolean;
+  $highlight?: string;
 }
 
 interface StyledExtraOptionProps {
@@ -20,15 +23,21 @@ interface StyledExtraOptionProps {
 }
 
 const StyledList = styled.li`
+  font-size: 0.9rem;
   color: #fff;
 `;
 
 const StyledOption = styled.span<StyledOptionProps>`
-  color: ${(props) => (props.$enhanced ? "#5FECEC" : "#fff")};
+  color: ${(props) => (props.$enhanced ? "#5FECEC" : props.$highlight ? props.$highlight : "#fff")};
 `;
 
 const StyledExtraOption = styled.span<StyledExtraOptionProps>`
   color: ${(props) => (props.color ? props.color : "fff")};
+`;
+
+const StyledLogo = styled.img`
+  width: 0.9rem;
+  height: 0.9rem;
 `;
 
 const WeaponOptionItem: React.FC<Props> = ({
@@ -39,14 +48,17 @@ const WeaponOptionItem: React.FC<Props> = ({
   add = 0,
   starforce = 0,
   unit = "",
+  logo,
   desc,
+  highlight,
 }) => {
   if (+total === 0 && desc === undefined) return null;
 
   if (desc) {
     return (
       <StyledList>
-        <StyledOption>{desc}</StyledOption>
+        {logo && <StyledLogo src={logo} alt="logo" />}
+        <StyledOption $highlight={highlight}>{`${desc}${total ? ` : ${total}${unit}` : ""}`}</StyledOption>
       </StyledList>
     );
   }
@@ -54,7 +66,7 @@ const WeaponOptionItem: React.FC<Props> = ({
   return (
     <StyledList>
       <StyledOption $enhanced={+total > +base}>{`${optionName} : +${total}${unit}`}</StyledOption>
-      {+total > +base && (
+      {!desc && +total > +base && (
         <>
           (<StyledExtraOption>{`${+base}`}</StyledExtraOption>
           {+exceptional > 0 && <StyledExtraOption color="#AAAAFE">{`+${exceptional}`}</StyledExtraOption>}

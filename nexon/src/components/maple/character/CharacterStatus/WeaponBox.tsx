@@ -33,6 +33,10 @@ const ItemBox = styled.div<StylesProps>`
   border: 1px solid ${(props) => (!props.grade ? "#777" : MATCH_COLOR[props.grade])};
   background-color: ${(props) => (!props.grade ? "#555" : MATCH_BGCOLOR[props.grade])};
   margin-bottom: 4px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const WeaponBox: React.FC<Props> = ({ data }) => {
