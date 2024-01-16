@@ -15,6 +15,8 @@ import com.maple.mapleservice.dto.model.ranking.Union;
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 import com.maple.mapleservice.entity.Character;
+import com.maple.mapleservice.repository.character.CharacterCustomRepository;
+import com.maple.mapleservice.repository.character.CharacterExpHistoryCustomRepository;
 import com.maple.mapleservice.repository.character.CharacterExpHistoryRepository;
 import com.maple.mapleservice.repository.character.CharacterRepository;
 import com.maple.mapleservice.service.ranking.RankingApiService;
@@ -41,6 +43,28 @@ class CharacterServiceTest {
 
 	@Autowired
 	CharacterExpHistoryRepository characterExpHistoryRepository;
+
+	@Autowired
+	CharacterExpHistoryCustomRepository characterExpHistoryCustomRepository;
+
+	@Autowired
+	CharacterCustomRepository characterCustomRepository;
+
+	@Test
+	void 경험치_히스토리_삭제_테스트() {
+		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
+		List<Long> numbersToBeRemained = characterExpHistoryRepository.findNumbersToBeRemained(ocid);
+		List<Long> numbersToBeDeleted = characterExpHistoryRepository.findNumbersToBeDeleted(ocid, numbersToBeRemained);
+		characterExpHistoryCustomRepository.batchDelete(numbersToBeDeleted);
+	}
+
+	@Test
+	void 경험치_히스토리_삭제할_번호_테스트() {
+		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
+		List<Long> numbersToBeRemained = characterExpHistoryRepository.findNumbersToBeRemained(ocid);
+		List<Long> numbersToBeDeleted = characterExpHistoryRepository.findNumbersToBeDeleted(ocid, numbersToBeRemained);
+		System.out.println(numbersToBeDeleted.size());
+	}
 
 	@Test
 	void 경험치_히스토리_조회_안될때_테스트() {
@@ -167,7 +191,7 @@ class CharacterServiceTest {
 	@Test
 	void 대표ocid_갱신_테스트() {
 		// ocid가 a가 아니면서 parent_ocid가 qwerty인것을 갱신한다
-		characterServiceImpl.updateParentOcid("a", "qwerty", "e0a4f439e53c369866b55297d2f5f4eb");
+		characterCustomRepository.updateParentOcid("a", "qwerty", "e0a4f439e53c369866b55297d2f5f4eb");
 
 		assertThat(characterRepository.findByParentOcid("qwerty")).isEmpty();
 	}
@@ -281,7 +305,7 @@ class CharacterServiceTest {
 		Collections.sort(unionList, (o1, o2) -> Long.compare(o2.getUnion_level(), o1.getUnion_level()));
 		String parent_ocid = characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
 
-		characterServiceImpl.addChacterInformationToDbFromUnionRanking("다래푸딩", parent_ocid, unionList);
+		characterCustomRepository.addChacterInformationToDbFromUnionRanking("다래푸딩", parent_ocid, unionList);
 
 		assertThat(characterRepository.finndByCharacterName("핵불닭푸딩")).isNotNull();
 	}

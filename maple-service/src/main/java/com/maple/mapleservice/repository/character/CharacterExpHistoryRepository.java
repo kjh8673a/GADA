@@ -16,4 +16,13 @@ public interface CharacterExpHistoryRepository extends JpaRepository<CharacterEx
 
 	@Query(value = "select c.date from CharacterExpHistory c where c.ocid = :ocid order by c.date desc limit 1")
 	String getLatestExpDate(String ocid);
+
+	@Query(value = "select distinct c.ocid from CharacterExpHistory c")
+	List<String> findDistinctOcidInExpHistory();
+
+	@Query(value = "select c.id from CharacterExpHistory c where c.ocid = :ocid and c.id not in :numbers")
+	List<Long> findNumbersToBeDeleted(String ocid, List<Long> numbers);
+
+	@Query(value = "select c.id from CharacterExpHistory c where c.ocid = :ocid order by c.date desc limit 7")
+	List<Long> findNumbersToBeRemained(String ocid);
 }
