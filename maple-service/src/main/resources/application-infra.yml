@@ -1,0 +1,17 @@
+feign:
+  maple:
+    api-key: test_e68a16e7c9916451340f8867aba36437415d675d70b3b46629cacbc98c2e65be51b2893a5836ab804e65d0169189888f
+    url: https://open.api.nexon.com/maplestory
+
+redis:
+  host: 54.180.142.31
+  port: 6379
+  password: ssafy1234
+  sentinel-1: 54.180.142.31:26379
+  sentinel-2: 54.180.142.31:26380
+  sentinel-3: 54.180.142.31:26381
+
+mysql:
+  url: jdbc:mysql://54.180.142.31:3306/maple
+  username: ssafy
+  password: ssafy1234
