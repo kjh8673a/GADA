@@ -1,3 +1,5 @@
+import { MouseEvent } from "react";
+
 // 부모의 크기에 대한 비율로 canvs 사이즈를 조정
 // 텍스쳐 업스케일링
 export const initCanvasSize = (
@@ -52,6 +54,7 @@ export const drawExpBar = (
   let percent;
   let barHeight;
   for (let i = 0; i < expArr.length; i++) {
+    if (expArr[i] < 1) continue
     barHeight = graphHeight * 0.01 * expArr[i];
     ctx.fillStyle = "black";
     percent = expArr[i] + "";
@@ -81,7 +84,7 @@ export const drawLevelLine = (
   ctx.lineWidth = lineWidth;
 
   const graphHeight = height - 2 * margin;
-  let [maxV, minV] = [Math.max(...levelArr) + 5, Math.min(...levelArr) - 2];
+  let [maxV, minV] = [Math.max(...levelArr) + 8, Math.min(...levelArr) - 4];
   if (minV < 0) minV = 0;
   const numOfInterval = maxV - minV;
 
@@ -89,6 +92,7 @@ export const drawLevelLine = (
   let y;
   const yCoords = Array(levelArr.length).fill(null);
   for (let i = 0; i < levelArr.length; i++) {
+    if (levelArr[i] < 1) continue
     y = graphHeight - (graphHeight / numOfInterval) * (levelArr[i] - minV);
     ctx.beginPath();
     ctx.arc(xCoords[i], y, radius, 0, 2 * Math.PI);
@@ -98,10 +102,13 @@ export const drawLevelLine = (
 
   // 점 잇기
   ctx.beginPath();
-  ctx.moveTo(xCoords[0], yCoords[0]);
-  for (let i = 1; i < xCoords.length; i++) {
-    ctx.lineTo(xCoords[i], yCoords[i]);
-    ctx.stroke();
+  if (levelArr[0] > 0) {
+    ctx.moveTo(xCoords[0], yCoords[0]);
+    for (let i = 1; i < xCoords.length; i++) {
+      if (levelArr[i] < 1) continue
+      ctx.lineTo(xCoords[i], yCoords[i]);
+      ctx.stroke();
+    }
   }
 
   // 레벨 텍스트 표시
@@ -109,6 +116,7 @@ export const drawLevelLine = (
   ctx.textAlign = "center";
   ctx.fillStyle = "black";
   for (let i = 0; i < xCoords.length; i++) {
+    if (levelArr[i] < 1) continue
     ctx.fillText("" + levelArr[i], xCoords[i], yCoords[i] - 5);
   }
 };
@@ -140,6 +148,8 @@ export const drawXScale = (
   }
 };
 
-export const graphHoverHandler = () => {
-  console.log(1);
+// 마우스 좌표
+export const handleMouseMove = (event: MouseEvent, setXY: Function) => {
+  event.preventDefault();
+  setXY({ x: event.pageX, y: event.pageY });
 };
