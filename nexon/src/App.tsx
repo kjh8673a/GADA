@@ -14,7 +14,7 @@ function App() {
         { index: true, element: <Maple /> },
         //캐릭터 정보 조회 페이지
         {
-          path: "/Character",
+          path: "/Character/:Charactername",
           element: <Character />,
           errorElement : <Error />
         },

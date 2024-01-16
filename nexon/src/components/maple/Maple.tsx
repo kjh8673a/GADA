@@ -12,7 +12,7 @@ const Maple = () => {
   const SearchClickkName = (e : React.MouseEvent<HTMLImageElement, MouseEvent>) => {
     if (nickname.length !== 0) {
       setUserName(nickname);
-      navigate("/Character");
+      navigate(`/Character/${nickname}`);
     }
   }
 
@@ -20,7 +20,7 @@ const Maple = () => {
     if (e.key === 'Enter') {
       if (nickname.length !== 0) {
         setUserName(nickname);
-        navigate("/Character");
+        navigate(`/Character/${nickname}`);
       }
     }
   }
