@@ -1,4 +1,5 @@
 export type CharacterExpItemType = {
+  ocid: string,
   date: string;
   character_level: number;
   character_exp: number;
@@ -6,5 +7,6 @@ export type CharacterExpItemType = {
 }
 
 export type CharacterExpType = {
-  dates: CharacterExpItemType[];
+  timestamp: string;
+  data: CharacterExpItemType[];
 };

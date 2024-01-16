@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import CenteredBox from "../../../style/CenteredBox";
 import CharacterDetail from "./CharacterDetail";
-import CharacterSummary from "./summary/CharacterSummary";
+import CharacterSummary from "./CharacterSummary/CharacterSummary";
 import CharacterTab from "./CharacterTab";
 
 /* 헤더에 h2가 가려져서 임시로 넣어놓은 빈 박스 */
