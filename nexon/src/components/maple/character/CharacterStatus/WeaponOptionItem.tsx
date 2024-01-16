@@ -25,6 +25,8 @@ interface StyledExtraOptionProps {
 const StyledList = styled.li`
   font-size: 0.9rem;
   color: #fff;
+  display: flex;
+  align-items: center;
 `;
 
 const StyledOption = styled.span<StyledOptionProps>`
@@ -38,6 +40,7 @@ const StyledExtraOption = styled.span<StyledExtraOptionProps>`
 const StyledLogo = styled.img`
   width: 0.9rem;
   height: 0.9rem;
+  margin-right: 4px;
 `;
 
 const WeaponOptionItem: React.FC<Props> = ({

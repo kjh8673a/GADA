@@ -27,7 +27,7 @@ const WeaponPotentialOptionBox: React.FC<Props> = ({ title, potential1, potentia
       <StyledList>
         <WeaponOptionItem
           desc={title}
-          logo={`${process.env.PUBLIC_URL}/${isAdditional ? "letter-e.png" : "letter-e.png"}`}
+          logo={`${process.env.PUBLIC_URL}/assets/${isAdditional ? "letter-r.png" : "letter-e.png"}`}
           highlight={isAdditional ? "#5FECEC" : "#9966FD"}
         />
         {potential1 && <WeaponOptionItem desc={potential1} />}
