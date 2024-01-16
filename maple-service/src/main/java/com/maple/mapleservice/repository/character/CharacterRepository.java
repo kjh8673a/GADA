@@ -19,4 +19,5 @@ public interface CharacterRepository extends JpaRepository<Character, Long> {
 
 	@Query(value = "select c from Character c where c.character_image is null")
 	List<Character> findNotHaveCharacterImage();
+
 }

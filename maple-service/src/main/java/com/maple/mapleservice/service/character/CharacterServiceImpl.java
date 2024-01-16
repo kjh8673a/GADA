@@ -1,7 +1,5 @@
 package com.maple.mapleservice.service.character;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +21,7 @@ import com.maple.mapleservice.dto.feign.character.CharacterPetDto;
 import com.maple.mapleservice.dto.feign.character.CharacterSkillDto;
 import com.maple.mapleservice.dto.feign.character.CharacterVMatrixDto;
 import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
+import com.maple.mapleservice.repository.character.CharacterCustomRepository;
 import com.maple.mapleservice.util.HexaCoreTable;
 import com.maple.mapleservice.dto.model.character.Symbol;
 import com.maple.mapleservice.dto.model.character.skill.HexaMatrix;
@@ -54,6 +52,7 @@ public class CharacterServiceImpl implements CharacterService {
 	private final RankingApiService rankingApiService;
 	private final CharacterRepository characterRepository;
 	private final CharacterExpHistoryRepository characterExpHistoryRepository;
+	private final CharacterCustomRepository characterCustomRepository;
 
 	private final JdbcTemplate jdbcTemplate;
 
@@ -81,7 +80,7 @@ public class CharacterServiceImpl implements CharacterService {
 		String parent_ocid = characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
 
 		// 유니온 랭킹으로 가져온 캐릭터들 정보 넣기
-		addChacterInformationToDbFromUnionRanking(characterName, parent_ocid, unionList);
+		characterCustomRepository.addChacterInformationToDbFromUnionRanking(characterName, parent_ocid, unionList);
 
 		Character character = characterRepository.findByOcid(ocid);
 		if (character != null) {
@@ -111,7 +110,7 @@ public class CharacterServiceImpl implements CharacterService {
 			if (!character.getParent_ocid().equals(parent_ocid)) {
 				// 대표ocid변경될 경우 다른 캐릭터들도 바꿔주기 + 캐시 삭제
 				deleteFindMainCharacterCache(character.getParent_ocid());
-				updateParentOcid(ocid, character.getParent_ocid(), parent_ocid);
+				characterCustomRepository.updateParentOcid(ocid, character.getParent_ocid(), parent_ocid);
 				character.setParent_ocid(parent_ocid);
 			}
 
@@ -286,29 +285,7 @@ public class CharacterServiceImpl implements CharacterService {
 				listForExp.add(basicDto);
 			}
 		}
-		addExpHistoryFromList(ocid, listForExp);
-	}
-
-	public void addExpHistoryFromList(String ocid, List<CharacterBasicDto> list) {
-		String sql = "INSERT INTO character_exp_history (ocid, date, character_level, exp, character_exp_rate) VALUES (?, ?, ?, ?, ?)";
-
-		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
-			@Override
-			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				CharacterBasicDto characterBasicDto = list.get(i);
-
-				ps.setString(1, ocid);
-				ps.setString(2, characterBasicDto.getCharacter_level() == 0 ? "2099-12-31" : commonUtil.customDate(i));
-				ps.setLong(3, characterBasicDto.getCharacter_level());
-				ps.setLong(4, characterBasicDto.getCharacter_exp());
-				ps.setString(5, characterBasicDto.getCharacter_exp_rate());
-			}
-
-			@Override
-			public int getBatchSize() {
-				return list.size();
-			}
-		});
+		characterCustomRepository.addExpHistoryFromList(ocid, listForExp);
 	}
 
 	/**
@@ -317,86 +294,6 @@ public class CharacterServiceImpl implements CharacterService {
 	 */
 	@CacheEvict(value = "character-find-main-character", key = "#parentOcid")
 	public void deleteFindMainCharacterCache(String parentOcid) {
-	}
-
-	/**
-	 * 유니온 랭킹으로 가져온 캐릭터들 정보 넣기
-	 * @param characterName
-	 * @param parentOcid
-	 * @param unionList
-	 */
-	public void addChacterInformationToDbFromUnionRanking(String characterName, String parentOcid,
-		List<Union> unionList) {
-		List<Union> unionListToBeAdded = unionList.stream()
-			.filter(u -> characterRepository.finndByCharacterName(u.getCharacter_name()) == null)
-			.filter(u -> !u.getCharacter_name().equals(characterName))
-			.filter(
-				u -> characterApiService.getOcidKey(u.getCharacter_name()) != null && !characterApiService.getOcidKey(
-					u.getCharacter_name()).isBlank())
-			.collect(Collectors.toList());
-
-		String sql =
-			"INSERT INTO characters (ocid, date, world_name, character_name, combat_power, guild_name, parent_ocid, oguild_id, character_class, character_class_level, character_level, character_image) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
-			@Override
-			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				Union union = unionListToBeAdded.get(i);
-				String ocid = characterApiService.getOcidKey(union.getCharacter_name());
-				CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-				String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
-				String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(),
-					characterBasicDto.getWorld_name());
-
-				ps.setString(1, ocid);
-				ps.setString(2, commonUtil.date);
-				ps.setString(3, characterBasicDto.getWorld_name());
-				ps.setString(4, union.getCharacter_name());
-				ps.setLong(5, Long.parseLong(combatPower));
-				ps.setString(6, characterBasicDto.getCharacter_guild_name());
-				ps.setString(7, parentOcid);
-				ps.setString(8, oguildId);
-				ps.setString(9, characterBasicDto.getCharacter_class());
-				ps.setString(10, characterBasicDto.getCharacter_class_level());
-				ps.setLong(11, Long.valueOf(characterBasicDto.getCharacter_level()));
-				ps.setString(12, characterBasicDto.getCharacter_image());
-			}
-
-			@Override
-			public int getBatchSize() {
-				return unionListToBeAdded.size();
-			}
-		});
-	}
-
-	/**
-	 * 대표ocid변경될 경우 다른 캐릭터들도 바꿔주기
-	 * @param ocid
-	 * @param old_parent_ocid
-	 * @param new_parent_ocid
-	 */
-	public void updateParentOcid(String ocid, String old_parent_ocid, String new_parent_ocid) {
-		List<Character> characterList = characterRepository.findByParentOcid(old_parent_ocid).stream()
-			.filter(c -> c.getCharacter_name() != ocid)
-			.collect(Collectors.toList());
-
-		String sql = "UPDATE characters SET parent_ocid = ? WHERE ocid = ?";
-
-		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
-			@Override
-			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				Character character = characterList.get(i);
-
-				ps.setString(1, new_parent_ocid);
-				ps.setString(2, character.getOcid());
-			}
-
-			@Override
-			public int getBatchSize() {
-				return characterList.size();
-			}
-		});
 	}
 
 	@Override
