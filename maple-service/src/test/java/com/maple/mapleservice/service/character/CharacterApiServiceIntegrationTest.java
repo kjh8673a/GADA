@@ -1,6 +1,7 @@
 package com.maple.mapleservice.service.character;
 
 import com.maple.mapleservice.dto.feign.character.*;
+import com.maple.mapleservice.dto.model.character.HyperStat;
 import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
 import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
@@ -43,13 +45,13 @@ public class CharacterApiServiceIntegrationTest {
 
     @Test
     void 종합_능력치_조회_테스트() {
-        CharacterFinalStatDto characterStatDto = characterApiService.getCharacterStat(ocid);
+        Map<String, String> characterStatDto = characterApiService.getCharacterStat(ocid);
         // assertThat(characterStatDto).isEqualTo(44);
     }
 
     @Test
     void 하이퍼스탯_조회_테스트() {
-        CharacterHyperStatsDto characterHyperStat = characterApiService.getCharacterHyperStat(ocid);
+        Map<String, HyperStat> characterHyperStat = characterApiService.getCharacterHyperStat(ocid);
     }
 
     @Test
