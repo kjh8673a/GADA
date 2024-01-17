@@ -36,4 +36,10 @@ class CharacterControllerTest {
 		ResponseEntity<SuccessResponse> response = characterController.getExpHistory(characterName);
 	}
 
+	@Test
+	void 유니온_정보_조회_테스트() {
+		String characterName = "아델";
+		ResponseEntity<SuccessResponse> response = characterController.getCharacterUnion(characterName);
+	}
+
 }
