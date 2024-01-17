@@ -2,6 +2,7 @@ import styled from "styled-components";
 import CharacterUnitStat from "./CharacterUnitStat";
 import { IStatType } from "../../../../@types/maple/StatsTypes";
 import WeaponOptionItem from "./WeaponOptionItem";
+import OptionTitle from "../../../../style/OptionTitle";
 
 const StyledBox01 = styled.div`
   width: 100%;
@@ -75,7 +76,7 @@ const CharacterStatusHyper: React.FC<Props> = ({ stats }) => {
         <WeaponOptionItem />
       </StyledBox01>
       <StyledBox02>
-        <WeaponOptionItem desc="어빌리티" logo={`${process.env.PUBLIC_URL}/assets/orange_mushroom.gif`} />
+        <OptionTitle title="어빌리티" logo={`${process.env.PUBLIC_URL}/assets/orange_mushroom.gif`} />
         {stats.ability?.ability_info.map((item) => (
           <WeaponOptionItem desc={`${item.ability_no}. ${item.ability_value}`} />
         ))}
@@ -85,4 +86,3 @@ const CharacterStatusHyper: React.FC<Props> = ({ stats }) => {
 };
 
 export default CharacterStatusHyper;
-

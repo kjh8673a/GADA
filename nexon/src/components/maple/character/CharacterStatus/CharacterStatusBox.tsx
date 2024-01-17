@@ -11,7 +11,7 @@ import CharacterStatusExtra from "./CharacterStatusExtra";
 
 const StyledBox = styled.div`
   width: 480px;
-  min-height: 565px;
+  min-height: 580px;
   box-sizing: border-box;
   padding: 12px 8px;
   background-color: #3d454d;
@@ -46,7 +46,6 @@ const CharacterStatusBox = () => {
   const { getCharacterStats } = useCharacterData();
   const characterName = useRecoilValue<string>(userNickName);
   const stats = useRecoilValue<IStatType>(atomCharacterStats);
-  console.log(stats);
 
   useEffect(() => {
     getCharacterStats(characterName ? characterName : "말랑말랑");
@@ -58,11 +57,12 @@ const CharacterStatusBox = () => {
       {!statToggled && <CharacterStatusBasic stats={stats} />}
       {statToggled && <CharacterStatusExtra stats={stats} />}
       <StyledController>
-        <StyledButton onClick={() => setStatToggled((prev) => !prev)}>하이퍼 스탯 & 어빌리티</StyledButton>
+        <StyledButton onClick={() => setStatToggled((prev) => !prev)}>
+          {statToggled ? "기본 스탯" : "하이퍼 스탯 & 어빌리티"}
+        </StyledButton>
       </StyledController>
     </StyledBox>
   );
 };
 
 export default CharacterStatusBox;
-

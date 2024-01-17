@@ -6,7 +6,6 @@ interface Props {
 }
 
 const CenteredDiv = styled.div`
-  width: 100%;
   max-width: 1140px;
   display: flex;
   align-items: center;
@@ -23,4 +22,3 @@ const CenteredBox: React.FC<Props> = ({ children, clickHandler }) => {
 };
 
 export default CenteredBox;
-

@@ -9,13 +9,11 @@ interface Props {
   add?: string | undefined;
   starforce?: string | undefined;
   unit?: string;
-  logo?: string;
   desc?: string | undefined;
   highlight?: "레전드리" | "유니크" | "에픽" | undefined;
 }
 
 interface StyledOptionProps {
-  $title?: boolean;
   $enhanced?: boolean;
   $highlight?: string;
 }
@@ -33,8 +31,6 @@ const StyledList = styled.li`
 `;
 
 const StyledOption = styled.span<StyledOptionProps>`
-  margin-bottom: ${(props) => (props.$title ? "4px" : "0px")};
-  font-weight: ${(props) => (props.$title ? "700" : "400")};
   color: ${(props) => (props.$enhanced ? "#5FECEC" : props.$highlight ? MATCH_COLOR[props.$highlight] : "#fff")};
   display: ${(props) => (props.$highlight ? "block" : "inline")};
   width: ${(props) => (props.$highlight ? "100%" : "auto")};
@@ -45,13 +41,6 @@ const StyledExtraOption = styled.span<StyledExtraOptionProps>`
   color: ${(props) => (props.color ? props.color : "eee")};
 `;
 
-const StyledLogo = styled.img`
-  width: 0.9rem;
-  height: 0.9rem;
-  margin-right: 4px;
-  margin-bottom: 4px;
-`;
-
 const WeaponOptionItem: React.FC<Props> = ({
   optionName,
   total = 0,
@@ -60,7 +49,6 @@ const WeaponOptionItem: React.FC<Props> = ({
   add = 0,
   starforce = 0,
   unit = "",
-  logo,
   desc,
   highlight,
 }) => {
@@ -69,10 +57,7 @@ const WeaponOptionItem: React.FC<Props> = ({
   if (desc) {
     return (
       <StyledList>
-        {logo && <StyledLogo src={logo} alt="logo" />}
-        <StyledOption $title={!!logo} $highlight={highlight}>{`${desc}${
-          total ? ` : ${total}${unit}` : ""
-        }`}</StyledOption>
+        <StyledOption $highlight={highlight}>{`${desc}${total ? ` : ${total}${unit}` : ""}`}</StyledOption>
       </StyledList>
     );
   }
@@ -93,4 +78,3 @@ const WeaponOptionItem: React.FC<Props> = ({
 };
 
 export default WeaponOptionItem;
-

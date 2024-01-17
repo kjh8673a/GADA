@@ -3,6 +3,10 @@ import WeaponBox from "./WeaponBox";
 
 import { IWeaponData, WEAPON_SLOT_LIST } from "../../../../@types/maple/WeaponTypes";
 import { voidStrToCamelCase } from "../../../../hooks/commonUtils";
+import { useCharacterData } from "../../../../hooks/maple/useCharacterData";
+import { useEffect } from "react";
+import { userNickName } from "../../../../atoms/maple/characterName";
+import { useRecoilValue } from "recoil";
 
 const StyledBox = styled.div`
   width: 320px;
@@ -2995,6 +2999,13 @@ const DUMMY_WEAPONS: IWeaponData[] = [
 ];
 
 const CharacterWeapons = () => {
+  const { getCharacterWeapons } = useCharacterData();
+  const characterName = useRecoilValue<string>(userNickName);
+
+  useEffect(() => {
+    getCharacterWeapons(characterName ? characterName : "말랑말랑");
+  }, [getCharacterWeapons]);
+
   const WEAPONS = new Map<string, IWeaponData>();
 
   DUMMY_WEAPONS.forEach((item: IWeaponData) => {
@@ -3047,4 +3058,3 @@ const CharacterWeapons = () => {
 };
 
 export default CharacterWeapons;
-
