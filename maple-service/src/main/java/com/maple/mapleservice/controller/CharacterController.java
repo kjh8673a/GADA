@@ -12,8 +12,11 @@ import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseD
 import com.maple.mapleservice.dto.response.Character.CharacterStatsResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
 import com.maple.mapleservice.dto.response.SuccessResponse;
+import com.maple.mapleservice.dto.response.union.UnionInfoResponseDto;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.maple.mapleservice.service.character.CharacterService;
+import com.maple.mapleservice.service.union.UnionService;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CharacterController {
     private final CharacterService characterService;
     private final CharacterApiService characterApiService;
+    private final UnionService unionService;
 
     @RequestMapping("/basic")
     public String getBasicInfo(@RequestParam String characterName) {
@@ -115,6 +119,15 @@ public class CharacterController {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(SuccessResponse.of(characterHexaMatrixResponseDto));
+    }
+
+    @RequestMapping("/getCharacterUnion")
+    public ResponseEntity<SuccessResponse> getCharacterUnion(@RequestParam String characterName) {
+        UnionInfoResponseDto unionInfoResponseDto = unionService.getUnionInfoResponseDto(characterName);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.of(unionInfoResponseDto));
     }
 
 }
