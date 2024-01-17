@@ -15,13 +15,13 @@ class GuildApiServiceIntegrationTest {
     String oguildId = "6c938a9e6da0db559d3e30c209a63bdc";
 
     @Test
-    void getServerOguildIdKey() {
+    void 길드_oguild_id_찾기_테스트() {
         String key = guildApiService.getOguildIdKey("훈장교", WorldName.스카니아.name());
         assertThat(key).isEqualTo(oguildId);
     }
 
     @Test
-    void getServerGuildBasic() {
+    void 길드_정보_가져오기_테스트() {
         GuildBasicDto guildBasicDto = guildApiService.getGuildBasic(oguildId);
     }
 }
