@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const http = axios.create({
-  baseURL: `http://${process.env.REACT_APP_API}`,
+  baseURL: `${process.env.REACT_APP_API}`,
 });
 
 export const getExpHistory = async (characterName: string) => {
@@ -13,3 +13,4 @@ export const getExpHistory = async (characterName: string) => {
     },
   });
 };
+

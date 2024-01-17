@@ -7,7 +7,7 @@ import WeaponPotentialOptionBox from "./WeaponPotentialOptionBox";
 const StyledBox = styled.div`
   position: absolute;
   box-sizing: border-box;
-  width: 320px;
+  width: 340px;
   top: 0;
   right: 56px;
   background-color: #2b2c2a;
@@ -22,7 +22,6 @@ interface Props {
 }
 
 const WeaponBoxDetail: React.FC<Props> = ({ data }) => {
-  console.log(data);
   return (
     <StyledBox>
       <WeaponSummaryBox data={data} />
@@ -53,3 +52,4 @@ const WeaponBoxDetail: React.FC<Props> = ({ data }) => {
 };
 
 export default WeaponBoxDetail;
+

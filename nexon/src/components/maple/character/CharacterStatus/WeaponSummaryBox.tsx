@@ -34,7 +34,7 @@ const WeaponPreview = styled.div<WeaponPreviewProps>`
 `;
 
 const WeaponDetailTitle = styled.div`
-  padding: 0 16px;
+  padding-left: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,10 +43,11 @@ const WeaponDetailTitle = styled.div`
 `;
 
 const WeaponNameBox = styled.h3`
+  display: flex;
   color: #fff;
   margin: 0;
   padding: 0;
-  font-size: 1.2rem;
+  font-size: 1rem;
 `;
 
 const WeaponGradeBox = styled.span`
@@ -75,3 +76,4 @@ const WeaponSummaryBox: React.FC<Props> = ({ data }) => {
 };
 
 export default WeaponSummaryBox;
+

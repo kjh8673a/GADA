@@ -56,7 +56,7 @@ const WeaponBox: React.FC<Props> = ({ data }) => {
       <ItemBox
         onMouseEnter={hoverInHandler}
         onMouseLeave={hoverOutHandler}
-        img={data.item_shape_icon}
+        img={data.item_icon}
         grade={data.potential_option_grade}
       />
       {isHovered && <WeaponBoxDetail data={data} />}
@@ -65,3 +65,4 @@ const WeaponBox: React.FC<Props> = ({ data }) => {
 };
 
 export default WeaponBox;
+

@@ -28,7 +28,7 @@ const WeaponPotentialOptionBox: React.FC<Props> = ({ title, potential1, potentia
         <WeaponOptionItem
           desc={title}
           logo={`${process.env.PUBLIC_URL}/assets/${isAdditional ? "letter-r.png" : "letter-e.png"}`}
-          highlight={isAdditional ? "#5FECEC" : "#9966FD"}
+          highlight={isAdditional ? "유니크" : "에픽"}
         />
         {potential1 && <WeaponOptionItem desc={potential1} />}
         {potential2 && <WeaponOptionItem desc={potential2} />}
@@ -39,3 +39,4 @@ const WeaponPotentialOptionBox: React.FC<Props> = ({ title, potential1, potentia
 };
 
 export default WeaponPotentialOptionBox;
+

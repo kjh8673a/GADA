@@ -189,7 +189,7 @@ const WeaponOptionBox: React.FC<Props> = ({
         {golden_hammer_flag ? <WeaponOptionItem desc="황금망치 제련 적용" /> : null}
         {/* cuttable_count */}
         {cuttable_count ? (
-          <WeaponOptionItem desc="가위 사용 가능 횟수" highlight="#FDCA00" total={cuttable_count} unit="회" />
+          <WeaponOptionItem desc="가위 사용 가능 횟수" highlight="유니크" total={cuttable_count} unit="회" />
         ) : null}
       </StyledList>
     </>
@@ -197,3 +197,4 @@ const WeaponOptionBox: React.FC<Props> = ({
 };
 
 export default WeaponOptionBox;
+

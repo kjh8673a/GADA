@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { MATCH_COLOR } from "../../../../@types/maple/WeaponTypes";
 
 interface Props {
   optionName?: string;
@@ -10,10 +11,11 @@ interface Props {
   unit?: string;
   logo?: string;
   desc?: string | undefined;
-  highlight?: string;
+  highlight?: "레전드리" | "유니크" | "에픽" | undefined;
 }
 
 interface StyledOptionProps {
+  $title?: boolean;
   $enhanced?: boolean;
   $highlight?: string;
 }
@@ -23,24 +25,31 @@ interface StyledExtraOptionProps {
 }
 
 const StyledList = styled.li`
-  font-size: 0.9rem;
-  color: #fff;
+  width: 100%;
+  font-size: 0.8rem;
+  color: #eee;
   display: flex;
   align-items: center;
 `;
 
 const StyledOption = styled.span<StyledOptionProps>`
-  color: ${(props) => (props.$enhanced ? "#5FECEC" : props.$highlight ? props.$highlight : "#fff")};
+  margin-bottom: ${(props) => (props.$title ? "4px" : "0px")};
+  font-weight: ${(props) => (props.$title ? "700" : "400")};
+  color: ${(props) => (props.$enhanced ? "#5FECEC" : props.$highlight ? MATCH_COLOR[props.$highlight] : "#fff")};
+  display: ${(props) => (props.$highlight ? "block" : "inline")};
+  width: ${(props) => (props.$highlight ? "100%" : "auto")};
+  font-size: 0.8rem;
 `;
 
 const StyledExtraOption = styled.span<StyledExtraOptionProps>`
-  color: ${(props) => (props.color ? props.color : "fff")};
+  color: ${(props) => (props.color ? props.color : "eee")};
 `;
 
 const StyledLogo = styled.img`
   width: 0.9rem;
   height: 0.9rem;
   margin-right: 4px;
+  margin-bottom: 4px;
 `;
 
 const WeaponOptionItem: React.FC<Props> = ({
@@ -55,13 +64,15 @@ const WeaponOptionItem: React.FC<Props> = ({
   desc,
   highlight,
 }) => {
-  if (+total === 0 && desc === undefined) return null;
+  if ((+total === 0 && desc === undefined) || +total === 255) return null;
 
   if (desc) {
     return (
       <StyledList>
         {logo && <StyledLogo src={logo} alt="logo" />}
-        <StyledOption $highlight={highlight}>{`${desc}${total ? ` : ${total}${unit}` : ""}`}</StyledOption>
+        <StyledOption $title={!!logo} $highlight={highlight}>{`${desc}${
+          total ? ` : ${total}${unit}` : ""
+        }`}</StyledOption>
       </StyledList>
     );
   }
@@ -82,3 +93,4 @@ const WeaponOptionItem: React.FC<Props> = ({
 };
 
 export default WeaponOptionItem;
+
