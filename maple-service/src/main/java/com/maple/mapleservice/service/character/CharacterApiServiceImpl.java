@@ -326,7 +326,7 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     }
 
     @Override
-    @Cacheable(value = "character-api-hyper-passive", key = "#ocid + #character_skill_grade")
+    @Cacheable(value = "character-api-skill", key = "#ocid + '_' + #character_skill_grade")
     public CharacterSkillDto getCharacterSkill(String ocid, String character_skill_grade) {
         return characterFeignClient.getCharacterSkillDto(ocid, commonUtil.date, character_skill_grade);
     }

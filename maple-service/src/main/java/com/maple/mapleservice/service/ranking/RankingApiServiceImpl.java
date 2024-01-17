@@ -25,7 +25,7 @@ public class RankingApiServiceImpl implements RankingApiService {
 	}
 
 	@Override
-	@Cacheable(value = "ranking-overall", key = "#world_type + #page")
+	@Cacheable(value = "ranking-overall", key = "#world_type + '_' + #page")
 	public List<Overall> getRankingOverall(int world_type, int page) {
 		return rankingFeignClient.rankingOverallDto(commonUtil.date, world_type, page).getRanking();
 	}
