@@ -1,10 +1,14 @@
 package com.maple.mapleservice.repository.ranking;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -12,6 +16,7 @@ import com.maple.mapleservice.config.QuerydslConfig;
 import com.maple.mapleservice.dto.response.Ranking.CharacterCombatPowerRankingResponseDto;
 import static com.maple.mapleservice.entity.QCharacter.*;
 
+import com.maple.mapleservice.service.character.CharacterApiService;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -27,11 +32,10 @@ import lombok.RequiredArgsConstructor;
 @Repository
 @RequiredArgsConstructor
 public class RankingCustomRepository {
-	private final QuerydslConfig querydslConfig;
-	private final SQLTemplates sqlTemplates;
+	private final CharacterApiService characterApiService;
 
-	@PersistenceContext
-	private EntityManager entityManager;
+	private final JdbcTemplate jdbcTemplate;
+	private final QuerydslConfig querydslConfig;
 
 	public Page<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String worldName, String characterClass, Pageable pageable) {
 		List<CharacterCombatPowerRankingResponseDto> content = getCharacterCombatPowerRankingResponseDto(worldName, characterClass, pageable);
@@ -42,7 +46,7 @@ public class RankingCustomRepository {
 	}
 
 	private List<CharacterCombatPowerRankingResponseDto> getCharacterCombatPowerRankingResponseDto(String worldName, String characterClass, Pageable pageable) {
-		JPASQLQuery<?> query = new JPASQLQuery<Void>(entityManager, sqlTemplates);
+		JPASQLQuery<?> query = querydslConfig.jpasqlQuery();
 		List<CharacterCombatPowerRankingResponseDto> content = query
 			.select(Projections.constructor(CharacterCombatPowerRankingResponseDto.class,
 				Expressions.asNumber(SQLExpressions.rank().over().orderBy(character.combat_power.desc())),
@@ -91,4 +95,26 @@ public class RankingCustomRepository {
 		return StringUtils.hasText(worldName) ? character.world_name.eq(worldName) : null;
 	}
 
+	/**
+	 * 캐릭터 전투력 새로 조회하여 바꿔주기
+	 * @param ocidsToBeUpdated
+	 */
+	public void combatPowerBatchUpdate(List<String> ocidsToBeUpdated) {
+		String sql = "UPDATE characters SET combat_power = ? WHERE ocid = ?";
+
+		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				String ocid = ocidsToBeUpdated.get(i);
+
+				ps.setLong(1, characterApiService.getCharacterCombatPower(ocid));
+				ps.setString(2, ocid);
+			}
+
+			@Override
+			public int getBatchSize() {
+				return ocidsToBeUpdated.size();
+			}
+		});
+	}
 }

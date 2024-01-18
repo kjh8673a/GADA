@@ -12,12 +12,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import com.maple.mapleservice.dto.response.Ranking.CharacterCombatPowerRankingResponseDto;
+import com.maple.mapleservice.repository.ranking.RankingRepository;
 
 @SpringBootTest
 class RankingServiceTest {
 
 	@Autowired
 	RankingService rankingService;
+
+	@Autowired
+	RankingRepository rankingRepository;
+
+	@Autowired
+	RankingSchedule rankingSchedule;
 
 	// @Test
 	// void 종합_랭킹_조회해서_DB저장() {
@@ -56,6 +63,20 @@ class RankingServiceTest {
 	// 	Page<CharacterCombatPowerRankingResponseDto> list = rankingService.getCombatPowerRanking("", "듀얼블레이더", pageable);
 	//
 	// 	assertThat(list.getContent().size()).isEqualTo(20);
+	// }
+
+	@Test
+	void 전투력_랭킹_서버에서_200명_불러오기_테스트() {
+		List<String> ocids = rankingRepository.getTop200CombatPowerRankersByWorldName("스카니아");
+
+		assertThat(ocids).hasSize(200);
+	}
+
+	// 랭킹 갱신 되는 것 확인하였음.
+	// 굳이 빌드에서는 안해도 될듯하여 주석처리함.
+	// @Test
+	// void 전투력_랭킹_갱신_테스트() {
+	// 	rankingSchedule.renewCombatPowerRanking();
 	// }
 
 	@Test

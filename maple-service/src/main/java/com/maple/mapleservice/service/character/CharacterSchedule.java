@@ -25,7 +25,8 @@ public class CharacterSchedule {
 	// 매일 01:00마다 실행
 	@Scheduled(cron = "0 0 1 * * ?")
 	public void deleteExpHistory() {
-		log.info("경험치 히스토리 테이블에서 필요없는 내용 지우기");
+		log.info("경험치 히스토리 테이블에서 필요없는 데이터 삭제");
+
 		List<String> distinctOcidInExpHistory = characterExpHistoryRepository.findDistinctOcidInExpHistory();
 		List<Long> numbersToBeDeletedList = new ArrayList<>();
 		for(String ocid : distinctOcidInExpHistory) {
@@ -35,5 +36,7 @@ public class CharacterSchedule {
 		}
 
 		characterExpHistoryCustomRepository.batchDelete(numbersToBeDeletedList);
+		
+		log.info(numbersToBeDeletedList.size() + "개 데이터 삭제 완료");
 	}
 }
