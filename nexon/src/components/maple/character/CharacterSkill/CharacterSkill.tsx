@@ -8,6 +8,7 @@ import HiperPassiveSkill from './HiperPassiveSkill';
 import LinkSkill from './LinkSkill';
 import { getMyFiveSkill, getMyHiperSkill, getMyLinkSkill, getMySixSkill } from '../../../../api/Character/Skill';
 import { useLocation, useParams } from 'react-router-dom';
+import { skillType } from '../../../../@types/maple/CharacterSkillType';
 
 
 const SkillContainer = styled.div`
@@ -17,17 +18,9 @@ const SkillContainer = styled.div`
     flex-direction : column;
 `
 
-export interface skillType {
-    skill_description: string;
-    skill_effect: string;
-    skill_icon: string;
-    skill_level: number;
-    skill_name: string;
-}
-
 
 const CharacterSkill = () => {
-    const queryName = useParams<{ queryName : string }>();
+    const params = useParams<{ Charactername : string }>();
     const [sixSkill, setSixSkill] = useState<skillType[]>([]);
     const [fiveSkill, setFiveSkill] = useState<skillType[]>([]);
     const [hiperSkill, setHiperSkill] = useState<skillType[]>([]);
@@ -38,40 +31,45 @@ const CharacterSkill = () => {
 
     useEffect(() => {
         //새로고침시 존재하지 않을경우 쿼리에 있는 이름을 써야함.
-        if (characterName.length === 0) {
-            console.log(queryName);
-            if (!queryName) {
-                setCharacterName(queryName);
+        if (characterName.length === 0) { 
+            if (params) {
+                const { Charactername } = params;
+                if (Charactername) {
+                    setCharacterName(Charactername);
+                }
             }
         }
-
-        getMySixSkill(characterName)
-            .then((res) => {
-                setSolErdaEnergy(res.data.data.used_sol_erda_energy);
-                setSolErdaFragment(res.data.data.used_sol_erda_fragment);
-                setSixSkill(res.data.data.character_skill_desc);      
-            })
+        if (characterName.length !== 0) {
+            getMySixSkill(characterName)
+                .then((res) => {
+                    setSolErdaEnergy(res.data.data.used_sol_erda_energy);
+                    setSolErdaFragment(res.data.data.used_sol_erda_fragment);
+                    setSixSkill(res.data.data.character_skill_desc);
+                    console.log(res.data.data);
+                    
+                })
+            
+            getMyFiveSkill(characterName)
+                .then((res) => {
+                    setFiveSkill(res.data.data.character_skill_desc);
+                })
+            
+            getMyHiperSkill(characterName)
+                .then((res) => {
+                    setHiperSkill(res.data.data.character_skill);
+                })
+            
+            getMyLinkSkill(characterName)
+                .then((res) => {
+                    setLinkSkill(res.data.data.character_link_skill);
+                }) 
+        }
         
-        getMyFiveSkill(characterName)
-            .then((res) => {
-                setFiveSkill(res.data.data.character_skill_desc);
-            })
-        
-        getMyHiperSkill(characterName)
-            .then((res) => {
-                setHiperSkill(res.data.data.character_skill);
-            })
-        
-        getMyLinkSkill(characterName)
-            .then((res) => {
-                setLinkSkill(res.data.data.character_link_skill);
-            })
-        
-    },[])
+    },[characterName])
 
     return (
         <SkillContainer>
-            <SixSkill skillList={sixSkill}/>
+            <SixSkill skillList={sixSkill} solErdaEnergy={solErdaEnergy} solErdaFragment={solErdaFragment}/>
             <FiveSkill skillList={fiveSkill} />
             <HiperPassiveSkill skillList={hiperSkill}/>
             <LinkSkill skillList={linkSkill}/>
