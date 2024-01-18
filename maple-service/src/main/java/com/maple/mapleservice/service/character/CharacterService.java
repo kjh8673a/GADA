@@ -4,14 +4,12 @@ import java.util.List;
 
 import com.maple.mapleservice.dto.feign.character.CharacterLinkSkillDto;
 import com.maple.mapleservice.dto.feign.character.CharacterSkillDto;
-import com.maple.mapleservice.dto.feign.character.CharacterVMatrixDto;
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterHexaMatrixResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterItemResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 
 import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
-import com.maple.mapleservice.dto.response.Character.CharacterItemAndStatDto;
 import com.maple.mapleservice.dto.response.Character.CharacterStatsResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
 

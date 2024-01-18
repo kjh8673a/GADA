@@ -112,4 +112,9 @@ public class CharacterApiServiceIntegrationTest {
         CharacterSkillDto characterSkillDto = characterApiService.getCharacterSkill(ocid, "6");
     }
 
+    @Test
+    void 헥사_스탯_조회_테스트() {
+        CharacterHexaMatrixStatDto characterHexaMatrixStatDto = characterApiService.getCharacterHexaMatrixStatDto(ocid);
+        System.out.println(characterHexaMatrixStatDto.getCharacter_hexa_stat_core().get(0).getMain_stat_name());
+    }
 }
