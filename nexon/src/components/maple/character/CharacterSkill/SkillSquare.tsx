@@ -49,7 +49,7 @@ const SkillSquare: React.FC<Props> = ({ skill }) => {
     const hoverOutHandler = useCallback(() => {
         setIsHovered(false);
     }, []);
-    if (skill.skill_level !== 0) {
+    if (skill.skill_level !== 0 && skill.skill_effect !== null) {
         return (
             <Box
                 onMouseEnter={hoverInHandler}

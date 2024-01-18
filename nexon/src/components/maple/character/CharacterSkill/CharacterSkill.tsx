@@ -8,15 +8,24 @@ import HiperPassiveSkill from './HiperPassiveSkill';
 import LinkSkill from './LinkSkill';
 import { getMyFiveSkill, getMyHiperSkill, getMyLinkSkill, getMySixSkill } from '../../../../api/Character/Skill';
 import { useLocation, useParams } from 'react-router-dom';
-import { skillType } from '../../../../@types/maple/CharacterSkillType';
+import { hexaStat, skillType } from '../../../../@types/maple/CharacterSkillType';
+import HexaStat from './HexaStat';
 
 
 const SkillContainer = styled.div`
-    width : 70%;
+    width : 100%;
     display : flex;
     justify-content : center;
     flex-direction : column;
 `
+const DUMMY_HEXA: hexaStat = {
+    main_stat_name: "텍",
+    sub_stat_name_1: "사",
+    sub_stat_name_2: "스",
+    main_stat_level: 0,
+    sub_stat_level_1: 0,
+    sub_stat_level_2: 0,
+}
 
 
 const CharacterSkill = () => {
@@ -28,6 +37,8 @@ const CharacterSkill = () => {
     const [solErdaEnergy, setSolErdaEnergy] = useState<number>(0);
     const [solErdaFragment, setSolErdaFragment] = useState<number>(0);
     const [characterName, setCharacterName] = useRecoilState<string>(userNickName);
+    const [haveHexaStat, setHaveHexaStat] = useState<boolean>(false);
+    const [hexaStat, setHexaStat] = useState<hexaStat>(DUMMY_HEXA);
 
     useEffect(() => {
         //새로고침시 존재하지 않을경우 쿼리에 있는 이름을 써야함.
@@ -45,8 +56,7 @@ const CharacterSkill = () => {
                     setSolErdaEnergy(res.data.data.used_sol_erda_energy);
                     setSolErdaFragment(res.data.data.used_sol_erda_fragment);
                     setSixSkill(res.data.data.character_skill_desc);
-                    console.log(res.data.data);
-                    
+                    console.log(res.data);
                 })
             
             getMyFiveSkill(characterName)
@@ -69,7 +79,9 @@ const CharacterSkill = () => {
 
     return (
         <SkillContainer>
-            <SixSkill skillList={sixSkill} solErdaEnergy={solErdaEnergy} solErdaFragment={solErdaFragment}/>
+            <SixSkill skillList={sixSkill}
+                solErdaEnergy={solErdaEnergy} solErdaFragment={solErdaFragment} />
+            {haveHexaStat && <HexaStat hexaStat={hexaStat}/>}
             <FiveSkill skillList={fiveSkill} />
             <HiperPassiveSkill skillList={hiperSkill}/>
             <LinkSkill skillList={linkSkill}/>
