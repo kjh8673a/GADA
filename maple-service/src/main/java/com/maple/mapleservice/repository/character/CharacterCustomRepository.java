@@ -81,7 +81,7 @@ public class CharacterCustomRepository {
 				Union union = unionListToBeAdded.get(i);
 				String ocid = characterApiService.getOcidKey(union.getCharacter_name());
 				CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-				String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
+				String combatPower = characterApiService.getCharacterStat(ocid).get("전투력");
 				String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(),
 					characterBasicDto.getWorld_name());
 

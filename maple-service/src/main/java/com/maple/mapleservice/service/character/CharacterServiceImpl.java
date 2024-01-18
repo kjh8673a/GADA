@@ -3,8 +3,10 @@ package com.maple.mapleservice.service.character;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.maple.mapleservice.dto.model.character.HyperStat;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.CacheEvict;
@@ -71,7 +73,7 @@ public class CharacterServiceImpl implements CharacterService {
 		}
 
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
+		String combatPower = characterApiService.getCharacterStat(ocid).get("전투력");
 		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 
 		List<Union> unionList = rankingApiService.getRankingUnion(ocid, characterBasicDto.getWorld_name());
@@ -218,7 +220,7 @@ public class CharacterServiceImpl implements CharacterService {
 		}
 
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
+		String combatPower = characterApiService.getCharacterStat(ocid).get("전투력");
 		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 
 		Character characterForInsert = Character.builder()
@@ -256,6 +258,7 @@ public class CharacterServiceImpl implements CharacterService {
 
 		return characterExpHistoryRepository.getExpHistory(ocid);
 	}
+
 
 	private void addCharacterExpHistoryToday(String ocid) {
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
@@ -305,7 +308,7 @@ public class CharacterServiceImpl implements CharacterService {
 		String prevName = characterRepository.findByOcid(ocid).getPrev_name();
 		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 		Integer popularity = characterApiService.getCharacterPopularity(ocid);
-		String characterCombatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
+		String characterCombatPower = characterApiService.getCharacterStat(ocid).get("전투력");
 		return CharacterBasicInfoResponseDto.of(ocid, characterBasicDto, popularity, characterCombatPower, prevName,
 			oguildId);
 	}
@@ -326,11 +329,11 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-stats", key = "#characterName")
 	public CharacterStatsResponseDto getCharacterStats(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
-		CharacterFinalStatDto characterFinalStatDto = characterApiService.getCharacterStat(ocid);
-		CharacterHyperStatsDto characterHyperStatsDto = characterApiService.getCharacterHyperStat(ocid);
+		Map<String, String> stat = characterApiService.getCharacterStat(ocid);
+		Map<String, HyperStat> hyperStat = characterApiService.getCharacterHyperStat(ocid);
 		CharacterAbilityDto ability = characterApiService.getCharacterAbility(ocid);
 
-		return CharacterStatsResponseDto.of(characterFinalStatDto, characterHyperStatsDto, ability);
+		return CharacterStatsResponseDto.of(stat, hyperStat, ability);
 	}
 
 	@Override
