@@ -31,9 +31,13 @@ const DUMMY_HEXA: hexaStat = {
 const CharacterSkill = () => {
     const params = useParams<{ Charactername : string }>();
     const [sixSkill, setSixSkill] = useState<skillType[]>([]);
+    const [haveSixSkill, setHaveSixSkill] = useState<boolean>(true);
     const [fiveSkill, setFiveSkill] = useState<skillType[]>([]);
+    const [haveFiveSkill, setHaveFiveSkill] = useState<boolean>(true);
     const [hiperSkill, setHiperSkill] = useState<skillType[]>([]);
+    const [haveHiperSkill, setHaveHiperSkill] = useState<boolean>(true);
     const [linkSkill, setLinkSkill] = useState<skillType[]>([]);
+    const [haveLinkSkill, setHaveLinkSkill] = useState<boolean>(true);
     const [solErdaEnergy, setSolErdaEnergy] = useState<number>(0);
     const [solErdaFragment, setSolErdaFragment] = useState<number>(0);
     const [characterName, setCharacterName] = useRecoilState<string>(userNickName);
@@ -56,35 +60,55 @@ const CharacterSkill = () => {
                     setSolErdaEnergy(res.data.data.used_sol_erda_energy);
                     setSolErdaFragment(res.data.data.used_sol_erda_fragment);
                     setSixSkill(res.data.data.character_skill_desc);
-                    console.log(res.data);
+                    console.log(res.data.data);
+                    const hexa: hexaStat = {
+                        main_stat_name: res.data.data.character_hexa_stat_core.main_stat_name,
+                        sub_stat_name_1: res.data.data.character_hexa_stat_core.sub_stat_name_1,
+                        sub_stat_name_2: res.data.data.character_hexa_stat_core.sub_stat_name_2,
+                        main_stat_level: res.data.data.character_hexa_stat_core.main_stat_level,
+                        sub_stat_level_1: res.data.data.character_hexa_stat_core.sub_stat_level_1,
+                        sub_stat_level_2: res.data.data.character_hexa_stat_core.sub_stat_level_2
+                    }
+                    setHexaStat(hexa);
+                    setHaveHexaStat(true);
+                    
+                }).catch(() => {
+                    setHaveSixSkill(false);
+                    setHaveHexaStat(false);
                 })
             
             getMyFiveSkill(characterName)
                 .then((res) => {
                     setFiveSkill(res.data.data.character_skill_desc);
+                }).catch(() => {
+                    setHaveFiveSkill(false);
                 })
             
             getMyHiperSkill(characterName)
                 .then((res) => {
                     setHiperSkill(res.data.data.character_skill);
+                }).catch(() => {
+                    setHaveHiperSkill(false);
                 })
             
             getMyLinkSkill(characterName)
                 .then((res) => {
                     setLinkSkill(res.data.data.character_link_skill);
-                }) 
+                }).catch(() => {
+                    setHaveLinkSkill(false);
+                })
         }
         
     },[characterName])
 
     return (
         <SkillContainer>
-            <SixSkill skillList={sixSkill}
-                solErdaEnergy={solErdaEnergy} solErdaFragment={solErdaFragment} />
+            {haveSixSkill && <SixSkill skillList={sixSkill}
+                solErdaEnergy={solErdaEnergy} solErdaFragment={solErdaFragment} />}
             {haveHexaStat && <HexaStat hexaStat={hexaStat}/>}
-            <FiveSkill skillList={fiveSkill} />
-            <HiperPassiveSkill skillList={hiperSkill}/>
-            <LinkSkill skillList={linkSkill}/>
+            {haveFiveSkill && <FiveSkill skillList={fiveSkill} />}
+            {haveHiperSkill && <HiperPassiveSkill skillList={hiperSkill} />}
+            {haveLinkSkill && <LinkSkill skillList={linkSkill}/>}
         </SkillContainer>
     )
 }
