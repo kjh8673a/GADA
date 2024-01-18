@@ -2,8 +2,11 @@ package com.maple.mapleservice.service.character;
 
 
 import com.maple.mapleservice.dto.feign.character.*;
+import com.maple.mapleservice.dto.model.character.HyperStat;
 import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
 import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
+
+import java.util.Map;
 
 public interface CharacterApiService {
     String getOcidKey(String characterName);
@@ -12,9 +15,11 @@ public interface CharacterApiService {
 
     Integer getCharacterPopularity(String ocid);
 
-    CharacterFinalStatDto getCharacterStat(String ocid);
+    Long getCharacterCombatPower(String ocid);
 
-    CharacterHyperStatsDto getCharacterHyperStat(String ocid);
+    Map<String,String> getCharacterStat(String ocid);
+
+    Map<String, HyperStat> getCharacterHyperStat(String ocid);
 
     CharacterAbilityDto getCharacterAbility(String ocid);
 
