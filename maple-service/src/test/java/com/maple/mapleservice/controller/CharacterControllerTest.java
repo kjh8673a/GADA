@@ -42,4 +42,10 @@ class CharacterControllerTest {
 		ResponseEntity<SuccessResponse> response = characterController.getCharacterUnion(characterName);
 	}
 
+	@Test
+	void 헥사_매트릭스_조회_테스트() {
+		String characterName = "아델";
+		ResponseEntity<SuccessResponse> response = characterController.getCharacterHexamatrix(characterName);
+	}
+
 }

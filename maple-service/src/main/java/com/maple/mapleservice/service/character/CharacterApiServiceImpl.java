@@ -3,8 +3,6 @@ package com.maple.mapleservice.service.character;
 import com.maple.mapleservice.dto.feign.character.*;
 import com.maple.mapleservice.dto.model.character.FinalStat;
 import com.maple.mapleservice.dto.model.character.HyperStat;
-import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
-import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
 import com.maple.mapleservice.exception.CustomException;
 import com.maple.mapleservice.exception.ErrorCode;
 import com.maple.mapleservice.feign.CharacterFeignClient;
@@ -16,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -163,6 +160,11 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     @Cacheable(value = "character-api-hexa-matrix", key = "#ocid")
     public CharacterHexaMatrixDto getCharacterHexaMatrix(String ocid) {
         return characterFeignClient.getCharacterHexaMatrixDto(ocid, commonUtil.date);
+    }
+
+    @Override
+    public CharacterHexaMatrixStatDto getCharacterHexaMatrixStatDto(String ocid) {
+        return characterFeignClient.getCharacterHexamatrixStatDto(ocid, commonUtil.date);
     }
 
 }

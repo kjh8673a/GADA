@@ -40,4 +40,6 @@ public interface CharacterApiService {
     CharacterLinkSkillDto getCharacterLinkSkill(String ocid);
 
     CharacterHexaMatrixDto getCharacterHexaMatrix(String ocid);
+
+    CharacterHexaMatrixStatDto getCharacterHexaMatrixStatDto(String ocid);
 }

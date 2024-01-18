@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.maple.mapleservice.dto.model.character.HyperStat;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.CacheEvict;
@@ -21,6 +22,7 @@ import com.maple.mapleservice.dto.feign.character.CharacterLinkSkillDto;
 import com.maple.mapleservice.dto.feign.character.CharacterPetDto;
 import com.maple.mapleservice.dto.feign.character.CharacterSkillDto;
 import com.maple.mapleservice.dto.feign.character.CharacterVMatrixDto;
+import com.maple.mapleservice.dto.model.character.skill.HexaStatCore;
 import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
 import com.maple.mapleservice.util.HexaCoreTable;
 import com.maple.mapleservice.dto.model.character.Symbol;
@@ -252,7 +254,6 @@ public class CharacterServiceImpl implements CharacterService {
 		return characterExpHistoryRepository.getExpHistory(ocid);
 	}
 
-
 	private void addCharacterExpHistoryToday(String ocid) {
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
 		CharacterExpHistory characterExpHistory = CharacterExpHistory.builder()
@@ -384,9 +385,12 @@ public class CharacterServiceImpl implements CharacterService {
 		}
 
 		CharacterSkillDto characterSkillDto = characterApiService.getCharacterSkill(ocid, "6");
+		HexaStatCore hexaStatCore = characterApiService.getCharacterHexaMatrixStatDto(ocid)
+			.getCharacter_hexa_stat_core()
+			.get(0);
 
 		return CharacterHexaMatrixResponseDto.of(character_hexa_core_equipment, used_sol_erda_energy,
-			used_sol_erda_fragment, characterSkillDto.getCharacter_skill());
+			used_sol_erda_fragment, characterSkillDto.getCharacter_skill(), hexaStatCore);
 	}
 
 	private int[][] calculateSkillCore(int hexaCoreLevel) {
