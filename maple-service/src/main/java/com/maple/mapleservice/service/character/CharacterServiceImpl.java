@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.maple.mapleservice.dto.model.character.HyperStat;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.maple.mapleservice.dto.feign.character.CharacterAbilityDto;
@@ -22,13 +22,11 @@ import com.maple.mapleservice.dto.feign.character.CharacterLinkSkillDto;
 import com.maple.mapleservice.dto.feign.character.CharacterPetDto;
 import com.maple.mapleservice.dto.feign.character.CharacterSkillDto;
 import com.maple.mapleservice.dto.feign.character.CharacterVMatrixDto;
+import com.maple.mapleservice.dto.model.character.skill.HexaStatCore;
 import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
-import com.maple.mapleservice.repository.character.CharacterCustomRepository;
 import com.maple.mapleservice.util.HexaCoreTable;
 import com.maple.mapleservice.dto.model.character.Symbol;
 import com.maple.mapleservice.dto.model.character.skill.HexaMatrix;
-import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
-import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
 import com.maple.mapleservice.dto.model.ranking.Union;
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterHexaMatrixResponseDto;
@@ -54,9 +52,6 @@ public class CharacterServiceImpl implements CharacterService {
 	private final RankingApiService rankingApiService;
 	private final CharacterRepository characterRepository;
 	private final CharacterExpHistoryRepository characterExpHistoryRepository;
-	private final CharacterCustomRepository characterCustomRepository;
-
-	private final JdbcTemplate jdbcTemplate;
 
 	private HexaCoreTable hexaCoreTable = new HexaCoreTable();
 	private CommonUtil commonUtil = new CommonUtil();
@@ -82,7 +77,7 @@ public class CharacterServiceImpl implements CharacterService {
 		String parent_ocid = characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
 
 		// 유니온 랭킹으로 가져온 캐릭터들 정보 넣기
-		characterCustomRepository.addChacterInformationToDbFromUnionRanking(characterName, parent_ocid, unionList);
+		characterRepository.addChacterInformationToDbFromUnionRanking(characterName, parent_ocid, unionList);
 
 		Character character = characterRepository.findByOcid(ocid);
 		if (character != null) {
@@ -112,7 +107,7 @@ public class CharacterServiceImpl implements CharacterService {
 			if (!character.getParent_ocid().equals(parent_ocid)) {
 				// 대표ocid변경될 경우 다른 캐릭터들도 바꿔주기 + 캐시 삭제
 				deleteFindMainCharacterCache(character.getParent_ocid());
-				characterCustomRepository.updateParentOcid(ocid, character.getParent_ocid(), parent_ocid);
+				characterRepository.updateParentOcid(ocid, character.getParent_ocid(), parent_ocid);
 				character.setParent_ocid(parent_ocid);
 			}
 
@@ -203,7 +198,7 @@ public class CharacterServiceImpl implements CharacterService {
 	 */
 	@Override
 	public void addCharactersFromRanking(String characterName) {
-		Character character = characterRepository.finndByCharacterName(characterName);
+		Character character = characterRepository.findByCharacterName(characterName);
 		if (character != null) {
 			return;
 		}
@@ -259,7 +254,6 @@ public class CharacterServiceImpl implements CharacterService {
 		return characterExpHistoryRepository.getExpHistory(ocid);
 	}
 
-
 	private void addCharacterExpHistoryToday(String ocid) {
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
 		CharacterExpHistory characterExpHistory = CharacterExpHistory.builder()
@@ -288,7 +282,7 @@ public class CharacterServiceImpl implements CharacterService {
 				listForExp.add(basicDto);
 			}
 		}
-		characterCustomRepository.addExpHistoryFromList(ocid, listForExp);
+		characterRepository.addExpHistoryFromList(ocid, listForExp);
 	}
 
 	/**
@@ -391,9 +385,12 @@ public class CharacterServiceImpl implements CharacterService {
 		}
 
 		CharacterSkillDto characterSkillDto = characterApiService.getCharacterSkill(ocid, "6");
+		HexaStatCore hexaStatCore = characterApiService.getCharacterHexaMatrixStatDto(ocid)
+			.getCharacter_hexa_stat_core()
+			.get(0);
 
 		return CharacterHexaMatrixResponseDto.of(character_hexa_core_equipment, used_sol_erda_energy,
-			used_sol_erda_fragment, characterSkillDto.getCharacter_skill());
+			used_sol_erda_fragment, characterSkillDto.getCharacter_skill(), hexaStatCore);
 	}
 
 	private int[][] calculateSkillCore(int hexaCoreLevel) {
