@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.maple.mapleservice.repository.ranking.RankingCustomRepository;
 import com.maple.mapleservice.repository.ranking.RankingRepository;
 import com.maple.mapleservice.util.WorldName;
 
@@ -19,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class RankingSchedule {
 	private final RankingRepository rankingRepository;
-	private final RankingCustomRepository rankingCustomRepository;
 	
 	// 매일 01:00마다 실행
 	@Scheduled(cron = "0 0 1 * * ?")
@@ -34,7 +32,7 @@ public class RankingSchedule {
 			log.info(worldName.name() + " : " + ocidList.size());
 		}
 
-		rankingCustomRepository.combatPowerBatchUpdate(ocidsToBeUpdated);
+		rankingRepository.combatPowerBatchUpdate(ocidsToBeUpdated);
 
 		log.info(ocidsToBeUpdated.size() + "개 데이터 갱신 완료");
 	}

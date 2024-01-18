@@ -13,7 +13,7 @@ import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
 import com.maple.mapleservice.dto.response.Ranking.CharacterCombatPowerRankingResponseDto;
 import com.maple.mapleservice.entity.Character;
 import com.maple.mapleservice.repository.character.CharacterRepository;
-import com.maple.mapleservice.repository.ranking.RankingCustomRepository;
+import com.maple.mapleservice.repository.ranking.RankingRepository;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.maple.mapleservice.service.character.CharacterService;
 
@@ -27,7 +27,7 @@ public class RankingServiceImpl implements RankingService {
 	private final CharacterService characterService;
 	private final CharacterRepository characterRepository;
 	private final CharacterApiService characterApiService;
-	private final RankingCustomRepository rankingCustomRepository;
+	private final RankingRepository rankingRepository;
 
 	@Override
 	public void addCharacterInformationFromRankingToDB(int world_type, int page) {
@@ -59,7 +59,7 @@ public class RankingServiceImpl implements RankingService {
 	public Page<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String world_name, String character_class,
 		Pageable pageable) {
 
-		Page<CharacterCombatPowerRankingResponseDto> result = rankingCustomRepository.getCombatPowerRanking(world_name, character_class, pageable);
+		Page<CharacterCombatPowerRankingResponseDto> result = rankingRepository.getCombatPowerRanking(world_name, character_class, pageable);
 
 		return result;
 	}

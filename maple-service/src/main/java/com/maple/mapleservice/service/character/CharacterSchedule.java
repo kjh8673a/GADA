@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.maple.mapleservice.repository.character.CharacterExpHistoryCustomRepository;
 import com.maple.mapleservice.repository.character.CharacterExpHistoryRepository;
 import com.maple.mapleservice.util.CommonUtil;
 
@@ -18,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class CharacterSchedule {
 	private final CharacterExpHistoryRepository characterExpHistoryRepository;
-	private final CharacterExpHistoryCustomRepository characterExpHistoryCustomRepository;
 
 	private CommonUtil commonUtil = new CommonUtil();
 
@@ -35,8 +33,8 @@ public class CharacterSchedule {
 			numbersToBeDeletedList.addAll(numbersToBeDeleted);
 		}
 
-		characterExpHistoryCustomRepository.batchDelete(numbersToBeDeletedList);
-		
+		characterExpHistoryRepository.expHistoryBatchDelete(numbersToBeDeletedList);
+
 		log.info(numbersToBeDeletedList.size() + "개 데이터 삭제 완료");
 	}
 }
