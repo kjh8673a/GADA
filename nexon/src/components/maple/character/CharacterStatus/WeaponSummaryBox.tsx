@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { IWeaponData, MATCH_BGCOLOR, MATCH_COLOR } from "../../../../@types/maple/WeaponTypes";
+import { ITitleDataType, IWeaponDataType, MATCH_BGCOLOR, MATCH_COLOR } from "../../../../@types/maple/WeaponTypes";
 
 const StyledBox = styled.div`
   width: 100%;
@@ -9,12 +9,7 @@ const StyledBox = styled.div`
 `;
 
 interface WeaponPreviewProps {
-  img: string | undefined;
-  grade: string | undefined | null;
-}
-
-interface WeaponPreviewProps {
-  img: string | undefined;
+  img: string | undefined | null;
   grade: string | undefined | null;
 }
 
@@ -57,16 +52,17 @@ const WeaponGradeBox = styled.span`
 `;
 
 interface Props {
-  data?: IWeaponData | undefined;
+  data?: IWeaponDataType | undefined;
+  title?: ITitleDataType | null | undefined;
 }
 
-const WeaponSummaryBox: React.FC<Props> = ({ data }) => {
+const WeaponSummaryBox: React.FC<Props> = ({ data, title }) => {
   return (
     <StyledBox>
-      <WeaponPreview img={data?.item_icon} grade={data?.potential_option_grade} />
+      <WeaponPreview img={data?.item_icon || title?.title_icon} grade={data?.potential_option_grade && ""} />
       <WeaponDetailTitle>
         <WeaponNameBox>
-          {data?.item_name}
+          {data?.item_name || title?.title_name}
           {data?.scroll_upgrade && +data?.scroll_upgrade > 0 && ` (+${data?.scroll_upgrade})`}
         </WeaponNameBox>
         {data?.potential_option_grade && <WeaponGradeBox>{`(${data?.potential_option_grade} 아이템)`}</WeaponGradeBox>}

@@ -1,12 +1,15 @@
 import { IStatType } from "./../../@types/maple/StatsTypes";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { getMyStatus } from "../../api/Character/Stats";
 import { useCallback } from "react";
 import { atomCharacterStats } from "../../atoms/maple/characterStatState";
 import { getMyWeapons } from "../../api/Character/Weapons";
+import { IWeaponTypes } from "../../@types/maple/WeaponTypes";
+import { atomCharacterWeapon } from "../../atoms/maple/characterWeaponState";
 
 export const useCharacterData = () => {
-  const [_, setStats] = useRecoilState<IStatType>(atomCharacterStats);
+  const setStats = useSetRecoilState<IStatType>(atomCharacterStats);
+  const setWeapons = useSetRecoilState<IWeaponTypes>(atomCharacterWeapon);
 
   const getCharacterStats = useCallback(
     async (characterName: string) => {
@@ -26,7 +29,10 @@ export const useCharacterData = () => {
   const getCharacterWeapons = useCallback(async (characterName: string) => {
     try {
       const res = await getMyWeapons(characterName);
-      console.log(res);
+      // const timestamp: string = res.data.data.timestamp;
+      const data: IWeaponTypes = res.data.data;
+
+      setWeapons(data);
     } catch (e) {
       console.error("조회된 장비가 없습니다.");
     }
@@ -37,3 +43,4 @@ export const useCharacterData = () => {
     getCharacterWeapons,
   };
 };
+

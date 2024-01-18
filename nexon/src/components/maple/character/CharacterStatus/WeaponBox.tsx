@@ -1,15 +1,16 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import { IWeaponData, MATCH_BGCOLOR, MATCH_COLOR } from "../../../../@types/maple/WeaponTypes";
+import { ITitleDataType, IWeaponDataType, MATCH_BGCOLOR, MATCH_COLOR } from "../../../../@types/maple/WeaponTypes";
 import WeaponBoxDetail from "./WeaponBoxDetail";
 
 interface StylesProps {
-  img: string;
+  img: string | null;
   grade: string | null;
 }
 
 interface Props {
-  data?: IWeaponData | undefined;
+  data?: IWeaponDataType | undefined;
+  title?: ITitleDataType | null;
 }
 
 const BoxContainer = styled.div`
@@ -39,7 +40,7 @@ const ItemBox = styled.div<StylesProps>`
   }
 `;
 
-const WeaponBox: React.FC<Props> = ({ data }) => {
+const WeaponBox: React.FC<Props> = ({ data, title }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const hoverInHandler = useCallback(() => {
@@ -50,16 +51,21 @@ const WeaponBox: React.FC<Props> = ({ data }) => {
     setIsHovered(false);
   }, []);
 
-  if (data === undefined) return <VoidBox />;
+  if (data === undefined && title === undefined) return <VoidBox />;
   return (
     <BoxContainer>
-      <ItemBox
-        onMouseEnter={hoverInHandler}
-        onMouseLeave={hoverOutHandler}
-        img={data.item_icon}
-        grade={data.potential_option_grade}
-      />
-      {isHovered && <WeaponBoxDetail data={data} />}
+      {data && (
+        <ItemBox
+          onMouseEnter={hoverInHandler}
+          onMouseLeave={hoverOutHandler}
+          img={data.item_icon}
+          grade={data.potential_option_grade}
+        />
+      )}
+      {title && (
+        <ItemBox onMouseEnter={hoverInHandler} onMouseLeave={hoverOutHandler} img={title.title_icon} grade="" />
+      )}
+      {isHovered && <WeaponBoxDetail data={data} title={title} />}
     </BoxContainer>
   );
 };

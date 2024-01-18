@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import WeaponOptionItem from "./WeaponOptionItem";
-import { IWeaponOption } from "../../../../@types/maple/WeaponTypes";
+import { IWeaponOptionType } from "../../../../@types/maple/WeaponTypes";
 import DashedLine from "../../../common/DashedLine";
 
 const StyledList = styled.ul`
@@ -12,11 +12,11 @@ const StyledList = styled.ul`
 
 interface Props {
   item_equipment_part: string | undefined;
-  totalOption: IWeaponOption | undefined;
-  baseOption: IWeaponOption | undefined;
-  exceptionalOption: IWeaponOption | undefined;
-  addOption: IWeaponOption | undefined;
-  starforceOption: IWeaponOption | undefined;
+  totalOption: IWeaponOptionType | undefined;
+  baseOption: IWeaponOptionType | undefined;
+  exceptionalOption: IWeaponOptionType | undefined;
+  addOption: IWeaponOptionType | undefined;
+  starforceOption: IWeaponOptionType | undefined;
   golden_hammer_flag: boolean | undefined;
   cuttable_count: string | undefined;
 }
