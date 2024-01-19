@@ -62,8 +62,8 @@ class CharacterControllerTest {
 	@Test
 	void 캐릭터_비교_테스트() {
 		String leftCharacterName = "아델";
-		String rightCharactername = "도적";
-		ResponseEntity<SuccessResponse> response = characterController.getCharacterCompare(leftCharacterName, rightCharactername);
+		String rightCharacterName = "도적";
+		ResponseEntity<SuccessResponse> response = characterController.getCharacterCompare(leftCharacterName, rightCharacterName);
 	}
 
 }

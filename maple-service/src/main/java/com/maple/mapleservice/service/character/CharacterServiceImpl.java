@@ -407,7 +407,7 @@ public class CharacterServiceImpl implements CharacterService {
 	@Override
 	public CharacterCompareResponseDto getCharacterCompare(String leftCharacterName, String rightCharacterName) {
 		CharacterCompareEachCharacterResponseDto left_character = getCharacterForCompare(leftCharacterName);
-		CharacterCompareEachCharacterResponseDto right_character = getCharacterForCompare(leftCharacterName);
+		CharacterCompareEachCharacterResponseDto right_character = getCharacterForCompare(rightCharacterName);
 
 		return CharacterCompareResponseDto.of(left_character, right_character);
 	}
