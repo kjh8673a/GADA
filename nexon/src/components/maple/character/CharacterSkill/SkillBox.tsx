@@ -6,21 +6,19 @@ const Box = styled.div`
     justify-content : flex-start;
     align-items : center;
     flex-wrap : wrap;
-    margin : 8px;
-    border: 1px solid #000;
-    border-radius : 8px;
+    width : 100%;
+    padding : 4px;
+    margin : 4px;
 `
 
-const Skill = styled.div`
-    display : flex;
-`
+
 interface Props {
   children: React.ReactNode;
 }
 
 
 
-const SkillBox : React.FC<Props> = ({children}) => {
+const SkillBox: React.FC<Props> = ({ children }) => {
     return (
         <Box>
             {children}

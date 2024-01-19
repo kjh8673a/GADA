@@ -24,7 +24,6 @@ interface Props {
 }
 
 const WeaponBoxDetail: React.FC<Props> = ({ data, title }) => {
-  console.log(data, title);
   return (
     <StyledBox>
       <WeaponStarforce starforce={data ? +data?.starforce : null} scrollFlag={data?.starforce_scroll_flag === "사용"} />

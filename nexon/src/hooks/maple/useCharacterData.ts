@@ -6,6 +6,7 @@ import { atomCharacterStats } from "../../atoms/maple/characterStatState";
 import { getMyWeapons } from "../../api/Character/Weapons";
 import { IWeaponTypes } from "../../@types/maple/WeaponTypes";
 import { atomCharacterWeapon } from "../../atoms/maple/characterWeaponState";
+import { convertObjToSnakeCaseObj } from "../commonUtils";
 
 export const useCharacterData = () => {
   const setStats = useSetRecoilState<IStatType>(atomCharacterStats);
@@ -16,7 +17,7 @@ export const useCharacterData = () => {
       try {
         const res = await getMyStatus(characterName);
         // const timestamp: string = res.data.data;
-        const data: IStatType = res.data.data;
+        const data: IStatType = convertObjToSnakeCaseObj(res.data.data);
 
         setStats(data);
       } catch (e) {

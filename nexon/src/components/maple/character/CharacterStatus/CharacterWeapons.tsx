@@ -23,7 +23,6 @@ const CharacterWeapons = () => {
   const { getCharacterWeapons } = useCharacterData();
   const characterName = useRecoilValue<string>(userNickName);
   const myWeapons = useRecoilValue<IWeaponTypes>(atomCharacterWeapon);
-  console.log(myWeapons);
 
   useEffect(() => {
     getCharacterWeapons(characterName ? characterName : "도적");

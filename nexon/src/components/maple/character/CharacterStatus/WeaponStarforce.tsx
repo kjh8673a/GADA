@@ -25,7 +25,7 @@ const WeaponStarforce: React.FC<Props> = ({ starforce, scrollFlag }) => {
 
   for (let i = 0; i < 5; i++) {
     starGroup.push(
-      <StyledImgBlock>
+      <StyledImgBlock key={i}>
         <StarSvg fill={i * 5 + 1 <= +starforce ? (scrollFlag ? "rgb(36, 221, 250)" : "yellow") : undefined} />
         <StarSvg fill={i * 5 + 2 <= +starforce ? (scrollFlag ? "rgb(36, 221, 250)" : "yellow") : undefined} />
         <StarSvg fill={i * 5 + 3 <= +starforce ? (scrollFlag ? "rgb(36, 221, 250)" : "yellow") : undefined} />

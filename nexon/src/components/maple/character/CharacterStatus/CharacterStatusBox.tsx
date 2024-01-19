@@ -53,7 +53,7 @@ const CharacterStatusBox = () => {
 
   return (
     <StyledBox>
-      <CharacterStatusBattlePoint combatPower={stats.final_stats?.combat_power} />
+      <CharacterStatusBattlePoint combatPower={stats.final_stats?.전투력} />
       {!statToggled && <CharacterStatusBasic stats={stats} />}
       {statToggled && <CharacterStatusExtra stats={stats} />}
       <StyledController>
@@ -66,3 +66,4 @@ const CharacterStatusBox = () => {
 };
 
 export default CharacterStatusBox;
+

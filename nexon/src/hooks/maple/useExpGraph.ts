@@ -48,7 +48,7 @@ export const drawExpBar = (
   const y = height - margin;
   const graphHeight = height - 2 * margin;
 
-  ctx.font = `${13}px 고딕`;
+  ctx.font = "0.7rem 고딕";
   ctx.textAlign = "center";
 
   let percent;
@@ -56,7 +56,7 @@ export const drawExpBar = (
   for (let i = 0; i < expArr.length; i++) {
     if (expArr[i] < 1) continue
     barHeight = graphHeight * 0.01 * expArr[i];
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "#ABABAB";
     percent = expArr[i] + "";
     ctx.fillText(
       percent.slice(0, percent.indexOf(".")) + "%",
@@ -112,9 +112,9 @@ export const drawLevelLine = (
   }
 
   // 레벨 텍스트 표시
-  ctx.font = `${13}px 고딕`;
+  ctx.font = "0.7rem 고딕";
   ctx.textAlign = "center";
-  ctx.fillStyle = "black";
+  ctx.fillStyle = "#ABABAB";
   for (let i = 0; i < xCoords.length; i++) {
     if (levelArr[i] < 1) continue
     ctx.fillText("" + levelArr[i], xCoords[i], yCoords[i] - 5);
@@ -134,7 +134,7 @@ export const drawXScale = (
   color: string
 ) => {
   ctx.lineWidth = lineWidth;
-  ctx.fillStyle = "black";
+  ctx.fillStyle = "#ABABAB";
   ctx.strokeStyle = color;
   ctx.beginPath();
   ctx.moveTo(margin, height - margin);

@@ -36,93 +36,93 @@ const CharacterStatusBasic: React.FC<Props> = ({ stats }) => {
       <StyledBox01>
         <CharacterUnitStat
           statKey="HP"
-          statVal={stats.final_stats?.max_hp}
-          increased={stats.final_stats?.ap_increased_hp}
+          statVal={stats.final_stats?.hp}
+          increased={stats.final_stats?.AP_배분_HP}
           type="NUMBER"
         />
         <CharacterUnitStat
           statKey="MP"
-          statVal={stats.final_stats?.max_mp}
-          increased={stats.final_stats?.ap_increased_mp}
+          statVal={stats.final_stats?.mp}
+          increased={stats.final_stats?.AP_배분_MP}
           type="NUMBER"
         />
         <CharacterUnitStat
           statKey="STR"
-          statVal={stats.final_stats?.max_str}
-          increased={stats.final_stats?.ap_increased_str}
+          statVal={stats.final_stats?.str}
+          increased={stats.final_stats?.AP_배분_STR}
           type="INCREASED"
         />
         <CharacterUnitStat
           statKey="DEX"
-          statVal={stats.final_stats?.max_dex}
-          increased={stats.final_stats?.ap_increased_dex}
+          statVal={stats.final_stats?.dex}
+          increased={stats.final_stats?.AP_배분_DEX}
           type="INCREASED"
         />
         <CharacterUnitStat
           statKey="INT"
-          statVal={stats.final_stats?.max_int}
-          increased={stats.final_stats?.ap_increased_int}
+          statVal={stats.final_stats?.int}
+          increased={stats.final_stats?.AP_배분_INT}
           type="INCREASED"
         />
         <CharacterUnitStat
           statKey="LUK"
-          statVal={stats.final_stats?.max_luk}
-          increased={stats.final_stats?.ap_increased_luk}
+          statVal={stats.final_stats?.luk}
+          increased={stats.final_stats?.AP_배분_LUK}
           type="INCREASED"
         />
       </StyledBox01>
       <StyledBox02>
-        <CharacterUnitStat statKey="스탯 공격력" statVal={stats.final_stats?.max_stat_power} type="POWER" />
-        <CharacterUnitStat statKey="데미지" statVal={stats.final_stats?.damage} type="PERCENT" />
-        <CharacterUnitStat statKey="최종 데미지" statVal={stats.final_stats?.final_damage} type="PERCENT" />
-        <CharacterUnitStat statKey="보스 몬스터 데미지" statVal={stats.final_stats?.boss_damage} type="PERCENT" />
-        <CharacterUnitStat statKey="방어율 무시" statVal={stats.final_stats?.ignore_monster_armor} type="PERCENT" />
+        <CharacterUnitStat statKey="스탯 공격력" statVal={stats.final_stats?.최대_스탯공격력} type="POWER" />
+        <CharacterUnitStat statKey="데미지" statVal={stats.final_stats?.데미지} type="PERCENT" />
+        <CharacterUnitStat statKey="최종 데미지" statVal={stats.final_stats?.최종_데미지} type="PERCENT" />
+        <CharacterUnitStat
+          statKey="보스 몬스터 데미지"
+          statVal={stats.final_stats?.보스_몬스터_데미지}
+          type="PERCENT"
+        />
+        <CharacterUnitStat statKey="방어율 무시" statVal={stats.final_stats?.방어율_무시} type="PERCENT" />
         <CharacterUnitStat
           statKey="일반 몬스터 데미지"
-          statVal={stats.final_stats?.normal_monster_damage}
+          statVal={stats.final_stats?.일반_몬스터_데미지}
           type="PERCENT"
         />
-        <CharacterUnitStat statKey="공격력" statVal={stats.final_stats?.attack_power} type="NUMBER" />
-        <CharacterUnitStat statKey="크리티컬 확률" statVal={stats.final_stats?.critical_rate} type="PERCENT" />
-        <CharacterUnitStat statKey="마력" statVal={stats.final_stats?.magic_power} type="NUMBER" />
-        <CharacterUnitStat statKey="크리티컬 데미지" statVal={stats.final_stats?.critical_damage} type="PERCENT" />
+        <CharacterUnitStat statKey="공격력" statVal={stats.final_stats?.공격력} type="NUMBER" />
+        <CharacterUnitStat statKey="크리티컬 확률" statVal={stats.final_stats?.크리티컬_확률} type="PERCENT" />
+        <CharacterUnitStat statKey="마력" statVal={stats.final_stats?.마력} type="NUMBER" />
+        <CharacterUnitStat statKey="크리티컬 데미지" statVal={stats.final_stats?.크리티컬_데미지} type="PERCENT" />
         <CharacterUnitStat
           statKey="재사용 대기시간 감소"
-          statVal={stats.final_stats?.decrease_cooldowns_percent}
-          statVal2={stats.final_stats?.decrease_cooldowns_second}
+          statVal={stats.final_stats?.["재사용_대기시간_감소_(%)"]}
+          statVal2={stats.final_stats?.["재사용_대기시간_감소_(초)"]}
           type="SEC/PERCENT"
         />
-        <CharacterUnitStat statKey="버프 지속 시간" statVal={stats.final_stats?.buff_duration} type="PERCENT" />
+        <CharacterUnitStat statKey="버프 지속 시간" statVal={stats.final_stats?.버프_지속시간} type="PERCENT" />
         <CharacterUnitStat
           statKey="재사용 대기시간 미적용"
-          statVal={stats.final_stats?.skip_cooldowns}
+          statVal={stats.final_stats?.재사용_대기시간_미적용}
           type="PERCENT"
         />
-        <CharacterUnitStat
-          statKey="속성 내성 무시"
-          statVal={stats.final_stats?.ignore_status_tolerance}
-          type="PERCENT"
-        />
+        <CharacterUnitStat statKey="속성 내성 무시" statVal={stats.final_stats?.속성_내성_무시} type="PERCENT" />
         <CharacterUnitStat
           statKey="상태이상 추가 데미지"
-          statVal={stats.final_stats?.status_bonus_damage}
+          statVal={stats.final_stats?.상태이상_추가_데미지}
           type="PERCENT"
         />
-        <CharacterUnitStat statKey="무기 숙련도" statVal={stats.final_stats?.weapon_proficiency} type="PERCENT" />
+        <CharacterUnitStat statKey="무기 숙련도" statVal={stats.final_stats?.무기_숙련도} type="PERCENT" />
       </StyledBox02>
       <StyledBox02>
-        <CharacterUnitStat statKey="메소 획득량" statVal={stats.final_stats?.mesos_obtained} type="PERCENT" />
-        <CharacterUnitStat statKey="스타포스" statVal={stats.final_stats?.star_force} type="PERCENT" />
-        <CharacterUnitStat statKey="아이템 드롭률" statVal={stats.final_stats?.item_drop_rate} type="PERCENT" />
-        <CharacterUnitStat statKey="아케인 포스" statVal={stats.final_stats?.item_drop_rate} type="NUMBER" />
-        <CharacterUnitStat statKey="추가 경험치 획득" statVal={stats.final_stats?.bonus_exp} type="PERCENT" />
-        <CharacterUnitStat statKey="아센틱 포스" statVal={stats.final_stats?.authentic_force} type="NUMBER" />
-        <CharacterUnitStat statKey="방어력" statVal={stats.final_stats?.deffense} type="NUMBER" />
-        <CharacterUnitStat statKey="상태이상 내성" statVal={stats.final_stats?.status_resistance} type="NUMBER" />
-        <CharacterUnitStat statKey="이동속도" statVal={stats.final_stats?.speed} type="PERCENT" />
-        <CharacterUnitStat statKey="점프력" statVal={stats.final_stats?.jump} type="PERCENT" />
-        <CharacterUnitStat statKey="스탠스" statVal={stats.final_stats?.knockback_resistance} type="PERCENT" />
-        <CharacterUnitStat statKey="공격 속도" statVal={stats.final_stats?.attack_speed} type="STAGE" />
+        <CharacterUnitStat statKey="메소 획득량" statVal={stats.final_stats?.메소_획득량} type="PERCENT" />
+        <CharacterUnitStat statKey="스타포스" statVal={stats.final_stats?.스타포스} type="PERCENT" />
+        <CharacterUnitStat statKey="아이템 드롭률" statVal={stats.final_stats?.아이템_드롭률} type="PERCENT" />
+        <CharacterUnitStat statKey="아케인 포스" statVal={stats.final_stats?.아케인포스} type="NUMBER" />
+        <CharacterUnitStat statKey="추가 경험치 획득" statVal={stats.final_stats?.추가_경험치_획득} type="PERCENT" />
+        <CharacterUnitStat statKey="아센틱 포스" statVal={stats.final_stats?.어센틱포스} type="NUMBER" />
+        <CharacterUnitStat statKey="방어력" statVal={stats.final_stats?.방어력} type="NUMBER" />
+        <CharacterUnitStat statKey="상태이상 내성" statVal={stats.final_stats?.상태이상_내성} type="NUMBER" />
+        <CharacterUnitStat statKey="이동속도" statVal={stats.final_stats?.이동속도} type="PERCENT" />
+        <CharacterUnitStat statKey="점프력" statVal={stats.final_stats?.점프력} type="PERCENT" />
+        <CharacterUnitStat statKey="스탠스" statVal={stats.final_stats?.스탠스} type="PERCENT" />
+        <CharacterUnitStat statKey="공격 속도" statVal={stats.final_stats?.공격_속도} type="STAGE" />
       </StyledBox02>
     </>
   );
