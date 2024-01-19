@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import WeaponOptionItem from "./WeaponOptionItem";
-import { IWeaponOption } from "../../../../@types/maple/WeaponTypes";
+import { IWeaponOptionType } from "../../../../@types/maple/WeaponTypes";
 import DashedLine from "../../../common/DashedLine";
 
 const StyledList = styled.ul`
@@ -12,11 +12,11 @@ const StyledList = styled.ul`
 
 interface Props {
   item_equipment_part: string | undefined;
-  totalOption: IWeaponOption | undefined;
-  baseOption: IWeaponOption | undefined;
-  exceptionalOption: IWeaponOption | undefined;
-  addOption: IWeaponOption | undefined;
-  starforceOption: IWeaponOption | undefined;
+  totalOption: IWeaponOptionType | undefined;
+  baseOption: IWeaponOptionType | undefined;
+  exceptionalOption: IWeaponOptionType | undefined;
+  addOption: IWeaponOptionType | undefined;
+  starforceOption: IWeaponOptionType | undefined;
   golden_hammer_flag: boolean | undefined;
   cuttable_count: string | undefined;
 }
@@ -189,7 +189,7 @@ const WeaponOptionBox: React.FC<Props> = ({
         {golden_hammer_flag ? <WeaponOptionItem desc="황금망치 제련 적용" /> : null}
         {/* cuttable_count */}
         {cuttable_count ? (
-          <WeaponOptionItem desc="가위 사용 가능 횟수" highlight="#FDCA00" total={cuttable_count} unit="회" />
+          <WeaponOptionItem desc="가위 사용 가능 횟수" highlight="유니크" total={cuttable_count} unit="회" />
         ) : null}
       </StyledList>
     </>
@@ -197,3 +197,4 @@ const WeaponOptionBox: React.FC<Props> = ({
 };
 
 export default WeaponOptionBox;
+

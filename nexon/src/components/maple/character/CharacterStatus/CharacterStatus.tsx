@@ -4,7 +4,7 @@ import CharacterWeapons from "./CharacterWeapons";
 import PetWeapons from "./PetWeapons";
 
 const StyledBox = styled.div`
-  width: 1140px;
+  width: 100%;
   min-height: 800px;
   display: flex;
   justify-content: space-between;
@@ -22,4 +22,3 @@ const CharacterStatus = () => {
 };
 
 export default CharacterStatus;
-

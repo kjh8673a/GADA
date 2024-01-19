@@ -1,13 +1,14 @@
 import styled from "styled-components";
-import { IWeaponData } from "../../../../@types/maple/WeaponTypes";
+import { ITitleDataType, IWeaponDataType } from "../../../../@types/maple/WeaponTypes";
 import WeaponOptionBox from "./WeaponOptionBox";
 import WeaponSummaryBox from "./WeaponSummaryBox";
 import WeaponPotentialOptionBox from "./WeaponPotentialOptionBox";
+import WeaponStarforce from "./WeaponStarforce";
 
 const StyledBox = styled.div`
   position: absolute;
   box-sizing: border-box;
-  width: 320px;
+  width: 340px;
   top: 0;
   right: 56px;
   background-color: #2b2c2a;
@@ -18,16 +19,17 @@ const StyledBox = styled.div`
 `;
 
 interface Props {
-  data?: IWeaponData | undefined;
+  data?: IWeaponDataType | undefined;
+  title?: ITitleDataType | null | undefined;
 }
 
-const WeaponBoxDetail: React.FC<Props> = ({ data }) => {
-  console.log(data);
+const WeaponBoxDetail: React.FC<Props> = ({ data, title }) => {
   return (
     <StyledBox>
-      <WeaponSummaryBox data={data} />
+      <WeaponStarforce starforce={data ? +data?.starforce : null} scrollFlag={data?.starforce_scroll_flag === "사용"} />
+      <WeaponSummaryBox data={data} title={title} />
       <WeaponOptionBox
-        item_equipment_part={data?.item_equipment_part}
+        item_equipment_part={data?.item_equipment_part || "칭호"}
         totalOption={data?.item_total_option}
         baseOption={data?.item_base_option}
         exceptionalOption={data?.item_exceptional_option}
@@ -53,3 +55,4 @@ const WeaponBoxDetail: React.FC<Props> = ({ data }) => {
 };
 
 export default WeaponBoxDetail;
+

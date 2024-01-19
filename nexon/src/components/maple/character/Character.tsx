@@ -14,7 +14,7 @@ const Character = () => {
   useEffect(() => {
     setUserName(params.Charactername as string);
   }, [setUserName, params.Charactername]);
-  
+
   return (
     <CenteredBox>
       {/* 여기에 조회된 캐릭터 정보 표시 */}
@@ -28,3 +28,4 @@ const Character = () => {
 };
 
 export default Character;
+
