@@ -23,6 +23,8 @@ import com.maple.mapleservice.dto.feign.character.CharacterPetDto;
 import com.maple.mapleservice.dto.feign.character.CharacterSkillDto;
 import com.maple.mapleservice.dto.feign.character.CharacterVMatrixDto;
 import com.maple.mapleservice.dto.model.character.skill.HexaStatCore;
+import com.maple.mapleservice.dto.response.Character.CharacterCompareEachCharacterResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterCompareResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
 import com.maple.mapleservice.util.HexaCoreTable;
 import com.maple.mapleservice.dto.model.character.Symbol;
@@ -365,7 +367,7 @@ public class CharacterServiceImpl implements CharacterService {
 		Long used_sol_erda_energy = 0L;
 		Long used_sol_erda_fragment = 0L;
 
-		if(character_hexa_core_equipment != null) {
+		if (character_hexa_core_equipment != null) {
 			for (HexaMatrix hexaMatrix : character_hexa_core_equipment) {
 				int[][] usedCount = new int[1][2];
 				switch (hexaMatrix.getHexa_core_type()) {
@@ -394,6 +396,32 @@ public class CharacterServiceImpl implements CharacterService {
 		return CharacterHexaMatrixResponseDto.of(character_hexa_core_equipment, used_sol_erda_energy,
 			used_sol_erda_fragment, characterSkillDto.getCharacter_skill(),
 			character_hexa_stat_core.size() == 0 ? null : character_hexa_stat_core.get(0));
+	}
+
+	/**
+	 * 캐릭터 비교
+	 * @param leftCharacterName
+	 * @param rightCharacterName
+	 * @return
+	 */
+	@Override
+	public CharacterCompareResponseDto getCharacterCompare(String leftCharacterName, String rightCharacterName) {
+		CharacterCompareEachCharacterResponseDto left_character = getCharacterForCompare(leftCharacterName);
+		CharacterCompareEachCharacterResponseDto right_character = getCharacterForCompare(leftCharacterName);
+
+		return CharacterCompareResponseDto.of(left_character, right_character);
+	}
+
+	public CharacterCompareEachCharacterResponseDto getCharacterForCompare(String characterName) {
+		if (characterName == null || characterName.isBlank()) {
+			return null;
+		}
+
+		CharacterBasicInfoResponseDto character_basic_info = getCharacterBasicInfo(characterName);
+		CharacterItemResponseDto character_item = getCharacterItem(characterName);
+		CharacterStatsResponseDto character_stats = getCharacterStats(characterName);
+
+		return CharacterCompareEachCharacterResponseDto.of(character_basic_info, character_item, character_stats);
 	}
 
 	private int[][] calculateSkillCore(int hexaCoreLevel) {

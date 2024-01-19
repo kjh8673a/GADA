@@ -54,4 +54,16 @@ class CharacterControllerTest {
 		ResponseEntity<SuccessResponse> response = characterController.getCharacterHexamatrix(characterName);
 	}
 
+	@Test
+	void 캐릭터_비교_둘_다_없는_경우_테스트() {
+		ResponseEntity<SuccessResponse> response = characterController.getCharacterCompare(null, null);
+	}
+
+	@Test
+	void 캐릭터_비교_테스트() {
+		String leftCharacterName = "아델";
+		String rightCharactername = "도적";
+		ResponseEntity<SuccessResponse> response = characterController.getCharacterCompare(leftCharacterName, rightCharactername);
+	}
+
 }

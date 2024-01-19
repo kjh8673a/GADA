@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.maple.mapleservice.dto.feign.character.CharacterLinkSkillDto;
 import com.maple.mapleservice.dto.feign.character.CharacterSkillDto;
+import com.maple.mapleservice.dto.response.Character.CharacterCompareResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterHexaMatrixResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterItemResponseDto;
@@ -32,11 +33,6 @@ public class CharacterController {
     private final CharacterService characterService;
     private final CharacterApiService characterApiService;
     private final UnionService unionService;
-
-    @RequestMapping("/basic")
-    public String getBasicInfo(@RequestParam String characterName) {
-        return null;
-    }
 
     @RequestMapping("/findMyCharacter")
     public ResponseEntity<SuccessResponse> findMyCharacter(@RequestParam String characterName) {
@@ -128,6 +124,20 @@ public class CharacterController {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(SuccessResponse.of(unionInfoResponseDto));
+    }
+
+    @RequestMapping("/getCharacterCompare")
+    public ResponseEntity<SuccessResponse> getCharacterCompare(@RequestParam(required = false, defaultValue = "") String leftCharacterName, @RequestParam(required = false, defaultValue = "") String rightCharacterName) {
+        CharacterCompareResponseDto characterCompareResponseDto = characterService.getCharacterCompare(leftCharacterName, rightCharacterName);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(SuccessResponse.of(characterCompareResponseDto));
+    }
+
+    @RequestMapping("/paramTest")
+    public String getParamTest(@RequestParam(required = false) String a, @RequestParam(required = false) String b) {
+        return "a : " + a + " b : " + b;
     }
 
 }
