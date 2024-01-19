@@ -48,4 +48,10 @@ class CharacterControllerTest {
 		ResponseEntity<SuccessResponse> response = characterController.getCharacterHexamatrix(characterName);
 	}
 
+	@Test
+	void 헥사_매트릭스_없을때_조회_테스트() {
+		String characterName = "단심히어로";
+		ResponseEntity<SuccessResponse> response = characterController.getCharacterHexamatrix(characterName);
+	}
+
 }
