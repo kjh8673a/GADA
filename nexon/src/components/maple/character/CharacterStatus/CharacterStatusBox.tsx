@@ -46,10 +46,13 @@ const CharacterStatusBox = () => {
   const { getCharacterStats } = useCharacterData();
   const characterName = useRecoilValue<string>(userNickName);
   const stats = useRecoilValue<IStatType>(atomCharacterStats);
+  console.log(stats);
 
   useEffect(() => {
-    getCharacterStats(characterName ? characterName : "말랑말랑");
-  }, [getCharacterStats]);
+    if (characterName) {
+      getCharacterStats(characterName);
+    }
+  }, [characterName, getCharacterStats]);
 
   return (
     <StyledBox>

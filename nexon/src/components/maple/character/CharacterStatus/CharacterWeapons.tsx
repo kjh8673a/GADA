@@ -25,10 +25,16 @@ const CharacterWeapons = () => {
   const myWeapons = useRecoilValue<IWeaponTypes>(atomCharacterWeapon);
 
   useEffect(() => {
-    getCharacterWeapons(characterName ? characterName : "도적");
-  }, [getCharacterWeapons]);
+    if (characterName) {
+      getCharacterWeapons(characterName);
+    }
+  }, [characterName, getCharacterWeapons]);
 
-  const WEAPONS = useMemo(() => new Map<string, IWeaponDataType>(), [myWeapons]);
+  const WEAPONS = useMemo(() => new Map<string, IWeaponDataType | null>(), [myWeapons]);
+
+  WEAPON_SLOT_LIST.forEach((slot) => {
+    WEAPONS.set(slot, null);
+  });
 
   myWeapons?.item?.item_equipment.forEach((item: IWeaponDataType) => {
     const slot = voidStrToCamelCase(item.item_equipment_slot);
@@ -36,6 +42,8 @@ const CharacterWeapons = () => {
       WEAPONS.set(slot, item);
     }
   });
+
+  console.log(WEAPONS, myWeapons);
 
   return (
     <StyledBox>
