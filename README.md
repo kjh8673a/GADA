@@ -1,14 +1,14 @@
-# GADA
+# 🍄 GADA
 
-## 프로젝트 진행 기간
+## ⌛ 프로젝트 진행 기간
 
 - 2023.12.29 ~
 
-## 개요
+## 🎞️ 개요
 
-## 주요 기능
+## 📑 주요 기능
 
-## Tech Stack
+## 🛠️ 기술 스택
 
 <details open>
     <summary><b style="font-size: 18px">Application and Data</b></summary>
