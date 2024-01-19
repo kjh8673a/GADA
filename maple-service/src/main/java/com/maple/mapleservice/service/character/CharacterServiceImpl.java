@@ -364,33 +364,36 @@ public class CharacterServiceImpl implements CharacterService {
 
 		Long used_sol_erda_energy = 0L;
 		Long used_sol_erda_fragment = 0L;
-		for (HexaMatrix hexaMatrix : character_hexa_core_equipment) {
-			int[][] usedCount = new int[1][2];
-			switch (hexaMatrix.getHexa_core_type()) {
-				case "스킬 코어":
-					usedCount = calculateSkillCore(hexaMatrix.getHexa_core_level());
-					break;
-				case "마스터리 코어":
-					usedCount = calculateMasteryCore(hexaMatrix.getHexa_core_level());
-					break;
-				case "강화 코어":
-					usedCount = calculateEnhanceCore(hexaMatrix.getHexa_core_level());
-					break;
-				case "공용 코어":
-					usedCount = calculateCommonCore(hexaMatrix.getHexa_core_level());
-					break;
+
+		if(character_hexa_core_equipment != null) {
+			for (HexaMatrix hexaMatrix : character_hexa_core_equipment) {
+				int[][] usedCount = new int[1][2];
+				switch (hexaMatrix.getHexa_core_type()) {
+					case "스킬 코어":
+						usedCount = calculateSkillCore(hexaMatrix.getHexa_core_level());
+						break;
+					case "마스터리 코어":
+						usedCount = calculateMasteryCore(hexaMatrix.getHexa_core_level());
+						break;
+					case "강화 코어":
+						usedCount = calculateEnhanceCore(hexaMatrix.getHexa_core_level());
+						break;
+					case "공용 코어":
+						usedCount = calculateCommonCore(hexaMatrix.getHexa_core_level());
+						break;
+				}
+				used_sol_erda_energy += usedCount[0][0];
+				used_sol_erda_fragment += usedCount[0][1];
 			}
-			used_sol_erda_energy += usedCount[0][0];
-			used_sol_erda_fragment += usedCount[0][1];
 		}
 
 		CharacterSkillDto characterSkillDto = characterApiService.getCharacterSkill(ocid, "6");
-		HexaStatCore hexaStatCore = characterApiService.getCharacterHexaMatrixStatDto(ocid)
-			.getCharacter_hexa_stat_core()
-			.get(0);
+		List<HexaStatCore> character_hexa_stat_core = characterApiService.getCharacterHexaMatrixStatDto(ocid)
+			.getCharacter_hexa_stat_core();
 
 		return CharacterHexaMatrixResponseDto.of(character_hexa_core_equipment, used_sol_erda_energy,
-			used_sol_erda_fragment, characterSkillDto.getCharacter_skill(), hexaStatCore);
+			used_sol_erda_fragment, characterSkillDto.getCharacter_skill(),
+			character_hexa_stat_core.size() == 0 ? null : character_hexa_stat_core.get(0));
 	}
 
 	private int[][] calculateSkillCore(int hexaCoreLevel) {
