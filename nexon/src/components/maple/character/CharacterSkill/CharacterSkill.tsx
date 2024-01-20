@@ -31,13 +31,13 @@ const DUMMY_HEXA: hexaStat = {
 const CharacterSkill = () => {
     const params = useParams<{ Charactername : string }>();
     const [sixSkill, setSixSkill] = useState<skillType[]>([]);
-    const [haveSixSkill, setHaveSixSkill] = useState<boolean>(true);
+    const [haveSixSkill, setHaveSixSkill] = useState<boolean>(false);
     const [fiveSkill, setFiveSkill] = useState<skillType[]>([]);
-    const [haveFiveSkill, setHaveFiveSkill] = useState<boolean>(true);
+    const [haveFiveSkill, setHaveFiveSkill] = useState<boolean>(false);
     const [hiperSkill, setHiperSkill] = useState<skillType[]>([]);
-    const [haveHiperSkill, setHaveHiperSkill] = useState<boolean>(true);
+    const [haveHiperSkill, setHaveHiperSkill] = useState<boolean>(false);
     const [linkSkill, setLinkSkill] = useState<skillType[]>([]);
-    const [haveLinkSkill, setHaveLinkSkill] = useState<boolean>(true);
+    const [haveLinkSkill, setHaveLinkSkill] = useState<boolean>(false);
     const [solErdaEnergy, setSolErdaEnergy] = useState<number>(0);
     const [solErdaFragment, setSolErdaFragment] = useState<number>(0);
     const [characterName, setCharacterName] = useRecoilState<string>(userNickName);
@@ -59,19 +59,23 @@ const CharacterSkill = () => {
                 .then((res) => {
                     setSolErdaEnergy(res.data.data.used_sol_erda_energy);
                     setSolErdaFragment(res.data.data.used_sol_erda_fragment);
-                    setSixSkill(res.data.data.character_skill_desc);
-                    console.log(res.data.data);
-                    const hexa: hexaStat = {
-                        main_stat_name: res.data.data.character_hexa_stat_core.main_stat_name,
-                        sub_stat_name_1: res.data.data.character_hexa_stat_core.sub_stat_name_1,
-                        sub_stat_name_2: res.data.data.character_hexa_stat_core.sub_stat_name_2,
-                        main_stat_level: res.data.data.character_hexa_stat_core.main_stat_level,
-                        sub_stat_level_1: res.data.data.character_hexa_stat_core.sub_stat_level_1,
-                        sub_stat_level_2: res.data.data.character_hexa_stat_core.sub_stat_level_2
+                    if (res.data.data.character_skill_desc.length !== 0) {
+                        setSixSkill(res.data.data.character_skill_desc);
+                        setHaveSixSkill(true);
                     }
-                    setHexaStat(hexa);
-                    setHaveHexaStat(true);
-                    
+                    let hexa : hexaStat;
+                    if (res.data.data.character_hexa_stat_core !== null) {
+                        hexa = {
+                            main_stat_name: res.data.data.character_hexa_stat_core.main_stat_name,
+                            sub_stat_name_1: res.data.data.character_hexa_stat_core.sub_stat_name_1,
+                            sub_stat_name_2: res.data.data.character_hexa_stat_core.sub_stat_name_2,
+                            main_stat_level: res.data.data.character_hexa_stat_core.main_stat_level,
+                            sub_stat_level_1: res.data.data.character_hexa_stat_core.sub_stat_level_1,
+                            sub_stat_level_2: res.data.data.character_hexa_stat_core.sub_stat_level_2
+                        }
+                        setHexaStat(hexa);
+                        setHaveHexaStat(true);
+                    }
                 }).catch(() => {
                     setHaveSixSkill(false);
                     setHaveHexaStat(false);
@@ -79,21 +83,38 @@ const CharacterSkill = () => {
             
             getMyFiveSkill(characterName)
                 .then((res) => {
-                    setFiveSkill(res.data.data.character_skill_desc);
+                    if (res.data.data.character_skill_desc.length !== 0) {
+                        setFiveSkill(res.data.data.character_skill_desc);
+                        setHaveFiveSkill(true);
+                    }
+                    //5차스킬이 존재하지 않는다면?
                 }).catch(() => {
                     setHaveFiveSkill(false);
                 })
             
             getMyHiperSkill(characterName)
                 .then((res) => {
-                    setHiperSkill(res.data.data.character_skill);
+                    let cnt = 0;
+                    for (let i = 0; i < res.data.data.character_skill.length; i++) {
+                        if (res.data.data.character_skill[i].skill_level === 0) {
+                            cnt++;
+                        }
+                    }
+                    //하이퍼 패시브 스킬을 찍지 않았다면?
+                    if (cnt !== res.data.data.character_skill.length) {
+                        setHaveHiperSkill(true);
+                        setHiperSkill(res.data.data.character_skill);         
+                    }
                 }).catch(() => {
                     setHaveHiperSkill(false);
                 })
             
             getMyLinkSkill(characterName)
                 .then((res) => {
-                    setLinkSkill(res.data.data.character_link_skill);
+                    if (res.data.data.character_link_skill.length !== 0) {
+                        setLinkSkill(res.data.data.character_link_skill);
+                        setHaveLinkSkill(true);
+                    }
                 }).catch(() => {
                     setHaveLinkSkill(false);
                 })
