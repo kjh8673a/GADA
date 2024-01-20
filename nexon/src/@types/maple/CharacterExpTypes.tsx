@@ -1,10 +1,20 @@
 export type CharacterExpItemType = {
+  ocid: string,
   date: string;
   character_level: number;
-  character_exp: number;
+  exp: number;
   character_exp_rate: string;
 }
 
 export type CharacterExpType = {
-  dates: CharacterExpItemType[];
+  timestamp: string;
+  data: CharacterExpItemType[];
 };
+
+export type GraphHoverItemPropsType = {
+  x: number;
+  y: number;
+  exp: number;
+  character_level: number;
+  date: string;
+}

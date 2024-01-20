@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import SkillBox from './SkillBox';
-import { skillType } from './CharacterSkill';
 import SkillSquare from './SkillSquare';
+import { skillType } from '../../../../@types/maple/CharacterSkillType';
+import { SkillContainer, SkillDegree, SolidHr } from './SixSkill';
 
 interface Props {
     skillList: skillType[];
@@ -10,12 +11,17 @@ interface Props {
 
 const LinkSkill: React.FC<Props> = ({ skillList }) => {
     return (
-        <SkillBox>
-            {skillList?.map((_, index) => (
-                <SkillSquare skillImg={skillList[index].skill_icon}
-                    skillLevel={skillList[index].skill_level} />
-            ))}
-        </SkillBox>
+        <SkillContainer>
+            <SkillDegree>
+                링크 스킬
+            </SkillDegree>
+            <SolidHr />
+            <SkillBox>
+                {skillList?.map((_, index) => (
+                    <SkillSquare skill={skillList[index]} />
+                ))}
+            </SkillBox>
+        </SkillContainer>
     )
 }
 
