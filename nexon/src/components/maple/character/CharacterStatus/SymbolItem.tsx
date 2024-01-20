@@ -42,7 +42,7 @@ const StyledLevelBox = styled.div`
   font-size: 0.8rem;
   font-weight: 800;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   border-left: 1px solid #555;
   border-right: 1px solid #555;
 `;
@@ -51,7 +51,7 @@ const StyledTypeBox = styled.div`
   width: 100%;
   background-color: #555555;
   box-sizing: border-box;
-  padding: 4px 8px;
+  padding: 4px;
   font-size: 0.6rem;
   font-weight: 800;
   display: flex;
@@ -69,14 +69,10 @@ const SymbolItem: React.FC<Props> = ({ data }) => {
   return (
     <StyledBox $nodata={!data}>
       <StyledIcon $img={data?.symbol_icon} $type={data?.symbol_name?.split(" : ")[0] || "심볼없음"} />
-      <StyledLevelBox>
-        <span>Lv.</span>
-        <span>{data?.symbol_level || 0}</span>
-      </StyledLevelBox>
+      <StyledLevelBox>Lv. {data?.symbol_level || 0}</StyledLevelBox>
       <StyledTypeBox>{data?.symbol_name?.split(" : ")[0] || "심볼없음"}</StyledTypeBox>
     </StyledBox>
   );
 };
 
 export default SymbolItem;
-
