@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.maple.mapleservice.dto.feign.character.CharacterLinkSkillDto;
 import com.maple.mapleservice.dto.feign.character.CharacterSkillDto;
+import com.maple.mapleservice.dto.response.Character.CharacterCompareResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterExpHistoryResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterHexaMatrixResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterItemResponseDto;
@@ -39,4 +40,6 @@ public interface CharacterService {
 	CharacterLinkSkillDto getCharacterLinkSkill(String characterName);
 
 	CharacterHexaMatrixResponseDto getCharacterHexaMatrix(String characterName);
+
+	CharacterCompareResponseDto getCharacterCompare(String leftCharacterName, String rightCharacterName);
 }
