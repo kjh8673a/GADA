@@ -4,7 +4,7 @@ import CharacterTabItem from "./CharacterTabItem";
 import useCharacterTab from "../../../hooks/maple/useCharacterTab";
 
 const StyledTab = styled.div`
-  width: 1140px;
+  width: 100%;
   box-sizing: border-box;
   height: 44px;
   border: 1px solid #ccc;
@@ -28,4 +28,3 @@ const CharacterTab = () => {
 };
 
 export default CharacterTab;
-

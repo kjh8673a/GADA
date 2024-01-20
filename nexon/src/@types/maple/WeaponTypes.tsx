@@ -43,7 +43,20 @@ export type WEAPON_GRADE_TYPE = (typeof WEAPON_GRADE_LIST)[number];
 
 export type WEAPON_TYPE = (typeof WEAPON_SLOT_LIST)[number];
 
-export interface IWeaponOption {
+export interface cachItemPresetType {
+  cash_item_coloring_prism: string | null;
+  cash_item_description: string | null;
+  cash_item_equipment_part: string | null;
+  cash_item_equipment_slot: string | null;
+  cash_item_icon: string | null;
+  cash_item_label: string | null;
+  cash_item_name: string | null;
+  cash_item_option: string[];
+  date_expire: string | null;
+  date_option_expire: string | null;
+}
+
+export interface IWeaponOptionType {
   str?: string;
   dex?: string;
   int?: string;
@@ -65,7 +78,7 @@ export interface IWeaponOption {
   base_equipment_level?: number;
 }
 
-export interface IWeaponData {
+export interface IWeaponDataType {
   item_equipment_part: string;
   item_equipment_slot: string;
   item_name: string;
@@ -74,8 +87,8 @@ export interface IWeaponData {
   item_shape_name: string;
   item_shape_icon: string;
   item_gender: string | null;
-  item_total_option: IWeaponOption;
-  item_base_option: IWeaponOption;
+  item_total_option: IWeaponOptionType;
+  item_base_option: IWeaponOptionType;
   potential_option_grade: string | null;
   additional_potential_option_grade: string | null;
   potential_option_1: string | null;
@@ -85,8 +98,8 @@ export interface IWeaponData {
   additional_potential_option_2: string | null;
   additional_potential_option_3: string | null;
   equipment_level_increase: number;
-  item_exceptional_option: IWeaponOption;
-  item_add_option: IWeaponOption;
+  item_exceptional_option: IWeaponOptionType;
+  item_add_option: IWeaponOptionType;
   growth_exp: number;
   growth_level: number;
   scroll_upgrade: string;
@@ -96,10 +109,100 @@ export interface IWeaponData {
   scroll_upgradeable_count: string;
   soul_name: string | null;
   soul_option: string | null;
-  item_etc_option: IWeaponOption;
+  item_etc_option: IWeaponOptionType;
   starforce: string;
   starforce_scroll_flag: string;
-  item_starforce_option: IWeaponOption;
+  item_starforce_option: IWeaponOptionType;
   special_ring_level: number;
   date_expire: string | null;
 }
+
+export interface ITitleDataType {
+  date_expire: string | null;
+  date_option_expire: string | null;
+  title_description: string | null;
+  title_icon: string | null;
+  title_name: string | null;
+}
+
+export interface IPetWeaponOptionType {
+  option_type: string;
+  option_value: string;
+}
+
+export interface IPetWeaponDataType {
+  item_description: string | null;
+  item_icon: string | null;
+  item_name: string | null;
+  item_option: IPetWeaponOptionType[];
+  scroll_upgrade: number | null;
+  scroll_upgradeable: string | null;
+}
+
+export interface ISymbolStatType {
+  symbol_hp: number;
+  symbol_dex: number;
+  symbol_force: number;
+  symbol_str: number;
+  symbol_int: number;
+  symbol_luk: number;
+}
+
+export interface ISymbolDataType {
+  symbol_description: string | null;
+  symbol_dex: string | null;
+  symbol_force: string | null;
+  symbol_growth_count: number | null;
+  symbol_hp: string | null;
+  symbol_icon: string | null;
+  symbol_int: string | null;
+  symbol_level: number | null;
+  symbol_luk: string | null;
+  symbol_name: string | null;
+  symbol_require_growth_count: number | null;
+  symbol_str: string | null;
+}
+
+export interface IWeaponTypes {
+  cach_item?: {
+    cach_item_equitment_preset_1: cachItemPresetType[];
+    cach_item_equitment_preset_2: cachItemPresetType[];
+    cach_item_equitment_preset_3: cachItemPresetType[];
+    character_class: string | null;
+    character_gender: string | null;
+    preset_no: number | null;
+  };
+  item?: {
+    item_equipment: IWeaponDataType[];
+    title: ITitleDataType | null;
+  };
+  pet?: {
+    pet_1_name: string | null;
+    pet_1_nickname: string | null;
+    pet_1_icon: string | null;
+    pet_1_description: string | null;
+    pet_1_equipment: IPetWeaponDataType;
+    pet_1_pet_type: string | null;
+    pet_1_skill: string[];
+    pet_1_date_expire: string | null;
+    pet_2_name: string | null;
+    pet_2_nickname: string | null;
+    pet_2_icon: string | null;
+    pet_2_description: string | null;
+    pet_2_equipment: IPetWeaponDataType;
+    pet_2_pet_type: string | null;
+    pet_2_skill: string[];
+    pet_2_date_expire: string | null;
+    pet_3_name: string | null;
+    pet_3_nickname: string | null;
+    pet_3_icon: string | null;
+    pet_3_description: string | null;
+    pet_3_equipment: IPetWeaponDataType;
+    pet_3_pet_type: string | null;
+    pet_3_skill: string[];
+    pet_3_date_expire: string | null;
+  };
+  symbols?: ISymbolDataType[] | null;
+  timestamp?: string | null;
+}
+

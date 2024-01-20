@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import WeaponOptionItem from "./WeaponOptionItem";
 import DashedLine from "../../../common/DashedLine";
+import OptionTitle from "../../../../style/OptionTitle";
 
 const StyledList = styled.ul`
   width: 100%;
@@ -25,10 +26,10 @@ const WeaponPotentialOptionBox: React.FC<Props> = ({ title, potential1, potentia
     <>
       <DashedLine />
       <StyledList>
-        <WeaponOptionItem
-          desc={title}
+        <OptionTitle
+          title={title}
+          highlight={isAdditional ? "레전드리" : "유니크"}
           logo={`${process.env.PUBLIC_URL}/assets/${isAdditional ? "letter-r.png" : "letter-e.png"}`}
-          highlight={isAdditional ? "#5FECEC" : "#9966FD"}
         />
         {potential1 && <WeaponOptionItem desc={potential1} />}
         {potential2 && <WeaponOptionItem desc={potential2} />}
