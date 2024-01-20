@@ -19,7 +19,7 @@ const StyledBox = styled.div`
 `;
 
 interface Props {
-  data?: IWeaponDataType | undefined;
+  data?: IWeaponDataType | null | undefined;
   title?: ITitleDataType | null | undefined;
 }
 
