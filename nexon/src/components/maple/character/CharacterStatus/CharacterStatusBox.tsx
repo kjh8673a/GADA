@@ -46,7 +46,6 @@ const CharacterStatusBox = () => {
   const { getCharacterStats } = useCharacterData();
   const characterName = useRecoilValue<string>(userNickName);
   const stats = useRecoilValue<IStatType>(atomCharacterStats);
-  console.log(stats);
 
   useEffect(() => {
     if (characterName) {

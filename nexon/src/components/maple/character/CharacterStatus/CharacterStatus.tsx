@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import CharacterStatusBox from "./CharacterStatusBox";
-import CharacterWeapons from "./CharacterWeapons";
-import PetWeapons from "./PetWeapons";
+import CharacterWeaponBox from "./CharacterWeaponBox";
+import CharacterSymbols from "./CharacterSymbols";
 
 const StyledBox = styled.div`
   width: 100%;
@@ -15,10 +15,11 @@ const CharacterStatus = () => {
   return (
     <StyledBox>
       <CharacterStatusBox />
-      <CharacterWeapons />
-      <PetWeapons />
+      <CharacterWeaponBox />
+      <CharacterSymbols />
     </StyledBox>
   );
 };
 
 export default CharacterStatus;
+

@@ -9,8 +9,8 @@ const StyledBox = styled.div`
 `;
 
 interface WeaponPreviewProps {
-  img: string | undefined | null;
-  grade: string | undefined | null;
+  $img: string | undefined | null;
+  $grade: string | undefined | null;
 }
 
 const WeaponPreview = styled.div<WeaponPreviewProps>`
@@ -18,14 +18,14 @@ const WeaponPreview = styled.div<WeaponPreviewProps>`
   height: 100px;
   box-sizing: border-box;
   padding: 8px;
-  background-image: url(${(props) => (props.img ? props.img.trim() : "")});
+  background-image: url(${(props) => (props.$img ? props.$img.trim() : "")});
   background-size: contain;
   background-position: center; /* 이미지를 가운데 정렬 */
   background-repeat: no-repeat; /* 이미지 반복 없음 */
   background-origin: content-box;
-  border: 1px solid ${(props) => (!props.grade ? "#777" : MATCH_COLOR[props.grade])};
+  border: 1px solid ${(props) => (!props.$grade ? "#777" : MATCH_COLOR[props.$grade])};
   border-radius: 8px;
-  background-color: ${(props) => (!props.grade ? "#555" : MATCH_BGCOLOR[props.grade])};
+  background-color: ${(props) => (!props.$grade ? "#555" : MATCH_BGCOLOR[props.$grade])};
 `;
 
 const WeaponDetailTitle = styled.div`
@@ -59,7 +59,7 @@ interface Props {
 const WeaponSummaryBox: React.FC<Props> = ({ data, title }) => {
   return (
     <StyledBox>
-      <WeaponPreview img={data?.item_icon || title?.title_icon} grade={data?.potential_option_grade && ""} />
+      <WeaponPreview $img={data?.item_icon || title?.title_icon} $grade={data?.potential_option_grade && ""} />
       <WeaponDetailTitle>
         <WeaponNameBox>
           {data?.item_name || title?.title_name}

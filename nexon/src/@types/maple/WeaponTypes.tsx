@@ -125,13 +125,27 @@ export interface ITitleDataType {
   title_name: string | null;
 }
 
+export interface IPetWeaponOptionType {
+  option_type: string;
+  option_value: string;
+}
+
 export interface IPetWeaponDataType {
   item_description: string | null;
   item_icon: string | null;
   item_name: string | null;
-  item_option: string[];
+  item_option: IPetWeaponOptionType[];
   scroll_upgrade: number | null;
   scroll_upgradeable: string | null;
+}
+
+export interface ISymbolStatType {
+  symbol_hp: number;
+  symbol_dex: number;
+  symbol_force: number;
+  symbol_str: number;
+  symbol_int: number;
+  symbol_luk: number;
 }
 
 export interface ISymbolDataType {
@@ -188,7 +202,7 @@ export interface IWeaponTypes {
     pet_3_skill: string[];
     pet_3_date_expire: string | null;
   };
-  symbols?: ISymbolDataType[];
+  symbols?: ISymbolDataType[] | null;
   timestamp?: string | null;
 }
 

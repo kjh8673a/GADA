@@ -12,11 +12,12 @@ import { atomCharacterWeapon } from "../../../../atoms/maple/characterWeaponStat
 const StyledBox = styled.div`
   width: 320px;
   box-sizing: border-box;
-  padding: 8px;
+  padding: 16px 8px;
   background-color: #3d454d;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  border-radius: 4px;
 `;
 
 const CharacterWeapons = () => {
@@ -30,7 +31,7 @@ const CharacterWeapons = () => {
     }
   }, [characterName, getCharacterWeapons]);
 
-  const WEAPONS = useMemo(() => new Map<string, IWeaponDataType | null>(), [myWeapons]);
+  const WEAPONS = useMemo(() => new Map<string, IWeaponDataType | null>(), []);
 
   WEAPON_SLOT_LIST.forEach((slot) => {
     WEAPONS.set(slot, null);
@@ -42,8 +43,6 @@ const CharacterWeapons = () => {
       WEAPONS.set(slot, item);
     }
   });
-
-  console.log(WEAPONS, myWeapons);
 
   return (
     <StyledBox>
