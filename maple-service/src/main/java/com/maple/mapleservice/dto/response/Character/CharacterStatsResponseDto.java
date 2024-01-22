@@ -1,7 +1,6 @@
 package com.maple.mapleservice.dto.response.Character;
 
 import java.util.List;
-import java.util.Map;
 
 import com.maple.mapleservice.dto.feign.character.CharacterAbilityDto;
 import com.maple.mapleservice.dto.feign.character.CharacterCashItemDto;
@@ -23,17 +22,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CharacterStatsResponseDto {
-    Map<String, String> final_stats;
-    Map<String, HyperStat> hyper_stats;
-    CharacterAbilityDto ability;
+	CharacterFinalStatDto final_stats;
+	CharacterHyperStatsDto hyper_stats;
+	CharacterAbilityDto ability;
 
-    public static CharacterStatsResponseDto of(Map<String, String> final_stats,
-                                               Map<String, HyperStat> hyper_stats,
-                                               CharacterAbilityDto ability) {
-        return CharacterStatsResponseDto.builder()
-                .final_stats(final_stats)
-                .hyper_stats(hyper_stats)
-                .ability(ability)
-                .build();
-    }
+	public static CharacterStatsResponseDto of(CharacterFinalStatDto final_stats, CharacterHyperStatsDto hyper_stats, CharacterAbilityDto ability) {
+		return CharacterStatsResponseDto.builder()
+			.final_stats(final_stats)
+			.hyper_stats(hyper_stats)
+			.ability(ability)
+			.build();
+	}
 }

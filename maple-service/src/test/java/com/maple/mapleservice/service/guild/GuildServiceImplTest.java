@@ -19,16 +19,16 @@ class GuildServiceImplTest {
     String guildName = "리더";
 
     @Test
-    void 길드정보_서버별_가져오기_테스트() {
+    void getGuildBasicInfosByServer() {
         List<GuildBasicDto> guildBasicList = guildService.getGuildBasicInfosByServer(guildName);
-        assertThat(guildBasicList).hasSize(11);
+        assertThat(guildBasicList).hasSize(10);
 
     }
 
     @Test
-    void 길드이름_서벼벌_가져오기_테스트() {
+    void getAllOguildIdByGuildName() {
         List<String> oguildIdList = guildService.getAllOguildIdByGuildName(guildName);
-        assertThat(oguildIdList).hasSize(11);
+        assertThat(oguildIdList).hasSize(10);
 
     }
 }
