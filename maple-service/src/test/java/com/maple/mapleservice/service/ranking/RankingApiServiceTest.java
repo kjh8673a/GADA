@@ -2,8 +2,14 @@ package com.maple.mapleservice.service.ranking;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
+import com.maple.mapleservice.dto.model.ranking.Guild;
+import com.maple.mapleservice.util.CommonUtil;
+import com.maple.mapleservice.util.WorldName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +22,7 @@ class RankingApiServiceTest {
 
 	@Autowired
 	RankingApiService rankingApiService;
+	CommonUtil commonUtil = new CommonUtil();
 
 	@Test
 	void 유니온_랭킹_조회_테스트() {
@@ -31,4 +38,11 @@ class RankingApiServiceTest {
 	//
 	// 	assertThat(overallList.size()).isEqualTo(200);
 	// }
+
+	@Test
+	void 길드_랭킹_조회_테스트(){
+
+		List<Guild> guildList = rankingApiService.getRankingGuild(null, 2, 1);
+
+	}
 }

@@ -42,6 +42,24 @@ class CharacterServiceTest {
 	@Autowired
 	CharacterExpHistoryRepository characterExpHistoryRepository;
 
+
+
+	@Test
+	void 경험치_히스토리_삭제_테스트() {
+		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
+		List<Long> numbersToBeRemained = characterExpHistoryRepository.findNumbersToBeRemained(ocid);
+		List<Long> numbersToBeDeleted = characterExpHistoryRepository.findNumbersToBeDeleted(ocid, numbersToBeRemained);
+		characterExpHistoryRepository.expHistoryBatchDelete(numbersToBeDeleted);
+	}
+
+	@Test
+	void 경험치_히스토리_삭제할_번호_테스트() {
+		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
+		List<Long> numbersToBeRemained = characterExpHistoryRepository.findNumbersToBeRemained(ocid);
+		List<Long> numbersToBeDeleted = characterExpHistoryRepository.findNumbersToBeDeleted(ocid, numbersToBeRemained);
+		System.out.println(numbersToBeDeleted.size());
+	}
+
 	@Test
 	void 경험치_히스토리_조회_안될때_테스트() {
 		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
@@ -141,7 +159,7 @@ class CharacterServiceTest {
 	void 길드명없을때_null로_들어가는지_테스트() {
 		String ocid = characterApiService.getOcidKey("태주");
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
+		Long combatPower = characterApiService.getCharacterCombatPower(ocid);
 		List<Union> unionList = rankingApiService.getRankingUnion(ocid, characterBasicDto.getWorld_name());
 		Collections.sort(unionList, (o1, o2) -> Long.compare(o2.getUnion_level(), o1.getUnion_level()));
 
@@ -152,7 +170,7 @@ class CharacterServiceTest {
 			.date(commonUtil.date)
 			.world_name(characterBasicDto.getWorld_name())
 			.character_name(characterBasicDto.getCharacter_name())
-			.combat_power(Long.parseLong(combatPower))
+			.combat_power(combatPower)
 			.guild_name(characterBasicDto.getCharacter_guild_name())
 			.parent_ocid(parent_ocid)
 			.character_class(characterBasicDto.getCharacter_class())
@@ -167,7 +185,7 @@ class CharacterServiceTest {
 	@Test
 	void 대표ocid_갱신_테스트() {
 		// ocid가 a가 아니면서 parent_ocid가 qwerty인것을 갱신한다
-		characterServiceImpl.updateParentOcid("a", "qwerty", "e0a4f439e53c369866b55297d2f5f4eb");
+		characterRepository.updateParentOcid("a", "qwerty", "e0a4f439e53c369866b55297d2f5f4eb");
 
 		assertThat(characterRepository.findByParentOcid("qwerty")).isEmpty();
 	}
@@ -176,7 +194,7 @@ class CharacterServiceTest {
 	void 이전_닉네임_저장_테스트() {
 		String ocid = characterApiService.getOcidKey("큐브충");
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
+		Long combatPower = characterApiService.getCharacterCombatPower(ocid);
 		String oguildId = characterServiceImpl.getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 
 		Character character = characterRepository.findByOcid(ocid);
@@ -194,7 +212,7 @@ class CharacterServiceTest {
 			character.setCharacter_name(characterBasicDto.getCharacter_name());
 		}
 		// 전투력
-		character.setCombat_power(Long.parseLong(combatPower));
+		character.setCombat_power(combatPower);
 		// 길드명 + 길드식별자
 		if(characterBasicDto.getCharacter_guild_name() != null && !characterBasicDto.getCharacter_guild_name().equals(character.getGuild_name())) {
 			character.setGuild_name(characterBasicDto.getCharacter_guild_name());
@@ -204,14 +222,14 @@ class CharacterServiceTest {
 
 		characterRepository.save(character);
 
-		assertThat(characterRepository.finndByCharacterName("큐브충").getPrev_name()).isEqualTo(null);
+		assertThat(characterRepository.findByCharacterName("큐브충").getPrev_name()).isEqualTo(null);
 	}
 
 	@Test
 	void 캐릭터_정보_없는_경우_DB에_저장_테스트() {
 		String ocid = characterApiService.getOcidKey("큐브충");
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
+		Long combatPower = characterApiService.getCharacterCombatPower(ocid);
 		String oguildId = characterServiceImpl.getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 		String parent_ocid = "e0a4f439e53c369866b55297d2f5f4eb"; // 아델
 
@@ -223,7 +241,7 @@ class CharacterServiceTest {
 				.date(commonUtil.date)
 				.world_name(characterBasicDto.getWorld_name())
 				.character_name(characterBasicDto.getCharacter_name())
-				.combat_power(Long.parseLong(combatPower))
+				.combat_power(combatPower)
 				.guild_name(characterBasicDto.getCharacter_guild_name())
 				.parent_ocid(parent_ocid)
 				.oguild_id(oguildId)
@@ -236,14 +254,14 @@ class CharacterServiceTest {
 			characterRepository.save(characterForInsert);
 		}
 
-		assertThat(characterRepository.finndByCharacterName("큐브충").getCharacter_name()).isEqualTo("큐브충");
+		assertThat(characterRepository.findByCharacterName("큐브충").getCharacter_name()).isEqualTo("큐브충");
 	}
 	
 	@Test
 	void 캐릭터_정보_있는데_날짜_다를_경우_갱신_테스트() {
 		String ocid = "45a15799827229de6694e3086160d615efe8d04e6d233bd35cf2fabdeb93fb0d"; // 핵불닭푸딩
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		String combatPower = characterApiService.getCharacterStat(ocid).getCombat_power();
+		Long combatPower = characterApiService.getCharacterCombatPower(ocid);
 
 		Character character = characterRepository.findByOcid(ocid);
 
@@ -259,7 +277,7 @@ class CharacterServiceTest {
 			character.setCharacter_name(characterBasicDto.getCharacter_name());
 		}
 		// 전투력
-		character.setCombat_power(Long.parseLong(combatPower));
+		character.setCombat_power(combatPower);
 		// 길드명 + 길드식별자
 		if(characterBasicDto.getCharacter_guild_name() != null && !characterBasicDto.getCharacter_guild_name().equals(character.getGuild_name())) {
 			character.setGuild_name(characterBasicDto.getCharacter_guild_name());
@@ -269,7 +287,7 @@ class CharacterServiceTest {
 
 		characterRepository.save(character);
 
-		// assertThat(characterRepository.finndByCharacterName("핵불닭푸딩").getDate()).isEqualTo(commonUtil.date).isNotEqualTo(date);
+		// assertThat(characterRepository.findByCharacterName("핵불닭푸딩").getDate()).isEqualTo(commonUtil.date).isNotEqualTo(date);
 	}
 
 	@Test
@@ -281,9 +299,9 @@ class CharacterServiceTest {
 		Collections.sort(unionList, (o1, o2) -> Long.compare(o2.getUnion_level(), o1.getUnion_level()));
 		String parent_ocid = characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
 
-		characterServiceImpl.addChacterInformationToDbFromUnionRanking("다래푸딩", parent_ocid, unionList);
+		characterRepository.addChacterInformationToDbFromUnionRanking("다래푸딩", parent_ocid, unionList);
 
-		assertThat(characterRepository.finndByCharacterName("핵불닭푸딩")).isNotNull();
+		assertThat(characterRepository.findByCharacterName("핵불닭푸딩")).isNotNull();
 	}
 
 	@Test
