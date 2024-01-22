@@ -1,10 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
-type InfoItemPropsType = {
-  titles: string[];
-  values: string[];
-};
+import { BasicPropsType } from "../../../../@types/maple/CharacterBasicTypes";
 
 const InfoItemBox = styled.div`
   display: flex;
@@ -38,15 +34,24 @@ const InfoItemValue = styled.div`
   border-radius: 0.5rem;
 `;
 
-const InfoContainerItem: React.FC<InfoItemPropsType> = ({ titles, values }) => {
+const InfoContainerItem: React.FC<BasicPropsType> = ({
+  id,
+  titles,
+  values,
+}) => {
   return (
     <InfoItemBox>
       {titles.map((v, i) => {
         return (
-          <>
+          <React.Fragment key={v}>
             <InfoItemTitle>{v}</InfoItemTitle>
-            <InfoItemValue style={{ background: v === "LEVEL" ? "#B4CB32" : "#ABABAB"}}>{values[i]}</InfoItemValue>
-          </>
+            <InfoItemValue
+              key={id[i]}
+              style={{ background: v === "LEVEL" ? "#B4CB32" : "#ABABAB" }}
+            >
+              {values[i]}
+            </InfoItemValue>
+          </React.Fragment>
         );
       })}
     </InfoItemBox>

@@ -4,16 +4,22 @@ import CharacterDetail from "./CharacterDetail";
 import CharacterSummary from "./CharacterSummary/CharacterSummary";
 import CharacterTab from "./CharacterTab";
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { userNickName } from "../../../atoms/maple/characterName";
+import useCharacterBasic from "../../../hooks/maple/useCharacterBasic";
 
 const Character = () => {
   const params = useParams();
-  const [, setUserName] = useRecoilState(userNickName);
+  const { getCharacterBasic } = useCharacterBasic();
+  const setUserName = useSetRecoilState(userNickName);
 
   useEffect(() => {
     setUserName(params.Charactername as string);
   }, [setUserName, params.Charactername]);
+
+  useEffect(() => {
+    getCharacterBasic(params.Charactername as string);
+  }, [getCharacterBasic, params.Charactername]);
 
   return (
     <CenteredBox>
@@ -28,4 +34,3 @@ const Character = () => {
 };
 
 export default Character;
-
