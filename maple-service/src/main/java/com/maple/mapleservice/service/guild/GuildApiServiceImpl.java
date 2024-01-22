@@ -18,7 +18,7 @@ public class GuildApiServiceImpl implements GuildApiService{
 
     // 길드 이름으로 서버의 oguildid를 찾는다.
     @Override
-    @Cacheable(value = "guild-oguildId", key = "#worldName + '_' + #guildName", unless = "#result == null")
+    @Cacheable(value = "guild-oguildId", key = "#worldName + #guildName", unless = "#result == null")
     public String getOguildIdKey(String guildName, String worldName) {
 
         return oguildidFeignClient.getOguildId(guildName, worldName).getOguild_id();

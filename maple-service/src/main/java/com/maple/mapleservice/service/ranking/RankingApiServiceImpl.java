@@ -1,11 +1,7 @@
 package com.maple.mapleservice.service.ranking;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
-import com.maple.mapleservice.dto.model.ranking.Guild;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -29,18 +25,9 @@ public class RankingApiServiceImpl implements RankingApiService {
 	}
 
 	@Override
-	@Cacheable(value = "ranking-overall", key = "#world_type + '_' + #page")
+	@Cacheable(value = "ranking-overall", key = "#world_type + #page")
 	public List<Overall> getRankingOverall(int world_type, int page) {
 		return rankingFeignClient.rankingOverallDto(commonUtil.date, world_type, page).getRanking();
-	}
-
-	@Override
-	@Cacheable(value = "ranking-guild", key = "#ranking_type + '_' + #world_name + '_' + #page")
-	public List<Guild> getRankingGuild(String world_name, int ranking_type, int page) {
-		LocalDate currentDate = LocalDate.now();
-		LocalDate mondayOfWeek = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-		int daysDifference = currentDate.getDayOfMonth() - mondayOfWeek.getDayOfMonth() - 1;
-		return rankingFeignClient.rankingGuildDto(commonUtil.customDate(daysDifference), world_name, ranking_type, page).getRanking();
 	}
 
 }

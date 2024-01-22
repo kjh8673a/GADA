@@ -1,7 +1,6 @@
 package com.maple.mapleservice.service.character;
 
 import com.maple.mapleservice.dto.feign.character.*;
-import com.maple.mapleservice.dto.model.character.HyperStat;
 import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
 import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
@@ -45,13 +43,13 @@ public class CharacterApiServiceIntegrationTest {
 
     @Test
     void 종합_능력치_조회_테스트() {
-        Map<String, String> characterStatDto = characterApiService.getCharacterStat(ocid);
+        CharacterFinalStatDto characterStatDto = characterApiService.getCharacterStat(ocid);
         // assertThat(characterStatDto).isEqualTo(44);
     }
 
     @Test
     void 하이퍼스탯_조회_테스트() {
-        Map<String, HyperStat> characterHyperStat = characterApiService.getCharacterHyperStat(ocid);
+        CharacterHyperStatsDto characterHyperStat = characterApiService.getCharacterHyperStat(ocid);
     }
 
     @Test
@@ -111,24 +109,5 @@ public class CharacterApiServiceIntegrationTest {
     void 육차_스킬_조회_테스트() {
         CharacterSkillDto characterSkillDto = characterApiService.getCharacterSkill(ocid, "6");
     }
-    
-    @Test
-    void 육차_스킬_없을때_조회_테스트() {
-        String key = characterApiService.getOcidKey("단심히어로");
-        CharacterSkillDto characterSkillDto = characterApiService.getCharacterSkill(key, "6");
-        System.out.println(characterSkillDto.getCharacter_skill().size());
-    }
 
-    @Test
-    void 헥사_스탯_조회_테스트() {
-        CharacterHexaMatrixStatDto characterHexaMatrixStatDto = characterApiService.getCharacterHexaMatrixStatDto(ocid);
-        System.out.println(characterHexaMatrixStatDto.getCharacter_hexa_stat_core().get(0).getMain_stat_name());
-    }
-
-    @Test
-    void 헥사_스탯_없을때_조회_테스트() {
-        String key = characterApiService.getOcidKey("단심법사");
-        CharacterHexaMatrixStatDto characterHexaMatrixStatDto = characterApiService.getCharacterHexaMatrixStatDto(key);
-        System.out.println(characterHexaMatrixStatDto.getCharacter_hexa_stat_core().size());
-    }
 }

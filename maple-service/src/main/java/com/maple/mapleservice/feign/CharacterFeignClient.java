@@ -47,7 +47,4 @@ public interface CharacterFeignClient {
 
     @GetMapping("/hexamatrix")
     CharacterHexaMatrixDto getCharacterHexaMatrixDto(@RequestParam String ocid, @RequestParam String date);
-
-    @GetMapping("/hexamatrix-stat")
-    CharacterHexaMatrixStatDto getCharacterHexamatrixStatDto(@RequestParam String ocid, @RequestParam String date);
 }

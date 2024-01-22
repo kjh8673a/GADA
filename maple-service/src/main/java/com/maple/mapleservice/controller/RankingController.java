@@ -1,6 +1,5 @@
 package com.maple.mapleservice.controller;
 
-import com.maple.mapleservice.dto.model.ranking.Guild;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -14,8 +13,6 @@ import com.maple.mapleservice.dto.response.SuccessResponse;
 import com.maple.mapleservice.service.ranking.RankingService;
 
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,24 +32,4 @@ public class RankingController {
 			.status(HttpStatus.OK)
 			.body(SuccessResponse.of(combatPowerRanking));
 	}
-
-	@RequestMapping("/guildWaterway")
-	public ResponseEntity<SuccessResponse> getGuildWaterwayRanking(@RequestParam(defaultValue = "1") int page,
-																   @RequestParam(required = false) String world_name){
-
-		List<Guild> waterwayRanking = rankingService.getGuildWaterwayRanking(world_name, page - 1);
-
-		return ResponseEntity
-				.status(HttpStatus.OK)
-				.body(SuccessResponse.of(waterwayRanking));
-	}
-//
-//	@RequestMapping("/guildCombatPower")
-//	public ResponseEntity<SuccessResponse> getGuildCombatPowerRanking(@RequestParam(defaultValue = "1") int page,
-//																	  @RequestParam(required = false) String world_name){
-//
-//		return ResponseEntity
-//				.status(HttpStatus.OK)
-//				.body(SuccessResponse.of(combatPowerRanking));
-//	}
 }
