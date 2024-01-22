@@ -3,7 +3,7 @@ export const TAB_LIST = {
   CHARACTER: "장비/스탯",
   UNION: "유니온",
   SKILL: "스킬",
-  ORG_CHARACTER: "캐릭터 비교",
+  ORG_CHARACTER: "본/부캐",
 } as const;
 
 export type TabNameType = keyof typeof TAB_LIST;

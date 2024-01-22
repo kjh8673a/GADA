@@ -3,13 +3,15 @@ import SkillBox from './SkillBox';
 import SkillSquare from './SkillSquare';
 import { skillType } from '../../../../@types/maple/CharacterSkillType';
 import { SkillContainer, SkillDegree, SolidHr } from './SixSkill';
+import NoSkill from './NoSkill';
 
 
 interface Props {
-    skillList: skillType[]
+    skillList: skillType[];
+    haveFiveSkill: boolean;
 }
 
-const FiveSkill: React.FC<Props> = ({ skillList }) => {
+const FiveSkill: React.FC<Props> = ({ skillList, haveFiveSkill }) => {
 
     return (
         <SkillContainer>
@@ -17,11 +19,13 @@ const FiveSkill: React.FC<Props> = ({ skillList }) => {
                 5차 스킬
             </SkillDegree>
             <SolidHr />
-            <SkillBox>
-                {skillList?.map((_, index) => (
-                    <SkillSquare skill={skillList[index]} />
-                ))}
-            </SkillBox>
+            {haveFiveSkill ?
+                <SkillBox>
+                    {skillList?.map((_, index) => (
+                        <SkillSquare skill={skillList[index]} />
+                    ))}
+                </SkillBox>
+            : <NoSkill />}
         </SkillContainer>
         )
 }

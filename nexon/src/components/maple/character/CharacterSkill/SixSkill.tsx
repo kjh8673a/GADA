@@ -4,11 +4,13 @@ import SkillSquare from './SkillSquare';
 import { skillType } from '../../../../@types/maple/CharacterSkillType';
 import styled from 'styled-components';
 import SolErda from './SolErda';
+import NoSkill from './NoSkill';
 
 interface Props {
     skillList: skillType[];
     solErdaEnergy: number;
     solErdaFragment: number;
+    haveSixSkill: boolean;
 }
 
 export const SkillContainer = styled.div`
@@ -30,7 +32,7 @@ export const SolidHr = styled.hr`
 `;
 
 
-const SixSkill: React.FC<Props> = ({skillList, solErdaEnergy, solErdaFragment}) => {
+const SixSkill: React.FC<Props> = ({skillList, solErdaEnergy, solErdaFragment, haveSixSkill}) => {
 
     return (
         <SkillContainer>
@@ -38,6 +40,7 @@ const SixSkill: React.FC<Props> = ({skillList, solErdaEnergy, solErdaFragment}) 
                 6차 스킬
             </SkillDegree>
             <SolidHr />
+            {haveSixSkill ? <>
             <SkillBox>
             {skillList?.map((_, index) => (
                     <SkillSquare skill={skillList[index]} />
@@ -45,6 +48,7 @@ const SixSkill: React.FC<Props> = ({skillList, solErdaEnergy, solErdaFragment}) 
             </SkillBox>
             <SolidHr />
             <SolErda solErdaEnergy={solErdaEnergy} solErdaFragment={solErdaFragment} />
+            </> : <NoSkill />}
         </SkillContainer>
     )
 }

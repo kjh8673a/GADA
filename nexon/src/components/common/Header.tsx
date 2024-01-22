@@ -21,7 +21,7 @@ const Header = () => {
     const headerInputEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
         //엔터 클릭시 이름가지고 SearchPage로 이동해야함.
         if (e.key === 'Enter') {
-            // navigate("/Search");
+            navigate(`/Search/${headerName}`);
             console.log(headerName);
         }
     }
