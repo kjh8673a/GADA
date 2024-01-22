@@ -13,7 +13,7 @@ const ImageContainer = () => {
   return (
     <ImageBox>
       <img
-        src={characterBasic.data.character_image}
+        src={characterBasic.data?.character_image}
         width={"50%"}
         height={"35%"}
         alt="character img"

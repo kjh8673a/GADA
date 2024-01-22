@@ -13,6 +13,7 @@ import {
 import { getExpHistory } from "../../../../api/Character/Basic";
 import GraphHoverItem from "./GraphHoverItem";
 import { useParams } from "react-router-dom";
+import { CharacterExpItemType } from "../../../../@types/maple/CharacterExpTypes";
 
 const GraphCanvas = styled.canvas`
   align-self: center;
@@ -30,7 +31,10 @@ const Graph = () => {
   // 히스토리 조회
   useEffect(() => {
     getExpHistory(params.Charactername as string).then((res) => {
-      setData(res.data);
+      setData({
+        ...res.data,
+        data : res.data.data.filter((v: CharacterExpItemType) => v.character_level > 0),
+      });
     });
   }, [setData, params.Charactername]);
 
@@ -67,6 +71,8 @@ const Graph = () => {
   useEffect(() => {
     setIsHover(() => {
       const canvas = canvasRef.current as HTMLCanvasElement;
+      const len = data.data.length;
+      if (len < 1) return false;
       if (
         canvas.offsetLeft + 10 < xy.x &&
         canvas.offsetLeft + canvas.offsetWidth - 10 > xy.x
@@ -78,13 +84,13 @@ const Graph = () => {
           const width = canvas.offsetWidth - 2 * m;
           const intervalX = width / 8;
           let x = canvas.offsetLeft + m + intervalX * 0.5;
-          for (let i = 0; i < 7; i++) {
+          for (let i = 0; i < len; i++) {
             x += intervalX;
             if (xy.x < x) {
               setProps({
-                character_level: data.data[6 - i].character_level,
-                exp: data.data[6 - i].exp,
-                date: data.data[6 - i].date,
+                character_level: data.data[len - i - 1].character_level,
+                exp: data.data[len - i - 1].exp,
+                date: data.data[len - i - 1].date,
               });
               break;
             }
