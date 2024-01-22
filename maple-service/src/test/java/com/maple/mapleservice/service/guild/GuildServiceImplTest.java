@@ -21,14 +21,14 @@ class GuildServiceImplTest {
     @Test
     void 길드정보_서버별_가져오기_테스트() {
         List<GuildBasicDto> guildBasicList = guildService.getGuildBasicInfosByServer(guildName);
-        assertThat(guildBasicList).hasSize(10);
+        assertThat(guildBasicList).hasSize(11);
 
     }
 
     @Test
     void 길드이름_서벼벌_가져오기_테스트() {
         List<String> oguildIdList = guildService.getAllOguildIdByGuildName(guildName);
-        assertThat(oguildIdList).hasSize(10);
+        assertThat(oguildIdList).hasSize(11);
 
     }
 }
