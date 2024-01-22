@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import GraphContainer from "./GraphContainer";
 import ImageContainer from "./ImageContainer";
 import InfoContainer from "./InfoContainer";
-import { useParams } from "react-router-dom";
-import useCharacterBasic from "../../../../hooks/maple/useCharacterBasic";
-import { getCharacterBasicInfo } from "../../../../api/Character/Basic";
 
 const CharacterSummaryBox = styled.div`
   width: 1140px;
@@ -20,15 +17,6 @@ const CharacterSummaryBox = styled.div`
 `;
 
 const CharacterSummary = () => {
-  const params = useParams();
-  const { setCharacterBasic } = useCharacterBasic();
-
-  useEffect(() => {
-    getCharacterBasicInfo(params.Charactername as string).then((res) => {
-      setCharacterBasic(res.data);
-    });
-  }, [setCharacterBasic, params.Charactername]);
-
   return (
     <CharacterSummaryBox>
       <ImageContainer />
