@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.maple.mapleservice.config.FeignConfig;
+import com.maple.mapleservice.dto.feign.union.UnionArtifactDto;
 import com.maple.mapleservice.dto.feign.union.UnionDto;
 import com.maple.mapleservice.dto.feign.union.UnionRaiderDto;
 
@@ -13,9 +14,13 @@ public interface UnionFeignClient {
 
 	// 유니온 정보 조회
 	@GetMapping("/union")
-	public UnionDto getUnionDto(@RequestParam String ocid, @RequestParam String date);
+	UnionDto getUnionDto(@RequestParam String ocid, @RequestParam String date);
 
 	// 유니온 공격대 정보 조회
 	@GetMapping("/union-raider")
-	public UnionRaiderDto getUnionRaiderDto(@RequestParam String ocid, @RequestParam String date);
+	UnionRaiderDto getUnionRaiderDto(@RequestParam String ocid, @RequestParam String date);
+
+	// 유니온 공격대 정보 조회
+	@GetMapping("/union-artifact")
+	UnionArtifactDto getUnionArtifactDto(@RequestParam String ocid, @RequestParam String date);
 }

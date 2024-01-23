@@ -3,13 +3,13 @@ package com.maple.mapleservice.service.union;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import com.maple.mapleservice.dto.feign.union.UnionArtifactDto;
 import com.maple.mapleservice.dto.feign.union.UnionDto;
 import com.maple.mapleservice.dto.feign.union.UnionRaiderDto;
 import com.maple.mapleservice.feign.UnionFeignClient;
 import com.maple.mapleservice.util.CommonUtil;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
@@ -28,5 +28,10 @@ public class UnionApiServiceImpl implements UnionApiService {
 	@Cacheable(value = "union-api-union-raidar", key = "#ocid")
 	public UnionRaiderDto getUnionRaiderDto(String ocid) {
 		return unionFeignClient.getUnionRaiderDto(ocid, commonUtil.date);
+	}
+
+	@Override
+	public UnionArtifactDto getUnionArtifactDto(String ocid) {
+		return unionFeignClient.getUnionArtifactDto(ocid, commonUtil.date);
 	}
 }
