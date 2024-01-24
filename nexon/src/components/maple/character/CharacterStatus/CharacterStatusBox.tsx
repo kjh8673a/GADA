@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import CharacterStatusBattlePoint from "./CharacterStatusBattlePoint";
 import CharacterStatusBasic from "./CharacterStatusBasic";
-import { useCharacterData } from "../../../../hooks/maple/useCharacterData";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { IStatType } from "../../../../@types/maple/StatsTypes";
 import { atomCharacterStats } from "../../../../atoms/maple/characterStatState";
-import { userNickName } from "../../../../atoms/maple/characterName";
 import CharacterStatusExtra from "./CharacterStatusExtra";
 
 const StyledBox = styled.div`
@@ -43,15 +41,7 @@ const StyledButton = styled.button`
 
 const CharacterStatusBox = () => {
   const [statToggled, setStatToggled] = useState<boolean>(false);
-  const { getCharacterStats } = useCharacterData();
-  const characterName = useRecoilValue<string>(userNickName);
   const stats = useRecoilValue<IStatType>(atomCharacterStats);
-
-  useEffect(() => {
-    if (characterName) {
-      getCharacterStats(characterName);
-    }
-  }, [characterName, getCharacterStats]);
 
   return (
     <StyledBox>
