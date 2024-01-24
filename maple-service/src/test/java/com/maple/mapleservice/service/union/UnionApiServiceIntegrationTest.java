@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.maple.mapleservice.dto.feign.union.UnionArtifactDto;
 import com.maple.mapleservice.dto.feign.union.UnionDto;
 import com.maple.mapleservice.dto.feign.union.UnionRaiderDto;
+import com.maple.mapleservice.dto.response.union.UnionArtifactResponseDto;
 import com.maple.mapleservice.dto.response.union.UnionInfoResponseDto;
 
 @SpringBootTest
@@ -43,5 +44,10 @@ public class UnionApiServiceIntegrationTest {
 	@Test
 	void 유니온_아티팩트_조회_테스트() {
 		UnionArtifactDto unionArtifactDto = unionApiService.getUnionArtifactDto(ocid);
+	}
+
+	@Test
+	void 유니온_아티팩트_조회_서비스_테스트() {
+		UnionArtifactResponseDto unionArtifactResponseDto = unionService.getUnionArtifactResponseDto("아델");
 	}
 }

@@ -31,6 +31,7 @@ public class UnionApiServiceImpl implements UnionApiService {
 	}
 
 	@Override
+	@Cacheable(value = "union-api-union-artifact", key = "#ocid")
 	public UnionArtifactDto getUnionArtifactDto(String ocid) {
 		return unionFeignClient.getUnionArtifactDto(ocid, commonUtil.date);
 	}

@@ -13,6 +13,7 @@ import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseD
 import com.maple.mapleservice.dto.response.Character.CharacterStatsResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
 import com.maple.mapleservice.dto.response.SuccessResponse;
+import com.maple.mapleservice.dto.response.union.UnionArtifactResponseDto;
 import com.maple.mapleservice.dto.response.union.UnionInfoResponseDto;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.maple.mapleservice.service.character.CharacterService;
@@ -126,6 +127,15 @@ public class CharacterController {
 		return ResponseEntity
 			.status(HttpStatus.OK)
 			.body(SuccessResponse.of(unionInfoResponseDto));
+	}
+
+	@RequestMapping("/getCharacterUnionArtifact")
+	public ResponseEntity<SuccessResponse> getCharacterUnionArtifact(@RequestParam String characterName) {
+		UnionArtifactResponseDto unionArtifactResponseDto = unionService.getUnionArtifactResponseDto(characterName);
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(unionArtifactResponseDto));
 	}
 
 	@RequestMapping("/getCharacterCompare")

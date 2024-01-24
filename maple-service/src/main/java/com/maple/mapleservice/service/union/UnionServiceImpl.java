@@ -3,14 +3,14 @@ package com.maple.mapleservice.service.union;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import com.maple.mapleservice.dto.feign.union.UnionArtifactDto;
 import com.maple.mapleservice.dto.feign.union.UnionDto;
 import com.maple.mapleservice.dto.feign.union.UnionRaiderDto;
+import com.maple.mapleservice.dto.response.union.UnionArtifactResponseDto;
 import com.maple.mapleservice.dto.response.union.UnionInfoResponseDto;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.maple.mapleservice.util.UnionRaidarStatTable;
@@ -39,6 +39,17 @@ public class UnionServiceImpl implements UnionService {
 			unionRaiderDto.getUnion_block(), unionRaiderDto.getUnion_inner_stat());
 	}
 
+	@Override
+	@Cacheable(value = "union-artifact", key = "#characterName")
+	public UnionArtifactResponseDto getUnionArtifactResponseDto(String characterName) {
+		String ocid = characterApiService.getOcidKey(characterName);
+		UnionDto unionDto = unionApiService.getUnionDto(ocid);
+		UnionArtifactDto unionArtifactDto = unionApiService.getUnionArtifactDto(ocid);
+
+		return UnionArtifactResponseDto.of(unionDto.getArtifact_level(),
+			unionArtifactDto.getUnion_artifact_effect(), unionArtifactDto.getUnion_artifact_crystal());
+	}
+
 	/**
 	 * 스탯 합칠수있는거 더해주기
 	 * @param statList
@@ -53,19 +64,20 @@ public class UnionServiceImpl implements UnionService {
 		int tableIndex = 0;
 		int sumValue = 0;
 		for (String stat : statList) {
-			if(!stat.startsWith(union_raider_stat_table[tableIndex][0])) {
-				if(sumValue > 0) {
-					String caculatedValue = union_raider_stat_table[tableIndex][0] + String.valueOf(sumValue) + union_raider_stat_table[tableIndex][1];
+			if (!stat.startsWith(union_raider_stat_table[tableIndex][0])) {
+				if (sumValue > 0) {
+					String caculatedValue = union_raider_stat_table[tableIndex][0] + String.valueOf(sumValue)
+						+ union_raider_stat_table[tableIndex][1];
 					total_stat.add(caculatedValue);
 					sumValue = 0;
 				}
 			}
 
-			while(!stat.startsWith(union_raider_stat_table[tableIndex][0])) {
+			while (!stat.startsWith(union_raider_stat_table[tableIndex][0])) {
 				tableIndex++;
 			}
 
-			if(stat.startsWith(union_raider_stat_table[tableIndex][0])) {
+			if (stat.startsWith(union_raider_stat_table[tableIndex][0])) {
 				String[] splittedKeyArray = stat.split(" ");
 
 				String valueToBeCalculated = "";
@@ -84,8 +96,9 @@ public class UnionServiceImpl implements UnionService {
 			}
 		}
 
-		if(sumValue > 0) {
-			String caculatedValue = union_raider_stat_table[tableIndex][0] + String.valueOf(sumValue) + union_raider_stat_table[tableIndex][1];
+		if (sumValue > 0) {
+			String caculatedValue = union_raider_stat_table[tableIndex][0] + String.valueOf(sumValue)
+				+ union_raider_stat_table[tableIndex][1];
 			total_stat.add(caculatedValue);
 		}
 
