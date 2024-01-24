@@ -1,37 +1,38 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const MapleConatiner = styled.div`
-    position : relative;
-    display : flex;
-    flex-direction : column;
-    justify-content : center;
-    align-items : center;
-    flex : 1;
-`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding-top: 30vh;
+`;
 
 export const MainImg = styled.img`
-    width : 64px;
-    height : 64px;
-    margin : 10px;
-`
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+`;
 
 export const NameSearch = styled.div`
-    position: relative;
-`
+  position: relative;
+`;
 
 export const NicknameSearch = styled.input`
-    outline : none;
-    font-size: 10px;
-    border : 1px solid #bbb;
-    border-radius : 8px;
-    padding : 8px 12px;
-    font-size : 10px;
-`
+  outline: none;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  padding: 8px 12px;
+  width: 240px;
+`;
 
 export const CheckButton = styled.img`
-    position : absolute;
-    width : 16px;
-    top : 7px;
-    right : 6px;
-    margin : 0;
-`
+  position: absolute;
+  width: 16px;
+  top: 7px;
+  right: 6px;
+  margin: 0;
+`;
+
