@@ -6,6 +6,7 @@ import useCharacterUnion from "../../../../hooks/maple/useCharacterUnion";
 const StyledBox = styled.div`
   aspect-ratio: 1 / 1;
   flex-grow: 1;
+  opacity: 0.7;
 `;
 
 const UnionGridItem: React.FC<UnionBlockCoordType> = ({ x, y }) => {

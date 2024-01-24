@@ -31,6 +31,10 @@ const useCharacterUnion = () => {
             return grid;
           });
         }
+      }).catch((res) => {
+        if (res.response.status === 500) {
+          console.log("Error getCharacterUnion");
+        }
       });
     },
     [setcharacterUnion, setUnionGrid]
