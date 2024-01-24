@@ -3,6 +3,7 @@ import Maple from "./components/maple/Maple";
 import RootLayout from "./components/common/RootLayout";
 import Character from "./components/maple/character/Character";
 import Error from "./components/common/Error";
+import CGsearch from "./components/maple/search/CGsearch";
 
 function App() {
 
@@ -20,8 +21,8 @@ function App() {
         },
         //캐릭터/길드 조회 페이지
         {
-          path: "/Search",
-          element: <></>,
+          path: "/Search/:name",
+          element: <CGsearch />,
           errorElement : <Error />
         },
         //랭킹 페이지

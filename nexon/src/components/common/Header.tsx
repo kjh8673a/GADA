@@ -9,7 +9,6 @@ const Header = () => {
 
   //헤더에 있는 Input창에 닉네임 또는 길드명 입력
   const changeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     setHeaderName(e.target.value);
   };
 
@@ -18,7 +17,6 @@ const Header = () => {
     //엔터 클릭시 이름가지고 SearchPage로 이동해야함.
     if (e.key === "Enter") {
       navigate(`/Search/${headerName}`);
-      console.log(headerName);
     }
   };
 

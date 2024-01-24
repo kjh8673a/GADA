@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom';
 import { hexaStat, skillType } from '../../../../@types/maple/CharacterSkillType';
 import HexaStat from './HexaStat';
 import { useCharacterSkill } from '../../../../hooks/maple/useCharacterSkill';
-import NoSkill from './NoSkill';
 
 
 const SkillContainer = styled.div`
