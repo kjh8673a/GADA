@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import CenteredBox from "../../../style/CenteredBox";
 import { useEffect } from "react";
@@ -12,7 +11,6 @@ import CharacterSummary from "./CharacterSummary/CharacterSummary";
 import CharacterDetail from "./CharacterDetail";
 import { atomStatIsFetching } from "../../../atoms/maple/characterStatState";
 import { atomWeaponIsFetching } from "../../../atoms/maple/characterWeaponState";
-import SkeletonBox from "../../common/SkeletonBox";
 import Loading from "../../common/Loading";
 
 const Character = () => {
