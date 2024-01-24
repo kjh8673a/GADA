@@ -13,10 +13,10 @@ export const UNION_GRID_INNER = [
   { left: "40%", top: "30%" },
   { left: "55%", top: "30%" },
   { left: "68%", top: "40%" },
-  { left: "68%", top: "58%" },
+  { left: "68%", top: "56%" },
   { left: "40%", top: "65%" },
   { left: "55%", top: "65%" },
-  { left: "27%", top: "58%" },
+  { left: "27%", top: "56%" },
   { left: "27%", top: "40%" },
 ];
 
@@ -44,7 +44,7 @@ export type CharacterUnionType = {
     union_level: number;
     union_grade: string;
     union_rader_stat: string[];
-    total_union_rader_stat: string[];
+    total_union_raider_stat: string[];
     union_occupied_stat: string[];
     union_block: UnionBlockType[];
     union_inner_stat: UnionInnerStatType[];

@@ -21,7 +21,7 @@ const useCharacterUnion = () => {
           setUnionGrid((_) => {
             const grid = Array.from<Array<Array<boolean>>, Array<boolean>>(
               { length: 20 },
-              () => Array.from({ length: 20 }, () => false)
+              () => Array.from({ length: 22 }, () => false)
             );
             data.data.union_block.forEach((v: UnionBlockType) => {
               v.block_position?.forEach((v) => {

@@ -4,6 +4,7 @@ import UnionGridRow from "./UnionGridRow";
 import useCharacterUnion from "../../../../hooks/maple/useCharacterUnion";
 import { UNION_GRID_INNER, UNION_GRID_OUTER } from "../../../../@types/maple/CharacterUnionTypes";
 
+// 가로 : 세로 = 22 : 20 의 비율을 유지해야함
 const StyledBox = styled.div`
   position: relative;
   width: 704px;
