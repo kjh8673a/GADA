@@ -25,6 +25,7 @@ const ContentWrapper = styled.div`
   flex-wrap: wrap;
   gap: 5px;
   border-radius: 4px;
+  color: white;
 `;
 
 const UnionRaid = () => {
@@ -35,7 +36,7 @@ const UnionRaid = () => {
       <HeaderBox>유니온 공격대</HeaderBox>
       <DashedLine />
       <ContentWrapper>
-        {characterUnion.data?.union_block.map((v, i) => {
+        {characterUnion.data?.union_block.length ?characterUnion.data?.union_block?.map((v, i) => {
           return (
             <UnionRaider
               key={i}
@@ -43,7 +44,7 @@ const UnionRaid = () => {
               block_level={v.block_level}
             />
           );
-        })}
+        }): "없음"}
       </ContentWrapper>
     </StyledBox>
   );

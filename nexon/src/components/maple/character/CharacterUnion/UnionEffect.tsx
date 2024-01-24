@@ -31,12 +31,12 @@ const UnionEffect = () => {
     <StyledBox>
       <UnionEffectHeader />
       <DashedLine />
-      <TitleBox>공격대원 합산 효과</TitleBox>
+      <TitleBox>공격대원 합산 효과{ characterUnion.data?.total_union_raider_stat ? "" : " 없음" }</TitleBox>
       {characterUnion.data?.total_union_raider_stat?.map((v, i) => {
         return <ContentBox key={i}>{" - " + v}</ContentBox>;
       })}
       <DashedLine />
-      <TitleBox>공격대 점령 효과</TitleBox>
+      <TitleBox>공격대 점령 효과{ characterUnion.data?.union_occupied_stat ? "" : " 없음" }</TitleBox>
       {characterUnion.data?.union_occupied_stat?.map((v, i) => {
         return <ContentBox key={i}>{" - " + v}</ContentBox>;
       })}

@@ -15,7 +15,6 @@ const GraphHoverBox = styled.div`
   padding: 0.5%;
   background-color: #3d444c;
   border-radius: 10px;
-  border: black 2px solid;
   opacity: 0.8;
 `;
 
