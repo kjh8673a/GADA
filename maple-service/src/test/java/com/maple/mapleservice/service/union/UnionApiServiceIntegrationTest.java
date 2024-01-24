@@ -6,8 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.maple.mapleservice.dto.feign.union.UnionArtifactDto;
 import com.maple.mapleservice.dto.feign.union.UnionDto;
 import com.maple.mapleservice.dto.feign.union.UnionRaiderDto;
+import com.maple.mapleservice.dto.response.union.UnionArtifactResponseDto;
 import com.maple.mapleservice.dto.response.union.UnionInfoResponseDto;
 
 @SpringBootTest
@@ -37,5 +39,15 @@ public class UnionApiServiceIntegrationTest {
 	@Test
 	void 유니온_정보_조회_통합_테스트() {
 		UnionInfoResponseDto unionInfoResponseDto = unionService.getUnionInfoResponseDto("아델");
+	}
+
+	@Test
+	void 유니온_아티팩트_조회_테스트() {
+		UnionArtifactDto unionArtifactDto = unionApiService.getUnionArtifactDto(ocid);
+	}
+
+	@Test
+	void 유니온_아티팩트_조회_서비스_테스트() {
+		UnionArtifactResponseDto unionArtifactResponseDto = unionService.getUnionArtifactResponseDto("아델");
 	}
 }
