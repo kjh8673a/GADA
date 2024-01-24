@@ -11,6 +11,8 @@ export const Domain = styled.a`
 export const InputHeaderName = styled.input`
   outline: none;
   font-size: 10px;
+  border-radius : 8px;
+  padding : 3px;
 `;
 
 //헤더의 위 컨테이너
