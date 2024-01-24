@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Domain, DownConatiner, InputHeaderName, UpContainer, PageHeader } from "../../style/header";
 
 import { useNavigate } from "react-router-dom";
-import CenteredBox from "../../style/CenteredBox";
 
 const Header = () => {
   const [headerName, setHeaderName] = useState<string>("");

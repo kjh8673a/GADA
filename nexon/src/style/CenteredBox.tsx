@@ -6,11 +6,11 @@ interface Props {
   clickHandler?: () => void;
 }
 
-interface CenteredDiv {
+interface CenteredDivProps {
   $direction: "column" | "row";
 }
 
-const CenteredDiv = styled.div<CenteredDiv>`
+const CenteredDiv = styled.div<CenteredDivProps>`
   max-width: 1140px;
   display: flex;
   align-items: center;
