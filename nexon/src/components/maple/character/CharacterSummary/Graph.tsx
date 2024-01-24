@@ -24,18 +24,28 @@ const Graph = () => {
   const [data, setData] = useRecoilState(atomCharacterExp);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [xy, setXY] = useState({ x: 0, y: 0 });
-  const [m, ] = useState(20);
+  const [m] = useState(20);
   const [props, setProps] = useState({ character_level: 0, exp: 0, date: "" });
   const [isHover, setIsHover] = useState(false);
 
   // 히스토리 조회
   useEffect(() => {
-    getExpHistory(params.Charactername as string).then((res) => {
-      setData({
-        ...res.data,
-        data : res.data.data.filter((v: CharacterExpItemType) => v.character_level > 0),
+    getExpHistory(params.Charactername as string)
+      .then((res) => {
+        if (res.status === 200) {
+          setData({
+            ...res.data,
+            data: res.data.data.filter(
+              (v: CharacterExpItemType) => v.character_level > 0
+            ),
+          });
+        }
+      })
+      .catch((res) => {
+        if (res.response.status === 500) {
+          console.log("Error getExpHistory");
+        }
       });
-    });
   }, [setData, params.Charactername]);
 
   // 그래프 생성
