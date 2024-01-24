@@ -76,7 +76,7 @@ public class CharacterServiceImpl implements CharacterService {
 		List<Union> unionList = rankingApiService.getRankingUnion(ocid, characterBasicDto.getWorld_name());
 		Collections.sort(unionList, (o1, o2) -> Long.compare(o2.getUnion_level(), o1.getUnion_level()));
 
-		String parent_ocid = characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
+		String parent_ocid = unionList.size() == 0 ? ocid : characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
 
 		// 유니온 랭킹으로 가져온 캐릭터들 정보 넣기
 		characterRepository.addChacterInformationToDbFromUnionRanking(characterName, parent_ocid, unionList);
@@ -203,12 +203,6 @@ public class CharacterServiceImpl implements CharacterService {
 		Character character = characterRepository.findByCharacterName(characterName);
 		if (character != null) {
 			return;
-		}
-
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
 		}
 
 		String ocid = characterApiService.getOcidKey(characterName);
