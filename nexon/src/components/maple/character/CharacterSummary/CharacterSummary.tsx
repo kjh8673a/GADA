@@ -14,7 +14,11 @@ const CharacterSummaryBox = styled.div`
   grid-template-columns: 1fr 1.8fr 1.8fr;
   margin-top: 1%;
   border-radius: 1.25rem;
-  background: url("${process.env.PUBLIC_URL}/assets/bg_cursed_temple.png") 0% 100%;
+  background: url("${process.env.REACT_APP_BG_IMG}/maple_bg_${String(Math.floor(Math.random() * 122) + 1).padStart(
+      3,
+      "0"
+    )}.png")
+    0% 100%;
 `;
 
 const CharacterSummary = () => {
