@@ -29,14 +29,19 @@ const ContentWrapper = styled.div`
 
 const UnionRaid = () => {
   const { characterUnion } = useCharacterUnion();
+
   return (
     <StyledBox>
       <HeaderBox>유니온 공격대</HeaderBox>
-      <DashedLine/>
+      <DashedLine />
       <ContentWrapper>
         {characterUnion.data?.union_block.map((v, i) => {
           return (
-            <UnionRaider key={i} block_class={v.block_class} block_level={v.block_level} />
+            <UnionRaider
+              key={i}
+              block_class={v.block_class}
+              block_level={v.block_level}
+            />
           );
         })}
       </ContentWrapper>

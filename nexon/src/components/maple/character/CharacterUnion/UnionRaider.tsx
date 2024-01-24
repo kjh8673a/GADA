@@ -7,7 +7,7 @@ const StyledBox = styled.div`
   align-items: center;
   border: 1px solid white;
   border-radius: 2px;
-  padding: 2px;
+  padding: 5px;
 `;
 
 const ClassBox = styled.div`

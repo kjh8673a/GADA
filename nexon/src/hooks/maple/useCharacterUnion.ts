@@ -15,27 +15,29 @@ const useCharacterUnion = () => {
 
   const getUnion = useCallback(
     (characterName: string) => {
-      getCharacterUnion(characterName).then(({ data, status }) => {
-        if (status === 200) {
-          setcharacterUnion(data);
-          setUnionGrid((_) => {
-            const grid = Array.from<Array<Array<boolean>>, Array<boolean>>(
-              { length: 20 },
-              () => Array.from({ length: 22 }, () => false)
-            );
-            data.data.union_block.forEach((v: UnionBlockType) => {
-              v.block_position?.forEach((v) => {
-                grid[10 - v.y][v.x + 11] = true;
+      getCharacterUnion(characterName)
+        .then(({ data, status }) => {
+          if (status === 200) {
+            setcharacterUnion(data);
+            setUnionGrid((_) => {
+              const grid = Array.from<Array<Array<boolean>>, Array<boolean>>(
+                { length: 20 },
+                () => Array.from({ length: 22 }, () => false)
+              );
+              data.data.union_block.forEach((v: UnionBlockType) => {
+                v.block_position?.forEach((v) => {
+                  grid[10 - v.y][v.x + 11] = true;
+                });
               });
+              return grid;
             });
-            return grid;
-          });
-        }
-      }).catch((res) => {
-        if (res.response.status === 500) {
-          console.log("Error getCharacterUnion");
-        }
-      });
+          }
+        })
+        .catch((res) => {
+          if (res.response.status === 500) {
+            console.log("Error getCharacterUnion");
+          }
+        });
     },
     [setcharacterUnion, setUnionGrid]
   );

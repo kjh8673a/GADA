@@ -8,7 +8,7 @@ import UnionRaid from "./UnionRaid";
 
 const StyledBox = styled.div`
   width: 100%;
-  min-height: 1000px;
+  min-height: 1200px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

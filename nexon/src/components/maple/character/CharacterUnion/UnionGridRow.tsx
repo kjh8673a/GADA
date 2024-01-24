@@ -10,9 +10,11 @@ const StyledBox = styled.div`
 const UnionGridRow: React.FC<{ y: number }> = ({ y }) => {
   return (
     <StyledBox>
-      {Array(22).fill(null).map((_, i) => (
-        <UnionGridItem key={i} x={i} y={y} />
-      ))}
+      {Array(22)
+        .fill(null)
+        .map((_, i) => (
+          <UnionGridItem key={i} x={i} y={y} />
+        ))}
     </StyledBox>
   );
 };

@@ -2,7 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import UnionGridRow from "./UnionGridRow";
 import useCharacterUnion from "../../../../hooks/maple/useCharacterUnion";
-import { UNION_GRID_INNER, UNION_GRID_OUTER } from "../../../../@types/maple/CharacterUnionTypes";
+import {
+  UNION_GRID_INNER,
+  UNION_GRID_OUTER,
+} from "../../../../@types/maple/CharacterUnionTypes";
 
 // 가로 : 세로 = 22 : 20 의 비율을 유지해야함
 const StyledBox = styled.div`
@@ -61,7 +64,7 @@ const UnionGrid = () => {
       ))}
       {UNION_GRID_INNER.map((v, i) => (
         <TitleBox key={i} style={{ left: v.left, top: v.top }}>
-          {characterUnion.data?.union_inner_stat[i].stat_field_effect.slice(4,)}
+          {characterUnion.data?.union_inner_stat[i].stat_field_effect.slice(4)}
         </TitleBox>
       ))}
     </StyledBox>
