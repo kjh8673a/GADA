@@ -1,11 +1,7 @@
-import axios from "axios";
-
-export const http = axios.create({
-  baseURL: `${process.env.REACT_APP_API}`,
-});
+import { https } from "../Https";
 
 export const getCharacterUnion = async (characterName: string) => {
-  return await http({
+  return await https({
     method: "get",
     url: "/character/getCharacterUnion",
     params: { characterName },
