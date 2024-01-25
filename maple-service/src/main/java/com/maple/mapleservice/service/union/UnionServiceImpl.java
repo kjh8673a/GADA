@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.maple.mapleservice.dto.feign.union.UnionArtifactDto;
 import com.maple.mapleservice.dto.feign.union.UnionDto;
 import com.maple.mapleservice.dto.feign.union.UnionRaiderDto;
+import com.maple.mapleservice.dto.model.union.UnionBlock;
 import com.maple.mapleservice.dto.response.union.UnionArtifactResponseDto;
 import com.maple.mapleservice.dto.response.union.UnionInfoResponseDto;
 import com.maple.mapleservice.service.character.CharacterApiService;
@@ -34,9 +35,12 @@ public class UnionServiceImpl implements UnionService {
 
 		List<String> total_union_raider_stat = calculateUnionStats(unionRaiderDto.getUnion_raider_stat());
 
+		List<UnionBlock> union_block = unionRaiderDto.getUnion_block();
+		Collections.sort(union_block, ((o1, o2) -> Integer.parseInt(o2.getBlock_level()) - Integer.parseInt(o1.getBlock_level())));
+
 		return UnionInfoResponseDto.of(unionDto.getUnion_level(), unionDto.getUnion_grade(),
 			unionRaiderDto.getUnion_raider_stat(), total_union_raider_stat, unionRaiderDto.getUnion_occupied_stat(),
-			unionRaiderDto.getUnion_block(), unionRaiderDto.getUnion_inner_stat());
+			union_block, unionRaiderDto.getUnion_inner_stat());
 	}
 
 	@Override
