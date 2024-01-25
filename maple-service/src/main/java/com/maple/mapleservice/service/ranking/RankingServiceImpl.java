@@ -59,7 +59,7 @@ public class RankingServiceImpl implements RankingService {
 	public Page<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String world_name, String character_class,
 		Pageable pageable) {
 
-		log.info("전투력 랭킹 조회 : " + world_name + " : " + pageable.getPageNumber());
+		log.info("전투력 랭킹 조회 : " + world_name + " : " + character_class + " : " + pageable.getPageNumber());
 		Page<CharacterCombatPowerRankingResponseDto> result = rankingRepository.getCombatPowerRanking(world_name, character_class, pageable);
 
 		return result;
