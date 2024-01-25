@@ -1,5 +1,7 @@
 package com.maple.mapleservice.dto.response.Ranking;
 
+import com.maple.mapleservice.entity.Character;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CharacterCombatPowerRankingResponseDto {
+	private Long rank;
 	private String ocid;
 	private String world_name;
 	private String character_name;
