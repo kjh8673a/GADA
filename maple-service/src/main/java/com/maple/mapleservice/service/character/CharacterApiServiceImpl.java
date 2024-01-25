@@ -28,7 +28,7 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     private CommonUtil commonUtil = new CommonUtil();
 
     @Override
-    @Cacheable(value = "character-api-ocid", key = "#characterName")
+    @Cacheable(value = "character-api-ocid", key = "#characterName", unless = "#result == null")
     public String getOcidKey(String characterName) {
         String ocid = "";
         try {

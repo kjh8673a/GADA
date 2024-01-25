@@ -1,6 +1,8 @@
 package com.maple.mapleservice.service.guild;
 
 import com.maple.mapleservice.dto.feign.guild.GuildBasicDto;
+import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,5 +32,12 @@ class GuildServiceImplTest {
         List<String> oguildIdList = guildService.getAllOguildIdByGuildName(guildName);
         assertThat(oguildIdList).hasSize(11);
 
+    }
+
+    @Test
+    void 길드_멤버_정보_가져오기_테스트() {
+        List<CharacterBasicInfoResponseDto> list = guildService.getGuildMembers(guildName, "스카니아");
+        // System.out.println(list.size());
+        // System.out.println(list.get(0).getCharacter_name());
     }
 }
