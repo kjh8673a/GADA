@@ -65,7 +65,6 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 				worldNameEq(worldName),
 				characterClassEq(characterClass)
 			)
-			.orderBy(character.combat_power.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
 			.fetch();

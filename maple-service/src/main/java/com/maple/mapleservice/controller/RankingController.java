@@ -3,6 +3,7 @@ package com.maple.mapleservice.controller;
 import com.maple.mapleservice.dto.model.ranking.Guild;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ public class RankingController {
 	public ResponseEntity<SuccessResponse> getCombatPowerRanking(@RequestParam(defaultValue = "1") int page,
 		@RequestParam(required = false) String world_name, @RequestParam(required = false) String character_class) {
 
-		PageRequest pageable = PageRequest.of(page - 1, 20);
+		PageRequest pageable = PageRequest.of(page - 1, 20, Sort.by("combat_power").descending());
 		Page<CharacterCombatPowerRankingResponseDto> combatPowerRanking = rankingService.getCombatPowerRanking(
 			world_name, character_class, pageable);
 
