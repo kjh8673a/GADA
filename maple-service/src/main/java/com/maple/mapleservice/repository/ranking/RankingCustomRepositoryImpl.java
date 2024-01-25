@@ -25,7 +25,9 @@ import com.querydsl.jpa.sql.JPASQLQuery;
 import com.querydsl.sql.SQLExpressions;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class RankingCustomRepositoryImpl implements RankingCustomRepository {
@@ -68,6 +70,7 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 			.limit(pageable.getPageSize())
 			.fetch();
 
+		log.info("content size : " + content.size());
 		return content;
 	}
 
@@ -82,6 +85,7 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 			)
 			.fetchOne();
 
+		log.info("count : " + count);
 		return count;
 	}
 
