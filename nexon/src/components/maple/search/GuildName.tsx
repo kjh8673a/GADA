@@ -18,6 +18,7 @@ const NameContainer = styled.div`
     border : 1px solid;
     white-space : nowrap;
     writing-mode : vertical-lr;
+    text-orientation : upright;
     border-radius : 8px;
     cursor : pointer;
 `

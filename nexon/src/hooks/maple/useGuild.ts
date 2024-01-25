@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { searchGuild } from "../../api/Character/Guild";
-import { GuildType } from "../../@types/maple/GuildTypes";
+import { getGuildMember, searchGuild } from "../../api/Character/Guild";
+import { GuildMemberType, GuildType } from "../../@types/maple/GuildTypes";
 
 export const useGuild = () => {
 
@@ -9,7 +9,19 @@ export const useGuild = () => {
             try {
                 const res = await searchGuild(name);
                 const guildList : GuildType[] = res.data.data;
-                return guildList;
+                 return guildList;
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        []
+    )
+    const getMember = useCallback(
+        async (name: string, worldName : string) => {
+            try {
+                const res = await getGuildMember(name, worldName);
+                const guildMember: GuildMemberType[] = res.data.data;
+                return guildMember;
             } catch (e) {
                 console.log(e);
             }
@@ -17,6 +29,7 @@ export const useGuild = () => {
         []
     )
     return {
-        getAllGuild
+        getAllGuild,
+        getMember,
     }
 }

@@ -53,7 +53,9 @@ const CGsearch = () => {
                 getCharacterBasic(name);
                 getAllGuild(name).then((res) => {
                     if (res) {
-                        setGuildList(res);
+                        setGuildList(res);  
+                        setGuild(undefined);
+                        setWorldName("");
                     }
                 })
             }
@@ -75,7 +77,9 @@ const CGsearch = () => {
                             setGuild={setGuild} />
                     ))}
                 </GuildServerContainer>
-                <GuildInfo guild={guild} />
+                {
+                    worldName && <GuildInfo guild={guild} />
+                }
             </SmallContainer>
         </BigContainer>
     )

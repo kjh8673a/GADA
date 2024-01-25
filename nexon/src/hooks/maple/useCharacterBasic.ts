@@ -15,9 +15,10 @@ const useCharacterBasic = () => {
           if (status === 200) {
             setCharacterBasic(data);
           }
+          setError(false);
         })
         .catch((res) => {
-          if (res.response.status === 404) {
+        if (res.response.status === 404) {
             console.log("존재하지 않는 ID입니다.");
           }
           setError(true);
