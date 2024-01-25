@@ -293,6 +293,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-basic-info", key = "#characterName")
 	public CharacterBasicInfoResponseDto getCharacterBasicInfo(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
 		addCharacterInformationToDB(characterName);
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
 		String prevName = characterRepository.findByOcid(ocid).getPrev_name();
@@ -307,6 +311,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-item", key = "#characterName")
 	public CharacterItemResponseDto getCharacterItem(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
 		CharacterItemDto item = characterApiService.getCharacterItem(ocid);
 		CharacterCashItemDto cash_item = characterApiService.getCharacterCashItem(ocid);
 		CharacterPetDto pet = characterApiService.getCharacterPet(ocid);
@@ -319,6 +327,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-stats", key = "#characterName")
 	public CharacterStatsResponseDto getCharacterStats(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
 		Map<String, String> stat = characterApiService.getCharacterStat(ocid);
 		Map<String, HyperStat> hyperStat = characterApiService.getCharacterHyperStat(ocid);
 		CharacterAbilityDto ability = characterApiService.getCharacterAbility(ocid);
@@ -330,6 +342,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-v-matrix", key = "#characterName")
 	public CharacterVMatrixResponseDto getCharacterVMatrix(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
 		CharacterVMatrixDto characterVMatrixDto = characterApiService.getCharacterVMatrixDto(ocid);
 		CharacterSkillDto characterSkillDto = characterApiService.getCharacterSkill(ocid, "5");
 
@@ -341,6 +357,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-hyper-passive", key = "#characterName")
 	public CharacterSkillDto getCharacterHyperPassive(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
 		return characterApiService.getCharacterSkill(ocid, "hyperpassive");
 	}
 
@@ -348,6 +368,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-link-skill", key = "#characterName")
 	public CharacterLinkSkillDto getCharacterLinkSkill(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
 		return characterApiService.getCharacterLinkSkill(ocid);
 	}
 
@@ -355,6 +379,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-hexa-matrix", key = "#characterName")
 	public CharacterHexaMatrixResponseDto getCharacterHexaMatrix(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
 		List<HexaMatrix> character_hexa_core_equipment = characterApiService.getCharacterHexaMatrix(ocid)
 			.getCharacter_hexa_core_equipment();
 
