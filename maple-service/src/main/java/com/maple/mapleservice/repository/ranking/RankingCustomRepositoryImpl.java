@@ -47,7 +47,6 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 		JPASQLQuery<?> query = querydslConfig.jpasqlQuery();
 		List<CharacterCombatPowerRankingResponseDto> content = query
 			.select(Projections.constructor(CharacterCombatPowerRankingResponseDto.class,
-				Expressions.asNumber(SQLExpressions.rank().over().orderBy(character.combat_power.desc())),
 				character.ocid,
 				character.world_name,
 				character.character_name,
