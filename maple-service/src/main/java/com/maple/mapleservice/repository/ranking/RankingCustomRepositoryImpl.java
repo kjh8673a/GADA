@@ -48,6 +48,8 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 	private List<CharacterCombatPowerRankingResponseDto> getCharacterCombatPowerRankingResponseDto(String worldName, String characterClass, Pageable pageable) {
 		log.info("offset : " + pageable.getOffset());
 		log.info("page size : " + pageable.getPageSize());
+		log.info("worldName : " + worldName);
+		log.info("characterClass : " + characterClass);
 
 		JPASQLQuery<?> query = querydslConfig.jpasqlQuery();
 		List<CharacterCombatPowerRankingResponseDto> content = query
