@@ -25,10 +25,4 @@ public class QuerydslConfig {
 	public SQLTemplates mysqlTemplates() {
 		return MySQLTemplates.builder().build();
 	}
-
-	@Bean
-	public JPASQLQuery<?> jpasqlQuery() {
-		return new JPASQLQuery<Void>(em, mysqlTemplates());
-	}
-
 }

@@ -42,9 +42,8 @@ spring:
 
 logging:
   level:
-    com.maple.mapleservice: debug
     org:
       hibernate:
+        SQL: DEBUG
         type:
-          descriptor:
-            sql=trace: trace
+          trace

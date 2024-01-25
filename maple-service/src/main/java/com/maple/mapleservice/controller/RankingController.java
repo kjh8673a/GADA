@@ -28,7 +28,7 @@ public class RankingController {
 	public ResponseEntity<SuccessResponse> getCombatPowerRanking(@RequestParam(defaultValue = "1") int page,
 		@RequestParam(required = false) String world_name, @RequestParam(required = false) String character_class) {
 
-		PageRequest pageable = PageRequest.of(page - 1, 20, Sort.by("combat_power").descending());
+		PageRequest pageable = PageRequest.of(page - 1, 20);
 		Page<CharacterCombatPowerRankingResponseDto> combatPowerRanking = rankingService.getCombatPowerRanking(
 			world_name, character_class, pageable);
 
