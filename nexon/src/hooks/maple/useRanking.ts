@@ -62,36 +62,28 @@ const useRanking = () => {
 
   const rankTabClickHandler = (params: RankTabType) => {
     setRankTab(params);
-    setWorldTab("전체");
-    setClassTab("전체");
+    setWorldTab(undefined);
+    setClassTab(undefined);
     setRankPage(1);
     if (params === "개인 전투력 랭킹") getCombatPowerRank(1);
     if (params === "길드 수로 랭킹") getGuildWaterwayData(1);
   };
 
-  const worldTabClickHandler = (world_name: string) => {
+  const worldTabClickHandler = (world_name: string | undefined) => {
     setWorldTab(world_name);
     setRankPage(1);
     if (rankTab === "개인 전투력 랭킹")
-      getCombatPowerRank(
-        1,
-        world_name === "전체" ? undefined : world_name,
-        classTab === "전체" ? undefined : classTab
-      );
+      getCombatPowerRank(1, world_name, classTab);
     if (rankTab === "길드 수로 랭킹") {
       setTotalPage(9999);
-      getGuildWaterwayData(1, world_name === "전체" ? undefined : world_name);
+      getGuildWaterwayData(1, world_name);
     }
   };
 
-  const classTabClickHandler = (class_name: string) => {
+  const classTabClickHandler = (class_name: string | undefined) => {
     setClassTab(class_name);
     setRankPage(1);
-    getCombatPowerRank(
-      1,
-      worldTab === "전체" ? undefined : worldTab,
-      class_name === "전체" ? undefined : class_name
-    );
+    getCombatPowerRank(1, worldTab, class_name);
   };
 
   const combatPowerItemClickHandler = (character_name: string) => {
@@ -103,17 +95,10 @@ const useRanking = () => {
     if (rankPage + move > totalPage) return;
     setRankPage((prev) => {
       if (rankTab === "개인 전투력 랭킹") {
-        getCombatPowerRank(
-          prev + move,
-          worldTab === "전체" ? undefined : worldTab,
-          classTab === "전체" ? undefined : classTab
-        );
+        getCombatPowerRank(prev + move, worldTab, classTab);
       }
       if (rankTab === "길드 수로 랭킹") {
-        getGuildWaterwayData(
-          prev + move,
-          worldTab === "전체" ? undefined : worldTab
-        );
+        getGuildWaterwayData(prev + move, worldTab);
       }
       return prev + move;
     });

@@ -4,8 +4,8 @@ import { TabItemBox } from "../../../style/Rank";
 
 type Props = {
   children: React.ReactNode;
-  value: string;
-  clickHandler: (params: string) => void;
+  value: string | undefined;
+  clickHandler: (params: string | undefined) => void;
 };
 
 const WorldTabItem: React.FC<Props> = ({ children, value, clickHandler }) => {
