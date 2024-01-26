@@ -6,6 +6,7 @@ const StyledBox = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 4px;
+  width: 100%;
 `;
 
 const StyledLogo = styled.img`
@@ -42,3 +43,4 @@ const OptionTitle: React.FC<Props> = ({ title, highlight, logo }) => {
 };
 
 export default OptionTitle;
+

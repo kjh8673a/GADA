@@ -11,13 +11,15 @@ export const MapleConatiner = styled.div`
 `;
 
 export const MainImg = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 120px;
   margin-bottom: 20px;
 `;
 
 export const NameSearch = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const NicknameSearch = styled.input`
@@ -29,10 +31,9 @@ export const NicknameSearch = styled.input`
 `;
 
 export const CheckButton = styled.img`
-  position: absolute;
   width: 16px;
-  top: 7px;
-  right: 6px;
   margin: 0;
+  position: relative;
+  right: 56px;
 `;
 

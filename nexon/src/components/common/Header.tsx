@@ -23,7 +23,12 @@ const Header = () => {
   return (
     <>
       <UpContainer>
-        <Domain href="/">
+        <Domain
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        >
           <DomainLogo src={`${process.env.PUBLIC_URL}/assets/gadalogo.webp`} />
         </Domain>
         <InputHeaderName

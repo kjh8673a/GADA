@@ -10,6 +10,6 @@ export const FooterContainer = styled.div`
   width: 100%;
   box-sizing: border-box;
   background-color: #757575;
-  z-index: 1000;
+  z-index: 5;
 `;
 
