@@ -13,12 +13,13 @@ const StyledBox = styled.div`
   flex-direction: column;
   gap: 10px;
   margin-bottom: 10px;
+  min-height: 1000px;
 `;
 
 const CombatPower = () => {
-  const { combatPowerRanking, classTabClickHandler, getCombatPowerRank } =
+  const { rankPage, worldTab, classTab, combatPowerRanking, classTabClickHandler, getCombatPowerRank } =
     useRanking();
-  useEffect(() => getCombatPowerRank(1), [getCombatPowerRank]);
+  useEffect(() => getCombatPowerRank(rankPage, worldTab, classTab), [getCombatPowerRank]);
   return (
     <StyledBox>
       <TabBox>
@@ -29,7 +30,7 @@ const CombatPower = () => {
               value={classTabName}
               clickHandler={classTabClickHandler}
             >
-              {classTabName}
+              {classTabName ? classTabName : "전체"}
             </ClassTabItem>
           );
         })}
