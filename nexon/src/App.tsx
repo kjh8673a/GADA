@@ -6,6 +6,7 @@ import Error from "./components/common/Error";
 import CGsearch from "./components/maple/search/CGsearch";
 import Comparison from "./components/maple/comparison/Comparison";
 import Rank from "./components/maple/rank/Rank";
+import UserAgentBoundary from "./components/common/UserAgentBoundary";
 
 function App() {
   const router = createBrowserRouter([
@@ -44,7 +45,9 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
+      <UserAgentBoundary>
+        <RouterProvider router={router} />
+      </UserAgentBoundary>
     </>
   );
 }
