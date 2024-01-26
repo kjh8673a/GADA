@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Domain, DownConatiner, InputHeaderName, UpContainer, PageHeader } from "../../style/header";
+import { Domain, DownConatiner, InputHeaderName, UpContainer, PageHeader, DomainLogo } from "../../style/header";
 
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +23,9 @@ const Header = () => {
   return (
     <>
       <UpContainer>
-        <Domain href="/">GADA</Domain>
+        <Domain href="/">
+          <DomainLogo src={`${process.env.PUBLIC_URL}/assets/gadalogo.webp`} />
+        </Domain>
         <InputHeaderName
           placeholder="닉네임 또는 길드명 입력"
           onChange={changeInputValue}
@@ -33,7 +35,7 @@ const Header = () => {
       <DownConatiner>
         <PageHeader href="/">메인</PageHeader>
         <PageHeader href="/rank">랭킹</PageHeader>
-        <PageHeader href="/vs">캐릭터 비교</PageHeader>
+        {/* <PageHeader href="/comparison">캐릭터 비교</PageHeader> */}
         {/* <PageHeader>재획 타이머</PageHeader>
                 <PageHeader>파티구성</PageHeader> */}
       </DownConatiner>

@@ -4,10 +4,10 @@ import RootLayout from "./components/common/RootLayout";
 import Character from "./components/maple/character/Character";
 import Error from "./components/common/Error";
 import CGsearch from "./components/maple/search/CGsearch";
+import Comparison from "./components/maple/comparison/Comparison";
 import Rank from "./components/maple/rank/Rank";
 
 function App() {
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -18,35 +18,35 @@ function App() {
         {
           path: "/Character/:Charactername",
           element: <Character />,
-          errorElement : <Error />
+          errorElement: <Error />,
         },
         //캐릭터/길드 조회 페이지
         {
           path: "/Search/:name",
           element: <CGsearch />,
-          errorElement : <Error />
+          errorElement: <Error />,
         },
         //랭킹 페이지
         {
           path: "/Rank",
           element: <Rank />,
-          errorElement : <Error />
+          errorElement: <Error />,
         },
         //캐릭터 비교 페이지
         {
-          path: "/vs",
-          element: <></>,
-          errorElement : <Error />
-        }
-      ]
-    }
-  ])
+          path: "/comparison/:characters?",
+          element: <Comparison />,
+          errorElement: <Error />,
+        },
+      ],
+    },
+  ]);
 
   return (
     <>
       <RouterProvider router={router} />
     </>
-  )
+  );
 }
 
 export default App;
