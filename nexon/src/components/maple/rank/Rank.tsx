@@ -18,20 +18,26 @@ const TextBox = styled.div`
 
 const Rank = () => {
   const { rankTabClickHandler, worldTabClickHandler } = useRanking();
-  
+
   return (
     <CenteredBox>
       <TabBox>
         {RANK_TAB_NAME_LIST.map((rankTabName, i) => {
           return (
-            <RankTabItem key={i} value={rankTabName} clickHandler={rankTabClickHandler}>
+            <RankTabItem
+              key={i}
+              value={rankTabName}
+              clickHandler={rankTabClickHandler}
+            >
               {rankTabName}
             </RankTabItem>
           );
         })}
       </TabBox>
       <TextBox>- API 오픈 초기라 전투력 데이터를 꾸준히 쌓고 있습니다.</TextBox>
-      <TextBox>- 수집한 데이터를 기반하여 지속적으로 랭킹이 업데이트 됩니다.</TextBox>
+      <TextBox>
+        - 수집한 데이터를 기반하여 지속적으로 랭킹이 업데이트 됩니다.
+      </TextBox>
       <TabBox>
         {WORLD_NAME_LIST.map((worldTabName, i) => {
           return (
@@ -40,7 +46,7 @@ const Rank = () => {
               value={worldTabName}
               clickHandler={worldTabClickHandler}
             >
-              {worldTabName}
+              {worldTabName ? worldTabName : "전체"}
             </WorldTabItem>
           );
         })}

@@ -10,6 +10,7 @@ const StyledBox = styled.div`
   flex-direction: column;
   gap: 10px;
   margin-bottom: 10px;
+  min-height: 1000px;
 `;
 
 const GuildWaterway = () => {
