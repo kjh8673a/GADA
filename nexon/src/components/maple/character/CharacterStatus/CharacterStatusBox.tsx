@@ -19,7 +19,7 @@ const StyledBox = styled.div`
 
 const StyledController = styled.div`
   position: absolute;
-  bottom: 8px;
+  bottom: 12px;
   right: 8px;
   width: 100%;
   margin-top: 8px;

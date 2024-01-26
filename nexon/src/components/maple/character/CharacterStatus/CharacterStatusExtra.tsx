@@ -36,6 +36,7 @@ const CharacterStatusExtra: React.FC<Props> = ({ stats }) => {
   return (
     <>
       <StyledBox01>
+        <OptionTitle title="하이퍼스탯" logo={`${process.env.PUBLIC_URL}/assets/horn_mushroom.gif`} />
         <CharacterUnitStat statKey="STR" statVal={stats.hyper_stats?.str?.stat_level} type="LEVEL" />
         <CharacterUnitStat statKey="DEX" statVal={stats.hyper_stats?.dex?.stat_level} type="LEVEL" />
         <CharacterUnitStat statKey="INT" statVal={stats.hyper_stats?.int?.stat_level} type="LEVEL" />
@@ -80,7 +81,7 @@ const CharacterStatusExtra: React.FC<Props> = ({ stats }) => {
         <WeaponOptionItem />
       </StyledBox01>
       <StyledBox02>
-        <OptionTitle title="어빌리티" logo={`${process.env.PUBLIC_URL}/assets/orange_mushroom.gif`} />
+        <OptionTitle title="어빌리티" logo={`${process.env.PUBLIC_URL}/assets/bird.gif`} />
         {stats.ability?.ability_info.map((item) => (
           <WeaponOptionItem key={item.ability_no} desc={`${item.ability_no}. ${item.ability_value}`} />
         ))}

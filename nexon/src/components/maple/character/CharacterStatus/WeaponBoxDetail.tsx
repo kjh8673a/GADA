@@ -9,10 +9,10 @@ const StyledBox = styled.div`
   position: absolute;
   box-sizing: border-box;
   width: 340px;
-  top: 0;
+  bottom: 0;
   right: 56px;
   background-color: #2b2c2a;
-  z-index: 3;
+  z-index: 10;
   border-radius: 16px;
   border: 2px solid #777;
   padding-bottom: 8px;

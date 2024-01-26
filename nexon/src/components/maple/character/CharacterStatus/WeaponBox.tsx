@@ -83,19 +83,10 @@ const WeaponBox: React.FC<Props> = ({ data, title }) => {
 
   if (data === undefined && (title === undefined || title === null)) return <VoidBox />;
   return (
-    <BoxContainer>
-      {data && (
-        <ItemBox
-          onMouseEnter={hoverInHandler}
-          onMouseLeave={hoverOutHandler}
-          $img={data.item_icon}
-          $grade={data.potential_option_grade}
-        />
-      )}
+    <BoxContainer onMouseEnter={hoverInHandler} onMouseLeave={hoverOutHandler}>
+      {data && <ItemBox $img={data.item_icon} $grade={data.potential_option_grade} />}
       {data === null && <ItemBox $nodata={true} $img={`${process.env.PUBLIC_URL}/assets/question-mark.png`} />}
-      {title && (
-        <ItemBox onMouseEnter={hoverInHandler} onMouseLeave={hoverOutHandler} $img={title.title_icon} $grade="" />
-      )}
+      {title && <ItemBox $img={title.title_icon} $grade="" />}
       {isHovered && <WeaponBoxDetail data={data} title={title} />}
     </BoxContainer>
   );
