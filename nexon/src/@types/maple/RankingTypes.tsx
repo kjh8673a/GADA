@@ -59,7 +59,7 @@ export const RANK_TAB_NAME_LIST: RankTabType[] = [
 export type RankTabType = "개인 전투력 랭킹" | "길드 수로 랭킹";
 
 export const WORLD_NAME_LIST = [
-  "전체",
+  undefined,
   "스카니아",
   "베라",
   "루나",
@@ -80,7 +80,7 @@ export const WORLD_NAME_LIST = [
 ];
 
 export const CLASS_NAME_LIST = [
-  "전체",
+  undefined,
   "히어로",
   "팔라딘",
   "다크나이트",

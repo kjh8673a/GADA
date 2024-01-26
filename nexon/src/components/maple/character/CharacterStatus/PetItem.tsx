@@ -60,7 +60,8 @@ const PetItem: React.FC<Props> = ({ petIcon, petNickname, petName, petWeapon }) 
       <StyledIconBox $img={petWeapon?.item_icon} />
       <StyledInfo>
         <div>
-          {petNickname}({petName})
+          {petNickname ? `${petNickname}` : null}
+          {petName ? `(${petName})` : null}
         </div>
         <div>
           {petWeapon?.item_option.map((option, idx) => (

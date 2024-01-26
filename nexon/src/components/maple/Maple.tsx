@@ -3,6 +3,7 @@ import { CheckButton, MainImg, MapleConatiner, NameSearch, NicknameSearch } from
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userNickName } from "../../atoms/maple/characterName";
+import StyledInput from "../../style/StyledInput";
 
 const Maple = () => {
   const [nickname, setNickname] = useState<string>("");
@@ -31,9 +32,15 @@ const Maple = () => {
 
   return (
     <MapleConatiner>
-      <MainImg src="/assets/orange_mushroom.gif" alt="mushroom" />
+      <MainImg src="/assets/pinkbin.gif" alt="pinkbin" />
       <NameSearch>
-        <NicknameSearch type="text" placeholder="닉네임 입력" onChange={searchName} onKeyDown={SearchEnterName} />
+        <StyledInput
+          $width={320}
+          type="text"
+          placeholder="닉네임 입력"
+          onChange={searchName}
+          onKeyDown={SearchEnterName}
+        />
         <CheckButton src="/assets/search_button.png" alt="search" onClick={SearchClickkName} />
       </NameSearch>
     </MapleConatiner>
