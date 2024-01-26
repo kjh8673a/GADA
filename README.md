@@ -2,7 +2,7 @@
 
 ## ⌛ 프로젝트 진행 기간
 
-- 2023.12.29 ~
+- 2024.01.02 ~
 
 ## 🎞️ 개요
 
@@ -144,6 +144,14 @@
                 <td align="center">
                     <img src="./docs/image/icons/termius.jpg" width="100px" alt=""/><br />
                     <sub><b>Termius</b></sub><br />
+                </td>
+                <td align="center">
+                    <img src="./docs/image/icons/grafana.jpg" width="100px" alt=""/><br />
+                    <sub><b>Grafana</b></sub><br />
+                </td>
+                <td align="center">
+                    <img src="./docs/image/icons/prometheus.png" width="100px" alt=""/><br />
+                    <sub><b>Prometheus</b></sub><br />
                 </td>
             </tr>
         </tbody>
