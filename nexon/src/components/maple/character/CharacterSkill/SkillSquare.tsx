@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SkillDetail from './SkillDetail';
 import { skillType } from '../../../../@types/maple/CharacterSkillType';
 
-const Box = styled.div`
+export const Box = styled.div`
     display : flex;
     flex-direction : column;
     align-items : center;
@@ -14,13 +14,13 @@ const Box = styled.div`
     z-index : 10;
     position : relative;
 `
-const ImgBox = styled.img`
+export const ImgBox = styled.img`
     display : flex;
     width : 48px;
     border : 1px;
 `
 
-const LevelPosition = styled.div`
+export const LevelPosition = styled.div`
     position : absolute;
     color: rgb(255, 255, 255);
     background: rgb(0, 0, 0);

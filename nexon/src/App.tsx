@@ -5,6 +5,7 @@ import Character from "./components/maple/character/Character";
 import Error from "./components/common/Error";
 import CGsearch from "./components/maple/search/CGsearch";
 import Comparison from "./components/maple/comparison/Comparison";
+import Rank from "./components/maple/rank/Rank";
 
 function App() {
   const router = createBrowserRouter([
@@ -28,7 +29,7 @@ function App() {
         //랭킹 페이지
         {
           path: "/Rank",
-          element: <></>,
+          element: <Rank />,
           errorElement: <Error />,
         },
         //캐릭터 비교 페이지

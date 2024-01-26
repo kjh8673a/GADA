@@ -11,3 +11,17 @@ export const searchGuild = async(
         }
     })
 }
+
+export const getGuildMember = async(
+    name: string,
+    worldName : string,
+) => {
+    return await axios({
+        method: "get",
+        url: `${process.env.REACT_APP_API}/guild/guildMembers`,
+        params: {
+            guildName: name,
+            worldName: worldName,
+        }
+    })
+}

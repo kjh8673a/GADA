@@ -63,6 +63,8 @@ const FetchCharacterError = () => {
         <StyledSubMsg>
           캐릭터 조회를 위해서는 2023년 12월 21일 이후 접속 기록이 필요합니다.
           <br />
+          캐릭터 정보는 매일 오전 1시에 갱신됩니다.
+          <br />
           (조회할 캐릭터의 대소문자를 유의해 입력해주세요.)
         </StyledSubMsg>
         <StyledButton href="/">메인으로</StyledButton>
