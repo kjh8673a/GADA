@@ -7,10 +7,17 @@ export interface skillType {
 }
 
 export interface hexaStat {
-    main_stat_name: string;
-    sub_stat_name_1: string;
-    sub_stat_name_2: string;
-    main_stat_level: number;
-    sub_stat_level_1: number;
-    sub_stat_level_2: number;
+    slot_id?: number;
+    main_stat_name?: string;
+    sub_stat_name_1?: string;
+    sub_stat_name_2?: string;
+    main_stat_level?: number;
+    sub_stat_level_1?: number;
+    sub_stat_level_2?: number;
+    stat_grade?: number;
+}
+
+export interface erda {
+    used_sol_erda_energy: number;
+    used_sol_erda_fragment: number;
 }

@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
 import styled from "styled-components";
 import GraphContainer from "./GraphContainer";
 import ImageContainer from "./ImageContainer";
 import InfoContainer from "./InfoContainer";
-import { useParams } from "react-router-dom";
 import useCharacterBasic from "../../../../hooks/maple/useCharacterBasic";
-import { getCharacterBasicInfo } from "../../../../api/Character/Basic";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const CharacterSummaryBox = styled.div`
   width: 1140px;
@@ -15,19 +14,20 @@ const CharacterSummaryBox = styled.div`
   grid-template-columns: 1fr 1.8fr 1.8fr;
   margin-top: 1%;
   border-radius: 1.25rem;
-  background: url("${process.env.PUBLIC_URL}/assets/bg_cursed_temple.png") 0%
-    100%;
+  background: url("${process.env.REACT_APP_BG_IMG}/maple_bg_${String(Math.floor(Math.random() * 122) + 1).padStart(
+      3,
+      "0"
+    )}.png")
+    0% 100%;
 `;
 
 const CharacterSummary = () => {
   const params = useParams();
-  const { setCharacterBasic } = useCharacterBasic();
+  const { getCharacterBasic } = useCharacterBasic();
 
   useEffect(() => {
-    getCharacterBasicInfo(params.Charactername as string).then((res) => {
-      setCharacterBasic(res.data);
-    });
-  }, [setCharacterBasic, params.Charactername]);
+    getCharacterBasic(params.Charactername as string);
+  }, [params.Charactername, getCharacterBasic]);
 
   return (
     <CharacterSummaryBox>
@@ -39,3 +39,4 @@ const CharacterSummary = () => {
 };
 
 export default CharacterSummary;
+

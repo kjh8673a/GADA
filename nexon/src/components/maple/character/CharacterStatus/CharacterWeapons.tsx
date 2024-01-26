@@ -3,9 +3,7 @@ import WeaponBox from "./WeaponBox";
 
 import { IWeaponDataType, IWeaponTypes, WEAPON_SLOT_LIST } from "../../../../@types/maple/WeaponTypes";
 import { voidStrToCamelCase } from "../../../../hooks/commonUtils";
-import { useCharacterData } from "../../../../hooks/maple/useCharacterData";
-import { useEffect, useMemo } from "react";
-import { userNickName } from "../../../../atoms/maple/characterName";
+import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import { atomCharacterWeapon } from "../../../../atoms/maple/characterWeaponState";
 
@@ -21,15 +19,7 @@ const StyledBox = styled.div`
 `;
 
 const CharacterWeapons = () => {
-  const { getCharacterWeapons } = useCharacterData();
-  const characterName = useRecoilValue<string>(userNickName);
   const myWeapons = useRecoilValue<IWeaponTypes>(atomCharacterWeapon);
-
-  useEffect(() => {
-    if (characterName) {
-      getCharacterWeapons(characterName);
-    }
-  }, [characterName, getCharacterWeapons]);
 
   const WEAPONS = useMemo(() => new Map<string, IWeaponDataType | null>(), []);
 

@@ -6,10 +6,10 @@ import SixSkill from './SixSkill';
 import FiveSkill from './FiveSkill';
 import HiperPassiveSkill from './HiperPassiveSkill';
 import LinkSkill from './LinkSkill';
-import { getMyFiveSkill, getMyHiperSkill, getMyLinkSkill, getMySixSkill } from '../../../../api/Character/Skill';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { hexaStat, skillType } from '../../../../@types/maple/CharacterSkillType';
 import HexaStat from './HexaStat';
+import { useCharacterSkill } from '../../../../hooks/maple/useCharacterSkill';
 
 
 const SkillContainer = styled.div`
@@ -19,12 +19,14 @@ const SkillContainer = styled.div`
     flex-direction : column;
 `
 const DUMMY_HEXA: hexaStat = {
+    slot_id : 0,
     main_stat_name: "텍",
     sub_stat_name_1: "사",
     sub_stat_name_2: "스",
     main_stat_level: 0,
     sub_stat_level_1: 0,
     sub_stat_level_2: 0,
+    stat_grade: 0,
 }
 
 
@@ -44,9 +46,13 @@ const CharacterSkill = () => {
     const [haveHexaStat, setHaveHexaStat] = useState<boolean>(false);
     const [hexaStat, setHexaStat] = useState<hexaStat>(DUMMY_HEXA);
 
+    const { getSixSkill, getFiveSkill, getHiperSkill, getLinkSkill } = useCharacterSkill();
+
+    
+
     useEffect(() => {
         //새로고침시 존재하지 않을경우 쿼리에 있는 이름을 써야함.
-        if (characterName.length === 0) { 
+        if (characterName) { 
             if (params) {
                 const { Charactername } = params;
                 if (Charactername) {
@@ -54,82 +60,77 @@ const CharacterSkill = () => {
                 }
             }
         }
+
         if (characterName.length !== 0) {
-            getMySixSkill(characterName)
-                .then((res) => {
-                    setSolErdaEnergy(res.data.data.used_sol_erda_energy);
-                    setSolErdaFragment(res.data.data.used_sol_erda_fragment);
-                    if (res.data.data.character_skill_desc.length !== 0) {
-                        setSixSkill(res.data.data.character_skill_desc);
+            getSixSkill(characterName).then((res) => {          
+                if (res) {
+                    setSolErdaEnergy(res.erda.used_sol_erda_energy);
+                    setSolErdaFragment(res.erda.used_sol_erda_fragment);
+                    if (res.sixSkill.length !== 0) {
+                        setSixSkill(res.sixSkill);
                         setHaveSixSkill(true);
                     }
-                    let hexa : hexaStat;
-                    if (res.data.data.character_hexa_stat_core !== null) {
-                        hexa = {
-                            main_stat_name: res.data.data.character_hexa_stat_core.main_stat_name,
-                            sub_stat_name_1: res.data.data.character_hexa_stat_core.sub_stat_name_1,
-                            sub_stat_name_2: res.data.data.character_hexa_stat_core.sub_stat_name_2,
-                            main_stat_level: res.data.data.character_hexa_stat_core.main_stat_level,
-                            sub_stat_level_1: res.data.data.character_hexa_stat_core.sub_stat_level_1,
-                            sub_stat_level_2: res.data.data.character_hexa_stat_core.sub_stat_level_2
-                        }
-                        setHexaStat(hexa);
+                    if (Object.keys(res.hexaStat).length !== 0) {
+                        setHexaStat(res.hexaStat);
                         setHaveHexaStat(true);
                     }
-                }).catch(() => {
-                    setHaveSixSkill(false);
-                    setHaveHexaStat(false);
-                })
+                }
+            }).catch(() => {
+                setHaveSixSkill(false);
+                setHaveHexaStat(false);
+            })
             
-            getMyFiveSkill(characterName)
-                .then((res) => {
-                    if (res.data.data.character_skill_desc.length !== 0) {
-                        setFiveSkill(res.data.data.character_skill_desc);
+            getFiveSkill(characterName).then((res) => {
+                if (res) {
+                    if (res.length !== 0) {
+                        setFiveSkill(res);
                         setHaveFiveSkill(true);
                     }
-                    //5차스킬이 존재하지 않는다면?
-                }).catch(() => {
-                    setHaveFiveSkill(false);
-                })
-            
-            getMyHiperSkill(characterName)
-                .then((res) => {
+                }
+            }).catch(() => {
+                setHaveFiveSkill(false);
+            })
+
+            getHiperSkill(characterName).then((res) => {
+                if (res) {
                     let cnt = 0;
-                    for (let i = 0; i < res.data.data.character_skill.length; i++) {
-                        if (res.data.data.character_skill[i].skill_level === 0) {
+                    for (let i = 0; i < res.length; i++) {
+                        if (res[i].skill_level === 0) {
                             cnt++;
                         }
                     }
-                    //하이퍼 패시브 스킬을 찍지 않았다면?
-                    if (cnt !== res.data.data.character_skill.length) {
+                    //하나라도 찍혀있다면.
+                    if (cnt !== res.length) {
                         setHaveHiperSkill(true);
-                        setHiperSkill(res.data.data.character_skill);         
+                        setHiperSkill(res);         
                     }
-                }).catch(() => {
-                    setHaveHiperSkill(false);
-                })
+                }
+            }).catch(() => {
+                setHaveHiperSkill(false);
+            })
             
-            getMyLinkSkill(characterName)
-                .then((res) => {
-                    if (res.data.data.character_link_skill.length !== 0) {
-                        setLinkSkill(res.data.data.character_link_skill);
+            getLinkSkill(characterName).then((res) => {          
+                if (res) {
+                    if (res.length !== 0) {
+                        setLinkSkill(res);
                         setHaveLinkSkill(true);
                     }
-                }).catch(() => {
-                    setHaveLinkSkill(false);
-                })
+                }
+            }).catch(() => {
+                setHaveLinkSkill(false);
+            })
         }
         
     },[characterName])
 
     return (
         <SkillContainer>
-            {haveSixSkill && <SixSkill skillList={sixSkill}
-                solErdaEnergy={solErdaEnergy} solErdaFragment={solErdaFragment} />}
+            <SixSkill skillList={sixSkill}
+                solErdaEnergy={solErdaEnergy} solErdaFragment={solErdaFragment} haveSixSkill={haveSixSkill} />
             {haveHexaStat && <HexaStat hexaStat={hexaStat}/>}
-            {haveFiveSkill && <FiveSkill skillList={fiveSkill} />}
-            {haveHiperSkill && <HiperPassiveSkill skillList={hiperSkill} />}
-            {haveLinkSkill && <LinkSkill skillList={linkSkill}/>}
+            <FiveSkill skillList={fiveSkill} haveFiveSkill={haveFiveSkill} />
+            <HiperPassiveSkill skillList={hiperSkill} haveHiperSkill={haveHiperSkill} />
+            <LinkSkill skillList={linkSkill} haveLinkSkill={haveLinkSkill} />
         </SkillContainer>
     )
 }
