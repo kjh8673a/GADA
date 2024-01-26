@@ -30,3 +30,8 @@ export const atomRankPage = atom<number>({
   key: "atomRankPage",
   default: 1,
 });
+
+export const atomTotalPage = atom<number>({
+  key: "atomTotalPage",
+  default: 9999,
+})

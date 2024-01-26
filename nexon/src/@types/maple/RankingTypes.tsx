@@ -81,7 +81,6 @@ export const WORLD_NAME_LIST = [
 
 export const CLASS_NAME_LIST = [
   "전체",
-  "초보자",
   "히어로",
   "팔라딘",
   "다크나이트",
@@ -127,4 +126,5 @@ export const CLASS_NAME_LIST = [
   "카인",
   "라라",
   "칼리",
+  "초보자",
 ];

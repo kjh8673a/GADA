@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useRanking from "../../../hooks/maple/useRanking";
 
@@ -6,44 +6,51 @@ const StyledBox = styled.div`
   width: 100%;
   margin-bottom: 10px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
-const PageMoveBox = styled.div<{ page: number; type: string }>`
+const PageMoveBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  color: ${(props) =>
-    props.page === 1 && props.type === "left" ? "gray;" : "white;"}
-  border: ${(props) =>
-    props.page === 1 && props.type === "left" ? "gray" : "#3d444c"} solid 3px;
-  ${(props) =>
-    props.page === 1 && props.type === "left"
-      ? "cursor: auto;"
-      : "cursor: pointer;"}
-  background-color: ${(props) =>
-    props.page === 1 && props.type === "left"
-      ? "white;"
-      : "#3d444c;"}
   padding: 5px;
 `;
 
 const RankTablePageMove = () => {
-  const { page, pageMoveClickHandler } = useRanking();
+  const { totalPage, rankPage, pageMoveClickHandler } = useRanking();
+  const [pageMoveStyle, setPageMoveStyle] = useState({ left: {}, right: {} });
+
+  useEffect(() => {
+    setPageMoveStyle(() => {
+      return {
+        left: {
+          color: rankPage === 1 ? "gray" : "white",
+          border: rankPage === 1 ? "gray solid 3px" : "#3d444c solid 3px",
+          cursor: rankPage === 1 ? "default" : "pointer",
+          backgroundColor: rankPage === 1 ? "white" : "#3d444c",
+        },
+        right: {
+          color: rankPage === totalPage ? "gray" : "white",
+          border: rankPage === totalPage ? "gray solid 3px" : "#3d444c solid 3px",
+          cursor: rankPage === totalPage ? "default" : "pointer",
+          backgroundColor: rankPage === totalPage ? "white" : "#3d444c",
+        },
+      };
+    });
+  }, [rankPage, totalPage, setPageMoveStyle]);
+
   return (
     <StyledBox>
       <PageMoveBox
         onClick={() => pageMoveClickHandler(-1)}
-        page={page}
-        type={"left"}
+        style={pageMoveStyle.left}
       >
-        ◀ 이전{" "}
+        ◀ 이전
       </PageMoveBox>
       <PageMoveBox
         onClick={() => pageMoveClickHandler(1)}
-        page={page}
-        type={"right"}
+        style={pageMoveStyle.right}
       >
         다음 ▶
       </PageMoveBox>

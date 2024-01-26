@@ -65,16 +65,16 @@ const InfoContainer = () => {
             }}
           >
             <CharacterName>{characterBasic.data?.character_name}</CharacterName>
-            <BookmarkButton>
+            {/* <BookmarkButton>
               <img
                 src="/assets/star.png"
                 width={"105%"}
                 height={"80%"}
                 alt="bookmark btn"
               />
-            </BookmarkButton>
+            </BookmarkButton> */}
           </div>
-          <CompareButton>Compare</CompareButton>
+          {/* <CompareButton>Compare</CompareButton> */}
         </div>
       </InfoBoxHeader>
       <InfoBoxBody>

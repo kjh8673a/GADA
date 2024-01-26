@@ -27,7 +27,7 @@ const GuildWaterwayTable = () => {
               guild_level={v.guild_level}
               guild_point={v.guild_point}
             />
-            {i < 19 ? <DashedLine /> : <></>}
+            {i !== guildWaterway.data!.length - 1 ? <DashedLine /> : <></>}
           </React.Fragment>
         );
       })}

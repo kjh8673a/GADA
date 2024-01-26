@@ -8,6 +8,7 @@ import {
   atomGuildWaterway,
   atomRankPage,
   atomRankTab,
+  atomTotalPage,
   atomWorldTab,
 } from "../../atoms/maple/rankingState";
 import { RankTabType } from "../../@types/maple/RankingTypes";
@@ -22,13 +23,15 @@ const useRanking = () => {
   const [rankTab, setRankTab] = useRecoilState(atomRankTab);
   const [worldTab, setWorldTab] = useRecoilState(atomWorldTab);
   const [classTab, setClassTab] = useRecoilState(atomClassTab);
-  const [page, setPage] = useRecoilState(atomRankPage);
+  const [rankPage, setRankPage] = useRecoilState(atomRankPage);
+  const [totalPage, setTotalPage] = useRecoilState(atomTotalPage);
 
   const getCombatPowerRank = useCallback(
     (page: number, world_name?: string, character_class?: string) => {
       getCombatPowerRanking(page, world_name, character_class)
         .then(({ data, status }) => {
           if (status === 200) {
+            setTotalPage(data.data.totalPages);
             setCombatPowerRanking(data);
           }
         })
@@ -36,7 +39,7 @@ const useRanking = () => {
           console.log("Error getCombatPowerRanking");
         });
     },
-    [setCombatPowerRanking]
+    [setCombatPowerRanking, setTotalPage]
   );
 
   const getGuildWaterwayData = useCallback(
@@ -47,42 +50,45 @@ const useRanking = () => {
             setGuildWaterway(data);
           }
         })
-        .catch(() => {
-          console.log("Error getGuildWaterWay");
+        .catch((res) => {
+          if (res.response.status === 500) {
+            setTotalPage(rankPage);
+            setRankPage((prev) => prev - 1);
+          }
         });
     },
-    [setGuildWaterway]
+    [setGuildWaterway, rankPage, setTotalPage, setRankPage]
   );
 
   const rankTabClickHandler = (params: RankTabType) => {
     setRankTab(params);
     setWorldTab("전체");
     setClassTab("전체");
-    setPage(1);
+    setRankPage(1);
     if (params === "개인 전투력 랭킹") getCombatPowerRank(1);
     if (params === "길드 수로 랭킹") getGuildWaterwayData(1);
   };
 
   const worldTabClickHandler = (world_name: string) => {
     setWorldTab(world_name);
+    setRankPage(1);
     if (rankTab === "개인 전투력 랭킹")
       getCombatPowerRank(
-        page,
+        1,
         world_name === "전체" ? undefined : world_name,
         classTab === "전체" ? undefined : classTab
       );
-    if (rankTab === "길드 수로 랭킹")
-      getGuildWaterwayData(
-        page,
-        world_name === "전체" ? undefined : world_name
-      );
+    if (rankTab === "길드 수로 랭킹") {
+      setTotalPage(9999);
+      getGuildWaterwayData(1, world_name === "전체" ? undefined : world_name);
+    }
   };
 
   const classTabClickHandler = (class_name: string) => {
     setClassTab(class_name);
-    setPage(1);
+    setRankPage(1);
     getCombatPowerRank(
-      page,
+      1,
       worldTab === "전체" ? undefined : worldTab,
       class_name === "전체" ? undefined : class_name
     );
@@ -93,8 +99,9 @@ const useRanking = () => {
   };
 
   const pageMoveClickHandler = (move: number) => {
-    if (page + move < 1) return;
-    setPage((prev) => {
+    if (rankPage + move < 1) return;
+    if (rankPage + move > totalPage) return;
+    setRankPage((prev) => {
       if (rankTab === "개인 전투력 랭킹") {
         getCombatPowerRank(
           prev + move,
@@ -128,10 +135,12 @@ const useRanking = () => {
     classTab,
     setClassTab,
     classTabClickHandler,
-    page,
-    setPage,
+    rankPage,
+    setRankPage,
     combatPowerItemClickHandler,
     pageMoveClickHandler,
+    totalPage,
+    setTotalPage,
   };
 };
 

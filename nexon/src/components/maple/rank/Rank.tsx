@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import CenteredBox from "../../../style/CenteredBox";
 import RankTabItem from "./RankTabItem";
 import {
@@ -17,12 +17,7 @@ const TextBox = styled.div`
 `;
 
 const Rank = () => {
-  const { rankTabClickHandler, worldTabClickHandler, getCombatPowerRank, getGuildWaterwayData } = useRanking();
-
-  useEffect(() => {
-    getCombatPowerRank(1);
-    getGuildWaterwayData(1);
-  }, [])
+  const { rankTabClickHandler, worldTabClickHandler } = useRanking();
   
   return (
     <CenteredBox>
@@ -35,8 +30,8 @@ const Rank = () => {
           );
         })}
       </TabBox>
-      <TextBox>- API 오픈 초기라 열심히 전투력 데이터를 수집 중입니다.</TextBox>
-      <TextBox>- 수집 경과에 따라 랭킹이 지속적으로 업데이트 됩니다.</TextBox>
+      <TextBox>- API 오픈 초기라 전투력 데이터를 꾸준히 쌓고 있습니다.</TextBox>
+      <TextBox>- 수집한 데이터를 기반하여 지속적으로 랭킹이 업데이트 됩니다.</TextBox>
       <TabBox>
         {WORLD_NAME_LIST.map((worldTabName, i) => {
           return (
