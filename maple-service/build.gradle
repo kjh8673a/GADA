@@ -48,6 +48,10 @@ dependencies {
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
     implementation group: 'com.querydsl', name: 'querydsl-sql', version: '5.0.0'
 
+    // Spring Boot Actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // Prometheus
+    implementation 'io.micrometer:micrometer-registry-prometheus'
 }
 
 dependencyManagement {

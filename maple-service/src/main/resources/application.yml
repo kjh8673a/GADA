@@ -1,5 +1,8 @@
 server:
   port: 8080
+  tomcat:
+    mbeanregistry:
+      enabled: true
 
 spring:
   application:
@@ -47,3 +50,9 @@ logging:
         SQL: DEBUG
         type:
           trace
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "prometheus"
