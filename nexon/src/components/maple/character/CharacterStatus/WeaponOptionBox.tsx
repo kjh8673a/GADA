@@ -15,6 +15,7 @@ interface Props {
   totalOption: IWeaponOptionType | undefined;
   baseOption: IWeaponOptionType | undefined;
   exceptionalOption: IWeaponOptionType | undefined;
+  etcOption: IWeaponOptionType | undefined;
   addOption: IWeaponOptionType | undefined;
   starforceOption: IWeaponOptionType | undefined;
   golden_hammer_flag: boolean | undefined;
@@ -27,6 +28,7 @@ const WeaponOptionBox: React.FC<Props> = ({
   baseOption,
   exceptionalOption,
   addOption,
+  etcOption,
   starforceOption,
   golden_hammer_flag,
   cuttable_count,
@@ -43,6 +45,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.str}
           exceptional={exceptionalOption?.str}
           add={addOption?.str}
+          etc={etcOption?.str}
           starforce={starforceOption?.str}
         />
         {/* DEX */}
@@ -52,6 +55,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.dex}
           exceptional={exceptionalOption?.dex}
           add={addOption?.dex}
+          etc={etcOption?.dex}
           starforce={starforceOption?.dex}
         />
         {/* INT */}
@@ -61,6 +65,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.int}
           exceptional={exceptionalOption?.int}
           add={addOption?.int}
+          etc={etcOption?.int}
           starforce={starforceOption?.int}
         />
         {/* LUK */}
@@ -70,6 +75,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.luk}
           exceptional={exceptionalOption?.luk}
           add={addOption?.luk}
+          etc={etcOption?.luk}
           starforce={starforceOption?.luk}
         />
         {/* MAX_HP */}
@@ -79,6 +85,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.max_hp}
           exceptional={exceptionalOption?.max_hp}
           add={addOption?.max_hp}
+          etc={etcOption?.max_hp}
           starforce={starforceOption?.max_hp}
         />
         {/* MAX_MP */}
@@ -97,6 +104,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.attack_power}
           exceptional={exceptionalOption?.attack_power}
           add={addOption?.attack_power}
+          etc={etcOption?.attack_power}
           starforce={starforceOption?.attack_power}
         />
         {/* magic_power */}
@@ -106,6 +114,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.magic_power}
           exceptional={exceptionalOption?.magic_power}
           add={addOption?.magic_power}
+          etc={etcOption?.magic_power}
           starforce={starforceOption?.magic_power}
         />
         {/* armor */}
@@ -115,6 +124,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.armor}
           exceptional={exceptionalOption?.armor}
           add={addOption?.armor}
+          etc={etcOption?.armor}
           starforce={starforceOption?.armor}
         />
         {/* speed */}
@@ -124,6 +134,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.speed}
           exceptional={exceptionalOption?.speed}
           add={addOption?.speed}
+          etc={etcOption?.speed}
           starforce={starforceOption?.speed}
         />
         {/* jump */}
@@ -133,6 +144,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.jump}
           exceptional={exceptionalOption?.jump}
           add={addOption?.jump}
+          etc={etcOption?.jump}
           starforce={starforceOption?.jump}
         />
         {/* boss_damage */}
@@ -142,6 +154,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.boss_damage}
           exceptional={exceptionalOption?.boss_damage}
           add={addOption?.boss_damage}
+          etc={etcOption?.boss_damage}
           starforce={starforceOption?.boss_damage}
           unit="%"
         />
@@ -152,6 +165,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.ignore_monster_armor}
           exceptional={exceptionalOption?.ignore_monster_armor}
           add={addOption?.ignore_monster_armor}
+          etc={etcOption?.ignore_monster_armor}
           starforce={starforceOption?.ignore_monster_armor}
           unit="%"
         />
@@ -162,6 +176,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.all_stat}
           exceptional={exceptionalOption?.all_stat}
           add={addOption?.all_stat}
+          etc={etcOption?.all_stat}
           starforce={starforceOption?.all_stat}
           unit="%"
         />
@@ -172,6 +187,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.max_hp_rate}
           exceptional={exceptionalOption?.max_hp_rate}
           add={addOption?.max_hp_rate}
+          etc={etcOption?.max_hp_rate}
           starforce={starforceOption?.max_hp_rate}
           unit="%"
         />
@@ -182,6 +198,7 @@ const WeaponOptionBox: React.FC<Props> = ({
           base={baseOption?.max_mp_rate}
           exceptional={exceptionalOption?.max_mp_rate}
           add={addOption?.max_mp_rate}
+          etc={etcOption?.max_mp_rate}
           starforce={starforceOption?.max_mp_rate}
           unit="%"
         />

@@ -7,6 +7,7 @@ interface Props {
   base?: string | undefined;
   exceptional?: string | undefined;
   add?: string | undefined;
+  etc?: string | undefined;
   starforce?: string | undefined;
   unit?: string;
   desc?: string | undefined;
@@ -47,6 +48,7 @@ const WeaponOptionItem: React.FC<Props> = ({
   base = 0,
   exceptional = 0,
   add = 0,
+  etc = 0,
   starforce = 0,
   unit = "",
   desc,
@@ -70,6 +72,7 @@ const WeaponOptionItem: React.FC<Props> = ({
           (<StyledExtraOption>{`${+base}`}</StyledExtraOption>
           {+exceptional > 0 && <StyledExtraOption color="#AAAAFE">{`+${exceptional}`}</StyledExtraOption>}
           {+add > 0 && <StyledExtraOption color="#CAFD02">{`+${add}`}</StyledExtraOption>}
+          {+etc > 0 && <StyledExtraOption color="#3F7BC0">{`+${etc}`}</StyledExtraOption>}
           {+starforce > 0 && <StyledExtraOption color="#FDCA00">{`+${starforce}`}</StyledExtraOption>})
         </>
       )}
@@ -78,3 +81,4 @@ const WeaponOptionItem: React.FC<Props> = ({
 };
 
 export default WeaponOptionItem;
+
