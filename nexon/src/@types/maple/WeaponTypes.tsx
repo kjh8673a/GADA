@@ -1,12 +1,14 @@
-export const WEAPON_GRADE_LIST = ["유니크", "에픽", "레전드리"];
+export const WEAPON_GRADE_LIST = ["레어", "에픽", "유니크", "레전드리"];
 
 export const MATCH_COLOR: { [key in WEAPON_GRADE_TYPE]: string } = {
-  에픽: "rgb(76, 2, 145)",
+  레어: "rgb(97, 255, 255)",
+  에픽: "rgb(180, 102, 253)",
   유니크: "rgb(254, 199, 99)",
   레전드리: "rgb(83, 182, 0)",
 };
 
 export const MATCH_BGCOLOR: { [key in WEAPON_GRADE_TYPE]: string } = {
+  레어: "rgb(97, 255, 255)", // 연한 바다색
   에픽: "rgba(76, 2, 145, 0.2)", // 연한 보라색
   유니크: "rgba(254, 199, 99, 0.2)", // 연한 노란색
   레전드리: "rgba(83, 182, 0, 0.2)", // 연한 녹색

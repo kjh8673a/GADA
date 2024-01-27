@@ -11,7 +11,6 @@ const UserAgentBoundary: React.FC<Props> = ({ children }) => {
 
   // userAgent에서 모바일 기기 여부 확인
   const isMobile = mobileRegex.test(userAgent);
-  console.log(userAgent, isMobile);
 
   if (isMobile) return <MobileBlockMasking />;
   return <div>{children}</div>;

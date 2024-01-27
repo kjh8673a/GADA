@@ -24,6 +24,7 @@ interface Props {
 }
 
 const WeaponBoxDetail: React.FC<Props> = ({ data, title }) => {
+  console.log(data);
   return (
     <StyledBox>
       <WeaponStarforce starforce={data ? +data?.starforce : null} scrollFlag={data?.starforce_scroll_flag === "사용"} />
@@ -34,18 +35,21 @@ const WeaponBoxDetail: React.FC<Props> = ({ data, title }) => {
         baseOption={data?.item_base_option}
         exceptionalOption={data?.item_exceptional_option}
         addOption={data?.item_add_option}
+        etcOption={data?.item_etc_option}
         starforceOption={data?.item_starforce_option}
         golden_hammer_flag={data?.golden_hammer_flag === "적용"}
         cuttable_count={data?.cuttable_count}
       />
       <WeaponPotentialOptionBox
         title="잠재옵션"
+        grade={data?.potential_option_grade}
         potential1={data?.potential_option_1}
         potential2={data?.potential_option_2}
         potential3={data?.potential_option_3}
       />
       <WeaponPotentialOptionBox
         title="추가 잠재옵션"
+        grade={data?.additional_potential_option_grade}
         potential1={data?.additional_potential_option_1}
         potential2={data?.additional_potential_option_2}
         potential3={data?.additional_potential_option_3}

@@ -12,12 +12,13 @@ const StyledList = styled.ul`
 
 interface Props {
   title: string;
+  grade: string | null | undefined;
   potential2: string | null | undefined;
   potential3: string | null | undefined;
   potential1: string | null | undefined;
 }
 
-const WeaponPotentialOptionBox: React.FC<Props> = ({ title, potential1, potential2, potential3 }) => {
+const WeaponPotentialOptionBox: React.FC<Props> = ({ title, grade, potential1, potential2, potential3 }) => {
   if (!potential1 && !potential2 && !potential3) return null;
 
   const isAdditional = title !== "잠재옵션";
@@ -28,7 +29,7 @@ const WeaponPotentialOptionBox: React.FC<Props> = ({ title, potential1, potentia
       <StyledList>
         <OptionTitle
           title={title}
-          highlight={isAdditional ? "레전드리" : "유니크"}
+          highlight={grade ? grade : "#000"}
           logo={`${process.env.PUBLIC_URL}/assets/${isAdditional ? "letter-r.png" : "letter-e.png"}`}
         />
         {potential1 && <WeaponOptionItem desc={potential1} />}
@@ -40,3 +41,4 @@ const WeaponPotentialOptionBox: React.FC<Props> = ({ title, potential1, potentia
 };
 
 export default WeaponPotentialOptionBox;
+
