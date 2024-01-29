@@ -72,11 +72,11 @@ public class CharacterCustomRepositoryImpl implements CharacterCustomRepository 
 		List<Union> unionList) {
 
 		List<Union> unionListToBeAdded = unionList.stream()
-			.filter(u -> isCharacterNotInDB(u.getCharacter_name()))
 			.filter(u -> !u.getCharacter_name().equals(characterName))
 			.filter(
 				u -> characterApiService.getOcidKey(u.getCharacter_name()) != null && !characterApiService.getOcidKey(
 					u.getCharacter_name()).isBlank())
+			.filter(u -> isCharacterNotInDB(u.getCharacter_name()))
 			.collect(Collectors.toList());
 
 		String sql =
@@ -116,7 +116,9 @@ public class CharacterCustomRepositoryImpl implements CharacterCustomRepository 
 
 	private boolean isCharacterNotInDB(String characterName) {
 		JPAQueryFactory query = querydslConfig.jpaQueryFactory();
-		return query.selectFrom(character).where(character.character_name.eq(characterName)).fetchFirst() == null;
+
+		String ocid = characterApiService.getOcidKey(characterName);
+		return query.selectFrom(character).where(character.ocid.eq(ocid)).fetchFirst() == null;
 	}
 
 	/**
