@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.maple.mapleservice.dto.model.character.HyperStat;
@@ -76,7 +77,8 @@ public class CharacterServiceImpl implements CharacterService {
 		List<Union> unionList = rankingApiService.getRankingUnion(ocid, characterBasicDto.getWorld_name());
 		Collections.sort(unionList, (o1, o2) -> Long.compare(o2.getUnion_level(), o1.getUnion_level()));
 
-		String parent_ocid = unionList.size() == 0 ? ocid : characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
+		String parent_ocid =
+			unionList.size() == 0 ? ocid : characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
 
 		// 유니온 랭킹으로 가져온 캐릭터들 정보 넣기
 		characterRepository.addChacterInformationToDbFromUnionRanking(characterName, parent_ocid, unionList);
@@ -290,19 +292,23 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@Cacheable(value = "character-basic-info", key = "#characterName")
+	@Cacheable(value = "character-basic-info", key = "#characterName", unless = "#result == null")
 	public CharacterBasicInfoResponseDto getCharacterBasicInfo(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
 			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
 		}
-
 		addCharacterInformationToDB(characterName);
+
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+		if (characterBasicDto.getCharacter_level() == null || characterBasicDto.getCharacter_level() == 0) {
+			return null;
+		}
 		String prevName = characterRepository.findByOcid(ocid).getPrev_name();
 		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 		Integer popularity = characterApiService.getCharacterPopularity(ocid);
 		String characterCombatPower = characterApiService.getCharacterStat(ocid).get("전투력");
+
 		return CharacterBasicInfoResponseDto.of(ocid, characterBasicDto, popularity, characterCombatPower, prevName,
 			oguildId);
 	}
@@ -432,6 +438,20 @@ public class CharacterServiceImpl implements CharacterService {
 		CharacterCompareEachCharacterResponseDto right_character = getCharacterForCompare(rightCharacterName);
 
 		return CharacterCompareResponseDto.of(left_character, right_character);
+	}
+
+	@Override
+	public CharacterBasicInfoResponseDto getCharacterBasicInfoForGuildMember(String characterName) {
+		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
+		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+		Integer popularity = characterApiService.getCharacterPopularity(ocid);
+		String characterCombatPower = characterApiService.getCharacterStat(ocid).get("전투력");
+
+		return CharacterBasicInfoResponseDto.ofGuildMember(ocid, characterBasicDto, popularity, characterCombatPower);
 	}
 
 	public CharacterCompareEachCharacterResponseDto getCharacterForCompare(String characterName) {
