@@ -43,6 +43,7 @@ spring:
 #          - ${redis.sentinel-3}
 #        password: ${redis.password}
 
+
 logging:
   level:
     org:
@@ -56,3 +57,6 @@ management:
     web:
       exposure:
         include: "prometheus"
+
+cloudfront:
+  utl: ${cloudfront.url}
