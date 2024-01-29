@@ -43,8 +43,6 @@ public class UnionServiceImpl implements UnionService {
 
 		Collections.sort(union_block_for_response,
 			((o1, o2) -> Integer.parseInt(o2.getBlock_level()) - Integer.parseInt(o1.getBlock_level())));
-		Collections.sort(union_block,
-			((o1, o2) -> Integer.parseInt(o2.getBlock_level()) - Integer.parseInt(o1.getBlock_level())));
 
 		return UnionInfoResponseDto.of(unionDto.getUnion_level(), unionDto.getUnion_grade(),
 			unionRaiderDto.getUnion_raider_stat(), total_union_raider_stat, unionRaiderDto.getUnion_occupied_stat(),
