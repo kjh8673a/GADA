@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import com.maple.mapleservice.dto.feign.union.UnionArtifactDto;
 import com.maple.mapleservice.dto.feign.union.UnionDto;
 import com.maple.mapleservice.dto.feign.union.UnionRaiderDto;
+import com.maple.mapleservice.dto.model.union.UnionArtifactCrystalWithImage;
 import com.maple.mapleservice.dto.model.union.UnionBlock;
+import com.maple.mapleservice.dto.model.union.UnionBlockForResponse;
 import com.maple.mapleservice.dto.response.union.UnionArtifactResponseDto;
 import com.maple.mapleservice.dto.response.union.UnionInfoResponseDto;
 import com.maple.mapleservice.service.character.CharacterApiService;
@@ -36,11 +38,15 @@ public class UnionServiceImpl implements UnionService {
 		List<String> total_union_raider_stat = calculateUnionStats(unionRaiderDto.getUnion_raider_stat());
 
 		List<UnionBlock> union_block = unionRaiderDto.getUnion_block();
-		Collections.sort(union_block, ((o1, o2) -> Integer.parseInt(o2.getBlock_level()) - Integer.parseInt(o1.getBlock_level())));
+		List<UnionBlockForResponse> union_block_for_response = new ArrayList<>();
+		union_block.stream().forEach(u -> union_block_for_response.add(UnionBlockForResponse.of(u)));
+
+		Collections.sort(union_block_for_response,
+			((o1, o2) -> Integer.parseInt(o2.getBlock_level()) - Integer.parseInt(o1.getBlock_level())));
 
 		return UnionInfoResponseDto.of(unionDto.getUnion_level(), unionDto.getUnion_grade(),
 			unionRaiderDto.getUnion_raider_stat(), total_union_raider_stat, unionRaiderDto.getUnion_occupied_stat(),
-			union_block, unionRaiderDto.getUnion_inner_stat());
+			union_block_for_response, unionRaiderDto.getUnion_inner_stat());
 	}
 
 	@Override
@@ -50,8 +56,13 @@ public class UnionServiceImpl implements UnionService {
 		UnionDto unionDto = unionApiService.getUnionDto(ocid);
 		UnionArtifactDto unionArtifactDto = unionApiService.getUnionArtifactDto(ocid);
 
+		List<UnionArtifactCrystalWithImage> union_artifact_crystal = new ArrayList<>();
+		unionArtifactDto.getUnion_artifact_crystal().stream().forEach(u ->
+			union_artifact_crystal.add(UnionArtifactCrystalWithImage.of(u))
+		);
+
 		return UnionArtifactResponseDto.of(unionDto.getArtifact_level(),
-			unionArtifactDto.getUnion_artifact_effect(), unionArtifactDto.getUnion_artifact_crystal());
+			unionArtifactDto.getUnion_artifact_effect(), union_artifact_crystal);
 	}
 
 	/**
