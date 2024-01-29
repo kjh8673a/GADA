@@ -6,6 +6,7 @@ import com.maple.mapleservice.dto.feign.character.CharacterAbilityDto;
 import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
 import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
 import com.maple.mapleservice.dto.model.union.UnionBlock;
+import com.maple.mapleservice.dto.model.union.UnionBlockForResponse;
 import com.maple.mapleservice.dto.model.union.UnionInnerStat;
 import com.maple.mapleservice.dto.response.Character.CharacterStatsResponseDto;
 
@@ -24,11 +25,11 @@ public class UnionInfoResponseDto {
 	List<String> union_raider_stat;
 	List<String> total_union_raider_stat;
 	List<String> union_occupied_stat;
-	List<UnionBlock> union_block;
+	List<UnionBlockForResponse> union_block;
 	List<UnionInnerStat> union_inner_stat;
 
 	public static UnionInfoResponseDto of(int union_level, String union_grade, List<String> union_raider_stat,
-		List<String> total_union_raider_stat, List<String> union_occupied_stat, List<UnionBlock> union_block,
+		List<String> total_union_raider_stat, List<String> union_occupied_stat, List<UnionBlockForResponse> union_block,
 		List<UnionInnerStat> union_inner_stat) {
 		return UnionInfoResponseDto.builder()
 			.union_level(union_level)
