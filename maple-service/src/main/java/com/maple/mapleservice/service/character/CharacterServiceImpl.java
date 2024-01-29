@@ -130,13 +130,13 @@ public class CharacterServiceImpl implements CharacterService {
 				.date(commonUtil.date)
 				.world_name(characterBasicDto.getWorld_name())
 				.character_name(characterBasicDto.getCharacter_name())
-				.combat_power(Long.parseLong(combatPower))
+				.combat_power(Long.valueOf(Optional.ofNullable(combatPower).orElseGet(() -> "0")))
 				.guild_name(characterBasicDto.getCharacter_guild_name())
 				.parent_ocid(parent_ocid)
 				.oguild_id(oguildId)
 				.character_class(characterBasicDto.getCharacter_class())
 				.character_class_level(characterBasicDto.getCharacter_class_level())
-				.character_level(Long.valueOf(characterBasicDto.getCharacter_level()))
+				.character_level(Long.valueOf(Optional.ofNullable(characterBasicDto.getCharacter_level()).orElseGet(() -> 0)))
 				.character_image(characterBasicDto.getCharacter_image())
 				.build();
 
