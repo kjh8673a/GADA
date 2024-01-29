@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import CenteredBox from "../../../style/CenteredBox";
 import SearchBox from "./search/SearchBox";
-import CharacterBox from "./character/CharacterBox";
+import ComparisonData from "./ComparisonData";
 
 const StyledTitle = styled.h2`
   width: 100%;
@@ -14,7 +14,7 @@ const Comparison = () => {
     <CenteredBox>
       <StyledTitle>캐릭터 비교</StyledTitle>
       <SearchBox />
-      <CharacterBox />
+      <ComparisonData />
     </CenteredBox>
   );
 };

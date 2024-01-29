@@ -40,7 +40,7 @@ const Header = () => {
       <DownConatiner>
         <PageHeader href="/">메인</PageHeader>
         <PageHeader href="/rank">랭킹</PageHeader>
-        {/* <PageHeader href="/comparison">캐릭터 비교</PageHeader> */}
+        <PageHeader href="/comparison">캐릭터 비교</PageHeader>
         {/* <PageHeader>재획 타이머</PageHeader>
                 <PageHeader>파티구성</PageHeader> */}
       </DownConatiner>
