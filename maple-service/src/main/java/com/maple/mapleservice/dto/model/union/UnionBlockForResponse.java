@@ -2,6 +2,8 @@ package com.maple.mapleservice.dto.model.union;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +24,7 @@ public class UnionBlockForResponse {
 	String class_image;
 	String grade;
 
-	public static UnionBlockForResponse of(UnionBlock unionBlock) {
+	public static UnionBlockForResponse of(UnionBlock unionBlock, String url) {
 		String className = unionBlock.getBlock_class();
 		int blockLevel = Integer.parseInt(unionBlock.getBlock_level());
 		String grade = "";
@@ -68,7 +70,7 @@ public class UnionBlockForResponse {
 			.block_level(unionBlock.getBlock_level())
 			.block_control_point(unionBlock.getBlock_control_point())
 			.block_position(unionBlock.getBlock_position())
-			.class_image("https://d2ehkq4zb63ju5.cloudfront.net/maplestory/asset/" + unionBlock.getBlock_class().replace(" ", "") + ".png")
+			.class_image(url + unionBlock.getBlock_class().replace(" ", "") + ".png")
 			.grade(grade)
 			.build();
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,9 @@ public class UnionServiceImpl implements UnionService {
 
 	private UnionRaidarStatTable unionRaidarStatTable = new UnionRaidarStatTable();
 
+	@Value("${cloudfront.url}")
+	private String cloudfrontUrl;
+
 	@Override
 	@Cacheable(value = "union-info", key = "#characterName")
 	public UnionInfoResponseDto getUnionInfoResponseDto(String characterName) {
@@ -39,7 +43,7 @@ public class UnionServiceImpl implements UnionService {
 
 		List<UnionBlock> union_block = unionRaiderDto.getUnion_block();
 		List<UnionBlockForResponse> union_block_for_response = new ArrayList<>();
-		union_block.stream().forEach(u -> union_block_for_response.add(UnionBlockForResponse.of(u)));
+		union_block.stream().forEach(u -> union_block_for_response.add(UnionBlockForResponse.of(u, cloudfrontUrl)));
 
 		Collections.sort(union_block_for_response,
 			((o1, o2) -> Integer.parseInt(o2.getBlock_level()) - Integer.parseInt(o1.getBlock_level())));
@@ -58,7 +62,7 @@ public class UnionServiceImpl implements UnionService {
 
 		List<UnionArtifactCrystalWithImage> union_artifact_crystal = new ArrayList<>();
 		unionArtifactDto.getUnion_artifact_crystal().stream().forEach(u ->
-			union_artifact_crystal.add(UnionArtifactCrystalWithImage.of(u))
+			union_artifact_crystal.add(UnionArtifactCrystalWithImage.of(u, cloudfrontUrl))
 		);
 
 		return UnionArtifactResponseDto.of(unionDto.getArtifact_level(),

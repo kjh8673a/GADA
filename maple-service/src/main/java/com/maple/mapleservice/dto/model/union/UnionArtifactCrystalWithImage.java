@@ -1,5 +1,7 @@
 package com.maple.mapleservice.dto.model.union;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +21,7 @@ public class UnionArtifactCrystalWithImage {
 	String crystal_option_name_3;
 	String crystal_icon;
 
-	public static UnionArtifactCrystalWithImage of(UnionArtifactCrystal u) {
+	public static UnionArtifactCrystalWithImage of(UnionArtifactCrystal u, String url) {
 		return UnionArtifactCrystalWithImage.builder()
 			.name(u.getName())
 			.validity_flag(u.getDate_expire())
@@ -28,7 +30,7 @@ public class UnionArtifactCrystalWithImage {
 			.crystal_option_name_1(u.getCrystal_option_name_1())
 			.crystal_option_name_2(u.getCrystal_option_name_2())
 			.crystal_option_name_3(u.getCrystal_option_name_3())
-			.crystal_icon("https://d2ehkq4zb63ju5.cloudfront.net/maplestory/asset/" + u.getName().replace(" : ", "_") + ".png")
+			.crystal_icon(url + u.getName().replace(" : ", "_") + ".png")
 			.build();
 	}
 }
