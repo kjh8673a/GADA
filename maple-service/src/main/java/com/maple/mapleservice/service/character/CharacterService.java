@@ -42,4 +42,6 @@ public interface CharacterService {
 	CharacterHexaMatrixResponseDto getCharacterHexaMatrix(String characterName);
 
 	CharacterCompareResponseDto getCharacterCompare(String leftCharacterName, String rightCharacterName);
+
+	CharacterBasicInfoResponseDto getCharacterBasicInfoForGuildMember(String characterName);
 }

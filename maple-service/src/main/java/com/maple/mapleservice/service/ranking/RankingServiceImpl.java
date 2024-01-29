@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
 import com.maple.mapleservice.dto.response.Ranking.CharacterCombatPowerRankingResponseDto;
@@ -56,9 +57,11 @@ public class RankingServiceImpl implements RankingService {
 	}
 
 	@Override
+	@Transactional
 	public Page<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String world_name, String character_class,
 		Pageable pageable) {
 
+		log.info("전투력 랭킹 조회 : " + world_name + " : " + character_class + " : " + pageable.getPageNumber());
 		Page<CharacterCombatPowerRankingResponseDto> result = rankingRepository.getCombatPowerRanking(world_name, character_class, pageable);
 
 		return result;
