@@ -1,5 +1,8 @@
 server:
   port: 8080
+  tomcat:
+    mbeanregistry:
+      enabled: true
 
 spring:
   application:
@@ -42,4 +45,14 @@ spring:
 
 logging:
   level:
-    com.maple.mapleservice: debug
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          trace
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "prometheus"

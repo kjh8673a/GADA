@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.maple.mapleservice.config.QuerydslConfig;
@@ -23,9 +24,14 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.jpa.sql.JPASQLQuery;
 import com.querydsl.sql.SQLExpressions;
+import com.querydsl.sql.SQLTemplates;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class RankingCustomRepositoryImpl implements RankingCustomRepository {
@@ -34,7 +40,13 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 	private final JdbcTemplate jdbcTemplate;
 	private final QuerydslConfig querydslConfig;
 
+	private final SQLTemplates sqlTemplates;
+
+	@PersistenceContext
+	private EntityManager em;
+
 	@Override
+	@Transactional
 	public Page<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String worldName, String characterClass, Pageable pageable) {
 		List<CharacterCombatPowerRankingResponseDto> content = getCharacterCombatPowerRankingResponseDto(worldName, characterClass, pageable);
 
@@ -44,7 +56,12 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 	}
 
 	private List<CharacterCombatPowerRankingResponseDto> getCharacterCombatPowerRankingResponseDto(String worldName, String characterClass, Pageable pageable) {
-		JPASQLQuery<?> query = querydslConfig.jpasqlQuery();
+		log.info("offset : " + pageable.getOffset());
+		log.info("page size : " + pageable.getPageSize());
+		log.info("worldName : " + worldName);
+		log.info("characterClass : " + characterClass);
+
+		JPASQLQuery<?> query = new JPASQLQuery<>(em, sqlTemplates);
 		List<CharacterCombatPowerRankingResponseDto> content = query
 			.select(Projections.constructor(CharacterCombatPowerRankingResponseDto.class,
 				Expressions.asNumber(SQLExpressions.rank().over().orderBy(character.combat_power.desc())),
@@ -68,6 +85,7 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 			.limit(pageable.getPageSize())
 			.fetch();
 
+		log.info("content size : " + content.size());
 		return content;
 	}
 
@@ -82,14 +100,17 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 			)
 			.fetchOne();
 
+		log.info("count : " + count);
 		return count;
 	}
 
 	private BooleanExpression characterClassEq(String characterClass) {
+		log.info("EQ : characterClass : " + characterClass);
 		return StringUtils.hasText(characterClass) ? character.character_class.eq(characterClass) : null;
 	}
 
 	private BooleanExpression worldNameEq(String worldName) {
+		log.info("EQ : worldName : " + worldName);
 		return StringUtils.hasText(worldName) ? character.world_name.eq(worldName) : null;
 	}
 

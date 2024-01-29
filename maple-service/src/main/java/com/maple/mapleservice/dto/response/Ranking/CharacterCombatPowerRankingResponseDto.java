@@ -1,5 +1,7 @@
 package com.maple.mapleservice.dto.response.Ranking;
 
+import com.maple.mapleservice.entity.Character;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
