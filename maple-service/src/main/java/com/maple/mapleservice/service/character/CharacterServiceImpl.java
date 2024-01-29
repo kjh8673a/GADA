@@ -77,6 +77,8 @@ public class CharacterServiceImpl implements CharacterService {
 		Collections.sort(unionList, (o1, o2) -> Long.compare(o2.getUnion_level(), o1.getUnion_level()));
 
 		String parent_ocid = unionList.size() == 0 ? ocid : characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
+		System.out.println("000000000000000000000000000");
+		System.out.println(parent_ocid + "!!!");
 
 		// 유니온 랭킹으로 가져온 캐릭터들 정보 넣기
 		characterRepository.addChacterInformationToDbFromUnionRanking(characterName, parent_ocid, unionList);
