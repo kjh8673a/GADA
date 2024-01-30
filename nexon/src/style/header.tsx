@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 // 로고
 export const DomainLogo = styled.img`
-  width: 62px;
+  width: 80px;
+  aspect-ratio: 1.2;
 `;
 
 //헤더의 도메인 이름
@@ -17,7 +18,8 @@ export const InputHeaderName = styled.input`
   outline: none;
   font-size: 10px;
   border-radius: 8px;
-  padding: 3px;
+  width: 120px;
+  padding: 4px 12px;
   display: flex;
   justify-content: space-between;
 `;
@@ -28,8 +30,8 @@ export const UpContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #757575;
-  height: 40px;
+  background-color: var(--primary-bg-color);
+  height: 64px;
 `;
 
 export const Container = styled.div`
@@ -41,13 +43,20 @@ export const DownConatiner = styled.div`
   padding-left: 10%;
   display: flex;
   jutify-content: center;
-  background-color: #d8d8d8;
-  height: 32px;
+  align-items: center;
+  background-color: var(--secondary-bg-color);
+  height: 40px;
 `;
 
 export const PageHeader = styled.a`
   text-decoration-line: none;
-  color: black;
-  margin: 5px;
+  color: #eee;
+  margin: 0;
+  padding: 0 8px;
+  font-size: 0.9rem;
+
+  &:hover {
+    font-weight: 800;
+  }
 `;
 

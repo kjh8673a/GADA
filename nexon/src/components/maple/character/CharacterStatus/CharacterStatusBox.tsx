@@ -12,7 +12,8 @@ const StyledBox = styled.div`
   min-height: 580px;
   box-sizing: border-box;
   padding: 12px 8px;
-  background-color: #3d454d;
+  background-color: var(--secondary-bg-color);
+  box-shadow: var(--custom-shadow);
   border-radius: 4px;
   position: relative;
 `;

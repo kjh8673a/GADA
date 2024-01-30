@@ -6,7 +6,7 @@ export const InfoBox = styled.div`
   display: grid;
   grid-template-rows: 3fr 7.5fr;
   border-radius: 0.625rem;
-  background: #3d444c;
+  background-color: var(--secondary-bg-color);
 `;
 
 export const InfoBoxHeader = styled.div`

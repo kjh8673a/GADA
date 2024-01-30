@@ -35,7 +35,7 @@ const StyledPara = styled.p`
   position: relative;
   left: 24px;
   animation: ${ellipsisAnimation} 1.5s infinite;
-  color: #555;
+  color: #ccc;
   font-weight: 800;
 
   &:after {

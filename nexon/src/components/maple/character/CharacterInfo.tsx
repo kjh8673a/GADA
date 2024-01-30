@@ -6,9 +6,10 @@ const StyledBox = styled.div`
   align-item: center;
   padding: 16px;
   box-sizing: border-box;
-  border: 1px solid #ccc;
-  margin-top: 8px;
+  margin-top: 12px;
   border-radius: 4px;
+  background-color: var(--secondary-bg-color);
+  box-shadow: var(--custom-shadow);
 `;
 
 const StyledImg = styled.img`
@@ -20,7 +21,7 @@ const StyledPara = styled.p`
   margin: 0;
   padding: 0;
   font-size: 0.8rem;
-  color: #555;
+  color: #ddd;
   display: flex;
   flex-direction: column;
   justify-content: center;

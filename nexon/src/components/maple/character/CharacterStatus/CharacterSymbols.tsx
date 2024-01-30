@@ -7,7 +7,8 @@ import SymbolStats from "./SymbolStats";
 
 const StyledBox = styled.div`
   width: 300px;
-  background-color: #3d454d;
+  background-color: var(--secondary-bg-color);
+  box-shadow: var(--custom-shadow);
   border-radius: 4px;
   padding: 16px;
   box-sizing: border-box;

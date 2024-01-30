@@ -7,10 +7,12 @@ const StyledTab = styled.div`
   width: 100%;
   box-sizing: border-box;
   height: 44px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
+  overflow: hidden;
   display: flex;
-  margin: 8px 0;
+  margin: 12px 0;
+  background-color: #fff;
+  box-shadow: var(--custom-shadow);
 `;
 
 const CharacterTab = () => {
@@ -28,3 +30,4 @@ const CharacterTab = () => {
 };
 
 export default CharacterTab;
+
