@@ -1,8 +1,5 @@
 import styled from "styled-components";
 import CharacterInfo from "./CharacterInfo";
-import useFetch from "../../../../hooks/useFetch";
-import { getCharacterComparisonData } from "../../../../api/Character/Camparison";
-import { useParams } from "react-router-dom";
 import { ICharacterComparisonData } from "../../../../@types/maple/CharacterComparisionTypes";
 
 const StyledBox = styled.div`
@@ -10,6 +7,11 @@ const StyledBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  padding: 16px 0;
+  background-color: var(--secondary-bg-color);
+  box-shadow: var(--custom-shadow);
 `;
 
 const StyledVersus = styled.img`
@@ -18,15 +20,16 @@ const StyledVersus = styled.img`
   margin: 32px;
 `;
 
-const CharacterBox = () => {
-  const { characters } = useParams();
-  const result = useFetch<ICharacterComparisonData, string>(getCharacterComparisonData, characters || "");
+interface Props {
+  data: ICharacterComparisonData | undefined;
+}
 
+const CharacterBox: React.FC<Props> = ({ data }) => {
   return (
     <StyledBox>
-      <CharacterInfo type="left" data={result?.data.left_character.character_basic_info} />
+      <CharacterInfo type="left" data={data?.data?.left_character?.character_basic_info} />
       <StyledVersus src={`${process.env.PUBLIC_URL}/assets/player-versus-player.png`} alt="image-versus" />
-      <CharacterInfo type="right" data={result?.data.right_character.character_basic_info} />
+      <CharacterInfo type="right" data={data?.data?.right_character?.character_basic_info} />
     </StyledBox>
   );
 };

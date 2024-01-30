@@ -9,7 +9,7 @@ const GraphBox = styled.div`
   width: 60%;
   padding: 2.5%;
   border-radius: 0.625rem;
-  background: #3d444c;
+  background-color: var(--secondary-bg-color);
   display: flex;
   flex-direction: column;
 `;
@@ -35,3 +35,4 @@ const GraphContainer = () => {
 };
 
 export default GraphContainer;
+

@@ -1,18 +1,22 @@
 import styled from "styled-components";
-import useCharacterTab from "../../../hooks/maple/useCharacterTab";
-import { TabNameType } from "../../../@types/maple/TabTypes";
+import { TabNameType } from "../../../../@types/maple/ComparisonTabTypes";
+import { Dispatch, SetStateAction } from "react";
 
 const StyledTabItem = styled.div<{ selected: boolean }>`
+  position: relative;
+  bottom: -1px;
   height: 100%;
   display: flex;
+  box-sizing: border-box;
   justify-content: center;
   align-items: center;
-  padding: 0 24px;
-  border-right: 1px solid #ccc;
+  padding: 0 40px;
+  border: 1px solid var(--main-border-color);
+  overflow: hidden;
+  border-radius: 4px 4px 0 0;
   font-weight: 600;
   color: ${(props) => (props.selected ? "#fff" : "#666a7a")};
   background-color: ${(props) => (props.selected ? "#5cb85c" : "#fff")};
-  overflow: hidden;
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
@@ -20,19 +24,18 @@ const StyledTabItem = styled.div<{ selected: boolean }>`
 
 interface Props {
   children: React.ReactNode;
+  currTab: string;
   value: TabNameType;
-  clickHandler: (param: TabNameType) => void;
+  clickHandler: Dispatch<SetStateAction<TabNameType>>;
 }
 
-const CharacterTabItem: React.FC<Props> = ({ children, value, clickHandler }) => {
-  const { tabName } = useCharacterTab();
-
+const NaviItem: React.FC<Props> = ({ children, currTab, value, clickHandler }) => {
   return (
-    <StyledTabItem selected={value === tabName} onClick={() => clickHandler(value)}>
+    <StyledTabItem selected={value === currTab} onClick={() => clickHandler(value)}>
       {children}
     </StyledTabItem>
   );
 };
 
-export default CharacterTabItem;
+export default NaviItem;
 

@@ -36,7 +36,8 @@ const ellipsisAnimation = keyframes`
 const LoadingText = styled.div`
   text-align: center;
   font-size: 0.9rem;
-  color: #555;
+  font-weight: 600;
+  color: #ccc
   display: inline-block;
   padding: 8px 0;
   white-space: nowrap;
