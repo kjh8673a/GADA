@@ -40,6 +40,19 @@ const useStats = () => {
     return `${convertStrToCommaFormat(max)} (${convertStrToCommaFormat(increased)}+${convertStrToCommaFormat(base)})`;
   }, []);
 
+  const convertToShorterStatName = useCallback((statName: string) => {
+    return statName
+      .replace(/^(피격 시|공격 시|캐릭터 기준).*$/gm, "기타")
+      .replace(":", "")
+      .replace("보스 몬스터 공격 시 데미지", "보공")
+      .replace("크리티컬 데미지", "크뎀")
+      .replace("메소 획득량", "메획")
+      .replace("이동속도", "이속")
+      .replace("크리티컬 확률", "크확")
+      .replace("아이템 드롭률", "드롭")
+      .replace("몬스터 방어율 무시", "방무");
+  }, []);
+
   return {
     convertCombatPower,
     convertStrToCommaFormat,
@@ -48,6 +61,7 @@ const useStats = () => {
     convertToStage,
     convertToLevel,
     increasedStatView,
+    convertToShorterStatName,
   };
 };
 
