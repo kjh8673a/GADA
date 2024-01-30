@@ -56,7 +56,7 @@ const WeaponStatInfo: React.FC<Props> = ({
     }${pOption03 ? " / " + convertToShorterStatName(pOption03) : ""}`;
     if (param.length === 0) return "x";
     return param;
-  }, [pOption01, pOption02, pOption03]);
+  }, [pOption01, pOption02, pOption03, convertToShorterStatName]);
 
   const apOptionParam = useMemo(() => {
     const param = `${apOption01 ? convertToShorterStatName(apOption01) : ""}${
@@ -64,7 +64,7 @@ const WeaponStatInfo: React.FC<Props> = ({
     }${apOption03 ? " / " + convertToShorterStatName(apOption03) : ""}`;
     if (param.length === 0) return "x";
     return param;
-  }, [apOption01, apOption02, apOption03]);
+  }, [apOption01, apOption02, apOption03, convertToShorterStatName]);
 
   return (
     <StyledBox>

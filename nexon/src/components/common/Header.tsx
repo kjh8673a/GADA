@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Domain, DownConatiner, InputHeaderName, UpContainer, PageHeader, DomainLogo } from "../../style/header";
+import { Domain, DownConatiner, UpContainer, PageHeader, DomainLogo } from "../../style/header";
 
 import { useNavigate } from "react-router-dom";
+import StyledInput from "../../style/StyledInput";
 
 const Header = () => {
   const [headerName, setHeaderName] = useState<string>("");
@@ -31,7 +32,9 @@ const Header = () => {
         >
           <DomainLogo src={`${process.env.PUBLIC_URL}/assets/gadalogo.webp`} />
         </Domain>
-        <InputHeaderName
+        <StyledInput
+          $width={180}
+          $height={6}
           placeholder="닉네임 또는 길드명 입력"
           onChange={changeInputValue}
           onKeyDown={headerInputEnter}

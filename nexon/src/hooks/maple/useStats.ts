@@ -34,11 +34,14 @@ const useStats = () => {
     return `Lv. ${str}`;
   }, []);
 
-  const increasedStatView = useCallback((max: string | number = "", increased: string = "") => {
-    if (!increased) return `${convertStrToCommaFormat(max)}`;
-    const base = (+max - +increased).toString();
-    return `${convertStrToCommaFormat(max)} (${convertStrToCommaFormat(increased)}+${convertStrToCommaFormat(base)})`;
-  }, []);
+  const increasedStatView = useCallback(
+    (max: string | number = "", increased: string = "") => {
+      if (!increased) return `${convertStrToCommaFormat(max)}`;
+      const base = (+max - +increased).toString();
+      return `${convertStrToCommaFormat(max)} (${convertStrToCommaFormat(increased)}+${convertStrToCommaFormat(base)})`;
+    },
+    [convertStrToCommaFormat]
+  );
 
   const convertToShorterStatName = useCallback((statName: string) => {
     return statName

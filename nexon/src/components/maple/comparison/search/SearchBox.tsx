@@ -10,7 +10,7 @@ const StyledBox = styled.div`
 
 const SearchBox = () => {
   const { characters } = useParams();
-  const [left, right] = characters ? characters.split("&") : [];
+  const [left, right] = characters ? characters.split("&") : ["", ""];
   return (
     <StyledBox>
       <SearchBar nameLeft={left || ""} nameRight={right || ""} />

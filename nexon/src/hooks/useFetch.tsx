@@ -27,7 +27,7 @@ const useFetch = <T, I>(fetch: (arg: I) => Promise<T>, arg: I) => {
 
   if (_status === "error") {
     console.error(_error);
-    throw _error;
+    // throw _error;
   }
 
   return _result;

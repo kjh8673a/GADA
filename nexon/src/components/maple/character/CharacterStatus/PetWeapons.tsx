@@ -3,7 +3,8 @@ import PetList from "./PetList";
 
 const StyledBox = styled.div`
   width: 320px;
-  background-color: #3d454d;
+  background-color: var(--secondary-bg-color);
+  box-shadow: var(--custom-shadow);
   margin-top: 8px;
   border-radius: 4px;
   padding: 16px;

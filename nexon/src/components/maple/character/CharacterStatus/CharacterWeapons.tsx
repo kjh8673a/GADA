@@ -11,7 +11,8 @@ const StyledBox = styled.div`
   width: 320px;
   box-sizing: border-box;
   padding: 16px 8px;
-  background-color: #3d454d;
+  background-color: var(--secondary-bg-color);
+  box-shadow: var(--custom-shadow);
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;

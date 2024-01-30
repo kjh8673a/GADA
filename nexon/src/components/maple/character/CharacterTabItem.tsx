@@ -12,6 +12,7 @@ const StyledTabItem = styled.div<{ selected: boolean }>`
   font-weight: 600;
   color: ${(props) => (props.selected ? "#fff" : "#666a7a")};
   background-color: ${(props) => (props.selected ? "#5cb85c" : "#fff")};
+  overflow: hidden;
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */

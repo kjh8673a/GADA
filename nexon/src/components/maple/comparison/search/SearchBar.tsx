@@ -34,6 +34,11 @@ const SearchBar: React.FC<Props> = ({ nameLeft, nameRight }) => {
   const [_nameLeft, _setNameLeft] = useState<string>(nameLeft);
   const [_nameRight, _setNameRight] = useState<string>(nameRight);
 
+  const handleEnter = (e: React.KeyboardEvent) => {
+    if (e.key !== "Enter") return;
+    handleSearch();
+  };
+
   const handleSearch = () => {
     if (!_nameLeft || !_nameRight) {
       navigate("/comparison");
@@ -49,9 +54,16 @@ const SearchBar: React.FC<Props> = ({ nameLeft, nameRight }) => {
 
   return (
     <StyledBox>
-      <SearchInput value={_nameLeft} changeHandler={_setNameLeft} />
-      <StyledButton onClick={handleSearch}>캐릭터 비교하기</StyledButton>
-      <SearchInput value={_nameRight} changeHandler={_setNameRight} />
+      <SearchInput value={_nameLeft} placeholder="비교 캐릭터 입력" changeHandler={_setNameLeft} />
+      <StyledButton onClick={handleSearch} tabIndex={-1}>
+        캐릭터 비교하기
+      </StyledButton>
+      <SearchInput
+        value={_nameRight}
+        placeholder="비교 캐릭터 입력"
+        changeHandler={_setNameRight}
+        enterHandler={handleEnter}
+      />
     </StyledBox>
   );
 };

@@ -11,8 +11,10 @@ export const MapleConatiner = styled.div`
 `;
 
 export const MainImg = styled.img`
+  position: relative;
+  right: 16px;
   width: 120px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 `;
 
 export const NameSearch = styled.div`
