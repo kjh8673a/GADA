@@ -7,9 +7,9 @@ const StyledTab = styled.div`
   width: 100%;
   box-sizing: border-box;
   height: 44px;
-  border-bottom: 1px solid #ccc;
   display: flex;
-  margin: 8px 0;
+  margin: 0;
+  margin-top: 24px;
 `;
 
 interface Props {

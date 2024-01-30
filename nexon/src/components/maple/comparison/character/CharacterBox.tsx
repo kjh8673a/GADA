@@ -7,10 +7,11 @@ const StyledBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 4px;
   padding: 16px 0;
+  background-color: var(--secondary-bg-color);
+  box-shadow: var(--custom-shadow);
 `;
 
 const StyledVersus = styled.img`

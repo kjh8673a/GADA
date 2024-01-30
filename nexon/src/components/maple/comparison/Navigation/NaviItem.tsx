@@ -11,9 +11,9 @@ const StyledTabItem = styled.div<{ selected: boolean }>`
   justify-content: center;
   align-items: center;
   padding: 0 40px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--main-border-color);
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 4px 4px 0 0;
   font-weight: 600;
   color: ${(props) => (props.selected ? "#fff" : "#666a7a")};
   background-color: ${(props) => (props.selected ? "#5cb85c" : "#fff")};

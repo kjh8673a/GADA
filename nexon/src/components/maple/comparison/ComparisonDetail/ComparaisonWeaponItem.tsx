@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { IWeaponDataType } from "../../../../@types/maple/WeaponTypes";
 import WeaponBox from "./WeaponBox";
+import DashedLine from "../../../common/DashedLine";
 
 const StyledLi = styled.li`
   width: 100%;
@@ -16,8 +17,12 @@ const StyledSlotName = styled.div`
   box-sizing: border-box;
   font-weight: 800;
   font-size: 0.9rem;
-  margin: 2px 8px;
+  margin: 2px;
   text-align: center;
+`;
+
+const StyledConnectLine = styled.div`
+  width: 30px;
 `;
 
 interface Props {
@@ -29,7 +34,13 @@ const ComparaisonWeaponItem: React.FC<Props> = ({ leftWeapon, rightWeapon }) => 
   return (
     <StyledLi>
       <WeaponBox weapon={leftWeapon} />
+      <StyledConnectLine>
+        <DashedLine />
+      </StyledConnectLine>
       <StyledSlotName>{leftWeapon?.item_equipment_slot}</StyledSlotName>
+      <StyledConnectLine>
+        <DashedLine />
+      </StyledConnectLine>
       <WeaponBox weapon={rightWeapon} />
     </StyledLi>
   );

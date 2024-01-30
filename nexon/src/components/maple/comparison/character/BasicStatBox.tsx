@@ -18,7 +18,7 @@ const StyledListBox = styled.ul<StyledListBoxProps>`
 `;
 
 const StyledLi = styled.li`
-  color: #555;
+  color: #ccc;
 `;
 
 const StyledBlueGradient = styled.span`
@@ -26,7 +26,7 @@ const StyledBlueGradient = styled.span`
   font-size: 0.8rem;
   font-weight: 800;
   transform: translate(-50%, -50%);
-  background: linear-gradient(90deg, #4e6bff, #215dd5);
+  background: linear-gradient(90deg, #6aa3ff, #4e98ff);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -66,7 +66,7 @@ const StyledBoldText = styled.span`
 `;
 
 const StyledTitle = styled.h2`
-  color: #000;
+  color: #fff;
   font-size: 1.1rem;
   font-weight: 800;
   margin: 0;

@@ -12,6 +12,7 @@ const StyledBox = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0;
   padding-bottom: 24px;
 `;
 

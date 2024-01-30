@@ -8,7 +8,7 @@ const StyledStat = styled.span<{ $align: string; $highlight: boolean }>`
   justify-content: ${(props) => (props.$align === "left" ? "start" : "end")};
   align-items: center;
   font-weight: 800;
-  color: ${(props) => (props.$highlight ? "#000" : "#777")};
+  color: ${(props) => (props.$highlight ? "#fff" : "#aaa")};
   font-size: 0.9rem;
 `;
 

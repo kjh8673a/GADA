@@ -9,7 +9,6 @@ interface Props {
 
 const StyledList = styled.div`
   width: 100%;
-  background-color: #fff;
   margin: 0;
   margin-bottom: 24px;
   padding: 8px 0;
@@ -20,7 +19,6 @@ const StyledList = styled.div`
 `;
 
 const ComparisonWeapon: React.FC<Props> = ({ leftWeapons, rightWeapons }) => {
-  console.log(leftWeapons, rightWeapons);
   return (
     <StyledList>
       {leftWeapons?.item?.item_equipment.map((_, idx) => (
