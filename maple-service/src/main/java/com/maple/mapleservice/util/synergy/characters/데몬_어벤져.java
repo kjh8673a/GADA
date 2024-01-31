@@ -2,8 +2,9 @@ package com.maple.mapleservice.util.synergy.characters;
 
 import java.util.List;
 
+import com.maple.mapleservice.dto.model.synergy.StatWeightForCalculate;
 import com.maple.mapleservice.dto.model.synergy.SynergySkill;
-import com.maple.mapleservice.util.synergy.IncreaseVolume;
+import com.maple.mapleservice.dto.model.synergy.IncreaseVolume;
 
 import lombok.Getter;
 
@@ -46,5 +47,15 @@ public class 데몬_어벤져 {
 		.plus_damage(0)
 		.plus_final_damage(0)
 		.plus_critical_damage(0)
+		.build();
+
+	StatWeightForCalculate statWeightForCalculate = StatWeightForCalculate.builder()
+		.rate_str(1.0)
+		.rate_dex(0.0)
+		.rate_int(0.0)
+		.rate_luk(0.0)
+		.rate_hp(1 / 3.5)
+		.rate_attack_power(1.0)
+		.rate_magic_power(0.0)
 		.build();
 }

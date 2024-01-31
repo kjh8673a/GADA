@@ -1,10 +1,10 @@
 package com.maple.mapleservice.util.synergy.characters;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.maple.mapleservice.dto.model.synergy.StatWeightForCalculate;
 import com.maple.mapleservice.dto.model.synergy.SynergySkill;
-import com.maple.mapleservice.util.synergy.IncreaseVolume;
+import com.maple.mapleservice.dto.model.synergy.IncreaseVolume;
 
 import lombok.Getter;
 
@@ -47,5 +47,15 @@ public class 라라 {
 		.plus_damage(25)
 		.plus_final_damage(0)
 		.plus_critical_damage(0)
+		.build();
+
+	StatWeightForCalculate statWeightForCalculate = StatWeightForCalculate.builder()
+		.rate_str(0.0)
+		.rate_dex(0.0)
+		.rate_int(4.0)
+		.rate_luk(1.0)
+		.rate_hp(0.0)
+		.rate_attack_power(0.0)
+		.rate_magic_power(1.0)
 		.build();
 }

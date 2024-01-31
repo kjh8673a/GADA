@@ -1,4 +1,4 @@
-package com.maple.mapleservice.util.synergy;
+package com.maple.mapleservice.dto.model.synergy;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -19,4 +19,5 @@ public class StatsForSynergy {
 	double damage;
 	double final_damage;
 	double critical_damage;
+	double status_damage;
 }
