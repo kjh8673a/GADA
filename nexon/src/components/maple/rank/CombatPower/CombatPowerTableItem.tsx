@@ -15,12 +15,12 @@ type Props = {
 const StyledBox = styled.div`
   width: 100%;
   min-height: 40px;
-  background-color: white;
   display: grid;
+  background-color: var(--secondary-bg-color);
   grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
   cursor: pointer;
   &:hover {
-    background-color: #a2a2a2;
+    background-color: var(--primary-bg-color);
     transition: 0.2s;
   }
 `;
@@ -47,7 +47,7 @@ const CombatPowerTableItem: React.FC<Props> = ({
     <StyledBox onClick={() => clickHandler(character_name)}>
       <ContentBox>{ranking}</ContentBox>
       <ImgBox src={character_image} alt={"character image"} />
-      <ContentBox style={{justifySelf: "start"}}>{character_name}</ContentBox>
+      <ContentBox style={{ justifySelf: "start" }}>{character_name}</ContentBox>
       <ContentBox>{combat_power.toLocaleString("ko-kr")}</ContentBox>
       <ContentBox>{character_level}</ContentBox>
       <ContentBox>{character_class}</ContentBox>
@@ -57,3 +57,4 @@ const CombatPowerTableItem: React.FC<Props> = ({
 };
 
 export default CombatPowerTableItem;
+

@@ -10,6 +10,7 @@ const StyledBox = styled.div`
   border-radius: 10px;
   border: 2px solid #3d444c;
   overflow: hidden;
+  box-shadow: var(--custom-shadow);
 `;
 
 const ErrorBox = styled.div`
@@ -21,8 +22,7 @@ const ErrorBox = styled.div`
 `;
 
 const CombatPowerTable = () => {
-  const { combatPowerRanking, rankPage, combatPowerItemClickHandler } =
-    useRanking();
+  const { combatPowerRanking, rankPage, combatPowerItemClickHandler } = useRanking();
   return (
     <StyledBox>
       <CombatPowerTableHeader />
@@ -40,11 +40,7 @@ const CombatPowerTable = () => {
                 guild_name={v.guild_name}
                 clickHandler={combatPowerItemClickHandler}
               />
-              {i !== combatPowerRanking.data!.content.length - 1 ? (
-                <DashedLine />
-              ) : (
-                <></>
-              )}
+              {i !== combatPowerRanking.data!.content.length - 1 ? <DashedLine /> : <></>}
             </React.Fragment>
           );
         })
@@ -56,3 +52,4 @@ const CombatPowerTable = () => {
 };
 
 export default CombatPowerTable;
+
