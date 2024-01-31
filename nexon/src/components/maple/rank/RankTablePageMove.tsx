@@ -14,7 +14,8 @@ const PageMoveBox = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  padding: 5px;
+  padding: 4px 8px;
+  box-shadow: var(--custom-shadow);
 `;
 
 const RankTablePageMove = () => {
@@ -25,13 +26,13 @@ const RankTablePageMove = () => {
     setPageMoveStyle(() => {
       return {
         left: {
-          color: rankPage === 1 ? "gray" : "white",
+          color: rankPage === 1 ? "#000" : "white",
           border: rankPage === 1 ? "gray solid 3px" : "#3d444c solid 3px",
           cursor: rankPage === 1 ? "default" : "pointer",
           backgroundColor: rankPage === 1 ? "white" : "#3d444c",
         },
         right: {
-          color: rankPage === totalPage ? "gray" : "white",
+          color: rankPage === totalPage ? "#000" : "white",
           border: rankPage === totalPage ? "gray solid 3px" : "#3d444c solid 3px",
           cursor: rankPage === totalPage ? "default" : "pointer",
           backgroundColor: rankPage === totalPage ? "white" : "#3d444c",
@@ -42,16 +43,10 @@ const RankTablePageMove = () => {
 
   return (
     <StyledBox>
-      <PageMoveBox
-        onClick={() => pageMoveClickHandler(-1)}
-        style={pageMoveStyle.left}
-      >
+      <PageMoveBox onClick={() => pageMoveClickHandler(-1)} style={pageMoveStyle.left}>
         ◀ 이전
       </PageMoveBox>
-      <PageMoveBox
-        onClick={() => pageMoveClickHandler(1)}
-        style={pageMoveStyle.right}
-      >
+      <PageMoveBox onClick={() => pageMoveClickHandler(1)} style={pageMoveStyle.right}>
         다음 ▶
       </PageMoveBox>
     </StyledBox>
@@ -59,3 +54,4 @@ const RankTablePageMove = () => {
 };
 
 export default RankTablePageMove;
+

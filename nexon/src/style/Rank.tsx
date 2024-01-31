@@ -14,14 +14,13 @@ export const TabBox = styled.div`
 
 export const TabItemBox = styled.div<{ selected: boolean }>`
   margin: 4px 8px;
-  padding: 5px;
+  padding: 4px 12px;
   border-radius: 4px;
-  border: 1px solid ${(props) => (props.selected ? "white" : "#3d444c")};
-  color: #fff;
-  font-weight: ${(props) => (props.selected ? "800" : "400")};
+  border: 1px solid ${(props) => (props.selected ? "#fff" : "#646d77")};
+  color: ${(props) => (props.selected ? "#fff" : "#ccc")};
   cursor: pointer;
   &:hover {
-    font-weight: 800;
+    color: #fff;
     transition: 0.2s;
   }
 `;

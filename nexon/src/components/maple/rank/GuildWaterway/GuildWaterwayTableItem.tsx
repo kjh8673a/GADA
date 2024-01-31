@@ -12,12 +12,13 @@ type Props = {
 const StyledBox = styled.div`
   width: 100%;
   min-height: 40px;
-  background-color: white;
+  background-color: var(--secondary-bg-color);
   display: grid;
   grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
   &:hover {
-    background-color: #a2a2a2;
+    background-color: var(--primary-bg-color);
     transition: 0.2s;
+    cursor: pointer;
   }
 `;
 
@@ -46,3 +47,4 @@ const GuildWaterwayTableItem: React.FC<Props> = ({
 };
 
 export default GuildWaterwayTableItem;
+

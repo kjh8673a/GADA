@@ -40,12 +40,23 @@ const StyledButton = styled.button`
   box-shadow: rgb(51, 51, 51, 0.2), 0px 1px 4px, rgba(225, 225, 225, 0.2), 0px 0px 0px 3px;
 `;
 
+const StyledTitle = styled.h3`
+  margin: 0;
+  margin-bottom: 8px;
+  padding: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+`;
+
 const CharacterStatusBox = () => {
   const [statToggled, setStatToggled] = useState<boolean>(false);
   const stats = useRecoilValue<IStatType>(atomCharacterStats);
 
   return (
     <StyledBox>
+      <StyledTitle>캐릭터 스탯</StyledTitle>
       <CharacterStatusBattlePoint combatPower={stats.final_stats?.전투력} />
       {!statToggled && <CharacterStatusBasic stats={stats} />}
       {statToggled && <CharacterStatusExtra stats={stats} />}
