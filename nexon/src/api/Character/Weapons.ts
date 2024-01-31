@@ -7,3 +7,4 @@ export const getMyWeapons = (characterName: string) => {
     params: { characterName },
   });
 };
+
