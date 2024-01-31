@@ -7,19 +7,22 @@ export const TabBox = styled.div`
   padding: 10px 0px;
   align-items: center;
   width: 100%;
-  background-color: #3d444c;
+  background-color: var(--secondary-bg-color);
   border-radius: 10px;
+  box-shadow: var(--custom-shadow);
 `;
 
 export const TabItemBox = styled.div<{ selected: boolean }>`
-  margin: 0px 10px;
+  margin: 4px 8px;
   padding: 5px;
   border-radius: 4px;
   border: 1px solid ${(props) => (props.selected ? "white" : "#3d444c")};
-  color: ${(props) => (props.selected ? "white" : "#666a7a")};
+  color: #fff;
+  font-weight: ${(props) => (props.selected ? "800" : "400")};
   cursor: pointer;
   &:hover {
-    color: white;
+    font-weight: 800;
     transition: 0.2s;
   }
 `;
+
