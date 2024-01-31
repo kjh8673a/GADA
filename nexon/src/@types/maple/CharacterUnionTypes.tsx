@@ -31,6 +31,8 @@ export type UnionBlockType = {
   block_level: string;
   block_control_point: UnionBlockCoordType;
   block_position: UnionBlockCoordType[] | null;
+  class_image: string;
+  grade: string;
 };
 
 export type UnionInnerStatType = {
@@ -48,5 +50,28 @@ export type CharacterUnionType = {
     union_occupied_stat: string[];
     union_block: UnionBlockType[];
     union_inner_stat: UnionInnerStatType[];
+  };
+};
+
+export type ArtifactCrystalType = {
+  name: string;
+  validity_flag: string;
+  date_expire: string;
+  level: number;
+  crystal_option_name_1: string;
+  crystal_option_name_2: string;
+  crystal_option_name_3: string;
+  crystal_icon: string;
+};
+
+export type CharacterUnionArtifactType = {
+  timestamp?: string[];
+  data?: {
+    artifact_level: number;
+    union_artifact_effect: {
+      name: string;
+      level: number;
+    }[];
+    union_artifact_crystal: ArtifactCrystalType[];
   };
 };
