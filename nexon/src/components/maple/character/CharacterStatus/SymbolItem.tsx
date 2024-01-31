@@ -66,7 +66,6 @@ interface Props {
 }
 
 const SymbolItem: React.FC<Props> = ({ data }) => {
-  console.log(data);
   return (
     <StyledBox $nodata={!data}>
       <StyledIcon $img={data?.symbol_icon} $type={data?.symbol_name?.split(" : ")[0] || "심볼없음"} />

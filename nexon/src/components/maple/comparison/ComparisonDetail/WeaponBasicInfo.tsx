@@ -36,10 +36,10 @@ interface Props {
 const WeaponBasicInfo: React.FC<Props> = ({ weaponImg, weaponSlot, weaponName }) => {
   return (
     <StyledBox>
-      <StyledImg src={weaponImg} alt="weapon icon" />
+      <StyledImg src={weaponImg || `${process.env.PUBLIC_URL}/assets/question-mark.png`} alt="weapon icon" />
       <StyledInfo>
         <StyledSubtitle>{weaponSlot}</StyledSubtitle>
-        <StyledTitle>{weaponName}</StyledTitle>
+        <StyledTitle>{weaponName || "장착장비 없음"}</StyledTitle>
       </StyledInfo>
     </StyledBox>
   );
