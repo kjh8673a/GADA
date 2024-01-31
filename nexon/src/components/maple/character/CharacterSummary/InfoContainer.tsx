@@ -15,8 +15,10 @@ import {
   BASIC_RIGHT,
   BasicPropsType,
 } from "../../../../@types/maple/CharacterBasicTypes";
+import useLocalStorage from "../../../../hooks/maple/useLocalStorage";
 
 const InfoContainer = () => {
+  const { bookmark, clickBookmarkHandler } = useLocalStorage();
   const { characterBasic } = useCharacterBasic();
   const [props1, setProps1] = useState<BasicPropsType>({
     id: [0, 1, 2],
@@ -65,14 +67,16 @@ const InfoContainer = () => {
             }}
           >
             <CharacterName>{characterBasic.data?.character_name}</CharacterName>
-            {/* <BookmarkButton>
+            <BookmarkButton onClick={() => {
+              clickBookmarkHandler(characterBasic.data?.character_name as string)
+            }}>
               <img
-                src="/assets/star.png"
+                src={`/assets/star${bookmark.includes(characterBasic.data?.character_name as string) ? "": "_blank"}.png`}
                 width={"105%"}
                 height={"80%"}
                 alt="bookmark btn"
               />
-            </BookmarkButton> */}
+            </BookmarkButton>
           </div>
           {/* <CompareButton>Compare</CompareButton> */}
         </div>

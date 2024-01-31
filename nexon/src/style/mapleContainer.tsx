@@ -39,3 +39,23 @@ export const CheckButton = styled.img`
   right: 56px;
 `;
 
+export const BookmarkBox = styled.div`
+  margin-top: 20px;
+  width: 320px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+`
+
+export const BookmarkItemWrapper = styled.div`
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  text-align: center;
+  border-radius: 10px;
+  background-color: var(--secondary-bg-color);
+`
+
