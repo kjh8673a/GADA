@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ArtifactCrystalType } from "../../../../@types/maple/CharacterUnionTypes";
-import DashedLine from "../../../common/DashedLine";
 
 const StyledBox = styled.div`
   position: relative;

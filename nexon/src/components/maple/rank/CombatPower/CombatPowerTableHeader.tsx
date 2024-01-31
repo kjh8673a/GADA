@@ -6,7 +6,7 @@ const StyledBox = styled.div`
   min-height: 40px;
   background-color: #3d444c;
   display: grid;
-  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr 1fr;
 `;
 
 const TextBox = styled.div`
@@ -19,12 +19,13 @@ const TextBox = styled.div`
 const CombatPowerTableHeader = () => {
   return (
     <StyledBox>
-      <TextBox>#</TextBox>
+      <TextBox>순위</TextBox>
       <TextBox>캐릭터</TextBox>
-      <TextBox>전투력</TextBox>
       <TextBox>레벨</TextBox>
+      <TextBox>전투력</TextBox>
       <TextBox>직업</TextBox>
       <TextBox>길드</TextBox>
+      <TextBox>월드</TextBox>
     </StyledBox>
   );
 };

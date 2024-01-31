@@ -38,6 +38,7 @@ const CombatPowerTable = () => {
                 character_class={v.character_class}
                 character_image={v.character_image}
                 guild_name={v.guild_name}
+                world_name={v.world_name}
                 clickHandler={combatPowerItemClickHandler}
               />
               {i !== combatPowerRanking.data!.content.length - 1 ? <DashedLine /> : <></>}
