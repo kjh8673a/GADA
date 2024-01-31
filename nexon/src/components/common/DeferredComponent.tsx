@@ -7,7 +7,7 @@ const DeferredComponent = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     setTimeout(() => {
       setIsDeferred(true);
-    }, 2000);
+    }, 200);
   }, []);
 
   if (!isDeferred) return null;
