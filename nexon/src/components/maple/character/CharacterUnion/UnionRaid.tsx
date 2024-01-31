@@ -10,7 +10,7 @@ const StyledBox = styled.div`
   flex-direction: column;
   gap: 10px;
   background-color: #3d444c;
-  border-radius: 4px;
+  border-radius: 5px;
 `;
 
 const HeaderBox = styled.div`
@@ -21,9 +21,9 @@ const HeaderBox = styled.div`
 
 const ContentWrapper = styled.div`
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
   border-radius: 4px;
 `;
 
@@ -41,6 +41,8 @@ const UnionRaid = () => {
               key={i}
               block_class={v.block_class}
               block_level={v.block_level}
+              class_image={v.class_image}
+              grade={v.grade}
             />
           );
         })}
