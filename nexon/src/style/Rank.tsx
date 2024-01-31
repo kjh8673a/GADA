@@ -16,7 +16,7 @@ export const TabItemBox = styled.div<{ selected: boolean }>`
   margin: 4px 8px;
   padding: 4px 12px;
   border-radius: 4px;
-  border: 1px solid ${(props) => (props.selected ? "#fff" : "#646d77")};
+  border: 1px solid ${(props) => (props.selected ? "#fff" : "var(--secondary-bg-color)")};
   color: ${(props) => (props.selected ? "#fff" : "#ccc")};
   cursor: pointer;
   &:hover {

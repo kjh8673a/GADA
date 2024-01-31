@@ -26,6 +26,7 @@ const GuildWaterwayTable = () => {
               guild_master_name={v.guild_master_name}
               guild_level={v.guild_level}
               guild_point={v.guild_point}
+              world_name={v.world_name}
             />
             {i !== guildWaterway.data!.length - 1 ? <DashedLine /> : <></>}
           </React.Fragment>

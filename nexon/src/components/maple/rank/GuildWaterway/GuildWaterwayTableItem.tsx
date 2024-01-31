@@ -7,6 +7,7 @@ type Props = {
   guild_master_name: string;
   guild_level: number;
   guild_point: number;
+  world_name: string;
 };
 
 const StyledBox = styled.div`
@@ -14,7 +15,7 @@ const StyledBox = styled.div`
   min-height: 40px;
   background-color: var(--secondary-bg-color);
   display: grid;
-  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
   &:hover {
     background-color: var(--primary-bg-color);
     transition: 0.2s;
@@ -34,6 +35,7 @@ const GuildWaterwayTableItem: React.FC<Props> = ({
   guild_master_name,
   guild_level,
   guild_point,
+  world_name,
 }) => {
   return (
     <StyledBox>
@@ -42,6 +44,7 @@ const GuildWaterwayTableItem: React.FC<Props> = ({
       <ContentBox>{guild_master_name}</ContentBox>
       <ContentBox>{guild_level}</ContentBox>
       <ContentBox>{guild_point.toLocaleString("ko-kr")}</ContentBox>
+      <ContentBox>{world_name}</ContentBox>
     </StyledBox>
   );
 };
