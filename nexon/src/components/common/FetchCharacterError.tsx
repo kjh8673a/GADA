@@ -25,13 +25,14 @@ const StyledIcon = styled.img`
 
 const StyledMainMsg = styled.span`
   font-size: 1.2rem;
+  font-weight: 600;
 `;
 
 const StyledSubMsg = styled.span`
   display: inline-block;
   text-align: center;
   padding: 16px 0;
-  color: #555;
+  color: #ccc;
   font-size: 0.9rem;
   white-space: pre-wrap;
 `;
