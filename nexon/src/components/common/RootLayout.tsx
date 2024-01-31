@@ -9,8 +9,8 @@ import styled from "styled-components";
 const OutletPositioner = styled.div`
   width: 100%;
   min-height: calc(100vh - 64px - 40px - 120px);
-  height: 100%;
   padding: 8px 0;
+  box-sizing: border-box;
 `;
 
 const RootLayout = () => {

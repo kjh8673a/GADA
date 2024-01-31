@@ -19,6 +19,17 @@ const StyledBox = styled.div`
   border-radius: 4px;
 `;
 
+const StyledTitle = styled.h3`
+  width: 100%;
+  margin: 0;
+  margin-bottom: 12px;
+  padding: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+`;
+
 const CharacterWeapons = () => {
   const myWeapons = useRecoilValue<IWeaponTypes>(atomCharacterWeapon);
 
@@ -37,6 +48,7 @@ const CharacterWeapons = () => {
 
   return (
     <StyledBox>
+      <StyledTitle>장착 장비</StyledTitle>
       {!myWeapons && "조회된 장비가 없습니다."}
       {myWeapons && (
         <>
