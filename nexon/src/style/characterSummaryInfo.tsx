@@ -43,6 +43,7 @@ export const BookmarkButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const CompareButton = styled.button`
