@@ -9,6 +9,7 @@ type Props = {
   character_class: string;
   character_image: string;
   guild_name: string;
+  world_name: string;
   clickHandler: (character_name: string) => void;
 };
 
@@ -17,7 +18,7 @@ const StyledBox = styled.div`
   min-height: 40px;
   display: grid;
   background-color: var(--secondary-bg-color);
-  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   cursor: pointer;
   &:hover {
     background-color: var(--primary-bg-color);
@@ -41,17 +42,19 @@ const CombatPowerTableItem: React.FC<Props> = ({
   character_class,
   character_image,
   guild_name,
+  world_name,
   clickHandler,
 }) => {
   return (
     <StyledBox onClick={() => clickHandler(character_name)}>
       <ContentBox>{ranking}</ContentBox>
-      <ImgBox src={character_image} alt={"character image"} />
-      <ContentBox style={{ justifySelf: "start" }}>{character_name}</ContentBox>
-      <ContentBox>{combat_power.toLocaleString("ko-kr")}</ContentBox>
+      <ImgBox style={{ justifySelf: "center" }} src={character_image} alt={"character image"} />
+      <ContentBox>{character_name}</ContentBox>
       <ContentBox>{character_level}</ContentBox>
+      <ContentBox>{combat_power.toLocaleString("ko-kr")}</ContentBox>
       <ContentBox>{character_class}</ContentBox>
       <ContentBox>{guild_name}</ContentBox>
+      <ContentBox>{world_name}</ContentBox>
     </StyledBox>
   );
 };

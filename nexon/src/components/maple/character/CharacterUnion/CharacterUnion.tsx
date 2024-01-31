@@ -5,6 +5,7 @@ import useCharacterUnion from "../../../../hooks/maple/useCharacterUnion";
 import { useParams } from "react-router-dom";
 import UnionEffect from "./UnionEffect";
 import UnionRaid from "./UnionRaid";
+import UnionArtifact from "./UnionArtifact";
 
 const StyledBox = styled.div`
   width: 100%;
@@ -13,6 +14,7 @@ const StyledBox = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 10px;
 `;
 
 const UnionWrapper = styled.div`
@@ -24,14 +26,16 @@ const UnionWrapper = styled.div`
 
 const CharacterUnion = () => {
   const params = useParams();
-  const { getUnion } = useCharacterUnion();
+  const { getUnion, getUnionArtifact } = useCharacterUnion();
 
   useEffect(() => {
     getUnion(params.Charactername as string);
-  }, [getUnion, params.Charactername]);
+    getUnionArtifact(params.Charactername as string);
+  }, [getUnion, getUnionArtifact, params.Charactername]);
 
   return (
     <StyledBox>
+      <UnionArtifact />
       <UnionWrapper>
         <UnionGrid />
         <UnionRaid />

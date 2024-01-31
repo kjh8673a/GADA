@@ -15,7 +15,6 @@ const GraphHoverBox = styled.div`
   padding: 0.5%;
   background-color: #3d444c;
   border-radius: 10px;
-  border: black 2px solid;
   opacity: 0.8;
 `;
 
@@ -25,7 +24,7 @@ const GraphHoverItem: React.FC<GraphHoverItemPropsType> = ({ x, y, exp, characte
     <div style={{gridArea: "color1", backgroundColor: "orange", width: "15px", height: "15px", borderRadius: "50%"}}></div>
     <div style={{gridArea: "data1", fontSize: "12px" }}>Level {character_level}</div>
     <div style={{gridArea: "color2", backgroundColor: "#B4CB32", width: "15px", height: "15px"}}></div>
-    <div style={{gridArea: "data2", fontSize: "12px"}}>Exp {exp}</div>
+    <div style={{gridArea: "data2", fontSize: "12px"}}>Exp {exp.toLocaleString("ko-kr")}</div>
   </GraphHoverBox>;
 };
 

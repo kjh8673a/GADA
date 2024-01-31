@@ -1,11 +1,6 @@
 import { atom, selector } from "recoil";
 import { ISymbolStatType, IWeaponTypes } from "../../@types/maple/WeaponTypes";
 
-export const atomWeaponIsFetching = atom<boolean>({
-  key: "atomWeaponIsFetching",
-  default: false,
-});
-
 export const atomCharacterWeapon = atom<IWeaponTypes>({
   key: "atomCharacterWeapon",
   default: {},

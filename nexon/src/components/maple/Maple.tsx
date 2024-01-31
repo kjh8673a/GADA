@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { CheckButton, MainImg, MapleConatiner, NameSearch, NicknameSearch } from "../../style/mapleContainer";
+import { BookmarkBox, BookmarkItemWrapper, CheckButton, MainImg, MapleConatiner, NameSearch, NicknameSearch } from "../../style/mapleContainer";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userNickName } from "../../atoms/maple/characterName";
 import StyledInput from "../../style/StyledInput";
+import useLocalStorage from "../../hooks/maple/useLocalStorage";
 
 const Maple = () => {
   const [nickname, setNickname] = useState<string>("");
   const [, setUserName] = useRecoilState<string>(userNickName);
+  const { bookmark, deleteBookmark } = useLocalStorage();
   const navigate = useNavigate();
 
   const SearchClickkName = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
@@ -43,6 +45,12 @@ const Maple = () => {
         />
         <CheckButton src="/assets/search_button.png" alt="search" onClick={SearchClickkName} />
       </NameSearch>
+      <BookmarkBox>
+        {bookmark.map((v, i) => (<BookmarkItemWrapper key={i}>
+          <div style={{cursor: "pointer"}} onClick={() => navigate(`/Character/${v}`)}>{v}</div>
+          <div style={{cursor: "pointer"}} onClick={() => deleteBookmark(v)}>{"X"}</div>
+        </BookmarkItemWrapper>))}
+      </BookmarkBox>
     </MapleConatiner>
   );
 };

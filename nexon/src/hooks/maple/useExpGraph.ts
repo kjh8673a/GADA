@@ -46,7 +46,7 @@ export const drawExpBar = (
   color: string
 ) => {
   const y = height - margin;
-  const graphHeight = height - 2 * margin;
+  const graphHeight = (height - 2 * margin) / 2;
 
   ctx.font = "0.7rem 고딕";
   ctx.textAlign = "center";
@@ -83,8 +83,8 @@ export const drawLevelLine = (
   ctx.strokeStyle = color;
   ctx.lineWidth = lineWidth;
 
-  const graphHeight = height - 2 * margin;
-  let [maxV, minV] = [Math.max(...levelArr) + 8, Math.min(...levelArr) - 4];
+  const graphHeight = (height - 2 * margin) / 2;
+  let [maxV, minV] = [Math.max(...levelArr) + 5, Math.min(...levelArr) - 5];
   if (minV < 0) minV = 0;
   const numOfInterval = maxV - minV;
 

@@ -10,8 +10,8 @@ import RankTablePageMove from "../RankTablePageMove";
 const StyledBox = styled.div`
   width: 100%;
   display: flex;
+  gap: 5px;
   flex-direction: column;
-  gap: 10px;
   margin-bottom: 10px;
   min-height: 1000px;
 `;
