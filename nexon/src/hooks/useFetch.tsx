@@ -1,39 +1,45 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { atomFetchError } from "../atoms/common/fetchErrorState";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 const useFetch = <T, I>(fetch: (arg: I) => Promise<T>, arg: I) => {
   const [_promise, _setPromise] = useState<Promise<void>>();
   const [_status, _setStatus] = useState<"pending" | "fullfilled" | "error">("pending");
   const [_result, _setResult] = useState<T>();
-  const [_error, _setError] = useRecoilState<Error | null>(atomFetchError);
+  const _setError = useSetRecoilState<Error | null>(atomFetchError);
 
-  const _resolvePromise = (res: any) => {
-    _setStatus("fullfilled");
-    _setResult(res.data);
-  };
+  const _resolvePromise = useCallback(
+    (res: any) => {
+      _setStatus("fullfilled");
+      _setResult(res.data);
+    },
+    [_setResult]
+  );
 
-  const _rejectPromise = (error: Error) => {
-    _setStatus("error");
-    _setError(error);
-  };
+  const _rejectPromise = useCallback(
+    (error: Error) => {
+      _setStatus("error");
+      _setError(error);
+    },
+    [_setError]
+  );
 
   useEffect(() => {
+    _setError(null);
     _setStatus("pending");
     _setPromise(fetch(arg).then(_resolvePromise, _rejectPromise));
-  }, [fetch, arg]);
+  }, [fetch, arg, _resolvePromise, _rejectPromise, _setError]);
 
   if (_status === "pending" && _promise) {
     throw _promise;
   }
 
   if (_status === "error") {
-    console.error(_error);
-    throw _error;
+    return;
+    // throw _error;
   }
 
   return _result;
 };
 
 export default useFetch;
-

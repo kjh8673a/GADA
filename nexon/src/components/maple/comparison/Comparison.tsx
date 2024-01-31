@@ -20,4 +20,3 @@ const Comparison = () => {
 };
 
 export default Comparison;
-

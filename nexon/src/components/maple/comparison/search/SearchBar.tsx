@@ -49,7 +49,7 @@ const SearchBar: React.FC<Props> = ({ nameLeft, nameRight }) => {
       return;
     }
 
-    navigate(`/comparison/${_nameLeft || ""}&${_nameRight || ""}`);
+    navigate(`/comparison/${_nameLeft || ""}&${_nameRight || ""}`, { replace: true });
   };
 
   return (
@@ -69,4 +69,3 @@ const SearchBar: React.FC<Props> = ({ nameLeft, nameRight }) => {
 };
 
 export default SearchBar;
-
