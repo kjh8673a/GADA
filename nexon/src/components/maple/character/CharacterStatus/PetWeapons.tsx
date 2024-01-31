@@ -18,6 +18,7 @@ const StyledTitle = styled.h3`
   font-size: 1.1rem;
   font-weight: 700;
   color: #fff;
+  text-align: center;
 `;
 
 const PetWeapons = () => {

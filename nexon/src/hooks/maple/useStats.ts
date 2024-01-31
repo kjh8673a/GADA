@@ -53,7 +53,9 @@ const useStats = () => {
       .replace("이동속도", "이속")
       .replace("크리티컬 확률", "크확")
       .replace("아이템 드롭률", "드롭")
-      .replace("몬스터 방어율 무시", "방무");
+      .replace("몬스터 방어율 무시", "방무")
+      .replace(/^(모든 스킬의 재사용 대기시간)/gm, "쿨감")
+      .replace(/\(.*\)/gm, "");
   }, []);
 
   return {

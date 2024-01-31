@@ -25,7 +25,11 @@ const ComparisonWeapon: React.FC<Props> = ({ leftWeapons, rightWeapons }) => {
         <ComparaisonWeaponItem
           key={idx}
           leftWeapon={leftWeapons?.item?.item_equipment[idx]}
-          rightWeapon={rightWeapons?.item?.item_equipment[idx]}
+          rightWeapon={
+            rightWeapons?.item?.item_equipment.filter(
+              (item) => item.item_equipment_slot === leftWeapons?.item?.item_equipment[idx].item_equipment_slot
+            )[0]
+          }
         />
       ))}
     </StyledList>

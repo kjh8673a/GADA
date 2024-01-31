@@ -70,9 +70,10 @@ const SymbolItem: React.FC<Props> = ({ data }) => {
     <StyledBox $nodata={!data}>
       <StyledIcon $img={data?.symbol_icon} $type={data?.symbol_name?.split(" : ")[0] || "심볼없음"} />
       <StyledLevelBox>Lv. {data?.symbol_level || 0}</StyledLevelBox>
-      <StyledTypeBox>{data?.symbol_name?.split(" : ")[0] || "심볼없음"}</StyledTypeBox>
+      <StyledTypeBox>{data?.symbol_name?.split(" : ")[1] || "심볼없음"}</StyledTypeBox>
     </StyledBox>
   );
 };
 
 export default SymbolItem;
+
