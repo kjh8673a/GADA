@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 const StyledBox = styled.div`
   width: 100%;
-  padding-top: 20vh;
+  padding-top: 12vh;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;

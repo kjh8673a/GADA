@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import useStats from "../../../../hooks/maple/useStats";
+import { useNavigate } from "react-router-dom";
 
 type StyledListBoxProps = {
   $align: string;
@@ -74,6 +75,10 @@ const StyledTitle = styled.h2`
   margin-bottom: 8px;
   width: 100%;
   display: block;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 interface Props {
@@ -94,11 +99,16 @@ const BasicStatBox: React.FC<Props> = ({
   combatPower,
 }) => {
   const { convertCombatPower } = useStats();
+  const navigate = useNavigate();
+
+  const handleSearchCharacter = () => {
+    navigate(`/Character/${characterName}`);
+  };
 
   return (
     <StyledListBox $align={align}>
       <StyledLi>
-        <StyledTitle>
+        <StyledTitle onClick={handleSearchCharacter}>
           {characterName}({characterClass})
         </StyledTitle>
       </StyledLi>

@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { atomFetchError } from "../atoms/common/fetchErrorState";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 const useFetch = <T, I>(fetch: (arg: I) => Promise<T>, arg: I) => {
   const [_promise, _setPromise] = useState<Promise<void>>();
   const [_status, _setStatus] = useState<"pending" | "fullfilled" | "error">("pending");
   const [_result, _setResult] = useState<T>();
-  const _setError = useSetRecoilState<Error | null>(atomFetchError);
+  const [_error, _setError] = useRecoilState<Error | null>(atomFetchError);
 
   const _resolvePromise = useCallback(
     (res: any) => {
@@ -35,7 +35,7 @@ const useFetch = <T, I>(fetch: (arg: I) => Promise<T>, arg: I) => {
   }
 
   if (_status === "error") {
-    return;
+    return _error;
     // throw _error;
   }
 
@@ -43,3 +43,4 @@ const useFetch = <T, I>(fetch: (arg: I) => Promise<T>, arg: I) => {
 };
 
 export default useFetch;
+
