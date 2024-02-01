@@ -50,6 +50,7 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     @Override
     @Cacheable(value = "character-api-basic", key = "#ocid")
     public CharacterBasicDto getCharacterBasic(String ocid) {
+        log.info("api 적용 날짜 : " + commonUtil.date);
         return characterFeignClient.getCharacterBasicDto(ocid, commonUtil.date);
     }
 
