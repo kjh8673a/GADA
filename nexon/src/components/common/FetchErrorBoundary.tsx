@@ -14,10 +14,8 @@ interface Props {
 
 const FetchErrorBoundary: React.FC<Props> = ({ children }) => {
   const hasError = useRecoilValue(atomFetchError);
-  console.log(hasError);
 
   if (hasError) {
-    console.log("에러 띄움");
     return (
       <StyledBox>
         <FetchCharacterError />
@@ -29,3 +27,4 @@ const FetchErrorBoundary: React.FC<Props> = ({ children }) => {
 };
 
 export default FetchErrorBoundary;
+

@@ -13,7 +13,7 @@ const SearchInput: React.FC<Props> = ({ value, placeholder, changeHandler, enter
       $width={160}
       $align="center"
       placeholder={placeholder}
-      onChange={(e) => changeHandler(e.target.value)}
+      onChange={(e) => changeHandler(e.target.value.trim())}
       onKeyDown={enterHandler}
       value={value}
     />
