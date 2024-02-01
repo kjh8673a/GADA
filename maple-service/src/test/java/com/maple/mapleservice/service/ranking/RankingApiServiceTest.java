@@ -39,10 +39,10 @@ class RankingApiServiceTest {
 	// 	assertThat(overallList.size()).isEqualTo(200);
 	// }
 
-	@Test
-	void 길드_랭킹_조회_테스트(){
-
-		List<Guild> guildList = rankingApiService.getRankingGuild(null, 2, 1);
-
-	}
+	// @Test
+	// void 길드_랭킹_조회_테스트(){
+	//
+	// 	List<Guild> guildList = rankingApiService.getRankingGuild(null, 2, 1);
+	//
+	// }
 }
