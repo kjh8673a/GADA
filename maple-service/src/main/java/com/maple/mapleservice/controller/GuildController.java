@@ -3,6 +3,7 @@ package com.maple.mapleservice.controller;
 import com.maple.mapleservice.dto.feign.guild.GuildBasicDto;
 import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
 import com.maple.mapleservice.dto.response.SuccessResponse;
+import com.maple.mapleservice.entity.Character;
 import com.maple.mapleservice.service.guild.GuildService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class GuildController {
 
 	@GetMapping("/guildMembers")
 	public ResponseEntity<SuccessResponse> getGuildMembers(@RequestParam String guildName, String worldName) {
-		List<CharacterBasicInfoResponseDto> characterBasicInfoList = guildService.getGuildMembers(guildName, worldName);
+		List<Character> characterBasicInfoList = guildService.getGuildMembers(guildName, worldName);
 		return ResponseEntity
 			.status(HttpStatus.OK)
 			.body(SuccessResponse.of(characterBasicInfoList));

@@ -18,6 +18,7 @@ public interface CharacterService {
 	CharacterBasicInfoResponseDto getCharacterBasicInfo(String characterName);
 
 	void addCharacterInformationToDB(String characterName);
+	void addCharacterInformationToDB(List<String> characterNames);
 
 	CharacterResponseDto getCharacterFromDB(String ocid);
 
