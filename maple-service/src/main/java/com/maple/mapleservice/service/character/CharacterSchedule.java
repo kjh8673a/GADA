@@ -58,7 +58,7 @@ public class CharacterSchedule {
 	}
 
 	@Transactional
-	@Scheduled(cron = "0 0/1 * * * ?")
+	@Scheduled(cron = "0 0/7 * * * ?")
 	public void addCharacterFromRedis() {
 		log.info("캐릭터 DB에 저장");
 
