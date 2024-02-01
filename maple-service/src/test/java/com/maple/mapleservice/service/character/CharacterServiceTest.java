@@ -2,6 +2,12 @@ package com.maple.mapleservice.service.character;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -304,10 +310,25 @@ class CharacterServiceTest {
 		assertThat(characterRepository.findByCharacterName("핵불닭푸딩")).isNotNull();
 	}
 
+	private final ZoneId zoneId = ZoneId.of("Asia/Seoul");
+
 	@Test
 	void getOcidKey() {
 		String key = characterApiService.getOcidKey("아델");
+		System.out.println(LocalDateTime.now(zoneId));
+		System.out.println(LocalDateTime.of(getNextDate(), ZonedDateTime.of(getNextDate(), LocalTime.of(1, 0, 0), zoneId).toLocalTime()));
+		System.out.println(Duration.between(
+			LocalDateTime.now(zoneId),
+			LocalDateTime.of(getNextDate(), ZonedDateTime.of(getNextDate(), LocalTime.of(1, 0, 0), zoneId).toLocalTime())));
 		assertThat(key).isEqualTo("e0a4f439e53c369866b55297d2f5f4eb");
+	}
+
+	private static LocalDate getNextDate() {
+		if(LocalDateTime.now(ZoneId.of("Asia/Seoul")).toLocalTime().isBefore(LocalTime.of(1, 0, 0))) {
+			return LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toLocalDate();
+		}else {
+			return LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).plusDays(1).toLocalDate();
+		}
 	}
 
 }

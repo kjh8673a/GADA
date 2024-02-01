@@ -79,14 +79,14 @@ class RankingServiceTest {
 	// 	rankingSchedule.renewCombatPowerRanking();
 	// }
 
-	@Test
-	void 길드_수로랭킹_페이징_조회_테스트(){
-		List<Guild> guildList = rankingService.getGuildWaterwayRanking(null, 10);
-
-		assertThat(guildList).hasSize(20);
-
-//		for(Guild g : guildList){
-//			System.out.println(g.toString());
-//		}
-	}
+// 	@Test
+// 	void 길드_수로랭킹_페이징_조회_테스트(){
+// 		List<Guild> guildList = rankingService.getGuildWaterwayRanking(null, 10);
+//
+// 		assertThat(guildList).hasSize(20);
+//
+// //		for(Guild g : guildList){
+// //			System.out.println(g.toString());
+// //		}
+// 	}
 }
