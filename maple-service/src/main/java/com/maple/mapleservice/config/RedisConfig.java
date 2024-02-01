@@ -59,6 +59,15 @@ public class RedisConfig {
 	}
 
 	@Bean
+	public RedisTemplate<?, ?> redisTemplate() {
+		RedisTemplate<byte[], byte[]> template = new RedisTemplate<>();
+		template.setKeySerializer(new StringRedisSerializer());
+		template.setValueSerializer(new StringRedisSerializer());
+		template.setConnectionFactory(redisConnectionFactory());
+		return template;
+	}
+
+	@Bean
 	public CacheManager cacheManager() {
 		RedisCacheManager.RedisCacheManagerBuilder builder =
 			RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory());

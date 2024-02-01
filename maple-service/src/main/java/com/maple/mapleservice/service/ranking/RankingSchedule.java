@@ -20,7 +20,7 @@ public class RankingSchedule {
 	private final RankingRepository rankingRepository;
 	
 	// 매일 01:00마다 실행
-	@Scheduled(cron = "0 0 1 * * ?")
+	@Scheduled(cron = "0 0 1 * * ?", zone = "Asia/Seoul")
 	public void renewCombatPowerRanking() {
 		log.info("개인 전투력 랭킹 갱신");
 

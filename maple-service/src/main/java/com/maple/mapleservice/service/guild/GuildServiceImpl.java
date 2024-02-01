@@ -2,8 +2,10 @@ package com.maple.mapleservice.service.guild;
 
 import com.maple.mapleservice.dto.feign.guild.GuildBasicDto;
 import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
+import com.maple.mapleservice.entity.Character;
 import com.maple.mapleservice.exception.CustomException;
 import com.maple.mapleservice.exception.ErrorCode;
+import com.maple.mapleservice.repository.character.CharacterRepository;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.maple.mapleservice.service.character.CharacterService;
 import com.maple.mapleservice.util.WorldName;
@@ -24,6 +26,7 @@ public class GuildServiceImpl implements GuildService {
 	private final CharacterService characterService;
 
 	private final CharacterApiService characterApiService;
+	private final CharacterRepository characterRepository;
 
 	@Override
 	public List<GuildBasicDto> getGuildBasicInfosByServer(String guildName) {
@@ -53,7 +56,7 @@ public class GuildServiceImpl implements GuildService {
 
 	@Override
 	@Cacheable(value = "guild-members", key = "#worldName + '_' + #guildName")
-	public List<CharacterBasicInfoResponseDto> getGuildMembers(String guildName, String worldName) {
+	public List<Character> getGuildMembers(String guildName, String worldName) {
 		String oguildId = guildApiService.getOguildIdKey(guildName, worldName);
 		if (oguildId == null || oguildId.isBlank()) {
 			throw new CustomException(ErrorCode.GUILD_NOT_FOUND);
@@ -61,20 +64,12 @@ public class GuildServiceImpl implements GuildService {
 
 		GuildBasicDto guildBasicDto = guildApiService.getGuildBasic(oguildId);
 
-		List<CharacterBasicInfoResponseDto> characterBasicInfoList = new ArrayList<>();
-		for (String characterName : guildBasicDto.getGuild_member()) {
-			String ocid = characterApiService.getOcidKey(characterName);
-			if (ocid == null || ocid.isBlank()) {
-				continue;
-			}
+		List<String> characterNames = guildBasicDto.getGuild_member();
 
-			Optional<CharacterBasicInfoResponseDto> characterBasicInfoResponseDto = Optional.ofNullable(
-				characterService.getCharacterBasicInfoForGuildMember(characterName));
-			characterBasicInfoResponseDto.ifPresent(characterBasicInfoList::add);
-		}
+		characterService.addCharacterInformationToDB(characterNames);
 
-		Collections.sort(characterBasicInfoList, ((o1, o2) -> o2.getCharacter_level() - o1.getCharacter_level()));
+		List<Character> characterList = characterRepository.getGuildMembersInfo(oguildId, characterNames);
 
-		return characterBasicInfoList;
+		return characterList;
 	}
 }
