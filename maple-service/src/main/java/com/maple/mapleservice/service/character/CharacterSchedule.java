@@ -73,6 +73,7 @@ public class CharacterSchedule {
 
 			Character character = characterRepository.findByOcid(ocid);
 			if(character != null && character.getDate().equals(commonUtil.date)) {
+				redisTemplate.opsForSet().remove("addCharacterToDB", characterName);
 				continue;
 			}
 
