@@ -2,6 +2,7 @@ package com.maple.mapleservice.service.guild;
 
 import com.maple.mapleservice.dto.feign.guild.GuildBasicDto;
 import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
+import com.maple.mapleservice.entity.Character;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ public interface GuildService {
 
     List<String> getAllOguildIdByGuildName(String guildName);
 
-    List<CharacterBasicInfoResponseDto> getGuildMembers(String guildName, String worldName);
+    List<Character> getGuildMembers(String guildName, String worldName);
 }

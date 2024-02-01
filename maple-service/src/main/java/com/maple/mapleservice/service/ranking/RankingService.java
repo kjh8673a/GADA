@@ -11,8 +11,6 @@ import java.util.List;
 public interface RankingService {
 	void addCharacterInformationFromRankingToDB(int world_type, int page);
 
-	void addCharacterImageFromDB();
-
 	Page<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String world_name, String character_class, Pageable pageable);
 
 	List<Guild> getGuildWaterwayRanking(String world_name, int page);

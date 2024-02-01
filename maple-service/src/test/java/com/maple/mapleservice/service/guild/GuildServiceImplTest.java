@@ -2,6 +2,7 @@ package com.maple.mapleservice.service.guild;
 
 import com.maple.mapleservice.dto.feign.guild.GuildBasicDto;
 import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
+import com.maple.mapleservice.entity.Character;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,11 @@ class GuildServiceImplTest {
 
     @Test
     void 길드_멤버_정보_가져오기_테스트() {
-        List<CharacterBasicInfoResponseDto> list = guildService.getGuildMembers(guildName, "스카니아");
-        // System.out.println(list.size());
+        List<Character> list = guildService.getGuildMembers(guildName, "스카니아");
+        System.out.println(list.size());
+        for(Character c : list) {
+            System.out.println(c.getCharacter_name());
+        }
         // System.out.println(list.get(0).getCharacter_name());
     }
 }

@@ -4,13 +4,10 @@ import java.util.List;
 
 import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
 import com.maple.mapleservice.dto.model.ranking.Union;
+import com.maple.mapleservice.entity.Character;
 
 public interface CharacterCustomRepository {
-	void addExpHistoryFromList(String ocid, List<CharacterBasicDto> list);
+	void batchCharacterInsert(List<Character> characterInsertList);
 
-	void addChacterInformationToDbFromUnionRanking(String characterName, String parentOcid,
-		List<Union> unionList);
-
-	void updateParentOcid(String ocid, String old_parent_ocid, String new_parent_ocid);
-
+	void batchCharacterUpdate(List<Character> characterUpdateList);
 }
