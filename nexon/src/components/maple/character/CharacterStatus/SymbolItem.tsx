@@ -6,7 +6,7 @@ interface StyledBoxProps {
 }
 
 const StyledBox = styled.div<StyledBoxProps>`
-  width: 25%;
+  width: 30%;
   border-radius: 8px;
   height: 100%;
   background-color: green;
@@ -21,7 +21,7 @@ interface StyledIconProps {
 
 const StyledIcon = styled.div<StyledIconProps>`
   width: 100%;
-  height: 54px;
+  height: 64px;
   background-image: url(${(props) => props.$img || `${process.env.PUBLIC_URL}/assets/question-mark.png`});
   background-size: 60%;
   background-position: center;
@@ -31,6 +31,10 @@ const StyledIcon = styled.div<StyledIconProps>`
     ${(props) => (props.$type === "아케인심볼" ? "#ffab26" : props.$type === "어센틱심볼" ? "#26a0ff" : "#eee")};
   border-radius: 8px 8px 0 0;
   box-sizing: border-box;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledLevelBox = styled.div`
@@ -76,4 +80,3 @@ const SymbolItem: React.FC<Props> = ({ data }) => {
 };
 
 export default SymbolItem;
-

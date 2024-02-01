@@ -23,6 +23,10 @@ const StyledIconBox = styled.div<StyledIconBoxProps>`
   border: 1px solid #777;
   background-color: #555;
   margin-right: 4px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledInfo = styled.div`
@@ -76,4 +80,3 @@ const PetItem: React.FC<Props> = ({ petIcon, petNickname, petName, petWeapon }) 
 };
 
 export default PetItem;
-

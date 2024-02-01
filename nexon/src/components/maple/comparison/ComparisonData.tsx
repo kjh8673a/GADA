@@ -15,6 +15,7 @@ const ComparisonData = () => {
   }, [result]);
 
   if (
+    !characters ||
     !convertedResult ||
     !convertedResult.data ||
     !convertedResult.data.left_character ||
@@ -31,4 +32,3 @@ const ComparisonData = () => {
 };
 
 export default ComparisonData;
-

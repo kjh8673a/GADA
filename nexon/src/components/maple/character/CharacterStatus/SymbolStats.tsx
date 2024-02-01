@@ -15,6 +15,7 @@ const StyledUl = styled.ul`
 const StyledLi = styled.li`
   color: #fff;
   font-size: 0.8rem;
+  margin: 2px 0;
 `;
 
 const SymbolStats = () => {
@@ -33,4 +34,3 @@ const SymbolStats = () => {
 };
 
 export default SymbolStats;
-
