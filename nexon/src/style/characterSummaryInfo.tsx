@@ -32,6 +32,7 @@ export const CharacterName = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  margin-right: 32px;
 `;
 
 export const BookmarkButton = styled.button`
@@ -46,10 +47,11 @@ export const BookmarkButton = styled.button`
   cursor: pointer;
 `;
 
-export const CompareButton = styled.button`
+export const PartyButton = styled.button`
   justify-self: end;
   color: #fff;
   width: 8rem;
+  height: 40px;
   border: none;
   text-align: center;
   text-shadow: 3px 3px 3px #000;
@@ -59,6 +61,12 @@ export const CompareButton = styled.button`
   font-weight: 400;
   border-radius: 0.5rem;
   background: #2d638b;
+  box-shadow: var(--custom-shadow);
+
+  &:hover {
+    cursor: pointer;
+    font-weight: 800;
+  }
 `;
 
 export const InfoBoxBody = styled.div`
