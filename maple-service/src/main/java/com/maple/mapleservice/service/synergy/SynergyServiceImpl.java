@@ -9,6 +9,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
+import com.maple.mapleservice.dto.feign.character.CharacterItemDto;
+import com.maple.mapleservice.dto.model.character.item.ItemEquipment;
+import com.maple.mapleservice.dto.model.synergy.EquipmentForSynergy;
 import com.maple.mapleservice.dto.model.synergy.MainCharacter;
 import com.maple.mapleservice.dto.model.synergy.OptionCharacter;
 import com.maple.mapleservice.dto.model.synergy.SelectedCharcter;
@@ -19,7 +22,7 @@ import com.maple.mapleservice.exception.ErrorCode;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.maple.mapleservice.util.CharacterClassName;
 import com.maple.mapleservice.dto.model.synergy.SynergyCharacter;
-import com.maple.mapleservice.util.synergy.StatsForSynergy;
+import com.maple.mapleservice.dto.model.synergy.StatsForSynergy;
 import com.maple.mapleservice.util.synergy.SynergyCharacters;
 
 import lombok.RequiredArgsConstructor;
@@ -41,12 +44,10 @@ public class SynergyServiceImpl implements SynergyService {
 	@Override
 	public SynergyResponseDto partySynergy(PartySynergyRequestDto partySynergyRequestDto) {
 		String characterName = partySynergyRequestDto.getCharacterName();
-		log.info("characterName : " + characterName);
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
 			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
 		}
-		log.info("ocid : " + ocid);
 
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
 		if (Integer.parseInt(characterBasicDto.getCharacter_class_level()) < 5) {
@@ -62,10 +63,19 @@ public class SynergyServiceImpl implements SynergyService {
 		// 스탯가져오기
 		StatsForSynergy mainCharacterStat = getStatsForSynergy(ocid);
 
+		// 아이템 가져오기
+		CharacterItemDto characterItemDto = characterApiService.getCharacterItem(ocid);
+
+		// hp+, hp%, 공격력%, 마력% 잠재옵션 가져오기
+		EquipmentForSynergy equipmentOptions = getEquipmentOptionsForCalculate(characterItemDto.getItem_equipment());
+
 		// 메인캐릭터 정보 가져오기
 		String className = getCharacterClassName(characterBasicDto.getCharacter_class());
 		alreadyInParty.add(className);
 		SynergyCharacter mainCharacter = characters.get(className);
+
+		// 자체 전투력 구하기
+		Long gada_combat_power = mainCharacter.calculateCombatPower(mainCharacterStat, equipmentOptions);
 
 		// response selected_characters
 		List<SelectedCharcter> selectedCharctersForDto = new ArrayList<>();
@@ -78,10 +88,12 @@ public class SynergyServiceImpl implements SynergyService {
 			className = getCharacterClassName(selectedClassName);
 			alreadyInParty.add(className);
 			SynergyCharacter selectedCharacter = characters.get(className);
-			appliedStat = selectedCharacter.applySkills(appliedStat);
+			appliedStat = selectedCharacter.applySkills(appliedStat, alreadyInParty.contains("에반"));
 			selectedCharctersForDto.add(SelectedCharcter.of(selectedCharacter));
 		}
-		Long increased_combat_power = calculateCombatPower(appliedStat, mainCharacterStat, combat_power);
+		Long partyCombatPower = mainCharacter.calculateCombatPower(appliedStat, equipmentOptions);
+		Long increased_combat_power = (long)Math.floor(
+			(partyCombatPower - gada_combat_power) * ((double)combat_power / gada_combat_power));
 
 		// response main_character
 		MainCharacter mainCharacterForDto = MainCharacter.of(characterBasicDto, combat_power, increased_combat_power,
@@ -97,10 +109,13 @@ public class SynergyServiceImpl implements SynergyService {
 			}
 
 			SynergyCharacter optionCharacter = characters.get(characterClassName.name());
-			StatsForSynergy ifOptionSelected = optionCharacter.applySkills(appliedStat);
-			Long ifOptionSelectedCombatPower = calculateCombatPower(ifOptionSelected, appliedStat, combat_power);
+			StatsForSynergy ifOptionSelected = optionCharacter.applySkills(appliedStat, characterClassName.equals("에반"));
+			Long ifOptionSelectedCombatPower = mainCharacter.calculateCombatPower(ifOptionSelected, equipmentOptions);
 
-			optionCharactersForDto.add(OptionCharacter.of(optionCharacter, ifOptionSelectedCombatPower));
+			Long option_increased_combat_power = (long)Math.floor(
+				(ifOptionSelectedCombatPower - partyCombatPower) * ((double)combat_power / gada_combat_power));
+
+			optionCharactersForDto.add(OptionCharacter.of(optionCharacter, option_increased_combat_power));
 		}
 		Collections.sort(optionCharactersForDto,
 			((o1, o2) -> Long.compare(o2.getIncrease_combat_power(), o1.getIncrease_combat_power())));
@@ -108,36 +123,88 @@ public class SynergyServiceImpl implements SynergyService {
 		return SynergyResponseDto.of(mainCharacterForDto, selectedCharctersForDto, optionCharactersForDto);
 	}
 
-	/**
-	 * 전투력 증가량 계산하기
-	 * @param appliedStat
-	 * @param mainCharacterStat
-	 * @param combatPower
-	 * @return
-	 */
-	private Long calculateCombatPower(StatsForSynergy appliedStat, StatsForSynergy mainCharacterStat,
-		Long combatPower) {
+	// hp+, hp%, 공격력%, 마력% 잠재옵션 가져오기
+	private EquipmentForSynergy getEquipmentOptionsForCalculate(List<ItemEquipment> itemEquipment) {
+		double[] result = new double[4];
+		String weapon_type = "";
+		int weapon_level = 0;
+		for (ItemEquipment item : itemEquipment) {
+			if (item.getItem_equipment_slot().equals("무기")) {
+				if (weapon_type.equals("태도")) {
+					continue;
+				}
+				weapon_type = item.getItem_equipment_part().replace(" ", "");
+				weapon_level = item.getItem_base_option().getBase_equipment_level();
+				String soul = item.getSoul_option();
+				if (soul.startsWith("최대 HP : +")) {
+					soul = soul.replace("최대 HP : +", "");
+					if (soul.endsWith("%")) {
+						soul = soul.replace("%", "");
+						result[1] += Double.valueOf(soul);
+					} else {
+						result[0] += Double.valueOf(soul);
+					}
+				} else if (soul.startsWith("공격력 : +")) {
+					soul = soul.replace("공격력 : +", "");
+					if (soul.endsWith("%")) {
+						soul = soul.replace("%", "");
+						result[2] += Double.valueOf(soul);
+					}
+				} else if (soul.startsWith("마력 : +")) {
+					soul = soul.replace("마력 : +", "");
+					if (soul.endsWith("%")) {
+						soul = soul.replace("%", "");
+						result[3] += Double.valueOf(soul);
+					}
+				}
+				continue;
+			}
+			List<String> options = List.of(
+				Optional.ofNullable(item.getPotential_option_1()).orElseGet(String::new),
+				Optional.ofNullable(item.getPotential_option_2()).orElseGet(String::new),
+				Optional.ofNullable(item.getPotential_option_3()).orElseGet(String::new),
+				Optional.ofNullable(item.getAdditional_potential_option_1()).orElseGet(String::new),
+				Optional.ofNullable(item.getAdditional_potential_option_2()).orElseGet(String::new),
+				Optional.ofNullable(item.getAdditional_potential_option_3()).orElseGet(String::new)
+			);
 
-		double appliedSum =
-			appliedStat.getMax_str() + appliedStat.getMax_dex() + appliedStat.getMax_int() + appliedStat.getMax_luk()
-				+ appliedStat.getMax_hp() + appliedStat.getAttack_power() + appliedStat.getBoss_damage()
-				+ appliedStat.getDamage() + appliedStat.getFinal_damage()
-				+ appliedStat.getCritical_damage();
+			for (String option : options) {
+				if (option.startsWith("최대 HP : +")) {
+					option = option.replace("최대 HP : +", "");
+					if (option.endsWith("%")) {
+						option = option.replace("%", "");
+						result[1] += Double.valueOf(option);
+					} else {
+						result[0] += Double.valueOf(option);
+					}
+				} else if (option.startsWith("공격력 : +")) {
+					option = option.replace("공격력 : +", "");
+					if (option.endsWith("%")) {
+						option = option.replace("%", "");
+						result[2] += Double.valueOf(option);
+					}
+				} else if (option.startsWith("마력 : +")) {
+					option = option.replace("마력 : +", "");
+					if (option.endsWith("%")) {
+						option = option.replace("%", "");
+						result[3] += Double.valueOf(option);
+					}
+				}
+			}
+		}
 
-		double mainSum =
-			mainCharacterStat.getMax_str() + mainCharacterStat.getMax_dex() + mainCharacterStat.getMax_int()
-				+ mainCharacterStat.getMax_luk()
-				+ mainCharacterStat.getMax_hp() + mainCharacterStat.getAttack_power()
-				+ mainCharacterStat.getBoss_damage()
-				+ mainCharacterStat.getDamage() + mainCharacterStat.getFinal_damage()
-				+ mainCharacterStat.getCritical_damage();
-
-		return (long)Math.floor(appliedSum - mainSum);
+		return EquipmentForSynergy.builder()
+			.max_hp_plus(result[0])
+			.max_hp_percent(result[1])
+			.attack_power_percent(result[2])
+			.magic_power_percent(result[3])
+			.weapon_type(weapon_type)
+			.weapon_level(weapon_level)
+			.build();
 	}
 
 	private StatsForSynergy getStatsForSynergy(String ocid) {
 		Map<String, String> stat = characterApiService.getCharacterStat(ocid);
-		// 공격력, 마력은 무보엠 공마따져서 계산해야함
 
 		return StatsForSynergy.builder()
 			.max_str(Integer.valueOf(stat.get("STR")))
@@ -145,6 +212,12 @@ public class SynergyServiceImpl implements SynergyService {
 			.max_int(Integer.valueOf(stat.get("INT")))
 			.max_luk(Integer.valueOf(stat.get("LUK")))
 			.max_hp(Integer.valueOf(stat.get("HP")))
+			.ap_str(Integer.valueOf(stat.get("AP 배분 STR")))
+			.ap_dex(Integer.valueOf(stat.get("AP 배분 DEX")))
+			.ap_int(Integer.valueOf(stat.get("AP 배분 INT")))
+			.ap_luk(Integer.valueOf(stat.get("AP 배분 LUK")))
+			.ap_hp(Integer.valueOf(stat.get("AP 배분 HP")))
+			.ap_str_rate(1.0).ap_dex_rate(1.0).ap_int_rate(1.0).ap_luk_rate(1.0).ap_hp_rate(1.0)
 			.attack_power(Integer.valueOf(stat.get("공격력")))
 			.magic_power(Integer.valueOf(stat.get("마력")))
 			.boss_damage(Double.valueOf(stat.get("보스 몬스터 데미지")))
