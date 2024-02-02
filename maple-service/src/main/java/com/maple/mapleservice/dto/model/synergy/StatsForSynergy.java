@@ -13,6 +13,16 @@ public class StatsForSynergy {
 	int max_int;
 	int max_luk;
 	int max_hp;
+	int ap_str;
+	int ap_dex;
+	int ap_int;
+	int ap_luk;
+	int ap_hp;
+	double ap_str_rate;
+	double ap_dex_rate;
+	double ap_int_rate;
+	double ap_luk_rate;
+	double ap_hp_rate;
 	int attack_power;
 	int magic_power;
 	double boss_damage;

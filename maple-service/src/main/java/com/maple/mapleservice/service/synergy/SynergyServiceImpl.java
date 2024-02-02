@@ -88,7 +88,7 @@ public class SynergyServiceImpl implements SynergyService {
 			className = getCharacterClassName(selectedClassName);
 			alreadyInParty.add(className);
 			SynergyCharacter selectedCharacter = characters.get(className);
-			appliedStat = selectedCharacter.applySkills(appliedStat);
+			appliedStat = selectedCharacter.applySkills(appliedStat, alreadyInParty.contains("에반"));
 			selectedCharctersForDto.add(SelectedCharcter.of(selectedCharacter));
 		}
 		Long partyCombatPower = mainCharacter.calculateCombatPower(appliedStat, equipmentOptions);
@@ -109,13 +109,12 @@ public class SynergyServiceImpl implements SynergyService {
 			}
 
 			SynergyCharacter optionCharacter = characters.get(characterClassName.name());
-			StatsForSynergy ifOptionSelected = optionCharacter.applySkills(appliedStat);
+			StatsForSynergy ifOptionSelected = optionCharacter.applySkills(appliedStat, characterClassName.equals("에반"));
 			Long ifOptionSelectedCombatPower = mainCharacter.calculateCombatPower(ifOptionSelected, equipmentOptions);
 
 			Long option_increased_combat_power = (long)Math.floor(
 				(ifOptionSelectedCombatPower - partyCombatPower) * ((double)combat_power / gada_combat_power));
 
-			log.info(characterClassName.name() + " : " + option_increased_combat_power);
 			optionCharactersForDto.add(OptionCharacter.of(optionCharacter, option_increased_combat_power));
 		}
 		Collections.sort(optionCharactersForDto,
@@ -131,7 +130,7 @@ public class SynergyServiceImpl implements SynergyService {
 		int weapon_level = 0;
 		for (ItemEquipment item : itemEquipment) {
 			if (item.getItem_equipment_slot().equals("무기")) {
-				if(weapon_type.equals("태도")) {
+				if (weapon_type.equals("태도")) {
 					continue;
 				}
 				weapon_type = item.getItem_equipment_part().replace(" ", "");
@@ -213,6 +212,12 @@ public class SynergyServiceImpl implements SynergyService {
 			.max_int(Integer.valueOf(stat.get("INT")))
 			.max_luk(Integer.valueOf(stat.get("LUK")))
 			.max_hp(Integer.valueOf(stat.get("HP")))
+			.ap_str(Integer.valueOf(stat.get("AP 배분 STR")))
+			.ap_dex(Integer.valueOf(stat.get("AP 배분 DEX")))
+			.ap_int(Integer.valueOf(stat.get("AP 배분 INT")))
+			.ap_luk(Integer.valueOf(stat.get("AP 배분 LUK")))
+			.ap_hp(Integer.valueOf(stat.get("AP 배분 HP")))
+			.ap_str_rate(1.0).ap_dex_rate(1.0).ap_int_rate(1.0).ap_luk_rate(1.0).ap_hp_rate(1.0)
 			.attack_power(Integer.valueOf(stat.get("공격력")))
 			.magic_power(Integer.valueOf(stat.get("마력")))
 			.boss_damage(Double.valueOf(stat.get("보스 몬스터 데미지")))

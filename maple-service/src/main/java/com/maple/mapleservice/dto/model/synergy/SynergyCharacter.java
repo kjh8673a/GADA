@@ -35,7 +35,12 @@ public class SynergyCharacter {
 	}
 
 	// 시너지 스킬적용된 스탯 계산하기
-	public StatsForSynergy applySkills(StatsForSynergy stats) {
+	public StatsForSynergy applySkills(StatsForSynergy stats, boolean evan) {
+		int evan_buff = 0;
+		if(stats.getMagic_power() > stats.getAttack_power()) {
+			evan_buff = 10;
+		}
+
 		return StatsForSynergy.builder()
 			.max_str(
 				(int)Math.floor(stats.getMax_str() * increase_volume.getMultiply_str() + increase_volume.getPlus_str()))
@@ -47,13 +52,23 @@ public class SynergyCharacter {
 				(int)Math.floor(stats.getMax_luk() * increase_volume.getMultiply_luk() + increase_volume.getPlus_luk()))
 			.max_hp(
 				(int)Math.floor(stats.getMax_hp() * increase_volume.getMultiply_hp() + increase_volume.getPlus_hp()))
+			.ap_str(stats.getAp_str())
+			.ap_dex(stats.getAp_dex())
+			.ap_int(stats.getAp_int())
+			.ap_luk(stats.getAp_luk())
+			.ap_hp(stats.getAp_hp())
+			.ap_str_rate(stats.getAp_str_rate() * increase_volume.getMultiply_ap_str())
+			.ap_dex_rate(stats.getAp_dex_rate() * increase_volume.getMultiply_ap_dex())
+			.ap_int_rate(stats.getAp_int_rate() * increase_volume.getMultiply_ap_int())
+			.ap_luk_rate(stats.getAp_luk_rate() * increase_volume.getMultiply_ap_luk())
+			.ap_hp_rate(stats.getAp_hp_rate() * increase_volume.getMultiply_ap_hp())
 			.attack_power((int)Math.floor(stats.getAttack_power() * increase_volume.getMultiply_attack_power()
 				+ increase_volume.getPlus_attack_power()))
 			.magic_power((int)Math.floor(stats.getMagic_power() * increase_volume.getMultiply_magic_power()
 				+ increase_volume.getPlus_magic_power()))
 			.boss_damage(stats.getBoss_damage() + increase_volume.getPlus_boss_damage())
 			.damage(stats.getDamage() + increase_volume.getPlus_damage())
-			.final_damage(stats.getFinal_damage() + increase_volume.getPlus_final_damage())
+			.final_damage(stats.getFinal_damage() + increase_volume.getPlus_final_damage() + evan_buff)
 			.critical_damage(stats.getCritical_damage() + increase_volume.getPlus_critical_damage())
 			.build();
 	}
@@ -61,12 +76,18 @@ public class SynergyCharacter {
 	// 전투력 계산하기
 	public long calculateCombatPower(StatsForSynergy stats, EquipmentForSynergy options) {
 		double a = (
-			stats.getMax_str() * statWeightForCalculate.getRate_str()
-				+ stats.getMax_dex() * statWeightForCalculate.getRate_dex()
-				+ stats.getMax_int() * statWeightForCalculate.getRate_int()
-				+ stats.getMax_luk() * statWeightForCalculate.getRate_luk()
-				+ ((stats.getMax_hp() - options.getMax_hp_plus()) / (100 + options.getMax_hp_percent()) * 100)
-				* statWeightForCalculate.getRate_hp()
+			(stats.getMax_str() + stats.getMax_str() * (stats.getAp_str_rate() - 1))
+				* statWeightForCalculate.getRate_str()
+				+ (stats.getMax_dex() + stats.getMax_dex() * (stats.getAp_dex_rate() - 1))
+				* statWeightForCalculate.getRate_dex()
+				+ (stats.getMax_int() + stats.getMax_int() * (stats.getAp_int_rate() - 1))
+				* statWeightForCalculate.getRate_int()
+				+ (stats.getMax_luk() + stats.getMax_luk() * (stats.getAp_luk_rate() - 1))
+				* statWeightForCalculate.getRate_luk()
+				+
+				((stats.getMax_hp() - options.getMax_hp_plus() + stats.getMax_hp() * (stats.getAp_hp_rate() - 1)) / (100
+					+ options.getMax_hp_percent()) * 100)
+					* statWeightForCalculate.getRate_hp()
 		);
 		if (statWeightForCalculate.getRate_hp() > 0) {
 			a += 0.8 * (

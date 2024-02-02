@@ -15,10 +15,10 @@ public class 보우마스터 {
 	List<String> skill_type = List.of("딜상승");
 	List<SynergySkill> skill_desc = List.of(
 		new SynergySkill(
-			"",
-			"",
-			"",
-			""
+			"샤프 아이즈",
+			"일정 시간 동안 파티원 전원에게 적의 약점을 찾아 치명상을 입힐 수 있는 능력을 부여한다.",
+			"MP 45 소비, 300초 동안 크리티컬 확률 20%, 크리티컬 데미지 15% 증가",
+			"https://open.api.nexon.com/static/maplestory/SkillIcon/KFPBKFPBMC.png"
 		)
 	);
 
@@ -33,6 +33,11 @@ public class 보우마스터 {
 		.multiply_int(1.0)
 		.multiply_luk(1.0)
 		.multiply_hp(1.0)
+		.multiply_ap_str(1.0)
+		.multiply_ap_dex(1.0)
+		.multiply_ap_int(1.0)
+		.multiply_ap_luk(1.0)
+		.multiply_ap_hp(1.0)
 		.plus_attack_power(0)
 		.plus_magic_power(0)
 		.multiply_attack_power(1.0)
@@ -40,7 +45,7 @@ public class 보우마스터 {
 		.plus_boss_damage(0)
 		.plus_damage(0)
 		.plus_final_damage(0)
-		.plus_critical_damage(0)
+		.plus_critical_damage(15)
 		.build();
 
 	StatWeightForCalculate statWeightForCalculate = StatWeightForCalculate.builder()
