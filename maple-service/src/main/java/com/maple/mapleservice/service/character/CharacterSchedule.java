@@ -68,6 +68,11 @@ public class CharacterSchedule {
 		for(String characterName : characterNames) {
 			String ocid = characterApiService.getOcidKey(characterName);
 			if (ocid == null || ocid.isBlank()) {
+				Character character = characterRepository.findByCharacterName(characterName);
+				if(character != null) {
+					characterRepository.deleteByCharacterName(characterName);
+				}
+				redisTemplate.opsForSet().remove("addCharacterToDB", characterName);
 				continue;
 			}
 
