@@ -124,10 +124,14 @@ public class CharacterServiceImpl implements CharacterService {
 	 */
 	@Override
 	public List<CharacterResponseDto> findMainCharacter(String parentOcid) {
-
-		return characterRepository.findByParentOcid(parentOcid).stream()
+		List<CharacterResponseDto> list = characterRepository.findByParentOcid(parentOcid).stream()
 			.map(CharacterResponseDto::of)
 			.collect(Collectors.toList());
+
+		List<String> characterNames = list.stream().map(CharacterResponseDto::getCharacter_name).collect(Collectors.toList());
+		addCharacterInformationToDB(characterNames);
+
+		return list;
 	}
 
 	/**
