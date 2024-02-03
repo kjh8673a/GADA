@@ -9,6 +9,7 @@ const RouterTrackerForGA = ({ children }: PropsWithChildren) => {
   // 구글 애널리틱스 운영서버만 적용
   useEffect(() => {
     if (process.env.REACT_APP_GOOGLE_ANALYTICS) {
+      // if (process.env.REACT_APP_GOOGLE_ANALYTICS && !window.location.href.includes("localhost")) {
       ga4.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS);
       setInitialized(true);
     }
