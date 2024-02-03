@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import com.maple.mapleservice.dto.model.character.HyperStat;
 
+import com.maple.mapleservice.service.guild.GuildService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.CacheEvict;
@@ -79,6 +80,12 @@ public class CharacterServiceImpl implements CharacterService {
 		for(String characterName : characterNames) {
 			setOperations.add(key, characterName);
 		}
+	}
+
+	public void addGuildInformationToDB(String oguildId){
+		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
+		String key = "addGuildToDB";
+		setOperations.add(key, oguildId);
 	}
 
 	// 길드명 체크해서 oguildid가져오기
@@ -236,6 +243,7 @@ public class CharacterServiceImpl implements CharacterService {
 		}
 		String prevName = characterRepository.findByOcid(ocid).getPrev_name();
 		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
+		addGuildInformationToDB(oguildId);
 		Integer popularity = characterApiService.getCharacterPopularity(ocid);
 		String characterCombatPower = characterApiService.getCharacterStat(ocid).get("전투력");
 

@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface GuildService {
 
+    void addGuildInformationToDB(String oguildId);
+
+    void addGuildInformationToDB(List<String> oguildIds);
     List<GuildBasicDto> getGuildBasicInfosByServer(String guildName);
 
     List<String> getAllOguildIdByGuildName(String guildName);

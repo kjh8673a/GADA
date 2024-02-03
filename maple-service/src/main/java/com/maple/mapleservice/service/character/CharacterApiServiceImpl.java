@@ -59,7 +59,11 @@ public class CharacterApiServiceImpl implements CharacterApiService {
 
     @Override
     public Long getCharacterCombatPower(String ocid) {
-        return Long.parseLong(getCharacterStat(ocid).get("전투력"));
+        String combatPower = getCharacterStat(ocid).get("전투력");
+        if(null == combatPower)
+            return 0L;
+        else
+            return Long.parseLong(combatPower);
     }
 
     @Override
