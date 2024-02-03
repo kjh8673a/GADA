@@ -22,3 +22,14 @@ export const convertObjToSnakeCaseObj: any = (obj: any) => {
   return snakeCaseObj;
 };
 
+export const extractInfoFromUrl = (url: string) => {
+  const arr = url.split("/");
+  if (arr.includes("party")) return "party";
+
+  if (arr[1]) {
+    return arr[1].toLowerCase();
+  } else {
+    return "";
+  }
+};
+
