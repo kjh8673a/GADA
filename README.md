@@ -90,6 +90,10 @@
         <tbody>
             <tr>
                 <td align="center">
+                    <img src="./docs/image/icons/googleanalytics.jpg" width="100px" alt=""/><br />
+                    <sub><b>Google Analytics</b></sub><br />
+                </td>
+                <td align="center">
                     <img src="./docs/image/icons/junit.png" width="100px" alt=""/><br />
                     <sub><b>JUnit</b></sub><br />
                 </td>
