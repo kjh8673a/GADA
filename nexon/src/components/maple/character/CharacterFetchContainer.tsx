@@ -1,6 +1,4 @@
 import { useParams } from "react-router-dom";
-import { IStatType } from "../../../@types/maple/StatsTypes";
-import { getMyStatus } from "../../../api/Character/Stats";
 import useFetch from "../../../hooks/useFetch";
 import CharacterDetail from "./CharacterDetail";
 import CharacterInfo from "./CharacterInfo";
@@ -32,4 +30,3 @@ const CharacterFetchContainer = () => {
 };
 
 export default CharacterFetchContainer;
-

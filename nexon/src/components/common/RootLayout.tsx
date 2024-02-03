@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { Container } from "../../style/style";
 import styled from "styled-components";
+import RouterTrackerForGA from "./RouterTrackerForGA";
 
 // header, nav, footer는 고정px
 // header: 64px & nav: 40px & footer: 120px;
@@ -15,13 +16,15 @@ const OutletPositioner = styled.div`
 
 const RootLayout = () => {
   return (
-    <Container>
-      <Header />
-      <OutletPositioner>
-        <Outlet />
-      </OutletPositioner>
-      <Footer />
-    </Container>
+    <RouterTrackerForGA>
+      <Container>
+        <Header />
+        <OutletPositioner>
+          <Outlet />
+        </OutletPositioner>
+        <Footer />
+      </Container>
+    </RouterTrackerForGA>
   );
 };
 

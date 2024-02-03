@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components";
 
 const StyledBox = styled.div`
   width: 100%;
-  padding-top: 30vh;
+  margin-top: 20vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

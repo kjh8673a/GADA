@@ -9,7 +9,7 @@ import CharacterStatusExtra from "./CharacterStatusExtra";
 
 const StyledBox = styled.div`
   width: 480px;
-  min-height: 580px;
+  min-height: 620px;
   box-sizing: border-box;
   padding: 12px 8px;
   background-color: var(--secondary-bg-color);
@@ -38,6 +38,10 @@ const StyledButton = styled.button`
   padding: 4px 24px;
   border-radius: 16px;
   box-shadow: rgb(51, 51, 51, 0.2), 0px 1px 4px, rgba(225, 225, 225, 0.2), 0px 0px 0px 3px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledTitle = styled.h3`
@@ -70,4 +74,3 @@ const CharacterStatusBox = () => {
 };
 
 export default CharacterStatusBox;
-

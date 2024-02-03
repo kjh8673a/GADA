@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import CopiableText from "./CopiableText";
 
 const FooterContainer = styled.div`
   display: flex;
@@ -29,6 +30,9 @@ const Footer = () => {
   return (
     <FooterContainer>
       <StyledDomainTitle>GADA.app</StyledDomainTitle>
+      <div style={{ display: "flex" }}>
+        서비스 문의 : &nbsp; <CopiableText text="gadadev202.gmail.com" />
+      </div>
       <div>&copy;{year} GADA All rights reserved.</div>
       <div>This site is not associated with NEXON Korea. Data sourced from NEXON OpenAPI.</div>
     </FooterContainer>
