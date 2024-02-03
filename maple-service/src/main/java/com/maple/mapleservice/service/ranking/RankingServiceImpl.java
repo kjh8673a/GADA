@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.maple.mapleservice.dto.model.ranking.Guild;
+import com.maple.mapleservice.dto.response.Ranking.GuildCombatPowerRankingResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -51,7 +52,7 @@ public class RankingServiceImpl implements RankingService {
 
 	@Override
 	public List<Guild> getGuildWaterwayRanking(String world_name, int page) {
-		log.error("페이지 : {}", page);
+
 		int apiPage = page / 10 + 1;
 		int idx = page % 10;
 		List<Guild> guildList = rankingApiService.getRankingGuild(world_name, 2, apiPage);
@@ -62,5 +63,11 @@ public class RankingServiceImpl implements RankingService {
 		}
 
 		return guildRankingResponseDtoList;
+	}
+
+	@Override
+	public Page<GuildCombatPowerRankingResponseDto> getGuildCombatPowerRanking(String worldName, Pageable pageable) {
+
+        return rankingRepository.getGuildCombatPowerRanking(worldName, pageable);
 	}
 }

@@ -1,6 +1,7 @@
 package com.maple.mapleservice.controller;
 
 import com.maple.mapleservice.dto.model.ranking.Guild;
+import com.maple.mapleservice.dto.response.Ranking.GuildCombatPowerRankingResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -47,13 +48,16 @@ public class RankingController {
 				.status(HttpStatus.OK)
 				.body(SuccessResponse.of(waterwayRanking));
 	}
-//
-//	@RequestMapping("/guildCombatPower")
-//	public ResponseEntity<SuccessResponse> getGuildCombatPowerRanking(@RequestParam(defaultValue = "1") int page,
-//																	  @RequestParam(required = false) String world_name){
-//
-//		return ResponseEntity
-//				.status(HttpStatus.OK)
-//				.body(SuccessResponse.of(combatPowerRanking));
-//	}
+
+	@RequestMapping("/guildCombatPower")
+	public ResponseEntity<SuccessResponse> getGuildCombatPowerRanking(@RequestParam(defaultValue = "1") int page,
+																	  @RequestParam(required = false) String world_name){
+
+		PageRequest pageable = PageRequest.of(page - 1, 20);
+		Page<GuildCombatPowerRankingResponseDto> guildCombatPowerRanking = rankingService.getGuildCombatPowerRanking(world_name, pageable);
+
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(SuccessResponse.of(guildCombatPowerRanking));
+	}
 }
