@@ -1,12 +1,10 @@
 package com.maple.mapleservice.service.ranking;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.maple.mapleservice.dto.feign.guild.GuildBasicDto;
+import static org.assertj.core.api.Assertions.*;
 import com.maple.mapleservice.dto.model.ranking.Guild;
+import com.maple.mapleservice.dto.model.ranking.Overall;
 import com.maple.mapleservice.repository.guild.GuildRepository;
 import com.maple.mapleservice.service.character.CharacterApiServiceImpl;
 import com.maple.mapleservice.service.guild.GuildApiService;
@@ -41,13 +39,13 @@ class RankingApiServiceTest {
 		// assertThat(unionList.size()).isEqualTo(1);
 	}
 
-	// @Test
-	// void 종합_랭킹_조회_테스트() {
-	// 	List<Overall> overallList = rankingApiService.getRankingOverall(0, 8);
-	// 	System.out.println(overallList.get(0).getCharacter_name());
-	//
-	// 	assertThat(overallList.size()).isEqualTo(200);
-	// }
+	@Test
+	void 종합_랭킹_조회_테스트() {
+		int page = (int)(Math.random() * 100000) + 1;
+		List<Overall> overallList = rankingApiService.getRankingOverall(page);
+
+		assertThat(overallList.size()).isEqualTo(200);
+	}
 
 	@Test
 	void 길드_랭킹_조회_테스트(){
