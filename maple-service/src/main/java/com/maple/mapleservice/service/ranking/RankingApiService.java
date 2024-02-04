@@ -11,6 +11,8 @@ public interface RankingApiService {
 
 	List<Overall> getRankingOverall(int world_type, int page);
 
+	List<Overall> getRankingOverall(int page);
+
 	List<Guild> getRankingGuild(String world_name, int ranking_type, int page);
 
 }
