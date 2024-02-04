@@ -125,6 +125,7 @@ public class CharacterSchedule {
 			redisTemplate.opsForSet().remove("addCharacterToDB", characterName);
 
 			count++;
+			log.info("addCharacter " + characterName + " : " + count + " / " + limit);
 			if (count == limit) {
 				break;
 			}
