@@ -2,8 +2,9 @@ package com.maple.mapleservice.util.synergy.characters;
 
 import java.util.List;
 
+import com.maple.mapleservice.dto.model.synergy.StatWeightForCalculate;
 import com.maple.mapleservice.dto.model.synergy.SynergySkill;
-import com.maple.mapleservice.util.synergy.IncreaseVolume;
+import com.maple.mapleservice.dto.model.synergy.IncreaseVolume;
 
 import lombok.Getter;
 
@@ -11,27 +12,19 @@ import lombok.Getter;
 public class 데몬_어벤져 {
 	String character_class = "데몬 어벤져";
 	Integer cycle = 2;
-	List<String> skill_type = List.of("바인드", "딜상승");
+	List<String> skill_type = List.of("딜상승", "바인드");
 	List<SynergySkill> skill_desc = List.of(
 		new SynergySkill(
-			"퍼지 에어리어",
-			"주위에 결계를 펼쳐 결계 안으로 들어오는 적들의 공격력과 이동속도, 방어율을 감소시킨다. "
-				+ "추가로 영구히 보스 사냥 시 추가 데미지를 줄 수 있다.",
-			"MP 41 소비, 40초 동안 지속, 결계 안의 보스 몬스터를 제외한 적의 공격력 및 방어율 30% 감소, 이동속도 -60 [패시브 효과 : 보스 몬스터 공격 시 데미지 10% 증가]",
-			"https://open.api.nexon.com/static/maplestory/SkillIcon/KEKDLHPBMC.png"
+			"아머 브레이크",
+			"전방의 적들을 공격하여 갑옷을 찢는다. 공격 당한 적들은 일정 시간 방어율이 감소하는 디버프에 걸린다.",
+			"HP 1000 소비, 최대 12명의 적을 350%의 데미지로 4번 공격. 공격 당한 적의 방어율이 60초 동안 30% 감소\\n[패시브 효과 : 익시드: 데몬 스트라이크의 스킬 데미지 155%p 증가]",
+			"https://open.api.nexon.com/static/maplestory/SkillIcon/KFMDJFPBMC.png"
 		),
 		new SynergySkill(
-			"쇼다운 챌린지",
-			"최대 6명의 적을 공격하며 도발하여 부딪히지 않는 상태로 만든다. "
-				+ "도발당한 적은 경험치 획득량과 아이템 드롭율도 함께 증가하며 보스에게도 절반의 효과가 적용된다. "
-				+ "부적이 폭발할 때 어둠의 수리검이 생성되어 주변의 적을 추적하여 공격한다. "
-				+ "어둠의 수리검은 공격반사 상태의 적을 공격해도 피해를 입지 않는다.",
-			"MP 50, 표창 3개 소비 "
-				+ "최대 6명의 적 708% 데미지로 2번 공격하고 6개의 수리검을 생성하며 도발 "
-				+ "도발당한 적은 부딪히지 않은 상태 지속. 140초 동안 획득 경험치, 아이템 드롭률 5% 증가, 보스일 경우 효과 절반 "
-				+ "수리검은 24% 데미지로 6번 공격을 하며 한 명의 적이 여러 개의 수리검에 맞을 경우 두 번째 수리검부터 최종 데미지 50% 감소, 일반 몬스터 공격 시 데미지 200% 증가 "
-				+ "수리검 생성 후 재생성까지 대기시간 5초",
-			"https://open.api.nexon.com/static/maplestory/SkillIcon/KEKDLHPBMC.png"
+			"블러디 임프리즌",
+			"전후방의 적들을 구속하는 공격을 한다. 공격당한 적들은 일정 시간 행동 불가 상태에 빠진다.\\n공격을 받은 적은 90초 동안 행동 불가 상태 이상에 저항하여 블러디 임프리즌 및 다른 스킬로 인한 행동 불가 상태 이상에 걸리지 않는다.",
+			"HP 5000 소비, 최대 14명의 적을 800% 데미지로 3번 공격. 공격 당한 적은 10초 동안 행동 불가\\n블러디 임프리즌으로 적에게 준 데미지에 따라 행동 불가 지속시간 최대 100% 증가\\n재사용 대기시간 120초",
+			"https://open.api.nexon.com/static/maplestory/SkillIcon/KFMDJFPBMD.png"
 		)
 	);
 
@@ -46,13 +39,28 @@ public class 데몬_어벤져 {
 		.multiply_int(1.0)
 		.multiply_luk(1.0)
 		.multiply_hp(1.0)
+		.multiply_ap_str(1.0)
+		.multiply_ap_dex(1.0)
+		.multiply_ap_int(1.0)
+		.multiply_ap_luk(1.0)
+		.multiply_ap_hp(1.0)
 		.plus_attack_power(0)
 		.plus_magic_power(0)
-		.multiply_attack_power(1.3)
-		.multiply_magic_power(1.3)
+		.multiply_attack_power(1.0)
+		.multiply_magic_power(1.0)
 		.plus_boss_damage(0)
 		.plus_damage(0)
 		.plus_final_damage(0)
 		.plus_critical_damage(0)
+		.build();
+
+	StatWeightForCalculate statWeightForCalculate = StatWeightForCalculate.builder()
+		.rate_str(1.0)
+		.rate_dex(0.0)
+		.rate_int(0.0)
+		.rate_luk(0.0)
+		.rate_hp(1 / 3.5)
+		.rate_attack_power(1.0)
+		.rate_magic_power(0.0)
 		.build();
 }

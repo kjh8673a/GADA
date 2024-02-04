@@ -12,11 +12,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
 import com.maple.mapleservice.dto.model.ranking.Union;
@@ -129,6 +131,9 @@ class CharacterServiceTest {
 	void 본캐_찾기_테스트() {
 		String ocid = "e0a4f439e53c369866b55297d2f5f4eb";
 		List<CharacterResponseDto> characterResponseDtoList = characterService.findMainCharacter(ocid);
+
+		List<String> characterNames = characterResponseDtoList.stream().map(CharacterResponseDto::getCharacter_name).collect(Collectors.toList());
+		characterNames.forEach(System.out::println);
 
 		// assertThat(characterResponseDtoList.size()).isEqualTo(3);
 	}
@@ -300,17 +305,6 @@ class CharacterServiceTest {
 			return LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toLocalDate();
 		}else {
 			return LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).plusDays(1).toLocalDate();
-		}
-	}
-
-	@Autowired
-	RedisTemplate redisTemplate;
-
-	@Test
-	void 레디스() {
-		Set<String> ocids = redisTemplate.opsForSet().members("addCharacterToDB");
-		for (String ocid : ocids) {
-			System.out.println(ocid);
 		}
 	}
 

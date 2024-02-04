@@ -1,4 +1,4 @@
-package com.maple.mapleservice.util.synergy;
+package com.maple.mapleservice.dto.model.synergy;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +20,11 @@ public class IncreaseVolume {
 	Double multiply_int;
 	Double multiply_luk;
 	Double multiply_hp;
+	Double multiply_ap_str;
+	Double multiply_ap_dex;
+	Double multiply_ap_int;
+	Double multiply_ap_luk;
+	Double multiply_ap_hp;
 
 	Integer plus_attack_power;
 	Integer plus_magic_power;

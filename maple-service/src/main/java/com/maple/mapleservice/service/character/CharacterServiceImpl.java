@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import com.maple.mapleservice.dto.model.character.HyperStat;
 
+import com.maple.mapleservice.service.guild.GuildService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.CacheEvict;
@@ -81,6 +82,12 @@ public class CharacterServiceImpl implements CharacterService {
 		}
 	}
 
+	public void addGuildInformationToDB(String oguildId){
+		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
+		String key = "addGuildToDB";
+		setOperations.add(key, oguildId);
+	}
+
 	// 길드명 체크해서 oguildid가져오기
 	public String getOguildId(String guildName, String worldName) {
 		if (guildName == null || guildName.isBlank()) {
@@ -124,10 +131,14 @@ public class CharacterServiceImpl implements CharacterService {
 	 */
 	@Override
 	public List<CharacterResponseDto> findMainCharacter(String parentOcid) {
-
-		return characterRepository.findByParentOcid(parentOcid).stream()
+		List<CharacterResponseDto> list = characterRepository.findByParentOcid(parentOcid).stream()
 			.map(CharacterResponseDto::of)
 			.collect(Collectors.toList());
+
+		List<String> characterNames = list.stream().map(CharacterResponseDto::getCharacter_name).collect(Collectors.toList());
+		addCharacterInformationToDB(characterNames);
+
+		return list;
 	}
 
 	/**
@@ -232,6 +243,7 @@ public class CharacterServiceImpl implements CharacterService {
 		}
 		String prevName = characterRepository.findByOcid(ocid).getPrev_name();
 		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
+		addGuildInformationToDB(oguildId);
 		Integer popularity = characterApiService.getCharacterPopularity(ocid);
 		String characterCombatPower = characterApiService.getCharacterStat(ocid).get("전투력");
 

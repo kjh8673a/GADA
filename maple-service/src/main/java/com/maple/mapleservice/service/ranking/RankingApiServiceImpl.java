@@ -1,7 +1,6 @@
 package com.maple.mapleservice.service.ranking;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
+import java.time.*;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
@@ -37,10 +36,9 @@ public class RankingApiServiceImpl implements RankingApiService {
 	@Override
 	@Cacheable(value = "ranking-guild", key = "#ranking_type + '_' + #world_name + '_' + #page")
 	public List<Guild> getRankingGuild(String world_name, int ranking_type, int page) {
-		LocalDate currentDate = LocalDate.now();
-		LocalDate mondayOfWeek = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-		int daysDifference = currentDate.getDayOfMonth() - mondayOfWeek.getDayOfMonth() - 1;
-		return rankingFeignClient.rankingGuildDto(commonUtil.customDate(daysDifference), world_name, ranking_type, page).getRanking();
+		ZonedDateTime currentDate = ZonedDateTime.now(commonUtil.getZoneId()).minusHours(1);
+		ZonedDateTime mondayOfWeek = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+		return rankingFeignClient.rankingGuildDto(mondayOfWeek.format(commonUtil.getFormatter()), world_name, ranking_type, page).getRanking();
 	}
 
 }

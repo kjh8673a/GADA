@@ -13,6 +13,8 @@ import com.maple.mapleservice.util.WorldName;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -27,7 +29,23 @@ public class GuildServiceImpl implements GuildService {
 
 	private final CharacterApiService characterApiService;
 	private final CharacterRepository characterRepository;
+	private final RedisTemplate redisTemplate;
 
+	@Override
+	public void addGuildInformationToDB(String oguildId){
+		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
+		String key = "addGuildToDB";
+		setOperations.add(key, oguildId);
+	}
+
+	@Override
+	public void addGuildInformationToDB(List<String> oguildIds){
+		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
+		String key = "addGuildToDB";
+		for(String oguildId : oguildIds) {
+			setOperations.add(key, oguildId);
+		}
+	}
 	@Override
 	public List<GuildBasicDto> getGuildBasicInfosByServer(String guildName) {
 		List<GuildBasicDto> guildBasicList = new ArrayList<>();
@@ -36,8 +54,6 @@ public class GuildServiceImpl implements GuildService {
 		for (String oguildId : oguildIdList) {
 			guildBasicList.add(guildApiService.getGuildBasic(oguildId));
 		}
-
-		System.out.println(guildBasicList.size());
 
 		return guildBasicList;
 	}
@@ -50,6 +66,7 @@ public class GuildServiceImpl implements GuildService {
 				guildApiService.getOguildIdKey(guildName, worldName.name()));
 			oguildId.ifPresent(oguildIdList::add);
 		}
+		addGuildInformationToDB(oguildIdList);
 
 		return oguildIdList;
 	}
@@ -67,6 +84,7 @@ public class GuildServiceImpl implements GuildService {
 		List<String> characterNames = guildBasicDto.getGuild_member();
 
 		characterService.addCharacterInformationToDB(characterNames);
+		addGuildInformationToDB(oguildId);
 
 		List<Character> characterList = characterRepository.getGuildMembersInfo(oguildId, characterNames);
 
