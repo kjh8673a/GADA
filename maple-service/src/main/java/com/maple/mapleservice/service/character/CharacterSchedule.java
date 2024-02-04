@@ -64,10 +64,7 @@ public class CharacterSchedule {
 
 		List<Character> characterInsertList = new ArrayList<>();
 		List<Character> characterUpdateList	= new ArrayList<>();
-		Set<String> characterNames = redisTemplate.opsForSet().members("addCharacterToDB");
-
-		int count = 0;
-		int limit = 1200;
+		Set<String> characterNames = redisTemplate.opsForSet().members("addCharacterToDB");;
 		for(String characterName : characterNames) {
 			String ocid = characterApiService.getOcidKey(characterName);
 			if (ocid == null || ocid.isBlank()) {
@@ -123,11 +120,6 @@ public class CharacterSchedule {
 			}
 
 			redisTemplate.opsForSet().remove("addCharacterToDB", characterName);
-
-			count++;
-			if(count == limit) {
-				break;
-			}
 		}
 
 		characterRepository.batchCharacterInsert(characterInsertList);

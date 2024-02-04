@@ -1,27 +1,37 @@
 package com.maple.mapleservice.service.ranking;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.maple.mapleservice.dto.feign.guild.GuildBasicDto;
 import com.maple.mapleservice.dto.model.ranking.Guild;
+import com.maple.mapleservice.repository.guild.GuildRepository;
+import com.maple.mapleservice.service.character.CharacterApiServiceImpl;
+import com.maple.mapleservice.service.guild.GuildApiService;
 import com.maple.mapleservice.util.CommonUtil;
-import com.maple.mapleservice.util.WorldName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.maple.mapleservice.dto.model.ranking.Overall;
 import com.maple.mapleservice.dto.model.ranking.Union;
+
 
 @SpringBootTest
 class RankingApiServiceTest {
 
 	@Autowired
 	RankingApiService rankingApiService;
+	@Autowired
+	GuildApiService guildApiService;
+
+	@Autowired
+	CharacterApiServiceImpl characterApiService;
+
+	@Autowired
+	GuildRepository guildRepository;
+
 	CommonUtil commonUtil = new CommonUtil();
 
 	@Test
@@ -45,4 +55,5 @@ class RankingApiServiceTest {
 		List<Guild> guildList = rankingApiService.getRankingGuild(null, 2, 1);
 
 	}
+
 }

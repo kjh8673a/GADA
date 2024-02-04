@@ -4,6 +4,13 @@ package com.maple.mapleservice.service.ranking;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.maple.mapleservice.dto.feign.guild.GuildBasicDto;
+import com.maple.mapleservice.entity.Character;
+import com.maple.mapleservice.entity.Guild;
+import com.maple.mapleservice.repository.character.CharacterRepository;
+import com.maple.mapleservice.repository.guild.GuildRepository;
+import com.maple.mapleservice.service.guild.GuildApiService;
+import com.maple.mapleservice.util.CommonUtil;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +19,20 @@ import com.maple.mapleservice.util.WorldName;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class RankingSchedule {
 	private final RankingRepository rankingRepository;
-	
+	private final CharacterRepository characterRepository;
+	private final GuildRepository guildRepository;
+	private final GuildApiService guildApiService;
+	private final CommonUtil commonUtil = new CommonUtil();
+
 	// 매일 01:00마다 실행
-	@Scheduled(cron = "0 0 1 * * ?")
+	@Scheduled(cron = "0 0 1 * * ?", zone = "Asia/Seoul")
 	public void renewCombatPowerRanking() {
 		log.info("개인 전투력 랭킹 갱신");
 
@@ -35,5 +47,45 @@ public class RankingSchedule {
 		rankingRepository.combatPowerBatchUpdate(ocidsToBeUpdated);
 
 		log.info(ocidsToBeUpdated.size() + "개 데이터 갱신 완료");
+	}
+
+	@Transactional
+	@Scheduled(cron = "0 0 2 * * ?", zone = "Asia/Seoul")
+	public void updateGuildCombatPower(){
+		log.info("길드 전투력 갱신 시작");
+
+		List<Guild> findGuilds = guildRepository.findAll();
+		List<Guild> updateGuilds = new ArrayList<>();
+
+		for(Guild g : findGuilds){
+			GuildBasicDto guildBasicDto = guildApiService.getGuildBasic(g.getOguildId());
+			if(guildBasicDto == null){
+				continue;
+			}
+
+			List<Character> characters = characterRepository.getGuildMembersInfo(guildBasicDto.getGuild_member());
+			Long sumCombatPower = 0L;
+
+			for(Character c : characters){
+				sumCombatPower += c.getCombat_power();
+			}
+
+			Guild guild = Guild.builder()
+					.id(g.getId())
+					.oguildId(g.getOguildId())
+					.date(commonUtil.date)
+					.name(guildBasicDto.getGuild_name())
+					.worldName(guildBasicDto.getWorld_name())
+					.masterName(guildBasicDto.getGuild_master_name())
+					.combatPower(sumCombatPower)
+					.level(guildBasicDto.getGuild_level().longValue())
+					.build();
+
+			updateGuilds.add(guild);
+		}
+
+		guildRepository.batchGuildUpdate(updateGuilds);
+
+		log.info(updateGuilds.size() + "개의 길드 전투력 갱신 완료");
 	}
 }

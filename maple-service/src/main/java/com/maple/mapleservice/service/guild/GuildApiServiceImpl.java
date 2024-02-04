@@ -26,7 +26,7 @@ public class GuildApiServiceImpl implements GuildApiService{
 
     // 길드 식별자로 길드를 조회한다.
     @Override
-    @Cacheable(value = "guild-basic", key = "#oguildId")
+    @Cacheable(value = "guild-basic", key = "#oguildId", unless = "#result == null")
     public GuildBasicDto getGuildBasic(String oguildId){
 
         return guildFeignClient.getGuildBasicDto(oguildId, commonUtil.getDate());

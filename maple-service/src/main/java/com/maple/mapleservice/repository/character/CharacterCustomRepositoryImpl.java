@@ -25,144 +25,75 @@ import lombok.RequiredArgsConstructor;
 @Repository
 @RequiredArgsConstructor
 public class CharacterCustomRepositoryImpl implements CharacterCustomRepository {
-	private final CharacterApiService characterApiService;
-	private final GuildApiService guildApiService;
-
 	private final JdbcTemplate jdbcTemplate;
 	private CommonUtil commonUtil = new CommonUtil();
 
-	private final QuerydslConfig querydslConfig;
-
-	/**
-	 * 경험치 히스토리에 경험치 한번에 삽입
-	 * @param ocid
-	 * @param list
-	 */
 	@Override
-	public void addExpHistoryFromList(String ocid, List<CharacterBasicDto> list) {
-		String sql = "INSERT INTO character_exp_history (ocid, date, character_level, exp, character_exp_rate) VALUES (?, ?, ?, ?, ?)";
-
-		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
-			@Override
-			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				CharacterBasicDto characterBasicDto = list.get(i);
-
-				ps.setString(1, ocid);
-				ps.setString(2, characterBasicDto.getCharacter_level() == 0 ? "2099-12-31" : commonUtil.customDate(i));
-				ps.setLong(3, characterBasicDto.getCharacter_level());
-				ps.setLong(4, characterBasicDto.getCharacter_exp());
-				ps.setString(5, characterBasicDto.getCharacter_exp_rate());
-			}
-
-			@Override
-			public int getBatchSize() {
-				return list.size();
-			}
-		});
-	}
-
-	/**
-	 * 유니온 랭킹으로 가져온 캐릭터들 정보 넣기
-	 * @param characterName
-	 * @param parentOcid
-	 * @param unionList
-	 */
-	@Override
-	public void addChacterInformationToDbFromUnionRanking(String characterName, String parentOcid,
-		List<Union> unionList) {
-
-		List<Union> unionListToBeAdded = unionList.stream()
-			.filter(u -> isCharacterNotInDB(u.getCharacter_name()))
-			.filter(u -> !u.getCharacter_name().equals(characterName))
-			.filter(
-				u -> characterApiService.getOcidKey(u.getCharacter_name()) != null && !characterApiService.getOcidKey(
-					u.getCharacter_name()).isBlank())
-			.collect(Collectors.toList());
-
+	public void batchCharacterInsert(List<Character> characterInsertList) {
 		String sql =
-			"INSERT INTO characters (ocid, date, world_name, character_name, combat_power, guild_name, parent_ocid, oguild_id, character_class, character_class_level, character_level, character_image) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO characters (ocid, date, world_name, character_name, combat_power, guild_name, parent_ocid, prev_name, oguild_id, character_class, character_class_level, character_level, character_image) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
 			@Override
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				Union union = unionListToBeAdded.get(i);
-				String ocid = characterApiService.getOcidKey(union.getCharacter_name());
-				CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-				String combatPower = characterApiService.getCharacterStat(ocid).get("전투력");
-				String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(),
-					characterBasicDto.getWorld_name());
+				Character character = characterInsertList.get(i);
 
-				ps.setString(1, ocid);
-				ps.setString(2, commonUtil.date);
-				ps.setString(3, characterBasicDto.getWorld_name());
-				ps.setString(4, union.getCharacter_name());
-				ps.setLong(5, Long.parseLong(combatPower));
-				ps.setString(6, characterBasicDto.getCharacter_guild_name());
-				ps.setString(7, parentOcid);
-				ps.setString(8, oguildId);
-				ps.setString(9, characterBasicDto.getCharacter_class());
-				ps.setString(10, characterBasicDto.getCharacter_class_level());
-				ps.setLong(11, Long.valueOf(characterBasicDto.getCharacter_level()));
-				ps.setString(12, characterBasicDto.getCharacter_image());
+				ps.setString(1, character.getOcid());
+				ps.setString(2, character.getDate());
+				ps.setString(3, character.getWorld_name());
+				ps.setString(4, character.getCharacter_name());
+				ps.setLong(5, character.getCombat_power());
+				ps.setString(6, character.getGuild_name());
+				ps.setString(7, character.getParent_ocid());
+				ps.setString(8, character.getPrev_name());
+				ps.setString(9, character.getOguild_id());
+				ps.setString(10, character.getCharacter_class());
+				ps.setString(11, character.getCharacter_class_level());
+				ps.setLong(12, character.getCharacter_level());
+				ps.setString(13, character.getCharacter_image());
 			}
 
 			@Override
 			public int getBatchSize() {
-				return unionListToBeAdded.size();
+				return characterInsertList.size();
 			}
 		});
 	}
 
-	private boolean isCharacterNotInDB(String characterName) {
-		JPAQueryFactory query = querydslConfig.jpaQueryFactory();
-		return query.selectFrom(character).where(character.character_name.eq(characterName)).fetchFirst() == null;
-	}
-
-	/**
-	 * 대표ocid변경될 경우 다른 캐릭터들도 바꿔주기
-	 * @param ocid
-	 * @param old_parent_ocid
-	 * @param new_parent_ocid
-	 */
 	@Override
-	public void updateParentOcid(String ocid, String old_parent_ocid, String new_parent_ocid) {
-		List<Character> characterList = characterListFindByParentOcid(old_parent_ocid).stream()
-			.filter(c -> c.getCharacter_name() != ocid)
-			.collect(Collectors.toList());
-
-		String sql = "UPDATE characters SET parent_ocid = ? WHERE ocid = ?";
+	public void batchCharacterUpdate(List<Character> characterUpdateList) {
+		String sql =
+			"UPDATE characters SET date = ?, world_name = ?, character_name = ?, combat_power = ?, guild_name = ?, "
+				+ "parent_ocid = ?, prev_name = ?, oguild_id = ?, character_class = ?, character_class_level = ?, "
+				+ "character_level = ?, character_image = ? WHERE ocid = ?";
 
 		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
 			@Override
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				Character character = characterList.get(i);
+				Character character = characterUpdateList.get(i);
 
-				ps.setString(1, new_parent_ocid);
-				ps.setString(2, character.getOcid());
+				ps.setString(1, character.getDate());
+				ps.setString(2, character.getWorld_name());
+				ps.setString(3, character.getCharacter_name());
+				ps.setLong(4, character.getCombat_power());
+				ps.setString(5, character.getGuild_name());
+				ps.setString(6, character.getParent_ocid());
+				ps.setString(7, character.getPrev_name());
+				ps.setString(8, character.getOguild_id());
+				ps.setString(9, character.getCharacter_class());
+				ps.setString(10, character.getCharacter_class_level());
+				ps.setLong(11, character.getCharacter_level());
+				ps.setString(12, character.getCharacter_image());
+
+				ps.setString(13, character.getOcid());
 			}
 
 			@Override
 			public int getBatchSize() {
-				return characterList.size();
+				return characterUpdateList.size();
 			}
 		});
-	}
-
-	List<Character> characterListFindByParentOcid(String parent_ocid) {
-		JPAQueryFactory query = querydslConfig.jpaQueryFactory();
-		return query.selectFrom(character)
-			.where(character.parent_ocid.eq(parent_ocid))
-			.orderBy(character.character_level.desc())
-			.fetch();
-	}
-
-	// 길드명 체크해서 oguildid가져오기
-	public String getOguildId(String guildName, String worldName) {
-		if (guildName == null || guildName.isBlank()) {
-			return "";
-		}
-		return guildApiService.getOguildIdKey(guildName, worldName);
 	}
 
 }

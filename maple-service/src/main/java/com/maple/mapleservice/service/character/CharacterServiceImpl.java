@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.maple.mapleservice.dto.model.character.HyperStat;
 
+import com.maple.mapleservice.service.guild.GuildService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Service;
 
 import com.maple.mapleservice.dto.feign.character.CharacterAbilityDto;
@@ -51,12 +55,13 @@ import com.maple.mapleservice.util.CommonUtil;
 public class CharacterServiceImpl implements CharacterService {
 	private final CharacterApiService characterApiService;
 	private final GuildApiService guildApiService;
-	private final RankingApiService rankingApiService;
 	private final CharacterRepository characterRepository;
 	private final CharacterExpHistoryRepository characterExpHistoryRepository;
 
 	private HexaCoreTable hexaCoreTable = new HexaCoreTable();
 	private CommonUtil commonUtil = new CommonUtil();
+
+	private final RedisTemplate redisTemplate;
 
 	/**
 	 * 캐릭터 정보 DB에 입력
@@ -64,84 +69,23 @@ public class CharacterServiceImpl implements CharacterService {
 	 */
 	@Override
 	public void addCharacterInformationToDB(String characterName) {
-		String ocid = characterApiService.getOcidKey(characterName);
-		if (ocid == null || ocid.isBlank()) {
-			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
+		String key = "addCharacterToDB";
+		setOperations.add(key, characterName);
+	}
+	@Override
+	public void addCharacterInformationToDB(List<String> characterNames) {
+		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
+		String key = "addCharacterToDB";
+		for(String characterName : characterNames) {
+			setOperations.add(key, characterName);
 		}
+	}
 
-		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		String combatPower = characterApiService.getCharacterStat(ocid).get("전투력");
-		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
-
-		List<Union> unionList = rankingApiService.getRankingUnion(ocid, characterBasicDto.getWorld_name());
-		Collections.sort(unionList, (o1, o2) -> Long.compare(o2.getUnion_level(), o1.getUnion_level()));
-
-		String parent_ocid = unionList.size() == 0 ? ocid : characterApiService.getOcidKey(unionList.get(0).getCharacter_name());
-
-		// 유니온 랭킹으로 가져온 캐릭터들 정보 넣기
-		characterRepository.addChacterInformationToDbFromUnionRanking(characterName, parent_ocid, unionList);
-
-		Character character = characterRepository.findByOcid(ocid);
-		if (character != null) {
-			// 조회 기준일 같으면 갱신안함
-			if (character.getDate().equals(commonUtil.date)) {
-				return;
-			}
-
-			// 조회 기준일
-			character.setDate(commonUtil.date);
-			// 월드 명
-			character.setWorld_name(characterBasicDto.getWorld_name());
-			// 캐릭터 이름 + 이전 캐릭터 이름
-			if (!character.getCharacter_name().equals(characterBasicDto.getCharacter_name())) {
-				character.setPrev_name(character.getCharacter_name());
-				character.setCharacter_name(characterBasicDto.getCharacter_name());
-			}
-			// 전투력
-			character.setCombat_power(Long.parseLong(combatPower));
-			// 길드명 + 길드식별자
-			if (characterBasicDto.getCharacter_guild_name() != null && !characterBasicDto.getCharacter_guild_name()
-				.equals(character.getGuild_name())) {
-				character.setGuild_name(characterBasicDto.getCharacter_guild_name());
-				character.setOguild_id(oguildId);
-			}
-			// 대표ocid
-			if (!character.getParent_ocid().equals(parent_ocid)) {
-				// 대표ocid변경될 경우 다른 캐릭터들도 바꿔주기 + 캐시 삭제
-				deleteFindMainCharacterCache(character.getParent_ocid());
-				characterRepository.updateParentOcid(ocid, character.getParent_ocid(), parent_ocid);
-				character.setParent_ocid(parent_ocid);
-			}
-
-			// 직업 + 전직차수 + 레벨
-			character.setCharacter_class(characterBasicDto.getCharacter_class());
-			character.setCharacter_class_level(characterBasicDto.getCharacter_class_level());
-			character.setCharacter_level(Long.valueOf(characterBasicDto.getCharacter_level()));
-
-			// 캐릭터 이미지
-			character.setCharacter_image(characterBasicDto.getCharacter_image());
-
-			characterRepository.save(character);
-		} else {
-			Character characterForInsert = Character.builder()
-				.ocid(ocid)
-				.date(commonUtil.date)
-				.world_name(characterBasicDto.getWorld_name())
-				.character_name(characterBasicDto.getCharacter_name())
-				.combat_power(Long.parseLong(combatPower))
-				.guild_name(characterBasicDto.getCharacter_guild_name())
-				.parent_ocid(parent_ocid)
-				.oguild_id(oguildId)
-				.character_class(characterBasicDto.getCharacter_class())
-				.character_class_level(characterBasicDto.getCharacter_class_level())
-				.character_level(Long.valueOf(characterBasicDto.getCharacter_level()))
-				.character_image(characterBasicDto.getCharacter_image())
-				.build();
-
-			characterRepository.save(characterForInsert);
-
-			deleteFindMainCharacterCache(parent_ocid);
-		}
+	public void addGuildInformationToDB(String oguildId){
+		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
+		String key = "addGuildToDB";
+		setOperations.add(key, oguildId);
 	}
 
 	// 길드명 체크해서 oguildid가져오기
@@ -186,12 +130,15 @@ public class CharacterServiceImpl implements CharacterService {
 	 * @return
 	 */
 	@Override
-	@Cacheable(value = "character-find-main-character", key = "#parentOcid")
 	public List<CharacterResponseDto> findMainCharacter(String parentOcid) {
-
-		return characterRepository.findByParentOcid(parentOcid).stream()
+		List<CharacterResponseDto> list = characterRepository.findByParentOcid(parentOcid).stream()
 			.map(CharacterResponseDto::of)
 			.collect(Collectors.toList());
+
+		List<String> characterNames = list.stream().map(CharacterResponseDto::getCharacter_name).collect(Collectors.toList());
+		addCharacterInformationToDB(characterNames);
+
+		return list;
 	}
 
 	/**
@@ -219,13 +166,13 @@ public class CharacterServiceImpl implements CharacterService {
 			.date(commonUtil.date)
 			.world_name(characterBasicDto.getWorld_name())
 			.character_name(characterBasicDto.getCharacter_name())
-			.combat_power(Long.parseLong(combatPower))
+			.combat_power(Long.valueOf(Optional.ofNullable(combatPower).orElseGet(() -> "0")))
 			.guild_name(characterBasicDto.getCharacter_guild_name())
 			.parent_ocid(ocid)
 			.oguild_id(oguildId)
 			.character_class(characterBasicDto.getCharacter_class())
 			.character_class_level(characterBasicDto.getCharacter_class_level())
-			.character_level(Long.valueOf(characterBasicDto.getCharacter_level()))
+			.character_level(Long.valueOf(Optional.ofNullable(characterBasicDto.getCharacter_level()).orElseGet(() -> 0)))
 			.character_image(characterBasicDto.getCharacter_image())
 			.build();
 
@@ -278,27 +225,28 @@ public class CharacterServiceImpl implements CharacterService {
 				listForExp.add(basicDto);
 			}
 		}
-		characterRepository.addExpHistoryFromList(ocid, listForExp);
-	}
-
-	/**
-	 * 본캐찾기 캐시에서 삭제
-	 * @param parentOcid
-	 */
-	@CacheEvict(value = "character-find-main-character", key = "#parentOcid")
-	public void deleteFindMainCharacterCache(String parentOcid) {
+		characterExpHistoryRepository.addExpHistoryFromList(ocid, listForExp);
 	}
 
 	@Override
-	@Cacheable(value = "character-basic-info", key = "#characterName")
+	@Cacheable(value = "character-basic-info", key = "#characterName", unless = "#result == null")
 	public CharacterBasicInfoResponseDto getCharacterBasicInfo(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
 		addCharacterInformationToDB(characterName);
+
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+		if (characterBasicDto.getCharacter_level() == null || characterBasicDto.getCharacter_level() == 0) {
+			return null;
+		}
 		String prevName = characterRepository.findByOcid(ocid).getPrev_name();
 		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
+		addGuildInformationToDB(oguildId);
 		Integer popularity = characterApiService.getCharacterPopularity(ocid);
 		String characterCombatPower = characterApiService.getCharacterStat(ocid).get("전투력");
+
 		return CharacterBasicInfoResponseDto.of(ocid, characterBasicDto, popularity, characterCombatPower, prevName,
 			oguildId);
 	}
@@ -307,6 +255,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-item", key = "#characterName")
 	public CharacterItemResponseDto getCharacterItem(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
 		CharacterItemDto item = characterApiService.getCharacterItem(ocid);
 		CharacterCashItemDto cash_item = characterApiService.getCharacterCashItem(ocid);
 		CharacterPetDto pet = characterApiService.getCharacterPet(ocid);
@@ -319,6 +271,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-stats", key = "#characterName")
 	public CharacterStatsResponseDto getCharacterStats(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
 		Map<String, String> stat = characterApiService.getCharacterStat(ocid);
 		Map<String, HyperStat> hyperStat = characterApiService.getCharacterHyperStat(ocid);
 		CharacterAbilityDto ability = characterApiService.getCharacterAbility(ocid);
@@ -330,6 +286,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-v-matrix", key = "#characterName")
 	public CharacterVMatrixResponseDto getCharacterVMatrix(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
 		CharacterVMatrixDto characterVMatrixDto = characterApiService.getCharacterVMatrixDto(ocid);
 		CharacterSkillDto characterSkillDto = characterApiService.getCharacterSkill(ocid, "5");
 
@@ -341,6 +301,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-hyper-passive", key = "#characterName")
 	public CharacterSkillDto getCharacterHyperPassive(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
 		return characterApiService.getCharacterSkill(ocid, "hyperpassive");
 	}
 
@@ -348,6 +312,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-link-skill", key = "#characterName")
 	public CharacterLinkSkillDto getCharacterLinkSkill(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
 		return characterApiService.getCharacterLinkSkill(ocid);
 	}
 
@@ -355,6 +323,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Cacheable(value = "character-hexa-matrix", key = "#characterName")
 	public CharacterHexaMatrixResponseDto getCharacterHexaMatrix(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
 		List<HexaMatrix> character_hexa_core_equipment = characterApiService.getCharacterHexaMatrix(ocid)
 			.getCharacter_hexa_core_equipment();
 
@@ -404,6 +376,20 @@ public class CharacterServiceImpl implements CharacterService {
 		CharacterCompareEachCharacterResponseDto right_character = getCharacterForCompare(rightCharacterName);
 
 		return CharacterCompareResponseDto.of(left_character, right_character);
+	}
+
+	@Override
+	public CharacterBasicInfoResponseDto getCharacterBasicInfoForGuildMember(String characterName) {
+		String ocid = characterApiService.getOcidKey(characterName);
+		if (ocid == null || ocid.isBlank()) {
+			throw new CustomException(ErrorCode.OCID_NOT_FOUND);
+		}
+
+		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+		Integer popularity = characterApiService.getCharacterPopularity(ocid);
+		String characterCombatPower = characterApiService.getCharacterStat(ocid).get("전투력");
+
+		return CharacterBasicInfoResponseDto.ofGuildMember(ocid, characterBasicDto, popularity, characterCombatPower);
 	}
 
 	public CharacterCompareEachCharacterResponseDto getCharacterForCompare(String characterName) {

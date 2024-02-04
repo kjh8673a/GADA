@@ -28,7 +28,7 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     private CommonUtil commonUtil = new CommonUtil();
 
     @Override
-    @Cacheable(value = "character-api-ocid", key = "#characterName")
+    @Cacheable(value = "character-api-ocid", key = "#characterName", unless = "#result == null")
     public String getOcidKey(String characterName) {
         String ocid = "";
         try {
@@ -47,6 +47,7 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     @Override
     @Cacheable(value = "character-api-basic", key = "#ocid")
     public CharacterBasicDto getCharacterBasic(String ocid) {
+        log.info("api 적용 날짜 : " + commonUtil.date);
         return characterFeignClient.getCharacterBasicDto(ocid, commonUtil.date);
     }
 
@@ -58,7 +59,11 @@ public class CharacterApiServiceImpl implements CharacterApiService {
 
     @Override
     public Long getCharacterCombatPower(String ocid) {
-        return Long.parseLong(getCharacterStat(ocid).get("전투력"));
+        String combatPower = getCharacterStat(ocid).get("전투력");
+        if(null == combatPower)
+            return 0L;
+        else
+            return Long.parseLong(combatPower);
     }
 
     @Override

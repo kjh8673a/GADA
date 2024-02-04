@@ -18,6 +18,7 @@ public interface CharacterService {
 	CharacterBasicInfoResponseDto getCharacterBasicInfo(String characterName);
 
 	void addCharacterInformationToDB(String characterName);
+	void addCharacterInformationToDB(List<String> characterNames);
 
 	CharacterResponseDto getCharacterFromDB(String ocid);
 
@@ -42,4 +43,6 @@ public interface CharacterService {
 	CharacterHexaMatrixResponseDto getCharacterHexaMatrix(String characterName);
 
 	CharacterCompareResponseDto getCharacterCompare(String leftCharacterName, String rightCharacterName);
+
+	CharacterBasicInfoResponseDto getCharacterBasicInfoForGuildMember(String characterName);
 }

@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.maple.mapleservice.dto.response.Ranking.GuildCombatPowerRankingResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,9 @@ import org.springframework.util.StringUtils;
 
 import com.maple.mapleservice.config.QuerydslConfig;
 import com.maple.mapleservice.dto.response.Ranking.CharacterCombatPowerRankingResponseDto;
+import com.maple.mapleservice.dto.response.Ranking.GuildCombatPowerRankingResponseDto;
 import static com.maple.mapleservice.entity.QCharacter.*;
+import static com.maple.mapleservice.entity.QGuild.*;
 
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.querydsl.core.types.Projections;
@@ -55,6 +58,16 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 		return new PageImpl<>(content, pageable, count);
 	}
 
+	@Override
+	public Page<GuildCombatPowerRankingResponseDto> getGuildCombatPowerRanking(String worldName, Pageable pageable) {
+
+		List<GuildCombatPowerRankingResponseDto> content = getGuildCombatPowerRankingResponseDto(worldName, pageable);
+
+		Long count = getGuildCount(worldName);
+
+		return new PageImpl<>(content, pageable, count);
+	}
+
 	private List<CharacterCombatPowerRankingResponseDto> getCharacterCombatPowerRankingResponseDto(String worldName, String characterClass, Pageable pageable) {
 		log.info("offset : " + pageable.getOffset());
 		log.info("page size : " + pageable.getPageSize());
@@ -89,6 +102,28 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 		return content;
 	}
 
+	private List<GuildCombatPowerRankingResponseDto> getGuildCombatPowerRankingResponseDto(String worldName, Pageable pageable){
+
+		JPASQLQuery<?> query = new JPASQLQuery<>(em, sqlTemplates);
+
+        return query
+				.select(Projections.constructor(GuildCombatPowerRankingResponseDto.class,
+						Expressions.asNumber(SQLExpressions.rank().over().orderBy(guild.combatPower.desc())),
+						guild.oguildId,
+						guild.name,
+						guild.worldName,
+						guild.masterName,
+						guild.level,
+						guild.combatPower
+						))
+				.from(guild)
+				.where(guildWorldNameEq(worldName))
+				.orderBy(guild.combatPower.desc())
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize())
+				.fetch();
+	}
+
 	private Long getCount(String worldName, String characterClass) {
 		JPAQueryFactory query = querydslConfig.jpaQueryFactory();
 		Long count = query
@@ -104,6 +139,15 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 		return count;
 	}
 
+	private Long getGuildCount(String worldName){
+		JPAQueryFactory query = querydslConfig.jpaQueryFactory();
+		return query
+				.select(guild.count())
+				.from(guild)
+				.where(guildWorldNameEq(worldName))
+				.fetchOne();
+	}
+
 	private BooleanExpression characterClassEq(String characterClass) {
 		log.info("EQ : characterClass : " + characterClass);
 		return StringUtils.hasText(characterClass) ? character.character_class.eq(characterClass) : null;
@@ -112,6 +156,10 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 	private BooleanExpression worldNameEq(String worldName) {
 		log.info("EQ : worldName : " + worldName);
 		return StringUtils.hasText(worldName) ? character.world_name.eq(worldName) : null;
+	}
+
+	private BooleanExpression guildWorldNameEq(String worldName){
+		return StringUtils.hasText(worldName) ? guild.worldName.eq(worldName) : null;
 	}
 
 	/**
