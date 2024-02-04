@@ -34,6 +34,11 @@ public class RankingApiServiceImpl implements RankingApiService {
 	}
 
 	@Override
+	public List<Overall> getRankingOverall(int page) {
+		return rankingFeignClient.rankingOverallDto(commonUtil.date, page).getRanking();
+	}
+
+	@Override
 	@Cacheable(value = "ranking-guild", key = "#ranking_type + '_' + #world_name + '_' + #page")
 	public List<Guild> getRankingGuild(String world_name, int ranking_type, int page) {
 		ZonedDateTime currentDate = ZonedDateTime.now(commonUtil.getZoneId()).minusHours(1);
