@@ -7,6 +7,7 @@ import CGsearch from "./components/maple/search/CGsearch";
 import Comparison from "./components/maple/comparison/Comparison";
 import Rank from "./components/maple/rank/Rank";
 import UserAgentBoundary from "./components/common/UserAgentBoundary";
+import Guild from "./components/maple/guild/Guild";
 
 function App() {
   const router = createBrowserRouter([
@@ -25,6 +26,12 @@ function App() {
         {
           path: "/Search/:name",
           element: <CGsearch />,
+          errorElement: <Error />,
+        },
+        //길드 페이지
+        {
+          path: "/Search/Guild/:worldName/:name",
+          element: <Guild />,
           errorElement: <Error />,
         },
         //랭킹 페이지
