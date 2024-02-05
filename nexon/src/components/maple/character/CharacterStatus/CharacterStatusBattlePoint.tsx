@@ -16,7 +16,6 @@ const StyledBox = styled.div`
 const FloatLeftBox = styled.div`
   position: absolute;
   left: 16px;
-  top: 8px;
   color: #fff;
 `;
 
@@ -41,4 +40,3 @@ const CharacterStatusBattlePoint: React.FC<Props> = ({ combatPower }) => {
 };
 
 export default CharacterStatusBattlePoint;
-
