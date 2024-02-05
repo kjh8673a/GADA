@@ -4,17 +4,12 @@ import InfoContainerItem from "./InfoContainerItem";
 import {
   BookmarkButton,
   CharacterName,
-  CompareButton,
   InfoBox,
   InfoBoxBody,
   InfoBoxHeader,
   InfoBoxHeaderTitle,
 } from "../../../../style/characterSummaryInfo";
-import {
-  BASIC_LEFT,
-  BASIC_RIGHT,
-  BasicPropsType,
-} from "../../../../@types/maple/CharacterBasicTypes";
+import { BASIC_LEFT, BASIC_RIGHT, BasicPropsType } from "../../../../@types/maple/CharacterBasicTypes";
 import useLocalStorage from "../../../../hooks/maple/useLocalStorage";
 
 const InfoContainer = () => {
@@ -67,13 +62,16 @@ const InfoContainer = () => {
             }}
           >
             <CharacterName>{characterBasic.data?.character_name}</CharacterName>
-            <BookmarkButton onClick={() => {
-              clickBookmarkHandler(characterBasic.data?.character_name as string)
-            }}>
+            <BookmarkButton
+              onClick={() => {
+                clickBookmarkHandler(characterBasic.data?.character_name as string);
+              }}
+            >
               <img
-                src={`/assets/star${bookmark.includes(characterBasic.data?.character_name as string) ? "": "_blank"}.png`}
+                src={`/assets/star${
+                  bookmark.includes(characterBasic.data?.character_name as string) ? "" : "_blank"
+                }.png`}
                 width={"105%"}
-                height={"80%"}
                 alt="bookmark btn"
               />
             </BookmarkButton>

@@ -43,7 +43,7 @@ const StyledOption = styled.div<StyledOptionProps>`
   background-color: ${(props) => (props.$type === "공격력" ? "#541B22" : props.$type === "마력" ? "#1C2B58" : "none")};
   color: #fff;
   display: inline-block;
-  padding: 4px 8px;
+  padding: 2px 8px;
   margin-right: 4px;
   margin-top: 2px;
   border-radius: 4px;

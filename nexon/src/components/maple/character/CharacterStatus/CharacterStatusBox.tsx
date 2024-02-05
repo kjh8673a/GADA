@@ -32,7 +32,7 @@ const StyledButton = styled.button`
   background-color: #323b44;
   color: #eee;
   font-size: 0.8rem;
-  font-weigth: 700;
+  font-weight: 700;
   display: flex;
   justify-content: center;
   padding: 4px 24px;
