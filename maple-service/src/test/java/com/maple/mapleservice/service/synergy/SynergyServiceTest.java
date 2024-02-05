@@ -3,6 +3,7 @@ package com.maple.mapleservice.service.synergy;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,16 @@ public class SynergyServiceTest {
 		PartySynergyRequestDto p = PartySynergyRequestDto.builder()
 			.characterName("아델")
 			.selectedCharacters(null)
+			.build();
+
+		synergyService.partySynergy(p);
+	}
+
+	@Test
+	void 파티_시너지_선택_직업_MAX_테스트() {
+		PartySynergyRequestDto p = PartySynergyRequestDto.builder()
+			.characterName("아델")
+			.selectedCharacters(List.of("비숍", "히어로", "은월", "바이퍼", "카인"))
 			.build();
 
 		synergyService.partySynergy(p);

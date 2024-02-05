@@ -102,6 +102,12 @@ public class SynergyServiceImpl implements SynergyService {
 		// response option_characters
 		List<OptionCharacter> optionCharactersForDto = new ArrayList<>();
 
+		if (selectedCharacters.size() > 5) {
+			throw new CustomException(ErrorCode.TOO_MUCH_PARTY_MEMBERS);
+		} else if (selectedCharacters.size() == 5) {
+			return SynergyResponseDto.of(mainCharacterForDto, selectedCharctersForDto, optionCharactersForDto);
+		}
+
 		// 옵션 캐릭터들 계산 -> 전투력증가량순으로 정렬
 		for (CharacterClassName characterClassName : CharacterClassName.values()) {
 			if (alreadyInParty.contains(characterClassName)) {
@@ -109,7 +115,8 @@ public class SynergyServiceImpl implements SynergyService {
 			}
 
 			SynergyCharacter optionCharacter = characters.get(characterClassName.name());
-			StatsForSynergy ifOptionSelected = optionCharacter.applySkills(appliedStat, characterClassName.equals("에반"));
+			StatsForSynergy ifOptionSelected = optionCharacter.applySkills(appliedStat,
+				characterClassName.equals("에반"));
 			Long ifOptionSelectedCombatPower = mainCharacter.calculateCombatPower(ifOptionSelected, equipmentOptions);
 
 			Long option_increased_combat_power = (long)Math.floor(
