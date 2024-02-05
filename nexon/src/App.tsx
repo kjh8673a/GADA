@@ -7,7 +7,6 @@ import CGsearch from "./components/maple/search/CGsearch";
 import Comparison from "./components/maple/comparison/Comparison";
 import Rank from "./components/maple/rank/Rank";
 import UserAgentBoundary from "./components/common/UserAgentBoundary";
-import CharacterParty from "./components/maple/Party/CharacterParty";
 import Guild from "./components/maple/guild/Guild";
 
 function App() {
@@ -21,12 +20,6 @@ function App() {
         {
           path: "/Character/:Charactername",
           element: <Character />,
-          errorElement: <Error />,
-        },
-        //캐릭터 파티구성 페이지
-        {
-          path: "/Character/:Charactername/party",
-          element: <CharacterParty />,
           errorElement: <Error />,
         },
         //캐릭터/길드 조회 페이지

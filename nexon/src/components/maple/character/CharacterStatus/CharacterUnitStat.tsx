@@ -1,18 +1,17 @@
 import styled from "styled-components";
 import useStats from "../../../../hooks/maple/useStats";
 
-const StyledBox = styled.div`
+const StyledBox = styled.div<{ $nodata: boolean }>`
   width: 45%;
   display: flex;
   justify-content: space-between;
   font-size: 0.8rem;
-  color: #fff;
+  color: ${(props) => (props.$nodata ? "#bcbcbc" : "#fff")};
   margin: 4px 0;
 `;
 
 const BoldText = styled.span`
-  font-weight: 600;
-  color: #c1ced6;
+  color: #cbd8e0;
 `;
 
 interface Props {
@@ -36,7 +35,7 @@ const CharacterUnitStat: React.FC<Props> = ({ statKey, statVal, statVal2, increa
     convertToLevel,
   } = useStats();
   return (
-    <StyledBox>
+    <StyledBox $nodata={!statVal || +statVal === 0}>
       <BoldText>{statKey}</BoldText>
       {type === "POWER" && <span>{convertCombatPower(statVal)}</span>}
       {type === "NUMBER" && <span>{convertStrToCommaFormat(statVal)}</span>}
@@ -50,4 +49,3 @@ const CharacterUnitStat: React.FC<Props> = ({ statKey, statVal, statVal2, increa
 };
 
 export default CharacterUnitStat;
-

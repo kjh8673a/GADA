@@ -55,9 +55,10 @@ const StyledTypeBox = styled.div`
   width: 100%;
   background-color: #555555;
   box-sizing: border-box;
-  padding: 4px;
+  padding: 1px 4px;
+  letter-spacing: 1px;
   font-size: 0.6rem;
-  font-weight: 800;
+  font-weight: 600;
   display: flex;
   justify-content: center;
   color: #eeeeee;

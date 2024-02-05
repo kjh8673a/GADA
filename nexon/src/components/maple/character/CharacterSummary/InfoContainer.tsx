@@ -4,7 +4,6 @@ import InfoContainerItem from "./InfoContainerItem";
 import {
   BookmarkButton,
   CharacterName,
-  PartyButton,
   InfoBox,
   InfoBoxBody,
   InfoBoxHeader,
@@ -12,10 +11,8 @@ import {
 } from "../../../../style/characterSummaryInfo";
 import { BASIC_LEFT, BASIC_RIGHT, BasicPropsType } from "../../../../@types/maple/CharacterBasicTypes";
 import useLocalStorage from "../../../../hooks/maple/useLocalStorage";
-import { useNavigate } from "react-router-dom";
 
 const InfoContainer = () => {
-  const navigate = useNavigate();
   const { bookmark, clickBookmarkHandler } = useLocalStorage();
   const { characterBasic } = useCharacterBasic();
   const [props1, setProps1] = useState<BasicPropsType>({
@@ -52,15 +49,11 @@ const InfoContainer = () => {
     });
   }, [characterBasic]);
 
-  const forwardParty = () => {
-    navigate("./party");
-  };
-
   return (
     <InfoBox>
       <InfoBoxHeader>
         <InfoBoxHeaderTitle>CHARACTER INFO</InfoBoxHeaderTitle>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
           <div
             style={{
               display: "flex",
@@ -79,12 +72,11 @@ const InfoContainer = () => {
                   bookmark.includes(characterBasic.data?.character_name as string) ? "" : "_blank"
                 }.png`}
                 width={"105%"}
-                height={"80%"}
                 alt="bookmark btn"
               />
             </BookmarkButton>
           </div>
-          <PartyButton onClick={forwardParty}>파티구성</PartyButton>
+          {/* <CompareButton>Compare</CompareButton> */}
         </div>
       </InfoBoxHeader>
       <InfoBoxBody>
