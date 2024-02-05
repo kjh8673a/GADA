@@ -6,17 +6,20 @@ import UnionArtifactItem from "./UnionArtifactItem";
 
 const StyledBox = styled.div`
   width: 100%;
-  padding: 1%;
+  padding: 16px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: #3d444c;
+  background-color: var(--secondary-bg-color);
+  box-shadow: var(--custom-shadow);
   border-radius: 5px;
 `;
 
 const HeaderBox = styled.div`
   width: 100%;
   font-size: 1.2rem;
+  font-weight: 800;
 `;
 
 const ContentBox = styled.div`
@@ -28,15 +31,28 @@ const ContentBox = styled.div`
 const ArtifactWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const TotalStatWrapper = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: column;
   align-items: start;
   padding: 2%;
   border-left: 1px dashed #777;
   gap: 10px;
+`;
+
+const StatItem = styled.span`
+  font-size: 0.9rem;
+`;
+
+const StyledLevel = styled.span`
+  color: rgba(97, 255, 255, 0.8);
+  font-weight: 600;
 `;
 
 const UnionArtifact = () => {
@@ -53,9 +69,14 @@ const UnionArtifact = () => {
         </ArtifactWrapper>
         <TotalStatWrapper>
           <HeaderBox>합산 효과</HeaderBox>
-          <DashedLine/>
+          <DashedLine />
           {unionArtifact.data?.union_artifact_effect.map((v, i) => {
-            return <div key={i}>{v.name + " Lv. " + v.level}</div>;
+            return (
+              <StatItem key={i}>
+                {v.name}
+                <StyledLevel> Lv. {v.level}</StyledLevel>
+              </StatItem>
+            );
           })}
         </TotalStatWrapper>
       </ContentBox>

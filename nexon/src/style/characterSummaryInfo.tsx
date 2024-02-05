@@ -18,7 +18,6 @@ export const InfoBoxHeader = styled.div`
 
 export const InfoBoxHeaderTitle = styled.div`
   color: #b4cb32;
-  font-family: "Inria Sans";
   font-size: 0.625rem;
   font-style: normal;
   font-weight: 400;
@@ -27,8 +26,7 @@ export const InfoBoxHeaderTitle = styled.div`
 
 export const CharacterName = styled.div`
   color: #fff;
-  font-family: "Zen Old Mincho";
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -36,8 +34,8 @@ export const CharacterName = styled.div`
 
 export const BookmarkButton = styled.button`
   border: none;
-  width: 2rem;
-  height: 2rem;
+  width: 1.6rem;
+  height: 1.6rem;
   color: #fff;
   border-radius: 0.5rem;
   display: flex;
@@ -53,7 +51,6 @@ export const CompareButton = styled.button`
   border: none;
   text-align: center;
   text-shadow: 3px 3px 3px #000;
-  font-family: "Inria Sans";
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;

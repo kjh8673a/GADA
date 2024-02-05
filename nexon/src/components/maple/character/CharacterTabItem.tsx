@@ -16,6 +16,10 @@ const StyledTabItem = styled.div<{ selected: boolean }>`
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 interface Props {
@@ -35,4 +39,3 @@ const CharacterTabItem: React.FC<Props> = ({ children, value, clickHandler }) =>
 };
 
 export default CharacterTabItem;
-

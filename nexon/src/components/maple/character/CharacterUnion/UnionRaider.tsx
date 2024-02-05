@@ -12,9 +12,16 @@ const StyledBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  border: 1px solid white;
-  border-radius: 2px;
-  padding: 5px;
+  border: 1px solid #777;
+  border-radius: 4px;
+  padding: 12px 8px;
+  box-sizing: border-box;
+  background-color: var(--primary-bg-color);
+  box-shadow: var(--custom-shadow);
+
+  &:hover {
+    border: 1px solid #eee;
+  }
 `;
 
 const WrapperBox = styled.div`
@@ -23,6 +30,7 @@ const WrapperBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 0.9rem;
 `;
 
 const ClassImg = styled.img`
@@ -31,25 +39,18 @@ const ClassImg = styled.img`
 `;
 
 const GradeBox = styled.div`
-  font-size: 1rem;
-  color: white;
+  color: #ccc;
+  font-weight: 600;
 `;
 
 const ClassBox = styled.div`
-  font-size: 1rem;
   color: white;
 `;
 const LevelBox = styled.div`
-  font-size: 1rem;
-  color: white;
+  color: #ccc;
 `;
 
-const UnionRaider: React.FC<Props> = ({
-  block_class,
-  block_level,
-  class_image,
-  grade,
-}) => {
+const UnionRaider: React.FC<Props> = ({ block_class, block_level, class_image, grade }) => {
   return (
     <StyledBox>
       <ClassImg src={class_image} alt={"class image"} />

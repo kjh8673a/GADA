@@ -1,22 +1,24 @@
-import React from "react";
 import styled from "styled-components";
 import useCharacterUnion from "../../../../hooks/maple/useCharacterUnion";
 
 const StyledBox = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 `;
 
 const UnionGrade = styled.div`
   color: white;
   font-size: 1.2rem;
+  font-weight: 800;
 `;
 
 const UnionLevel = styled.div`
-  color: #666a7a;
-  font-size: 1.1rem;
+  color: rgb(83, 182, 0);
+  font-size: 0.9rem;
+  margin-left: 8px;
+  font-weight: 600;
 `;
 
 const UnionEffectHeader = () => {

@@ -6,10 +6,13 @@ const StyledBox = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  margin: 0 8px;
 `;
 
-const CrystalImg = styled.img`
+const CrystalImg = styled.img<{ $hovered: boolean }>`
+  width: 140px;
   z-index: 1;
+  opacity: ${(props) => (props.$hovered ? "0.2" : "1")};
 `;
 
 const HoverItem = styled.div`
@@ -24,25 +27,18 @@ const HoverItem = styled.div`
   align-items: center;
   font-size: 1rem;
   z-index: 2;
-  border: 1px solid white;
-  border-radius: 10px;
-  background-color: #3d444c;
-  opacity: 0.8;
+  font-size: 0.8rem;
+  font-weight: 600;
 `;
 
-const UnionArtifactItem: React.FC<{ item: ArtifactCrystalType }> = ({
-  item,
-}) => {
+const UnionArtifactItem: React.FC<{ item: ArtifactCrystalType }> = ({ item }) => {
   const [isHover, setIsHover] = useState(false);
   return (
-    <StyledBox
-      onMouseOver={() => setIsHover(true)}
-      onMouseOut={() => setIsHover(false)}
-    >
-      <CrystalImg src={item.crystal_icon} alt={"crystal image"} />
+    <StyledBox onMouseOver={() => setIsHover(true)} onMouseOut={() => setIsHover(false)}>
+      <CrystalImg src={item.crystal_icon} alt={"crystal image"} $hovered={isHover} />
       {isHover && (
         <HoverItem>
-          <div style={{fontSize: "1.2rem"}}>{item.name.slice(7) + " Lv. " + item.level}</div>
+          <div style={{ fontSize: "1.2rem", marginBottom: "4px" }}>{item.name.slice(7) + " Lv. " + item.level}</div>
           <div>{item.crystal_option_name_1}</div>
           <div>{item.crystal_option_name_2}</div>
           <div>{item.crystal_option_name_3}</div>
