@@ -6,6 +6,6 @@ COPY ${JAR_FILE} /maple-service.jar
 
 ENV TZ=Asia/Seoul
 
-EXPOSE 8081
+EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "/maple-service.jar" ]
