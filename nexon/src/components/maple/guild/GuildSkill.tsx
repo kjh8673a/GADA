@@ -1,15 +1,14 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { skillType } from '../../../@types/maple/CharacterSkillType';
 import styled from 'styled-components';
-import SkillDetail from '../character/CharacterSkill/SkillDetail';
-import GuildSkillDetail from './GuildSkillDetail';
+import GuildSkillDetail from '../search/GuildSkillDetail';
 
 interface Props {
     skill: skillType[] | undefined;
 }
 
 const SkillContainer = styled.div`
-
+    padding : 4px 0px 0px 0px;
 `
 
 const NoSkill = styled.div`
