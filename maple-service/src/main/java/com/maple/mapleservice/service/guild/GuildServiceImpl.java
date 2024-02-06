@@ -73,7 +73,7 @@ public class GuildServiceImpl implements GuildService {
 	}
 
 	@Override
-	@RedisCacheable(value = "guild-members")
+	@RedisCacheable(value = "guild-members", key = "#worldName + '_' + #guildName")
 	public List<Character> getGuildMembers(String guildName, String worldName) {
 		String oguildId = guildApiService.getOguildIdKey(guildName, worldName);
 		if (oguildId == null || oguildId.isBlank()) {

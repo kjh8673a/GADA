@@ -1,6 +1,7 @@
 package com.maple.mapleservice.util.cache;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -9,6 +10,10 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.expression.EvaluationContext;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -27,9 +32,13 @@ public class RedisCacheAspect {
 
 	@Around("@annotation(RedisCacheable)")
 	public Object cacheableProcess(ProceedingJoinPoint joinPoint) throws Throwable {
+		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+		Method method = signature.getMethod();
+		RedisCacheable redisCacheable = method.getAnnotation(RedisCacheable.class);
 
-		RedisCacheable redisCacheable = getCacheable(joinPoint);
-		final String cacheKey = generateKey(redisCacheable.value(), joinPoint);
+		String key = (String) customSpELParser(signature.getParameterNames(), joinPoint.getArgs(), redisCacheable.key());
+
+		final String cacheKey = generateKey(redisCacheable.value(), key);
 
 		// 같은 키로 캐시가 있으면 그 값 반환
 		if (Boolean.TRUE.equals(redisTemplate.hasKey(cacheKey))) {
@@ -54,16 +63,18 @@ public class RedisCacheAspect {
 		return methodReturnValue;
 	}
 
-	private RedisCacheable getCacheable(ProceedingJoinPoint joinPoint) {
-		final MethodSignature signature = (MethodSignature)joinPoint.getSignature();
-		final Method method = signature.getMethod();
+	private Object customSpELParser(String[] parameterNames, Object[] args, String name) {
+		ExpressionParser parser = new SpelExpressionParser();
+		EvaluationContext context = new StandardEvaluationContext();
 
-		return AnnotationUtils.getAnnotation(method, RedisCacheable.class);
+		for (int i = 0; i < parameterNames.length; i++) {
+			context.setVariable(parameterNames[i], args[i]);
+		}
+
+		return parser.parseExpression(name).getValue(context);
 	}
 
-	private String generateKey(String cacheName, ProceedingJoinPoint joinPoint) {
-		String generatedKey = StringUtils.arrayToDelimitedString(joinPoint.getArgs(), "_");
-
-		return String.format("%s::%s", cacheName, generatedKey);
+	private String generateKey(String cacheName, String key) {
+		return String.format("%s::%s", cacheName, key);
 	}
 }

@@ -30,7 +30,7 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     private CommonUtil commonUtil = new CommonUtil();
 
     @Override
-    @RedisCacheable(value = "character-api-ocid")
+    @RedisCacheable(value = "character-api-ocid", key = "#characterName")
     public String getOcidKey(String characterName) {
         String ocid = "";
         try {
@@ -47,14 +47,14 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     }
 
     @Override
-    @RedisCacheable(value = "character-api-basic")
+    @RedisCacheable(value = "character-api-basic", key = "#ocid")
     public CharacterBasicDto getCharacterBasic(String ocid) {
         log.info("api 적용 날짜 : " + commonUtil.date);
         return characterFeignClient.getCharacterBasicDto(ocid, commonUtil.date);
     }
 
     @Override
-    @RedisCacheable(value = "character-api-popularity")
+    @RedisCacheable(value = "character-api-popularity", key = "#ocid")
     public Integer getCharacterPopularity(String ocid) {
         return characterFeignClient.getCharacterPopularityDto(ocid, commonUtil.date).getPopularity();
     }
@@ -69,7 +69,7 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     }
 
     @Override
-    @RedisCacheable(value = "character-api-final-stat")
+    @RedisCacheable(value = "character-api-final-stat", key = "#ocid")
     public Map<String, String> getCharacterStat(String ocid) {
         List<FinalStat> finalStats = characterFeignClient.getCharacterStatDto(ocid, commonUtil.date).getFinal_stat();
         Map<String, String> finalStatMap = new LinkedHashMap<>();
@@ -80,7 +80,7 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     }
 
     @Override
-    @RedisCacheable(value = "character-api-hyper-stat")
+    @RedisCacheable(value = "character-api-hyper-stat", key = "#ocid")
     public Map<String, HyperStat> getCharacterHyperStat(String ocid) {
         List<HyperStat> hyperStats = getSelectedHyperStat(ocid);
 
@@ -111,31 +111,31 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     }
 
     @Override
-    @RedisCacheable(value = "character-api-ability")
+    @RedisCacheable(value = "character-api-ability", key = "#ocid")
     public CharacterAbilityDto getCharacterAbility(String ocid) {
         return characterFeignClient.getCharacterAbilityDto(ocid, commonUtil.date);
     }
 
     @Override
-    @RedisCacheable(value = "character-api-item")
+    @RedisCacheable(value = "character-api-item", key = "#ocid")
     public CharacterItemDto getCharacterItem(String ocid) {
         return characterFeignClient.getCharacterItemDto(ocid, commonUtil.date);
     }
 
     @Override
-    @RedisCacheable(value = "character-api-cashitem")
+    @RedisCacheable(value = "character-api-cashitem", key = "#ocid")
     public CharacterCashItemDto getCharacterCashItem(String ocid) {
         return characterFeignClient.getCharacterCashItemDto(ocid, commonUtil.date);
     }
 
     @Override
-    @RedisCacheable(value = "character-api-symbol")
+    @RedisCacheable(value = "character-api-symbol", key = "#ocid")
     public CharacterSymbolDto getCharacterSymbol(String ocid) {
         return characterFeignClient.getCharacterSymbolDto(ocid, commonUtil.date);
     }
 
     @Override
-    @RedisCacheable(value = "character-api-pet")
+    @RedisCacheable(value = "character-api-pet", key = "#ocid")
     public CharacterPetDto getCharacterPet(String ocid) {
         return characterFeignClient.getCharacterPetDto(ocid, commonUtil.date);
     }
@@ -146,25 +146,25 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     }
 
     @Override
-    @RedisCacheable(value = "character-api-vmatrix")
+    @RedisCacheable(value = "character-api-vmatrix", key = "#ocid")
     public CharacterVMatrixDto getCharacterVMatrixDto(String ocid) {
         return characterFeignClient.getCharacterVMatrixDto(ocid, commonUtil.date);
     }
 
     @Override
-    @RedisCacheable(value = "character-api-skill")
+    @RedisCacheable(value = "character-api-skill", key = "#ocid + '_' + #character_skill_grade")
     public CharacterSkillDto getCharacterSkill(String ocid, String character_skill_grade) {
         return characterFeignClient.getCharacterSkillDto(ocid, commonUtil.date, character_skill_grade);
     }
 
     @Override
-    @RedisCacheable(value = "character-api-link-skill")
+    @RedisCacheable(value = "character-api-link-skill", key = "#ocid")
     public CharacterLinkSkillDto getCharacterLinkSkill(String ocid) {
         return characterFeignClient.getCharacterLinkSkillDto(ocid, commonUtil.date);
     }
 
     @Override
-    @RedisCacheable(value = "character-api-hexa-matrix")
+    @RedisCacheable(value = "character-api-hexa-matrix", key = "#ocid")
     public CharacterHexaMatrixDto getCharacterHexaMatrix(String ocid) {
         return characterFeignClient.getCharacterHexaMatrixDto(ocid, commonUtil.date);
     }

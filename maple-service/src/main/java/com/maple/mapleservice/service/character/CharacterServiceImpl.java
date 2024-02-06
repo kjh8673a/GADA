@@ -98,7 +98,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@RedisCacheable(value = "character-information-from-DB")
+	@RedisCacheable(value = "character-information-from-DB", key = "#ocid")
 	public CharacterResponseDto getCharacterFromDB(String ocid) {
 		Character character = characterRepository.findByOcid(ocid);
 		if (character == null) {
@@ -186,7 +186,7 @@ public class CharacterServiceImpl implements CharacterService {
 	 * @return
 	 */
 	@Override
-	@RedisCacheable(value = "character-exp-history")
+	@RedisCacheable(value = "character-exp-history", key = "#ocid")
 	public List<CharacterExpHistoryResponseDto> getCharacterExpHistory(String ocid) {
 		long count = characterExpHistoryRepository.countByOcid(ocid);
 		if (count == 0) {
@@ -230,7 +230,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@RedisCacheable(value = "character-basic-info")
+	@RedisCacheable(value = "character-basic-info", key = "#characterName")
 	public CharacterBasicInfoResponseDto getCharacterBasicInfo(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
@@ -253,7 +253,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@RedisCacheable(value = "character-item")
+	@RedisCacheable(value = "character-item", key = "#characterName")
 	public CharacterItemResponseDto getCharacterItem(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
@@ -269,7 +269,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@RedisCacheable(value = "character-stats")
+	@RedisCacheable(value = "character-stats", key = "#characterName")
 	public CharacterStatsResponseDto getCharacterStats(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
@@ -284,7 +284,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@RedisCacheable(value = "character-v-matrix")
+	@RedisCacheable(value = "character-v-matrix", key = "#characterName")
 	public CharacterVMatrixResponseDto getCharacterVMatrix(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
@@ -299,7 +299,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@RedisCacheable(value = "character-hyper-passive")
+	@RedisCacheable(value = "character-hyper-passive", key = "#characterName")
 	public CharacterSkillDto getCharacterHyperPassive(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
@@ -310,7 +310,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@RedisCacheable(value = "character-link-skill")
+	@RedisCacheable(value = "character-link-skill", key = "#characterName")
 	public CharacterLinkSkillDto getCharacterLinkSkill(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
@@ -321,7 +321,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@RedisCacheable(value = "character-hexa-matrix")
+	@RedisCacheable(value = "character-hexa-matrix", key = "#characterName")
 	public CharacterHexaMatrixResponseDto getCharacterHexaMatrix(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {

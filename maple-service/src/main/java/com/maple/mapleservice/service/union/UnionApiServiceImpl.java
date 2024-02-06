@@ -20,19 +20,19 @@ public class UnionApiServiceImpl implements UnionApiService {
 	private CommonUtil commonUtil = new CommonUtil();
 
 	@Override
-	@RedisCacheable(value = "union-api-union")
+	@RedisCacheable(value = "union-api-union", key="#ocid")
 	public UnionDto getUnionDto(String ocid) {
 		return unionFeignClient.getUnionDto(ocid, commonUtil.date);
 	}
 
 	@Override
-	@RedisCacheable(value = "union-api-union-raidar")
+	@RedisCacheable(value = "union-api-union-raidar", key="#ocid")
 	public UnionRaiderDto getUnionRaiderDto(String ocid) {
 		return unionFeignClient.getUnionRaiderDto(ocid, commonUtil.date);
 	}
 
 	@Override
-	@RedisCacheable(value = "union-api-union-artifact")
+	@RedisCacheable(value = "union-api-union-artifact", key="#ocid")
 	public UnionArtifactDto getUnionArtifactDto(String ocid) {
 		return unionFeignClient.getUnionArtifactDto(ocid, commonUtil.date);
 	}

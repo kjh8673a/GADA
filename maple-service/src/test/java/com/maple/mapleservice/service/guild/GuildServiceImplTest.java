@@ -53,10 +53,10 @@ class GuildServiceImplTest {
     @Test
     void 길드_멤버_정보_가져오기_테스트() {
         List<Character> list = guildService.getGuildMembers(guildName, WorldName.스카니아.name());
-        System.out.println(list.size());
-        for(Character c : list) {
-            System.out.println(c.getCharacter_name());
-        }
+        // System.out.println(list.size());
+        // for(Character c : list) {
+        //     System.out.println(c.getCharacter_name());
+        // }
         // System.out.println(list.get(0).getCharacter_name());
     }
 

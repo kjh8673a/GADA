@@ -29,7 +29,7 @@ public class RankingApiServiceImpl implements RankingApiService {
 	}
 
 	@Override
-	@RedisCacheable(value = "ranking-api-overall")
+	@RedisCacheable(value = "ranking-api-overall", key = "#world_type + '_' + #page")
 	public List<Overall> getRankingOverall(int world_type, int page) {
 		return rankingFeignClient.rankingOverallDto(commonUtil.date, world_type, page).getRanking();
 	}
@@ -40,7 +40,7 @@ public class RankingApiServiceImpl implements RankingApiService {
 	}
 
 	@Override
-	@RedisCacheable(value = "ranking-api-guild")
+	@RedisCacheable(value = "ranking-api-guild", key = "#ranking_type + '_' + #world_name + '_' + #page")
 	public List<Guild> getRankingGuild(String world_name, int ranking_type, int page) {
 		ZonedDateTime currentDate = ZonedDateTime.now(commonUtil.getZoneId()).minusHours(1);
 		ZonedDateTime mondayOfWeek = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));

@@ -34,7 +34,7 @@ public class UnionServiceImpl implements UnionService {
 	private String cloudfrontUrl;
 
 	@Override
-	@RedisCacheable(value = "union-info")
+	@RedisCacheable(value = "union-info", key="#characterName")
 	public UnionInfoResponseDto getUnionInfoResponseDto(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		UnionDto unionDto = unionApiService.getUnionDto(ocid);
@@ -55,7 +55,7 @@ public class UnionServiceImpl implements UnionService {
 	}
 
 	@Override
-	@RedisCacheable(value = "union-artifact")
+	@RedisCacheable(value = "union-artifact", key="#characterName")
 	public UnionArtifactResponseDto getUnionArtifactResponseDto(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		UnionDto unionDto = unionApiService.getUnionDto(ocid);
