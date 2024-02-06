@@ -1,30 +1,24 @@
 package com.maple.mapleservice.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cglib.core.Local;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisPassword;
-import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping;
 
 @Configuration
 @EnableCaching
@@ -37,8 +31,6 @@ public class RedisConfig {
 
 	@Value("${spring.data.redis.password}")
 	private String password;
-
-	private final ZoneId zoneId = ZoneId.of("Asia/Seoul");
 
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
@@ -58,45 +50,31 @@ public class RedisConfig {
 		return new LettuceConnectionFactory(standaloneConfig);
 	}
 
-	@Bean
-	public RedisTemplate<?, ?> redisTemplate() {
-		RedisTemplate<byte[], byte[]> template = new RedisTemplate<>();
-		template.setKeySerializer(new StringRedisSerializer());
-		template.setValueSerializer(new StringRedisSerializer());
-		template.setConnectionFactory(redisConnectionFactory());
-		return template;
+	//JSON 직렬화/역직렬화 관련
+	private ObjectMapper objectMapper() {
+		PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator
+			.builder()
+			.allowIfSubType(Object.class)
+			.build();
+
+		return new ObjectMapper()
+			.findAndRegisterModules()
+			.enable(SerializationFeature.INDENT_OUTPUT)
+			.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false)
+			.registerModule(new JavaTimeModule())
+			.activateDefaultTyping(ptv, DefaultTyping.NON_FINAL);
 	}
 
 	@Bean
-	public CacheManager cacheManager() {
-		RedisCacheManager.RedisCacheManagerBuilder builder =
-			RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory());
-
-		RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
-			.serializeValuesWith(
-				RedisSerializationContext
-					.SerializationPair
-					.fromSerializer(new GenericJackson2JsonRedisSerializer())
-			) // JSON 형태로 직렬화 적용
-			.disableCachingNullValues() //데이터가 null일경우 캐싱하지 않음
-			.entryTtl(
-				Duration.between(
-					LocalDateTime.now(zoneId),
-					LocalDateTime.of(getNextDate(), ZonedDateTime.of(getNextDate(), LocalTime.of(1, 0, 0), zoneId).toLocalTime()))
-			) //유효기간 설정
-			.disableCachingNullValues();
-
-		builder.cacheDefaults(configuration);
-
-		return builder.build();
-	}
-
-	private static LocalDate getNextDate() {
-		if(LocalDateTime.now(ZoneId.of("Asia/Seoul")).toLocalTime().isBefore(LocalTime.of(1, 0, 0))) {
-			return LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).toLocalDate();
-		}else {
-			return LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul")).plusDays(1).toLocalDate();
-		}
+	public RedisTemplate<String,Object> redisTemplate() {
+		final RedisTemplate<String,Object> redisTemplate = new RedisTemplate<>();
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
+		redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer(objectMapper()));
+		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+		redisTemplate.setHashValueSerializer(RedisSerializer.java());
+		redisTemplate.setConnectionFactory(redisConnectionFactory());
+		return redisTemplate;
 	}
 
 }

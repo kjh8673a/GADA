@@ -49,6 +49,7 @@ import com.maple.mapleservice.repository.character.CharacterRepository;
 import com.maple.mapleservice.service.guild.GuildApiService;
 import com.maple.mapleservice.service.ranking.RankingApiService;
 import com.maple.mapleservice.util.CommonUtil;
+import com.maple.mapleservice.util.cache.RedisCacheable;
 
 @Service
 @RequiredArgsConstructor
@@ -97,7 +98,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@Cacheable(value = "character-information-from-DB", key = "#ocid")
+	@RedisCacheable(value = "character-information-from-DB", key = "#ocid")
 	public CharacterResponseDto getCharacterFromDB(String ocid) {
 		Character character = characterRepository.findByOcid(ocid);
 		if (character == null) {
@@ -185,7 +186,7 @@ public class CharacterServiceImpl implements CharacterService {
 	 * @return
 	 */
 	@Override
-	@Cacheable(value = "character-exp-history", key = "#ocid")
+	@RedisCacheable(value = "character-exp-history", key = "#ocid")
 	public List<CharacterExpHistoryResponseDto> getCharacterExpHistory(String ocid) {
 		long count = characterExpHistoryRepository.countByOcid(ocid);
 		if (count == 0) {
@@ -229,7 +230,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@Cacheable(value = "character-basic-info", key = "#characterName", unless = "#result == null")
+	@RedisCacheable(value = "character-basic-info", key = "#characterName")
 	public CharacterBasicInfoResponseDto getCharacterBasicInfo(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
@@ -252,7 +253,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@Cacheable(value = "character-item", key = "#characterName")
+	@RedisCacheable(value = "character-item", key = "#characterName")
 	public CharacterItemResponseDto getCharacterItem(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
@@ -268,7 +269,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@Cacheable(value = "character-stats", key = "#characterName")
+	@RedisCacheable(value = "character-stats", key = "#characterName")
 	public CharacterStatsResponseDto getCharacterStats(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
@@ -283,7 +284,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@Cacheable(value = "character-v-matrix", key = "#characterName")
+	@RedisCacheable(value = "character-v-matrix", key = "#characterName")
 	public CharacterVMatrixResponseDto getCharacterVMatrix(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
@@ -298,7 +299,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@Cacheable(value = "character-hyper-passive", key = "#characterName")
+	@RedisCacheable(value = "character-hyper-passive", key = "#characterName")
 	public CharacterSkillDto getCharacterHyperPassive(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
@@ -309,7 +310,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@Cacheable(value = "character-link-skill", key = "#characterName")
+	@RedisCacheable(value = "character-link-skill", key = "#characterName")
 	public CharacterLinkSkillDto getCharacterLinkSkill(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {
@@ -320,7 +321,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	@Cacheable(value = "character-hexa-matrix", key = "#characterName")
+	@RedisCacheable(value = "character-hexa-matrix", key = "#characterName")
 	public CharacterHexaMatrixResponseDto getCharacterHexaMatrix(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		if (ocid == null || ocid.isBlank()) {

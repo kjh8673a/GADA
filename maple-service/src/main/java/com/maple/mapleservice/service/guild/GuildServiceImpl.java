@@ -9,6 +9,7 @@ import com.maple.mapleservice.repository.character.CharacterRepository;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.maple.mapleservice.service.character.CharacterService;
 import com.maple.mapleservice.util.WorldName;
+import com.maple.mapleservice.util.cache.RedisCacheable;
 
 import lombok.RequiredArgsConstructor;
 
@@ -72,7 +73,7 @@ public class GuildServiceImpl implements GuildService {
 	}
 
 	@Override
-	@Cacheable(value = "guild-members", key = "#worldName + '_' + #guildName")
+	@RedisCacheable(value = "guild-members", key = "#worldName + '_' + #guildName")
 	public List<Character> getGuildMembers(String guildName, String worldName) {
 		String oguildId = guildApiService.getOguildIdKey(guildName, worldName);
 		if (oguildId == null || oguildId.isBlank()) {
