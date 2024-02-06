@@ -21,7 +21,7 @@ public class CharacterApiServiceIntegrationTest {
 
     @Test
     void getOcidKey() {
-        String key = characterApiService.getOcidKey("심술녀");
+        String key = characterApiService.getOcidKey("도적");
         System.out.println("---------------");
         System.out.println(key);
 
@@ -30,7 +30,7 @@ public class CharacterApiServiceIntegrationTest {
 
     @Test
     void 캐시_로그_테스트() {
-        String key = characterApiService.getOcidKey("아델");
+        String key = characterApiService.getOcidKey("서믹");
         //나중에 테스트 확인 코드 넣자... outputcapturerule 이 적용이 잘안됨
     }
 

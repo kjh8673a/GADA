@@ -18,6 +18,7 @@ import com.maple.mapleservice.dto.response.union.UnionArtifactResponseDto;
 import com.maple.mapleservice.dto.response.union.UnionInfoResponseDto;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.maple.mapleservice.util.UnionRaidarStatTable;
+import com.maple.mapleservice.util.cache.RedisCacheable;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,7 +34,7 @@ public class UnionServiceImpl implements UnionService {
 	private String cloudfrontUrl;
 
 	@Override
-	@Cacheable(value = "union-info", key = "#characterName")
+	@RedisCacheable(value = "union-info")
 	public UnionInfoResponseDto getUnionInfoResponseDto(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		UnionDto unionDto = unionApiService.getUnionDto(ocid);
@@ -54,7 +55,7 @@ public class UnionServiceImpl implements UnionService {
 	}
 
 	@Override
-	@Cacheable(value = "union-artifact", key = "#characterName")
+	@RedisCacheable(value = "union-artifact")
 	public UnionArtifactResponseDto getUnionArtifactResponseDto(String characterName) {
 		String ocid = characterApiService.getOcidKey(characterName);
 		UnionDto unionDto = unionApiService.getUnionDto(ocid);
