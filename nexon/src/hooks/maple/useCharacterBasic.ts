@@ -18,10 +18,11 @@ const useCharacterBasic = () => {
           setError(null);
         })
         .catch((res) => {
-          if (res.response.status === 404) {
-            console.log("존재하지 않는 ID입니다.");
+          if (res.response?.status && res.response.status === 404) {
+            setError(new Error("존재하지 않는 ID입니다."));
+          } else {
+            setError(new Error("정보를 가져오는 도중 오류가 발생했습니다."));
           }
-          setError(new Error("존재하지 않는 ID입니다."));
         });
     },
     [setCharacterBasic, setError]
