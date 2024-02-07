@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { GuildType } from "../../../@types/maple/GuildTypes";
 import styled from "styled-components";
-import GuildMember from "./GuildMember";
-import GuildSkill from "./GuildSkill";
 import DashedLine from "../../common/DashedLine";
+import GuildSkill from "../guild/GuildSkill";
+import GuildMember from "../guild/GuildMember";
 
 interface Props {
   guild: GuildType | undefined;
