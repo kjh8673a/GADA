@@ -30,6 +30,7 @@ const TitleBox = styled.div`
 const ContentBox = styled.div`
   color: white;
   font-size: 0.9rem;
+  line-height: 1.4rem;
 `;
 
 const UnionEffect = () => {
@@ -57,3 +58,4 @@ const UnionEffect = () => {
 };
 
 export default UnionEffect;
+

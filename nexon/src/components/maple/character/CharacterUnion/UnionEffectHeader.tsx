@@ -6,6 +6,7 @@ const StyledBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 4px;
 `;
 
 const UnionGrade = styled.div`
@@ -32,3 +33,4 @@ const UnionEffectHeader = () => {
 };
 
 export default UnionEffectHeader;
+

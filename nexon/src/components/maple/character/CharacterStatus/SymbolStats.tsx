@@ -2,10 +2,17 @@ import styled from "styled-components";
 import { atomCharacterSymbolStats } from "../../../../atoms/maple/characterWeaponState";
 import { useRecoilValue } from "recoil";
 
-const StyledUl = styled.ul`
+const StyledBox = styled.div`
   width: 100%;
   display: flex;
+  overflow: hidden;
+`;
+
+const StyledUl = styled.ul`
+  width: 50%;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   list-style: none;
   margin: 0;
@@ -26,41 +33,35 @@ const StyledStat = styled.span`
 
 const SymbolStats = () => {
   const stats = useRecoilValue(atomCharacterSymbolStats);
+  console.log(stats);
 
   return (
-    <StyledUl>
-      {stats.symbol_hp > 0 && (
-        <StyledLi>
-          HP <StyledStat>+{stats.symbol_hp}</StyledStat>
-        </StyledLi>
-      )}
-      {stats.symbol_dex > 0 && (
-        <StyledLi>
-          DEX <StyledStat>+{stats.symbol_dex}</StyledStat>
-        </StyledLi>
-      )}
-      {stats.symbol_force > 0 && (
-        <StyledLi>
-          FORCE <StyledStat>+{stats.symbol_force}</StyledStat>
-        </StyledLi>
-      )}
-      {stats.symbol_str > 0 && (
-        <StyledLi>
-          STR <StyledStat>+{stats.symbol_str}</StyledStat>
-        </StyledLi>
-      )}
-      {stats.symbol_int > 0 && (
-        <StyledLi>
-          INT <StyledStat>+{stats.symbol_int}</StyledStat>
-        </StyledLi>
-      )}
-      {stats.symbol_luk > 0 && (
-        <StyledLi>
-          LUK <StyledStat>+{stats.symbol_luk}</StyledStat>
-        </StyledLi>
-      )}
-    </StyledUl>
+    <StyledBox>
+      <StyledUl>
+        <StyledLi>아케인심볼</StyledLi>
+        {Object.entries(stats["아케인심볼"]).map(
+          (entry) =>
+            entry[1] > 0 && (
+              <StyledLi>
+                {entry[0].split("_")[1].toUpperCase()} <StyledStat>+{entry[1]}</StyledStat>
+              </StyledLi>
+            )
+        )}
+      </StyledUl>
+      <StyledUl>
+        <StyledLi>어센틱심볼</StyledLi>
+        {Object.entries(stats["어센틱심볼"]).map(
+          (entry) =>
+            entry[1] > 0 && (
+              <StyledLi>
+                {entry[0].split("_")[1].toUpperCase()} <StyledStat>+{entry[1]}</StyledStat>
+              </StyledLi>
+            )
+        )}
+      </StyledUl>
+    </StyledBox>
   );
 };
 
 export default SymbolStats;
+

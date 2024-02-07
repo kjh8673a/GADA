@@ -52,14 +52,15 @@ const GuildInfo: React.FC<Props> = ({ guild }) => {
           <div>길드 포인트 : {guild?.guild_point}</div>
           <div>
             길드 노블 스킬
-            <GuildSkill skill={guild?.guild_noblesse_skill} />
+            {/* <GuildSkill skill={guild?.guild_noblesse_skill} /> */}
           </div>
         </GuildSkillAndPoint>
       </GuildExplain>
       <DashedLine />
-      <GuildMember name={guild?.guild_name} worldName={guild?.world_name} />
+      {/* <GuildMember name={guild?.guild_name} worldName={guild?.world_name} /> */}
     </Container>
   );
 };
 
 export default GuildInfo;
+
