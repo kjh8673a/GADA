@@ -16,7 +16,7 @@ public class 아크메이지_불_독 {
 	List<SynergySkill> skill_desc = List.of(
 		new SynergySkill(
 			"메디테이션",
-			"잠시 동안의 명상을 통해 내면의 집중력을 활성화시켜 모든 파티원의 마력을 일시적으로 증가시킨다.\\n필요 스킬 : MP 이터 3레벨 이상",
+			"잠시 동안의 명상을 통해 내면의 집중력을 활성화시켜 모든 파티원의 마력을 일시적으로 증가시킨다.\n필요 스킬 : MP 이터 3레벨 이상",
 			"MP 16 소비, 240초 동안 파티원의 마력 30 증가",
 			"https://open.api.nexon.com/static/maplestory/SkillIcon/KFPAJHPBMB.png"
 		)
