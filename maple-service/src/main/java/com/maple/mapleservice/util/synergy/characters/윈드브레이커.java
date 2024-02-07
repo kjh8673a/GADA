@@ -22,7 +22,7 @@ public class 윈드브레이커 {
 		),
 		new SynergySkill(
 			"에메랄드 더스트",
-			"에메랄드 플라워를 강화하여 보다 효율적인 전투를 감행한다.\\n필요 스킬 : 에메랄드 플라워 10레벨 이상",
+			"에메랄드 플라워를 강화하여 보다 효율적인 전투를 감행한다.\n필요 스킬 : 에메랄드 플라워 10레벨 이상",
 			"수정 꽃의 최대 HP 40000로 증가, 주변 몬스터 방어율 10% 감소 및 피격 데미지 20% 감소",
 			"https://open.api.nexon.com/static/maplestory/SkillIcon/KFOBKFOBMH.png"
 		)
