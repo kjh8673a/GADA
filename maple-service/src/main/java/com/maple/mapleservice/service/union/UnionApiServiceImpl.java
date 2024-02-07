@@ -8,6 +8,7 @@ import com.maple.mapleservice.dto.feign.union.UnionDto;
 import com.maple.mapleservice.dto.feign.union.UnionRaiderDto;
 import com.maple.mapleservice.feign.UnionFeignClient;
 import com.maple.mapleservice.util.CommonUtil;
+import com.maple.mapleservice.util.cache.RedisCacheable;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,19 +20,19 @@ public class UnionApiServiceImpl implements UnionApiService {
 	private CommonUtil commonUtil = new CommonUtil();
 
 	@Override
-	@Cacheable(value = "union-api-union", key = "#ocid")
+	@RedisCacheable(value = "union-api-union", key="#ocid")
 	public UnionDto getUnionDto(String ocid) {
 		return unionFeignClient.getUnionDto(ocid, commonUtil.date);
 	}
 
 	@Override
-	@Cacheable(value = "union-api-union-raidar", key = "#ocid")
+	@RedisCacheable(value = "union-api-union-raidar", key="#ocid")
 	public UnionRaiderDto getUnionRaiderDto(String ocid) {
 		return unionFeignClient.getUnionRaiderDto(ocid, commonUtil.date);
 	}
 
 	@Override
-	@Cacheable(value = "union-api-union-artifact", key = "#ocid")
+	@RedisCacheable(value = "union-api-union-artifact", key="#ocid")
 	public UnionArtifactDto getUnionArtifactDto(String ocid) {
 		return unionFeignClient.getUnionArtifactDto(ocid, commonUtil.date);
 	}
