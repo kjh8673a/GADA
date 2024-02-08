@@ -33,16 +33,15 @@ const StyledStat = styled.span`
 
 const SymbolStats = () => {
   const stats = useRecoilValue(atomCharacterSymbolStats);
-  console.log(stats);
 
   return (
     <StyledBox>
       <StyledUl>
         <StyledLi>아케인심볼</StyledLi>
         {Object.entries(stats["아케인심볼"]).map(
-          (entry) =>
+          (entry, idx) =>
             entry[1] > 0 && (
-              <StyledLi>
+              <StyledLi key={idx}>
                 {entry[0].split("_")[1].toUpperCase()} <StyledStat>+{entry[1]}</StyledStat>
               </StyledLi>
             )
@@ -51,9 +50,9 @@ const SymbolStats = () => {
       <StyledUl>
         <StyledLi>어센틱심볼</StyledLi>
         {Object.entries(stats["어센틱심볼"]).map(
-          (entry) =>
+          (entry, idx) =>
             entry[1] > 0 && (
-              <StyledLi>
+              <StyledLi key={idx}>
                 {entry[0].split("_")[1].toUpperCase()} <StyledStat>+{entry[1]}</StyledStat>
               </StyledLi>
             )
