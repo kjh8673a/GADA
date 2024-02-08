@@ -9,7 +9,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://${redis.host}:8761/eureka
+      defaultZone: http://${eureka.host}:8761/eureka
 
 
 spring:
