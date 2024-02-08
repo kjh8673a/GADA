@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import WeaponStarforce from "../../character/CharacterStatus/WeaponStarforce";
 
 const StyledBox = styled.div`
   display: flex;
