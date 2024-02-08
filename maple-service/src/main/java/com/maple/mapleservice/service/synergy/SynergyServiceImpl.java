@@ -116,7 +116,7 @@ public class SynergyServiceImpl implements SynergyService {
 
 			SynergyCharacter optionCharacter = characters.get(characterClassName.name());
 			StatsForSynergy ifOptionSelected = optionCharacter.applySkills(appliedStat,
-				characterClassName.equals("에반"));
+				characterClassName.name().equals("에반"));
 			Long ifOptionSelectedCombatPower = mainCharacter.calculateCombatPower(ifOptionSelected, equipmentOptions);
 
 			Long option_increased_combat_power = (long)Math.floor(
@@ -142,7 +142,7 @@ public class SynergyServiceImpl implements SynergyService {
 				}
 				weapon_type = item.getItem_equipment_part().replace(" ", "");
 				weapon_level = item.getItem_base_option().getBase_equipment_level();
-				String soul = item.getSoul_option();
+				String soul = Optional.ofNullable(item.getSoul_option()).orElseGet(String::new);
 				if (soul.startsWith("최대 HP : +")) {
 					soul = soul.replace("최대 HP : +", "");
 					if (soul.endsWith("%")) {
