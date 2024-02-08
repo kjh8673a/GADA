@@ -36,6 +36,7 @@ const SkillWrapper = styled.div`
 
 const HoverItem = styled.div`
   position: absolute;
+  z-index: 1;
   border-radius: 5px;
   padding: 2px 5px;
   background-color: var(--primary-bg-color);

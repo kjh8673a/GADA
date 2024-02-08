@@ -6,7 +6,7 @@ const StyledBox = styled.div`
   min-height: 40px;
   background-color: #3d444c;
   display: grid;
-  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 1fr 1.5fr 1fr 1fr 1fr;
 `;
 
 const TextBox = styled.div`
