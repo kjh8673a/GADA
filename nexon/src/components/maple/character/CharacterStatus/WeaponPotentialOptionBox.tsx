@@ -21,7 +21,8 @@ interface Props {
 const WeaponPotentialOptionBox: React.FC<Props> = ({ title, grade, potential1, potential2, potential3 }) => {
   if (!potential1 && !potential2 && !potential3) return null;
 
-  const isAdditional = title !== "잠재옵션";
+  const gradeLetter =
+    grade === "레어" ? "r" : grade === "에픽" ? "e" : grade === "유니크" ? "u" : grade === "레전드리" ? "l" : "e";
 
   return (
     <>
@@ -30,7 +31,7 @@ const WeaponPotentialOptionBox: React.FC<Props> = ({ title, grade, potential1, p
         <OptionTitle
           title={title}
           highlight={grade ? grade : "#000"}
-          logo={`${process.env.PUBLIC_URL}/assets/${isAdditional ? "letter-r.png" : "letter-e.png"}`}
+          logo={`${process.env.PUBLIC_URL}/assets/letter-${gradeLetter}.png`}
         />
         {potential1 && <WeaponOptionItem desc={potential1} />}
         {potential2 && <WeaponOptionItem desc={potential2} />}
