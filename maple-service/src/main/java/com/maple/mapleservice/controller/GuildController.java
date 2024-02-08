@@ -6,6 +6,7 @@ import com.maple.mapleservice.dto.response.SuccessResponse;
 import com.maple.mapleservice.entity.Character;
 import com.maple.mapleservice.service.guild.GuildService;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,14 @@ public class GuildController {
 		return ResponseEntity
 			.status(HttpStatus.OK)
 			.body(SuccessResponse.of(characterBasicInfoList));
+	}
+
+	@GetMapping("/guildInfo")
+	public ResponseEntity<SuccessResponse> getGuildInfo(@RequestParam String guildName, String worldName) {
+		GuildBasicDto guildBasicDto = guildService.getGuildBasicInfo(guildName, worldName);
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(guildBasicDto));
 	}
 
 }

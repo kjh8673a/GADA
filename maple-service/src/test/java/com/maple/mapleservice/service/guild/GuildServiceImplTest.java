@@ -60,4 +60,11 @@ class GuildServiceImplTest {
         // System.out.println(list.get(0).getCharacter_name());
     }
 
+    @Test
+    void 길드_기본_정보_가져오기_테스트() {
+        GuildBasicDto guildBasicDto = guildService.getGuildBasicInfo(guildName, WorldName.스카니아.name());
+
+        System.out.println(guildBasicDto.getGuild_master_name());
+    }
+
 }

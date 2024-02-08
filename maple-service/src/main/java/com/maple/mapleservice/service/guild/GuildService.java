@@ -16,4 +16,6 @@ public interface GuildService {
     List<String> getAllOguildIdByGuildName(String guildName);
 
     List<Character> getGuildMembers(String guildName, String worldName);
+
+    GuildBasicDto getGuildBasicInfo(String guildName, String worldName);
 }
