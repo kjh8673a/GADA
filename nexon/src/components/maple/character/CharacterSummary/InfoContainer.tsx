@@ -11,8 +11,10 @@ import {
 } from "../../../../style/characterSummaryInfo";
 import { BASIC_LEFT, BASIC_RIGHT, BasicPropsType } from "../../../../@types/maple/CharacterBasicTypes";
 import useLocalStorage from "../../../../hooks/maple/useLocalStorage";
+import { useForwarding } from "../../../../hooks/maple/useForwarding";
 
 const InfoContainer = () => {
+  const { moveToGuildPage } = useForwarding();
   const { bookmark, clickBookmarkHandler } = useLocalStorage();
   const { characterBasic } = useCharacterBasic();
   const [props1, setProps1] = useState<BasicPropsType>({
@@ -49,6 +51,10 @@ const InfoContainer = () => {
     });
   }, [characterBasic]);
 
+  const guildForwardHandler = () => {
+    moveToGuildPage(characterBasic.data?.world_name, characterBasic.data?.character_guild_name);
+  };
+
   return (
     <InfoBox>
       <InfoBoxHeader>
@@ -81,10 +87,16 @@ const InfoContainer = () => {
       </InfoBoxHeader>
       <InfoBoxBody>
         <InfoContainerItem id={props1.id} titles={props1.titles} values={props1.values} />
-        <InfoContainerItem id={props2.id} titles={props2.titles} values={props2.values} />
+        <InfoContainerItem
+          id={props2.id}
+          titles={props2.titles}
+          values={props2.values}
+          handleClick={guildForwardHandler}
+        />
       </InfoBoxBody>
     </InfoBox>
   );
 };
 
 export default InfoContainer;
+

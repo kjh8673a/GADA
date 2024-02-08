@@ -28,5 +28,6 @@ export type BasicPropsType = {
   id: number[];
   titles: (string | number | undefined)[];
   values: (string | number | undefined)[];
+  handleClick?: () => void;
 };
 

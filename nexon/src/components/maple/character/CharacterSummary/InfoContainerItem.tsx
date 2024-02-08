@@ -19,7 +19,7 @@ const InfoItemTitle = styled.div`
   padding-left: 4px;
 `;
 
-const InfoItemValue = styled.div`
+const InfoItemValue = styled.div<{ $isClickable: boolean }>`
   height: 2rem;
   margin: 1%;
   color: #fff;
@@ -33,16 +33,28 @@ const InfoItemValue = styled.div`
   font-weight: 400;
   line-height: normal;
   border-radius: 0.5rem;
+
+  ${(props) =>
+    props.$isClickable &&
+    `&:hover {
+      cursor: pointer;
+      font-weight: 600;
+    }`}
 `;
 
-const InfoContainerItem: React.FC<BasicPropsType> = ({ id, titles, values }) => {
+const InfoContainerItem: React.FC<BasicPropsType> = ({ id, titles, values, handleClick }) => {
   return (
     <InfoItemBox>
       {titles.map((v, i) => {
         return (
           <React.Fragment key={v}>
             <InfoItemTitle>{v}</InfoItemTitle>
-            <InfoItemValue key={id[i]} style={{ background: v === "LEVEL" ? "#B4CB32" : "#ABABAB" }}>
+            <InfoItemValue
+              key={id[i]}
+              style={{ background: v === "LEVEL" ? "#B4CB32" : "#ABABAB" }}
+              $isClickable={v === "GUILD"}
+              onClick={v === "GUILD" ? handleClick : () => {}}
+            >
               {values[i]}
             </InfoItemValue>
           </React.Fragment>
@@ -53,3 +65,4 @@ const InfoContainerItem: React.FC<BasicPropsType> = ({ id, titles, values }) => 
 };
 
 export default InfoContainerItem;
+
