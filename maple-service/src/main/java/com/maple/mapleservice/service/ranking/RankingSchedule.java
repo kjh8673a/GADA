@@ -100,9 +100,9 @@ public class RankingSchedule {
 		log.info(updateGuilds.size() + "개의 길드 전투력 갱신 완료");
 	}
 
-	// 매시 20분마다 랭킹에서 랜덤 한페이지 db에 넣기
+	// 매시 30분마다 랭킹에서 랜덤 한페이지 db에 넣기
 	@Transactional
-	@Scheduled(cron = "0 20 * * * ?")
+	@Scheduled(cron = "0 30 * * * ?")
 	public void characterRankingRandomInsert() {
 		int page = (int)(Math.random() * 100000) + 1;
 		log.info("종합 랭킹 캐릭터 db에 추가 : page : " + page);
@@ -112,9 +112,9 @@ public class RankingSchedule {
 		characterService.addCharacterInformationToDB(characterNames);
 	}
 
-	// 매시 40분마다 랭킹에서 랜덤 한페이지 db에 넣기
+	// 랭킹에서 랜덤 한페이지 db에 넣기
 	@Transactional
-	@Scheduled(cron = "0 40 * * * ?")
+	@Scheduled(cron = "0 0 3 * * ?")
 	public void guildRankingRandomInsert() {
 		int page = (int)(Math.random() * 250) + 1;
 		log.info("길드 랭킹 db에 추가 : page : " + page);
