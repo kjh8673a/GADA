@@ -110,7 +110,7 @@ public class SynergyServiceImpl implements SynergyService {
 
 		// 옵션 캐릭터들 계산 -> 전투력증가량순으로 정렬
 		for (CharacterClassName characterClassName : CharacterClassName.values()) {
-			if (alreadyInParty.contains(characterClassName)) {
+			if (alreadyInParty.contains(characterClassName.name())) {
 				continue;
 			}
 
