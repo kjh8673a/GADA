@@ -1,6 +1,7 @@
 import { atom } from "recoil";
 import {
   CombatPowerRankingType,
+  GuildCombatPowerType,
   GuildWaterwayType,
   RankTabType,
 } from "../../@types/maple/RankingTypes";
@@ -12,6 +13,11 @@ export const atomCombatPowerRanking = atom<CombatPowerRankingType>({
 
 export const atomGuildWaterway = atom<GuildWaterwayType>({
   key: "atomGuildWaterway",
+  default: {},
+});
+
+export const atomGuildCombatPower = atom<GuildCombatPowerType>({
+  key: "atomGuildCombatPower",
   default: {},
 });
 
