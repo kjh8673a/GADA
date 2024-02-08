@@ -8,10 +8,13 @@ import com.maple.mapleservice.dto.feign.guild.GuildBasicDto;
 import com.maple.mapleservice.dto.model.ranking.Overall;
 import com.maple.mapleservice.entity.Character;
 import com.maple.mapleservice.entity.Guild;
+import com.maple.mapleservice.exception.CustomException;
+import com.maple.mapleservice.exception.ErrorCode;
 import com.maple.mapleservice.repository.character.CharacterRepository;
 import com.maple.mapleservice.repository.guild.GuildRepository;
 import com.maple.mapleservice.service.character.CharacterService;
 import com.maple.mapleservice.service.guild.GuildApiService;
+import com.maple.mapleservice.service.guild.GuildService;
 import com.maple.mapleservice.util.CommonUtil;
 
 import org.springframework.scheduling.annotation.Scheduled;
@@ -35,6 +38,7 @@ public class RankingSchedule {
 	private final GuildApiService guildApiService;
 	private final RankingApiService rankingApiService;
 	private final CharacterService characterService;
+	private final GuildService guildService;
 
 	private final CommonUtil commonUtil = new CommonUtil();
 
@@ -96,15 +100,42 @@ public class RankingSchedule {
 		log.info(updateGuilds.size() + "개의 길드 전투력 갱신 완료");
 	}
 
-	// 매시 30분마다 랭킹에서 랜덤 한페이지(200개 캐릭터) db에 넣기
+	// 매시 20분마다 랭킹에서 랜덤 한페이지 db에 넣기
 	@Transactional
-	@Scheduled(cron = "0 30 * * * ?")
+	@Scheduled(cron = "0 20 * * * ?")
 	public void characterRankingRandomInsert() {
 		int page = (int)(Math.random() * 100000) + 1;
 		log.info("종합 랭킹 캐릭터 db에 추가 : page : " + page);
 
 		List<Overall> overallList = rankingApiService.getRankingOverall(page);
 		List<String> characterNames = overallList.stream().map(Overall::getCharacter_name).collect(Collectors.toList());
+		characterService.addCharacterInformationToDB(characterNames);
+	}
+
+	// 매시 40분마다 랭킹에서 랜덤 한페이지 db에 넣기
+	@Transactional
+	@Scheduled(cron = "0 40 * * * ?")
+	public void guildRankingRandomInsert() {
+		int page = (int)(Math.random() * 250) + 1;
+		log.info("길드 랭킹 db에 추가 : page : " + page);
+
+		List<com.maple.mapleservice.dto.model.ranking.Guild> guilds = rankingApiService.getGuildRankingForData(page);
+
+		List<String> oguildIds = new ArrayList<>();
+		List<String> characterNames = new ArrayList<>();
+		for(com.maple.mapleservice.dto.model.ranking.Guild guild : guilds) {
+			String oguildId = guildApiService.getOguildIdKey(guild.getGuild_name(), guild.getWorld_name());
+			if (oguildId == null || oguildId.isBlank()) {
+				continue;
+			}
+			oguildIds.add(oguildId);
+
+			GuildBasicDto guildBasicDto = guildService.getGuildBasicInfo(guild.getGuild_name(), guild.getWorld_name());
+			List<String> guild_member = guildBasicDto.getGuild_member();
+			characterNames.addAll(guild_member);
+		}
+
+		guildService.addGuildInformationToDB(oguildIds);
 		characterService.addCharacterInformationToDB(characterNames);
 	}
 
