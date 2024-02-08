@@ -34,8 +34,10 @@ const OptionCharacters = () => {
       <Container>
         {characterSynergy.data?.option_characters
           .filter((v) => {
-            if (optionOrder.cycle > 1 && optionOrder.cycle !== v.cycle) {
-              return false;
+            if (optionOrder.cycle > 1) {
+              if (optionOrder.cycle === 4 && v.cycle !== 0) return false;
+              if (optionOrder.cycle < 4 && optionOrder.cycle !== v.cycle) return false;
+              return true;
             }
             for (const type of optionOrder.skill_type) {
               if (!v.skill_type.includes(type)) return false;
@@ -43,9 +45,7 @@ const OptionCharacters = () => {
             return true;
           })
           .map((v, i) => {
-            return (
-              <OptionCharactersItem key={i} data={v}></OptionCharactersItem>
-            );
+            return <OptionCharactersItem key={i} data={v}></OptionCharactersItem>;
           })}
       </Container>
     </StyledBox>
@@ -53,3 +53,4 @@ const OptionCharacters = () => {
 };
 
 export default OptionCharacters;
+

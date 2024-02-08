@@ -42,7 +42,7 @@ const StyledButton = styled.button`
   font-weigth: 700;
   display: flex;
   justify-content: center;
-  padding: 4px 24px;
+  padding: 6px 24px;
   margin: 8px 0;
   border-radius: 16px;
   box-shadow: rgb(51, 51, 51, 0.2), 0px 1px 4px, rgba(225, 225, 225, 0.2), 0px 0px 0px 3px;
@@ -77,3 +77,4 @@ const CharacterBox: React.FC<Props> = ({ character }) => {
 };
 
 export default CharacterBox;
+

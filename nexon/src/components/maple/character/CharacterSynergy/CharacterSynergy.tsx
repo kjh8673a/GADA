@@ -14,14 +14,13 @@ const StyledBox = styled.div`
 `;
 
 const CharacterSynergy = () => {
-  const { getSynergy, selectedCharacters, setSelectedCharacters } =
-    useCharacterSynergy();
+  const { getSynergy, selectedCharacters, setSelectedCharacters } = useCharacterSynergy();
   useEffect(() => {
     getSynergy(selectedCharacters);
     return () => {
       setSelectedCharacters([]);
     };
-  }, [getSynergy]);
+  }, []);
   return (
     <StyledBox>
       <SelectedCharacters />
@@ -31,3 +30,4 @@ const CharacterSynergy = () => {
 };
 
 export default CharacterSynergy;
+

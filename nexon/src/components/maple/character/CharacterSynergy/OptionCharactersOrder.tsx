@@ -32,22 +32,17 @@ const ItemBox = styled.div`
 `;
 
 const OptionCharactersOrder = () => {
-  const { optionOrder, clickCycleOptionHandler, clickSkillOptionHandler } =
-    useCharacterSynergy();
+  const { optionOrder, clickCycleOptionHandler, clickSkillOptionHandler } = useCharacterSynergy();
   return (
     <StyledBox>
       <Container>
-        {["전체", "2 min", "3 min"].map((v, i) => {
+        {["전체", "2 min", "3 min", "기타"].map((v, i) => {
           return (
             <ItemBox
               key={i}
               onClick={() => clickCycleOptionHandler(i + 1)}
               style={{
-                border: `1px solid ${
-                  optionOrder.cycle === i + 1
-                    ? "white"
-                    : "var(--primary-bg-color)"
-                }`,
+                border: `1px solid ${optionOrder.cycle === i + 1 ? "white" : "var(--primary-bg-color)"}`,
                 opacity: `${optionOrder.cycle === i + 1 ? "1" : "0.7"}`,
               }}
             >
@@ -65,14 +60,12 @@ const OptionCharactersOrder = () => {
               onClick={() => clickSkillOptionHandler(v)}
               style={{
                 border: `1px solid ${
-                  optionOrder.skill_type.includes(v) ||
-                  (optionOrder.skill_type.length < 1 && v === "전체")
+                  optionOrder.skill_type.includes(v) || (optionOrder.skill_type.length < 1 && v === "전체")
                     ? "white"
                     : "var(--primary-bg-color)"
                 }`,
                 opacity: `${
-                  optionOrder.skill_type.includes(v) ||
-                  (optionOrder.skill_type.length < 1 && v === "전체")
+                  optionOrder.skill_type.includes(v) || (optionOrder.skill_type.length < 1 && v === "전체")
                     ? "1"
                     : "0.7"
                 }`,
@@ -88,3 +81,4 @@ const OptionCharactersOrder = () => {
 };
 
 export default OptionCharactersOrder;
+
