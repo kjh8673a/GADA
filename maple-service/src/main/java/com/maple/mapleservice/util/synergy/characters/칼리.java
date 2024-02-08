@@ -15,14 +15,7 @@ public class 칼리 {
 	String character_class = "칼리";
 	Integer cycle = 3;
 	List<String> skill_type = new ArrayList<>();
-	List<SynergySkill> skill_desc = List.of(
-		new SynergySkill(
-			"",
-			"",
-			"",
-			""
-		)
-	);
+	List<SynergySkill> skill_desc = new ArrayList<>();
 
 	IncreaseVolume increaseVolume = IncreaseVolume.builder()
 		.plus_str(0)
