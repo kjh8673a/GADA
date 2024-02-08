@@ -73,6 +73,19 @@ public class GuildServiceImpl implements GuildService {
 	}
 
 	@Override
+	@RedisCacheable(value = "guild-info", key = "#worldName + '_' + #guildName")
+	public GuildBasicDto getGuildBasicInfo(String guildName, String worldName) {
+		String oguildId = guildApiService.getOguildIdKey(guildName, worldName);
+		if (oguildId == null || oguildId.isBlank()) {
+			throw new CustomException(ErrorCode.GUILD_NOT_FOUND);
+		}
+
+		GuildBasicDto guildBasicDto = guildApiService.getGuildBasic(oguildId);
+
+		return guildBasicDto;
+	}
+
+	@Override
 	@RedisCacheable(value = "guild-members", key = "#worldName + '_' + #guildName")
 	public List<Character> getGuildMembers(String guildName, String worldName) {
 		String oguildId = guildApiService.getOguildIdKey(guildName, worldName);
@@ -91,4 +104,6 @@ public class GuildServiceImpl implements GuildService {
 
 		return characterList;
 	}
+
+
 }
