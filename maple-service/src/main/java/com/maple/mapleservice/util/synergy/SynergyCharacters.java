@@ -126,7 +126,7 @@ public class SynergyCharacters {
 					나이트워커.getSkill_type(),
 					나이트워커.getSkill_desc(),
 					나이트워커.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					나이트워커.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.다크나이트.name(),
@@ -136,7 +136,7 @@ public class SynergyCharacters {
 					다크나이트.getSkill_type(),
 					다크나이트.getSkill_desc(),
 					다크나이트.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					다크나이트.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.데몬_슬레이어.name(),
@@ -146,7 +146,7 @@ public class SynergyCharacters {
 					데몬_슬레이어.getSkill_type(),
 					데몬_슬레이어.getSkill_desc(),
 					데몬_슬레이어.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					데몬_슬레이어.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.데몬_어벤져.name(),
@@ -156,7 +156,7 @@ public class SynergyCharacters {
 					데몬_어벤져.getSkill_type(),
 					데몬_어벤져.getSkill_desc(),
 					데몬_어벤져.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					데몬_어벤져.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.듀얼블레이더.name(),
@@ -166,7 +166,7 @@ public class SynergyCharacters {
 					듀얼블레이더.getSkill_type(),
 					듀얼블레이더.getSkill_desc(),
 					듀얼블레이더.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					듀얼블레이더.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.라라.name(),
@@ -176,7 +176,7 @@ public class SynergyCharacters {
 					라라.getSkill_type(),
 					라라.getSkill_desc(),
 					라라.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					라라.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.루미너스.name(),
@@ -186,7 +186,7 @@ public class SynergyCharacters {
 					루미너스.getSkill_type(),
 					루미너스.getSkill_desc(),
 					루미너스.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					루미너스.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.메르세데스.name(),
@@ -196,7 +196,7 @@ public class SynergyCharacters {
 					메르세데스.getSkill_type(),
 					메르세데스.getSkill_desc(),
 					메르세데스.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					메르세데스.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.메카닉.name(),
@@ -206,7 +206,7 @@ public class SynergyCharacters {
 					메카닉.getSkill_type(),
 					메카닉.getSkill_desc(),
 					메카닉.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					메카닉.getStatWeightForCalculate()
 				)
 			);
 
@@ -217,7 +217,7 @@ public class SynergyCharacters {
 					미하일.getSkill_type(),
 					미하일.getSkill_desc(),
 					미하일.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					미하일.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.바이퍼.name(),
@@ -227,7 +227,7 @@ public class SynergyCharacters {
 					바이퍼.getSkill_type(),
 					바이퍼.getSkill_desc(),
 					바이퍼.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					바이퍼.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.배틀메이지.name(),
@@ -237,7 +237,7 @@ public class SynergyCharacters {
 					배틀메이지.getSkill_type(),
 					배틀메이지.getSkill_desc(),
 					배틀메이지.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					배틀메이지.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.보우마스터.name(),
@@ -247,7 +247,7 @@ public class SynergyCharacters {
 					보우마스터.getSkill_type(),
 					보우마스터.getSkill_desc(),
 					보우마스터.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					보우마스터.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.블래스터.name(),
@@ -257,7 +257,7 @@ public class SynergyCharacters {
 					블래스터.getSkill_type(),
 					블래스터.getSkill_desc(),
 					블래스터.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					블래스터.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.비숍.name(),
@@ -267,7 +267,7 @@ public class SynergyCharacters {
 					비숍.getSkill_type(),
 					비숍.getSkill_desc(),
 					비숍.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					비숍.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.섀도어.name(),
@@ -277,7 +277,7 @@ public class SynergyCharacters {
 					섀도어.getSkill_type(),
 					섀도어.getSkill_desc(),
 					섀도어.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					섀도어.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.소울마스터.name(),
@@ -287,7 +287,7 @@ public class SynergyCharacters {
 					소울마스터.getSkill_type(),
 					소울마스터.getSkill_desc(),
 					소울마스터.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					소울마스터.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.스트라이커.name(),
@@ -297,7 +297,7 @@ public class SynergyCharacters {
 					스트라이커.getSkill_type(),
 					스트라이커.getSkill_desc(),
 					스트라이커.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					스트라이커.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.신궁.name(),
@@ -307,7 +307,7 @@ public class SynergyCharacters {
 					신궁.getSkill_type(),
 					신궁.getSkill_desc(),
 					신궁.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					신궁.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.아델.name(),
@@ -328,7 +328,7 @@ public class SynergyCharacters {
 					아란.getSkill_type(),
 					아란.getSkill_desc(),
 					아란.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					아란.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.아크.name(),
@@ -338,7 +338,7 @@ public class SynergyCharacters {
 					아크.getSkill_type(),
 					아크.getSkill_desc(),
 					아크.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					아크.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.아크메이지_불_독.name(),
@@ -348,7 +348,7 @@ public class SynergyCharacters {
 					아크메이지_불_독.getSkill_type(),
 					아크메이지_불_독.getSkill_desc(),
 					아크메이지_불_독.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					아크메이지_불_독.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.아크메이지_썬_콜.name(),
@@ -358,7 +358,7 @@ public class SynergyCharacters {
 					아크메이지_썬_콜.getSkill_type(),
 					아크메이지_썬_콜.getSkill_desc(),
 					아크메이지_썬_콜.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					아크메이지_썬_콜.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.에반.name(),
@@ -368,7 +368,7 @@ public class SynergyCharacters {
 					에반.getSkill_type(),
 					에반.getSkill_desc(),
 					에반.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					에반.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.엔젤릭버스터.name(),
@@ -378,7 +378,7 @@ public class SynergyCharacters {
 					엔젤릭버스터.getSkill_type(),
 					엔젤릭버스터.getSkill_desc(),
 					엔젤릭버스터.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					엔젤릭버스터.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.와일드헌터.name(),
@@ -388,7 +388,7 @@ public class SynergyCharacters {
 					와일드헌터.getSkill_type(),
 					와일드헌터.getSkill_desc(),
 					와일드헌터.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					와일드헌터.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.윈드브레이커.name(),
@@ -398,7 +398,7 @@ public class SynergyCharacters {
 					윈드브레이커.getSkill_type(),
 					윈드브레이커.getSkill_desc(),
 					윈드브레이커.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					윈드브레이커.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.은월.name(),
@@ -408,7 +408,7 @@ public class SynergyCharacters {
 					은월.getSkill_type(),
 					은월.getSkill_desc(),
 					은월.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					은월.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.일리움.name(),
@@ -418,7 +418,7 @@ public class SynergyCharacters {
 					일리움.getSkill_type(),
 					일리움.getSkill_desc(),
 					일리움.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					일리움.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.제논.name(),
@@ -428,7 +428,7 @@ public class SynergyCharacters {
 					제논.getSkill_type(),
 					제논.getSkill_desc(),
 					제논.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					제논.getStatWeightForCalculate()
 				)
 			);
 
@@ -439,7 +439,7 @@ public class SynergyCharacters {
 					제로.getSkill_type(),
 					제로.getSkill_desc(),
 					제로.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					제로.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.카데나.name(),
@@ -449,7 +449,7 @@ public class SynergyCharacters {
 					카데나.getSkill_type(),
 					카데나.getSkill_desc(),
 					카데나.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					카데나.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.카이저.name(),
@@ -459,7 +459,7 @@ public class SynergyCharacters {
 					카이저.getSkill_type(),
 					카이저.getSkill_desc(),
 					카이저.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					카이저.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.카인.name(),
@@ -469,7 +469,7 @@ public class SynergyCharacters {
 					카인.getSkill_type(),
 					카인.getSkill_desc(),
 					카인.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					카인.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.칼리.name(),
@@ -479,7 +479,7 @@ public class SynergyCharacters {
 					칼리.getSkill_type(),
 					칼리.getSkill_desc(),
 					칼리.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					칼리.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.캐논마스터.name(),
@@ -489,7 +489,7 @@ public class SynergyCharacters {
 					캐논마스터.getSkill_type(),
 					캐논마스터.getSkill_desc(),
 					캐논마스터.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					캐논마스터.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.캡틴.name(),
@@ -499,7 +499,7 @@ public class SynergyCharacters {
 					캡틴.getSkill_type(),
 					캡틴.getSkill_desc(),
 					캡틴.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					캡틴.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.키네시스.name(),
@@ -509,7 +509,7 @@ public class SynergyCharacters {
 					키네시스.getSkill_type(),
 					키네시스.getSkill_desc(),
 					키네시스.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					키네시스.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.팔라딘.name(),
@@ -519,7 +519,7 @@ public class SynergyCharacters {
 					팔라딘.getSkill_type(),
 					팔라딘.getSkill_desc(),
 					팔라딘.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					팔라딘.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.패스파인더.name(),
@@ -529,7 +529,7 @@ public class SynergyCharacters {
 					패스파인더.getSkill_type(),
 					패스파인더.getSkill_desc(),
 					패스파인더.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					패스파인더.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.팬텀.name(),
@@ -539,7 +539,7 @@ public class SynergyCharacters {
 					팬텀.getSkill_type(),
 					팬텀.getSkill_desc(),
 					팬텀.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					팬텀.getStatWeightForCalculate()
 				)
 			);
 
@@ -550,7 +550,7 @@ public class SynergyCharacters {
 					플레임위자드.getSkill_type(),
 					플레임위자드.getSkill_desc(),
 					플레임위자드.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					플레임위자드.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.호영.name(),
@@ -560,7 +560,7 @@ public class SynergyCharacters {
 					호영.getSkill_type(),
 					호영.getSkill_desc(),
 					호영.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					호영.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.히어로.name(),
@@ -570,7 +570,7 @@ public class SynergyCharacters {
 					히어로.getSkill_type(),
 					히어로.getSkill_desc(),
 					히어로.getIncreaseVolume(),
-					나이트로드.getStatWeightForCalculate()
+					히어로.getStatWeightForCalculate()
 				)
 			);
 		}

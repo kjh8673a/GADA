@@ -116,7 +116,7 @@ public class SynergyServiceImpl implements SynergyService {
 
 			SynergyCharacter optionCharacter = characters.get(characterClassName.name());
 			StatsForSynergy ifOptionSelected = optionCharacter.applySkills(appliedStat,
-				characterClassName.equals("에반"));
+				characterClassName.name().equals("에반"));
 			Long ifOptionSelectedCombatPower = mainCharacter.calculateCombatPower(ifOptionSelected, equipmentOptions);
 
 			Long option_increased_combat_power = (long)Math.floor(
