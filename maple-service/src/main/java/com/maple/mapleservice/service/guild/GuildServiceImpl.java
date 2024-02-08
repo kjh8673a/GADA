@@ -28,7 +28,6 @@ public class GuildServiceImpl implements GuildService {
 
 	private final CharacterService characterService;
 
-	private final CharacterApiService characterApiService;
 	private final CharacterRepository characterRepository;
 	private final RedisTemplate redisTemplate;
 
@@ -81,6 +80,7 @@ public class GuildServiceImpl implements GuildService {
 		}
 
 		GuildBasicDto guildBasicDto = guildApiService.getGuildBasic(oguildId);
+		addGuildInformationToDB(oguildId);
 
 		return guildBasicDto;
 	}

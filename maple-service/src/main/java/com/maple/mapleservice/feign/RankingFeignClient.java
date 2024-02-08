@@ -23,5 +23,8 @@ public interface RankingFeignClient {
 	@GetMapping("/guild")
 	RankingGuildDto rankingGuildDto(@RequestParam String date, @RequestParam String world_name, @RequestParam int ranking_type, @RequestParam int page);
 
+	@GetMapping("/guild")
+	RankingGuildDto rankingGuildDtoForData(@RequestParam String date, @RequestParam int ranking_type, @RequestParam int page);
+
 
 }
