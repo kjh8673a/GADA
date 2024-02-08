@@ -1,10 +1,14 @@
-import { getGuildWaterway } from "./../../api/Ranking/Ranking";
+import {
+  getGuildCombatPower,
+  getGuildWaterway,
+} from "./../../api/Ranking/Ranking";
 import { useCallback } from "react";
 import { getCombatPowerRanking } from "../../api/Ranking/Ranking";
 import { useRecoilState } from "recoil";
 import {
   atomClassTab,
   atomCombatPowerRanking,
+  atomGuildCombatPower,
   atomGuildWaterway,
   atomRankPage,
   atomRankTab,
@@ -20,6 +24,8 @@ const useRanking = () => {
     atomCombatPowerRanking
   );
   const [guildWaterway, setGuildWaterway] = useRecoilState(atomGuildWaterway);
+  const [guildCombatPower, setGuildCombatPower] =
+    useRecoilState(atomGuildCombatPower);
   const [rankTab, setRankTab] = useRecoilState(atomRankTab);
   const [worldTab, setWorldTab] = useRecoilState(atomWorldTab);
   const [classTab, setClassTab] = useRecoilState(atomClassTab);
@@ -60,6 +66,22 @@ const useRanking = () => {
     [setGuildWaterway, rankPage, setTotalPage, setRankPage]
   );
 
+  const getGuildCombatPowerData = useCallback(
+    (page: number, world_name?: string) => {
+      getGuildCombatPower(page, world_name)
+        .then(({ data, status }) => {
+          if (status === 200) {
+            setTotalPage(data.data.totalPages);
+            setGuildCombatPower(data);
+          }
+        })
+        .catch(() => {
+          console.log("Error getGuildCombatPowerRanking");
+        });
+    },
+    [setGuildCombatPower, setTotalPage]
+  );
+
   const rankTabClickHandler = (params: RankTabType) => {
     setRankTab(params);
     setWorldTab(undefined);
@@ -67,6 +89,7 @@ const useRanking = () => {
     setRankPage(1);
     if (params === "개인 전투력 랭킹") getCombatPowerRank(1);
     if (params === "길드 수로 랭킹") getGuildWaterwayData(1);
+    if (params === "길드 전투력 랭킹") getGuildCombatPowerData(1);
   };
 
   const worldTabClickHandler = (world_name: string | undefined) => {
@@ -78,6 +101,7 @@ const useRanking = () => {
       setTotalPage(9999);
       getGuildWaterwayData(1, world_name);
     }
+    if (rankTab === "길드 전투력 랭킹") getGuildCombatPowerData(1, world_name);
   };
 
   const classTabClickHandler = (class_name: string | undefined) => {
@@ -90,15 +114,21 @@ const useRanking = () => {
     navigate(`/Character/${character_name}`);
   };
 
+  const guildClickHandler = (guildName: string, worldName: string) => {
+    navigate(`/Search/Guild/${worldName}/${guildName}`);
+  };
+
   const pageMoveClickHandler = (move: number) => {
     if (rankPage + move < 1) return;
     if (rankPage + move > totalPage) return;
+    window.scrollTo(0, 0);
     setRankPage((prev) => {
       if (rankTab === "개인 전투력 랭킹") {
         getCombatPowerRank(prev + move, worldTab, classTab);
-      }
-      if (rankTab === "길드 수로 랭킹") {
+      } else if (rankTab === "길드 수로 랭킹") {
         getGuildWaterwayData(prev + move, worldTab);
+      } else if (rankTab === "길드 전투력 랭킹") {
+        getGuildCombatPowerData(prev + move, worldTab);
       }
       return prev + move;
     });
@@ -126,6 +156,10 @@ const useRanking = () => {
     pageMoveClickHandler,
     totalPage,
     setTotalPage,
+    guildCombatPower,
+    setGuildCombatPower,
+    getGuildCombatPowerData,
+    guildClickHandler,
   };
 };
 

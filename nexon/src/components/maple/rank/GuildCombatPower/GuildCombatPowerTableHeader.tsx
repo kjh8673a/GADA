@@ -16,12 +16,12 @@ const TextBox = styled.div`
   align-items: center;
 `
 
-const GuildWaterwayTableHeader = () => {
+const GuildCombatPowerTableHeader = () => {
   return (
     <StyledBox>
       <TextBox>순위</TextBox>
       <TextBox>길드</TextBox>
-      <TextBox>포인트</TextBox>
+      <TextBox>전투력</TextBox>
       <TextBox>길드 레벨</TextBox>
       <TextBox>마스터</TextBox>
       <TextBox>월드</TextBox>
@@ -29,4 +29,4 @@ const GuildWaterwayTableHeader = () => {
   );
 };
 
-export default GuildWaterwayTableHeader;
+export default GuildCombatPowerTableHeader;

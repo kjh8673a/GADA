@@ -20,6 +20,7 @@ const WeaponBox: React.FC<Props> = ({ weapon }) => {
     <StyledBox>
       <WeaponBasicInfo
         weaponImg={weapon?.item_icon}
+        weaponStarforce={weapon?.starforce}
         weaponSlot={weapon?.item_equipment_slot}
         weaponName={weapon?.item_name}
       />

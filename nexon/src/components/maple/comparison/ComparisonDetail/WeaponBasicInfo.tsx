@@ -19,6 +19,19 @@ const StyledInfo = styled.div`
 const StyledSubtitle = styled.div`
   font-size: 0.8rem;
   color: #ccc;
+  display: flex;
+`;
+
+const StyledStarforce = styled.div`
+  margin-left: 8px;
+  color: rgb(254, 199, 99);
+  display: flex;
+  align-items: center;
+`;
+
+const StyledStarforceImg = styled.img`
+  width: 8px;
+  margin-right: 4px;
 `;
 
 const StyledTitle = styled.h2`
@@ -29,16 +42,25 @@ const StyledTitle = styled.h2`
 
 interface Props {
   weaponImg: string | undefined;
+  weaponStarforce: string | undefined;
   weaponSlot: string | undefined;
   weaponName: string | undefined;
 }
 
-const WeaponBasicInfo: React.FC<Props> = ({ weaponImg, weaponSlot, weaponName }) => {
+const WeaponBasicInfo: React.FC<Props> = ({ weaponImg, weaponStarforce, weaponSlot, weaponName }) => {
   return (
     <StyledBox>
       <StyledImg src={weaponImg || `${process.env.PUBLIC_URL}/assets/question-mark.png`} alt="weapon icon" />
       <StyledInfo>
-        <StyledSubtitle>{weaponSlot}</StyledSubtitle>
+        <StyledSubtitle>
+          {weaponSlot}
+          {weaponStarforce && +weaponStarforce > 0 && (
+            <StyledStarforce>
+              <StyledStarforceImg src={`${process.env.PUBLIC_URL}/assets/star.png`} alt="starforce star" />
+              {weaponStarforce}
+            </StyledStarforce>
+          )}
+        </StyledSubtitle>
         <StyledTitle>{weaponName || "장착장비 없음"}</StyledTitle>
       </StyledInfo>
     </StyledBox>
