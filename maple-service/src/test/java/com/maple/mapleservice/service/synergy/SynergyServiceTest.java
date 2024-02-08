@@ -50,7 +50,7 @@ public class SynergyServiceTest {
 	@Test
 	void 파티_시너지_선택_직업_null_테스트() {
 		PartySynergyRequestDto p = PartySynergyRequestDto.builder()
-			.characterName("아델")
+			.characterName("2찍비숍")
 			.selectedCharacters(null)
 			.build();
 
