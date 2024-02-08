@@ -61,6 +61,14 @@ const StyledLevel = styled.span`
   font-weight: 600;
 `;
 
+const StyledNoData = styled.div`
+  width: 100%;
+  height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const UnionArtifact = () => {
   const { unionArtifact } = useCharacterUnion();
   console.log(unionArtifact);
@@ -70,25 +78,31 @@ const UnionArtifact = () => {
         유니온 아티펙트<ArtifactLevel>Lv. {unionArtifact.data?.artifact_level}</ArtifactLevel>
       </HeaderBox>
       <DashedLine />
-      <ContentBox>
-        <ArtifactWrapper>
-          {unionArtifact.data?.union_artifact_crystal.map((v, i) => {
-            return <UnionArtifactItem key={i} item={v} />;
-          })}
-        </ArtifactWrapper>
-        <TotalStatWrapper>
-          <HeaderBox>합산 효과</HeaderBox>
-          <DashedLine />
-          {unionArtifact.data?.union_artifact_effect.map((v, i) => {
-            return (
-              <StatItem key={i}>
-                {v.name}
-                <StyledLevel> Lv. {v.level}</StyledLevel>
-              </StatItem>
-            );
-          })}
-        </TotalStatWrapper>
-      </ContentBox>
+      {unionArtifact &&
+      unionArtifact.data?.union_artifact_crystal &&
+      unionArtifact.data?.union_artifact_crystal?.length > 0 ? (
+        <ContentBox>
+          <ArtifactWrapper>
+            {unionArtifact.data?.union_artifact_crystal.map((v, i) => {
+              return <UnionArtifactItem key={i} item={v} />;
+            })}
+          </ArtifactWrapper>
+          <TotalStatWrapper>
+            <HeaderBox>합산 효과</HeaderBox>
+            <DashedLine />
+            {unionArtifact.data?.union_artifact_effect.map((v, i) => {
+              return (
+                <StatItem key={i}>
+                  {v.name}
+                  <StyledLevel> Lv. {v.level}</StyledLevel>
+                </StatItem>
+              );
+            })}
+          </TotalStatWrapper>
+        </ContentBox>
+      ) : (
+        <StyledNoData>아티팩트 정보가 없습니다.</StyledNoData>
+      )}
     </StyledBox>
   );
 };
