@@ -37,7 +37,7 @@ public class SynergyCharacter {
 	// 시너지 스킬적용된 스탯 계산하기
 	public StatsForSynergy applySkills(StatsForSynergy stats, boolean evan) {
 		int evan_buff = 0;
-		if(stats.getMagic_power() > stats.getAttack_power()) {
+		if(evan && stats.getMagic_power() > stats.getAttack_power()) {
 			evan_buff = 10;
 		}
 
@@ -101,13 +101,11 @@ public class SynergyCharacter {
 		double e = (1.35 + stats.getCritical_damage() / 100);
 
 		double b = Math.floor(
-			(stats.getAttack_power() * statWeightForCalculate.getRate_attack_power() / (100
-				+ options.getAttack_power_percent()) * 100
-				+ stats.getMagic_power() * statWeightForCalculate.getRate_magic_power() / (100
-				+ options.getMagic_power_percent()) * 100 + weaponConstant.getWeaponConstant(options.getWeapon_type(),
-				options.getWeapon_level()))
-				* (1 + options.getAttack_power_percent() * statWeightForCalculate.getRate_attack_power() / 100
-				+ options.getMagic_power_percent() * statWeightForCalculate.getRate_magic_power() / 100));
+			(stats.getAttack_power() * statWeightForCalculate.getRate_attack_power() / (100 + options.getAttack_power_percent()) * 100
+				+ stats.getMagic_power() * statWeightForCalculate.getRate_magic_power() / (100 + options.getMagic_power_percent()) * 100
+				+ weaponConstant.getWeaponConstant(options.getWeapon_type(), options.getWeapon_level()))
+				* (1 + (options.getAttack_power_percent() * statWeightForCalculate.getRate_attack_power() / 100)
+				+ (options.getMagic_power_percent() * statWeightForCalculate.getRate_magic_power() / 100)));
 
 		return (long)(a * b * c * d * e);
 	}
