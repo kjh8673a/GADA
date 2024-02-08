@@ -4,7 +4,7 @@ server:
 eureka:
   instance:
     instance-id: ${spring.application.name}
-    hostname: ${redis.host}
+    hostname: ${eureka.host}
   client:
     register-with-eureka: true
     fetch-registry: true
