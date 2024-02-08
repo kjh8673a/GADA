@@ -25,3 +25,17 @@ export const getGuildMember = async(
         }
     })
 }
+
+export const getGuildInfo = async(
+    name: string,
+    worldName : string,
+) => {
+    return await axios({
+        method: "get",
+        url: `${process.env.REACT_APP_API}/guild/guildInfo`,
+        params: {
+            guildName: name,
+            worldName: worldName,
+        }
+    })
+}

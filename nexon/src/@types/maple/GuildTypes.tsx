@@ -32,3 +32,18 @@ export interface GuildMemberType {
     world_name: string;
 }
 
+export interface GuildBasicInfo {
+    world_name: string;
+    guild_name: string;
+    guild_level: number;
+    guild_fame: number;
+    guild_point: number;
+    guild_master_name: string;
+    guild_member_count: number;
+    guild_member: GuildMemberType[];
+    guild_skill: skillType[];
+    guild_noblesse_skill: skillType[];
+    guild_mark: string;
+    guild_mark_custom: string;
+
+}

@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { GuildType } from '../../../@types/maple/GuildTypes';
+import { GuildBasicInfo, GuildType } from '../../../@types/maple/GuildTypes';
 import styled from 'styled-components';
 import GuildSkill from './GuildSkill';
 import GuildMember from './GuildMember';
 import GuildInfo from './GuildInfo';
+import { useGuild } from '../../../hooks/maple/useGuild';
 
 
 const Container = styled.div`
@@ -50,21 +51,20 @@ const GuildSkillAndPoint = styled.div`
 `
 
 const Guild = () => {
-    const { state: guild } = useLocation();
-    const { world_name, guild_name } = useParams<{ world_name?: string, guild_name?: string }>();
-    const [worldName, setWorldName] = useState<string>("");
-    const [guildName, setGuildName] = useState<string>("");
-    const [guildInfo, setGuildInfo] = useState<GuildType>();
+    const { getGuild } = useGuild();
+    const { worldName, name } = useParams<{ worldName?: string, name?: string }>();
+    const [guildInfo, setGuildInfo] = useState<GuildBasicInfo>();
+
 
     useEffect(() => {
-        setGuildInfo(guild);
-        if (world_name) {
-            setWorldName(world_name);
+        console.log(worldName);
+        console.log(name);
+        if (worldName && name) {
+            getGuild(name, worldName).then((res) => {   
+                setGuildInfo(res);
+            })
         }
-        if (guild_name) {
-            setGuildName(guild_name);
-        }
-    }, [world_name, guild_name]);
+    }, [worldName, name]);
 
 
     return (
@@ -73,25 +73,25 @@ const Guild = () => {
                 <GuildExplain>
                     <GuildDescription>
                         <Explain>
-                            '{guild?.world_name}' 서버의 {guild?.guild_name} 길드
+                            '{guildInfo?.world_name}' 서버의 {guildInfo?.guild_name} 길드
                         </Explain>
                         <Explain>
-                            길드레벨 : {guild?.guild_level}
+                            길드레벨 : {guildInfo?.guild_level}
                         </Explain>
                         <Explain>
-                            길드 마스터 : {guild?.guild_master_name}
+                            길드 마스터 : {guildInfo?.guild_master_name}
                         </Explain>
                         <Explain>
-                            길드원수 : {guild?.guild_member_count}
+                            길드원수 : {guildInfo?.guild_member_count}
                         </Explain>
                     </GuildDescription>
                     <GuildSkillAndPoint>
                         <Explain>
-                            길드 포인트 : {guild?.guild_point}
+                            길드 포인트 : {guildInfo?.guild_point}
                         </Explain>
                         <Explain>
                             길드 노블 스킬
-                            <GuildSkill skill={guild?.guild_noblesse_skill} />
+                            <GuildSkill skill={guildInfo?.guild_noblesse_skill} />
                         </Explain>
                     </GuildSkillAndPoint>
                 </GuildExplain>
@@ -100,7 +100,7 @@ const Guild = () => {
                 <GuildMemberList>길드원 목록</GuildMemberList>
                 <GuildInfo/>
             </NoLineContainer>
-        <GuildMember name={guild?.guild_name} worldName={guild?.world_name} />
+        <GuildMember name={guildInfo?.guild_name} worldName={guildInfo?.world_name} />
         </>
     );
 };
