@@ -14,6 +14,7 @@ const SkillImg = styled.img`
 
 const SkillHoverBox = styled.div`
   position:absolute;
+  z-index: 2;
   box-sizing: border-box;
   width: 400px;
   bottom : 100%;

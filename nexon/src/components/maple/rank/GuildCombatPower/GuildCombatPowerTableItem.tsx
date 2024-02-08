@@ -7,7 +7,7 @@ const StyledBox = styled.div`
   min-height: 40px;
   background-color: var(--secondary-bg-color);
   display: grid;
-  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 1fr 1.5fr 1fr 1fr 1fr;
   &:hover {
     background-color: var(--primary-bg-color);
     transition: 0.2s;
@@ -33,7 +33,7 @@ const GuildCombatPowerTableItem: React.FC<{
     >
       <ContentBox>{props.rank}</ContentBox>
       <ContentBox>{props.name}</ContentBox>
-      <ContentBox>{props.combatPower}</ContentBox>
+      <ContentBox>{props.combatPower.toLocaleString("ko-kr")}</ContentBox>
       <ContentBox>{props.level}</ContentBox>
       <ContentBox>{props.masterName}</ContentBox>
       <ContentBox>{props.worldName}</ContentBox>

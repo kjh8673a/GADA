@@ -121,6 +121,7 @@ const useRanking = () => {
   const pageMoveClickHandler = (move: number) => {
     if (rankPage + move < 1) return;
     if (rankPage + move > totalPage) return;
+    window.scrollTo(0, 0);
     setRankPage((prev) => {
       if (rankTab === "개인 전투력 랭킹") {
         getCombatPowerRank(prev + move, worldTab, classTab);
