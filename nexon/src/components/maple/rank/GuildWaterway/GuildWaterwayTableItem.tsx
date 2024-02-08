@@ -8,6 +8,7 @@ type Props = {
   guild_level: number;
   guild_point: number;
   world_name: string;
+  clickHandler: (guildName: string, worldName: string) => void;
 };
 
 const StyledBox = styled.div`
@@ -36,9 +37,14 @@ const GuildWaterwayTableItem: React.FC<Props> = ({
   guild_level,
   guild_point,
   world_name,
+  clickHandler,
 }) => {
   return (
-    <StyledBox>
+    <StyledBox
+      onClick={() => {
+        clickHandler(guild_name, world_name);
+      }}
+    >
       <ContentBox>{ranking}</ContentBox>
       <ContentBox>{guild_name}</ContentBox>
       <ContentBox>{guild_master_name}</ContentBox>
@@ -50,4 +56,3 @@ const GuildWaterwayTableItem: React.FC<Props> = ({
 };
 
 export default GuildWaterwayTableItem;
-
