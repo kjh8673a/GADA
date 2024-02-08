@@ -15,14 +15,7 @@ public class 카인 {
 	String character_class = "카인";
 	Integer cycle = 0;
 	List<String> skill_type = new ArrayList<>();
-	List<SynergySkill> skill_desc = List.of(
-		new SynergySkill(
-			"",
-			"",
-			"",
-			""
-		)
-	);
+	List<SynergySkill> skill_desc = new ArrayList<>();
 
 	IncreaseVolume increaseVolume = IncreaseVolume.builder()
 		.plus_str(0)
