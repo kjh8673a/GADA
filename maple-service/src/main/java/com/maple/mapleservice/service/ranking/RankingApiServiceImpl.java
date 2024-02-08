@@ -5,7 +5,6 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import com.maple.mapleservice.dto.model.ranking.Guild;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.maple.mapleservice.dto.model.ranking.Overall;
@@ -45,6 +44,13 @@ public class RankingApiServiceImpl implements RankingApiService {
 		ZonedDateTime currentDate = ZonedDateTime.now(commonUtil.getZoneId()).minusHours(1);
 		ZonedDateTime mondayOfWeek = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 		return rankingFeignClient.rankingGuildDto(mondayOfWeek.format(commonUtil.getFormatter()), world_name, ranking_type, page).getRanking();
+	}
+
+	@Override
+	public List<Guild> getGuildRankingForData(int page) {
+		ZonedDateTime currentDate = ZonedDateTime.now(commonUtil.getZoneId()).minusHours(1);
+		ZonedDateTime mondayOfWeek = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+		return rankingFeignClient.rankingGuildDtoForData(mondayOfWeek.format(commonUtil.getFormatter()), 0, page).getRanking();
 	}
 
 }
