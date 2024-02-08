@@ -22,6 +22,12 @@ const HeaderBox = styled.div`
   font-weight: 800;
 `;
 
+const ArtifactLevel = styled.span`
+  margin-left: 8px;
+  color: rgba(97, 255, 255);
+  font-size: 1rem;
+`;
+
 const ContentBox = styled.div`
   width: 100%;
   display: grid;
@@ -57,9 +63,12 @@ const StyledLevel = styled.span`
 
 const UnionArtifact = () => {
   const { unionArtifact } = useCharacterUnion();
+  console.log(unionArtifact);
   return (
     <StyledBox>
-      <HeaderBox>유니온 아티펙트</HeaderBox>
+      <HeaderBox>
+        유니온 아티펙트<ArtifactLevel>Lv. {unionArtifact.data?.artifact_level}</ArtifactLevel>
+      </HeaderBox>
       <DashedLine />
       <ContentBox>
         <ArtifactWrapper>
@@ -85,3 +94,4 @@ const UnionArtifact = () => {
 };
 
 export default UnionArtifact;
+
