@@ -22,3 +22,14 @@ export const getGuildWaterway = async (
     params: { page, world_name },
   });
 };
+
+export const getGuildCombatPower = async (
+  page: number,
+  world_name?: string
+) => {
+  return await https({
+    method: "get",
+    url: "/ranking/guildCombatPower",
+    params: { page, world_name },
+  });
+};

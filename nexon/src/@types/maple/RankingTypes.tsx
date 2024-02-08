@@ -54,9 +54,13 @@ export type GuildWaterwayType = {
 export const RANK_TAB_NAME_LIST: RankTabType[] = [
   "개인 전투력 랭킹",
   "길드 수로 랭킹",
+  "길드 전투력 랭킹",
 ];
 
-export type RankTabType = "개인 전투력 랭킹" | "길드 수로 랭킹";
+export type RankTabType =
+  | "개인 전투력 랭킹"
+  | "길드 수로 랭킹"
+  | "길드 전투력 랭킹";
 
 export const WORLD_NAME_LIST = [
   undefined,
@@ -128,3 +132,39 @@ export const CLASS_NAME_LIST = [
   "칼리",
   "초보자",
 ];
+
+export type GuildCombatPowerContentType = {
+  rank: number;
+  oguildId: string;
+  name: string;
+  worldName: string;
+  masterName: string;
+  level: number;
+  combatPower: number;
+};
+
+export type GuildCombatPowerPageableType = {
+  pageNumber: number;
+  pageSize: number;
+  sort: [];
+  offset: number;
+  paged: boolean;
+  unpaged: boolean;
+};
+
+export type GuildCombatPowerType = {
+  timestamp?: string;
+  data?: {
+    content: GuildCombatPowerContentType[];
+    pageable: GuildCombatPowerPageableType;
+    totalPages: number;
+    totalElements: number;
+    last: boolean;
+    size: number;
+    number: number;
+    sort: [];
+    numberOfElements: number;
+    first: boolean;
+    empty: boolean;
+  };
+};

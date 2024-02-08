@@ -13,7 +13,7 @@ const StyledBox = styled.div`
 `;
 
 const GuildWaterwayTable = () => {
-  const { guildWaterway } = useRanking();
+  const { guildWaterway, guildClickHandler } = useRanking();
   return (
     <StyledBox>
       <GuildWaterwayTableHeader />
@@ -27,6 +27,7 @@ const GuildWaterwayTable = () => {
               guild_level={v.guild_level}
               guild_point={v.guild_point}
               world_name={v.world_name}
+              clickHandler={guildClickHandler}
             />
             {i !== guildWaterway.data!.length - 1 ? <DashedLine /> : <></>}
           </React.Fragment>
