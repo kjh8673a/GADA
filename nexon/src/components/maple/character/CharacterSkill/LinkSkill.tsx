@@ -1,31 +1,32 @@
-import React, { useEffect } from 'react';
-import SkillBox from './SkillBox';
-import SkillSquare from './SkillSquare';
-import { skillType } from '../../../../@types/maple/CharacterSkillType';
-import { SkillContainer, SkillDegree, SolidHr } from './SixSkill';
-import NoSkill from './NoSkill';
+import React from "react";
+import SkillBox from "./SkillBox";
+import SkillSquare from "./SkillSquare";
+import { skillType } from "../../../../@types/maple/CharacterSkillType";
+import { SkillContainer, SkillDegree } from "./SixSkill";
+import NoSkill from "./NoSkill";
+import DashedLine from "../../../common/DashedLine";
 
 interface Props {
-    skillList: skillType[];
-    haveLinkSkill: boolean;
+  skillList: skillType[];
+  haveLinkSkill: boolean;
 }
-
 
 const LinkSkill: React.FC<Props> = ({ skillList, haveLinkSkill }) => {
-    return (
-        <SkillContainer>
-            <SkillDegree>
-                링크 스킬
-            </SkillDegree>
-            <SolidHr />
-            {haveLinkSkill ?
-                <SkillBox>
-                    {skillList?.map((_, index) => (
-                        <SkillSquare skill={skillList[index]} />
-                    ))}
-                </SkillBox> : <NoSkill />}
-        </SkillContainer>
-    )
-}
+  return (
+    <SkillContainer>
+      <SkillDegree>링크 스킬</SkillDegree>
+      <DashedLine />
+      {haveLinkSkill ? (
+        <SkillBox>
+          {skillList?.map((_, index) => (
+            <SkillSquare key={index} skill={skillList[index]} />
+          ))}
+        </SkillBox>
+      ) : (
+        <NoSkill />
+      )}
+    </SkillContainer>
+  );
+};
 
 export default LinkSkill;

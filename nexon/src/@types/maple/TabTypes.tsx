@@ -4,6 +4,7 @@ export const TAB_LIST = {
   UNION: "유니온",
   SKILL: "스킬",
   ORG_CHARACTER: "본/부캐",
+  SYNERGY: "파티 시너지",
 } as const;
 
 export type TabNameType = keyof typeof TAB_LIST;

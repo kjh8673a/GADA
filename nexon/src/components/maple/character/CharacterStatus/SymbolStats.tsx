@@ -2,10 +2,17 @@ import styled from "styled-components";
 import { atomCharacterSymbolStats } from "../../../../atoms/maple/characterWeaponState";
 import { useRecoilValue } from "recoil";
 
-const StyledUl = styled.ul`
+const StyledBox = styled.div`
   width: 100%;
   display: flex;
+  overflow: hidden;
+`;
+
+const StyledUl = styled.ul`
+  width: 50%;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   list-style: none;
   margin: 0;
@@ -16,21 +23,44 @@ const StyledLi = styled.li`
   color: #fff;
   font-size: 0.8rem;
   margin: 2px 0;
+  display: flex;
+`;
+
+const StyledStat = styled.span`
+  color: rgba(97, 255, 255, 0.8);
+  margin-left: 4px;
 `;
 
 const SymbolStats = () => {
   const stats = useRecoilValue(atomCharacterSymbolStats);
 
   return (
-    <StyledUl>
-      {stats.symbol_hp > 0 && <StyledLi>HP +{stats.symbol_hp}</StyledLi>}
-      {stats.symbol_dex > 0 && <StyledLi>DEX +{stats.symbol_dex}</StyledLi>}
-      {stats.symbol_force > 0 && <StyledLi>FORCE +{stats.symbol_force}</StyledLi>}
-      {stats.symbol_str > 0 && <StyledLi>STR +{stats.symbol_str}</StyledLi>}
-      {stats.symbol_int > 0 && <StyledLi>INT +{stats.symbol_int}</StyledLi>}
-      {stats.symbol_luk > 0 && <StyledLi>LUK +{stats.symbol_luk}</StyledLi>}
-    </StyledUl>
+    <StyledBox>
+      <StyledUl>
+        <StyledLi>아케인심볼</StyledLi>
+        {Object.entries(stats["아케인심볼"]).map(
+          (entry, idx) =>
+            entry[1] > 0 && (
+              <StyledLi key={idx}>
+                {entry[0].split("_")[1].toUpperCase()} <StyledStat>+{entry[1]}</StyledStat>
+              </StyledLi>
+            )
+        )}
+      </StyledUl>
+      <StyledUl>
+        <StyledLi>어센틱심볼</StyledLi>
+        {Object.entries(stats["어센틱심볼"]).map(
+          (entry, idx) =>
+            entry[1] > 0 && (
+              <StyledLi key={idx}>
+                {entry[0].split("_")[1].toUpperCase()} <StyledStat>+{entry[1]}</StyledStat>
+              </StyledLi>
+            )
+        )}
+      </StyledUl>
+    </StyledBox>
   );
 };
 
 export default SymbolStats;
+

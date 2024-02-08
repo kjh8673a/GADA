@@ -4,7 +4,6 @@ import { useRecoilState } from 'recoil';
 import { userNickName } from '../../../atoms/maple/characterName';
 import styled from 'styled-components';
 import CharacterInfo from './CharacterInfo';
-import GuildInfo from './GuildInfo';
 import useCharacterBasic from '../../../hooks/maple/useCharacterBasic';
 import { useGuild } from '../../../hooks/maple/useGuild';
 import { GuildType } from '../../../@types/maple/GuildTypes';
@@ -36,11 +35,18 @@ const GuildServerContainer = styled.div`
     width : auto;
 `
 
+const NoGuild = styled.div`
+    display : flex;
+    max-width : 1140px;
+    margin : 10px 0px 10px 0px;
+    height : auto;
+    width : auto;
+`
+
 const CGsearch = () => {
     const params = useParams<{ name: string }>();
     const [guildList, setGuildList] = useState<GuildType[]>([]);
     const [guild, setGuild] = useState<GuildType>();
-    const [worldName, setWorldName] = useState<string>("");
     const [characterName, setCharacterName] = useRecoilState<string>(userNickName);
     const { characterBasic, getCharacterBasic } = useCharacterBasic();
     const { getAllGuild } = useGuild();
@@ -55,7 +61,6 @@ const CGsearch = () => {
                     if (res) {
                         setGuildList(res);  
                         setGuild(undefined);
-                        setWorldName("");
                     }
                 })
             }
@@ -70,15 +75,16 @@ const CGsearch = () => {
                 <CharacterContainer>
                     <CharacterInfo characterBasic={characterBasic} />
                 </CharacterContainer>
-                <GuildServerContainer>
-                    {guildList.map((_, index) => (
-                        <GuildName guild={guildList[index]}
-                            setWorldName={setWorldName}
-                            setGuild={setGuild} />
-                    ))}
-                </GuildServerContainer>
                 {
-                    worldName && <GuildInfo guild={guild} />
+                    guildList.length !== 0
+                    ?
+                    <GuildServerContainer>
+                        {guildList.map((_, index) => (
+                            <GuildName guild={guildList[index]}
+                                setGuild={setGuild} />
+                        ))}
+                        </GuildServerContainer> :
+                        <NoGuild>길드가 존재하지 않습니다</NoGuild>
                 }
             </SmallContainer>
         </BigContainer>

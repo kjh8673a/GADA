@@ -11,18 +11,26 @@ const StyledBox = styled.div`
   flex-direction: column;
   align-items: start;
   gap: 5px;
-  background-color: #3d444c;
+  background-color: var(--secondary-bg-color);
+  box-shadow: var(--custom-shadow);
   border-radius: 4px;
+`;
+
+const EffectContainer = styled.div`
+  width: 100%;
+  padding: 8px 0;
 `;
 
 const TitleBox = styled.div`
   color: white;
-  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
 `;
 
 const ContentBox = styled.div`
   color: white;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.4rem;
 `;
 
 const UnionEffect = () => {
@@ -31,17 +39,23 @@ const UnionEffect = () => {
     <StyledBox>
       <UnionEffectHeader />
       <DashedLine />
-      <TitleBox>공격대원 합산 효과</TitleBox>
-      {characterUnion.data?.total_union_raider_stat?.map((v, i) => {
-        return <ContentBox key={i}>{" - " + v}</ContentBox>;
-      })}
+      <EffectContainer>
+        <TitleBox>공격대원 합산 효과</TitleBox>
+        {characterUnion.data?.total_union_raider_stat?.map((v, i) => {
+          return <ContentBox key={i}>{" - " + v}</ContentBox>;
+        })}
+      </EffectContainer>
       <DashedLine />
-      <TitleBox>공격대 점령 효과</TitleBox>
-      {characterUnion.data?.union_occupied_stat?.map((v, i) => {
-        return <ContentBox key={i}>{" - " + v}</ContentBox>;
-      })}
+      <EffectContainer>
+        <TitleBox>공격대 점령 효과</TitleBox>
+
+        {characterUnion.data?.union_occupied_stat?.map((v, i) => {
+          return <ContentBox key={i}>{" - " + v}</ContentBox>;
+        })}
+      </EffectContainer>
     </StyledBox>
   );
 };
 
 export default UnionEffect;
+

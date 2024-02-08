@@ -31,23 +31,24 @@ const StyleTextBold = styled.span`
   font-weight: 600;
 `;
 
-const PartyInfo = () => {
+const GuildInfo = () => {
   return (
     <StyledBox>
       <StyledImg src={`${process.env.PUBLIC_URL}/assets/exclamation-mark.png`} alt="exclamation-mark" />
       <StyledPara>
         <span>
-          본 서비스의 파티 시너지 결과는 실제 &nbsp;
-          <StyleTextBold>인게임 데이터</StyleTextBold>
-          &nbsp;와 상이할 수 있습니다.
+          길드원 목록은 &nbsp;
+          <StyleTextBold>2023.12.21</StyleTextBold>
+          &nbsp;이후 접속한 계정의 캐릭터만 확인이 가능합니다.
         </span>
         <span>
-          시너지 결과는&nbsp;
-          <StyleTextBold>스킬 강화 레벨</StyleTextBold>에 따라 달라질 수 있습니다.
+          캐릭터 정보는 매일&nbsp;
+          <StyleTextBold>오전 1시</StyleTextBold>에 갱신됩니다.
         </span>
       </StyledPara>
     </StyledBox>
   );
 };
 
-export default PartyInfo;
+export default GuildInfo;
+

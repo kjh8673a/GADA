@@ -2,20 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { useGuild } from '../../../hooks/maple/useGuild';
 import { GuildMemberType } from '../../../@types/maple/GuildTypes';
 import styled from 'styled-components';
-import Member from './Member';
+import Member from '../search/Member';
 
 interface Props {
     name: string | undefined,
-    worldName : string | undefined,
+    worldName: string | undefined,
 }
 
 const MemberContainer = styled.div`
     display : flex;
-    margin : 10px 0px 10px 0px;
+    margin : 20px auto 0;
     flex-wrap : wrap;
+    max-width : 1140px;
+    border : 1px solid;
+    padding : 8px 0px 8px 0px;
+    border-radius : 8px;
 `
-    
-    const MemberBox = styled.div`
+
+const MemberBox = styled.div`
     display : flex;
     flex-direction : column;
 `
@@ -31,7 +35,7 @@ const GuildMember: React.FC<Props> = ({ name, worldName }) => {
                     setMember(res);
                 }
             })
-            
+
         }
     }, [name, worldName])
 

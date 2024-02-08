@@ -18,7 +18,6 @@ export const InfoBoxHeader = styled.div`
 
 export const InfoBoxHeaderTitle = styled.div`
   color: #b4cb32;
-  font-family: "Inria Sans";
   font-size: 0.625rem;
   font-style: normal;
   font-weight: 400;
@@ -27,18 +26,16 @@ export const InfoBoxHeaderTitle = styled.div`
 
 export const CharacterName = styled.div`
   color: #fff;
-  font-family: "Zen Old Mincho";
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  margin-right: 32px;
 `;
 
 export const BookmarkButton = styled.button`
   border: none;
-  width: 2rem;
-  height: 2rem;
+  width: 1.6rem;
+  height: 1.6rem;
   color: #fff;
   border-radius: 0.5rem;
   display: flex;
@@ -47,26 +44,18 @@ export const BookmarkButton = styled.button`
   cursor: pointer;
 `;
 
-export const PartyButton = styled.button`
+export const CompareButton = styled.button`
   justify-self: end;
   color: #fff;
   width: 8rem;
-  height: 40px;
   border: none;
   text-align: center;
   text-shadow: 3px 3px 3px #000;
-  font-family: "Inria Sans";
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
   border-radius: 0.5rem;
   background: #2d638b;
-  box-shadow: var(--custom-shadow);
-
-  &:hover {
-    cursor: pointer;
-    font-weight: 800;
-  }
 `;
 
 export const InfoBoxBody = styled.div`
