@@ -21,7 +21,7 @@ public class CharacterApiServiceIntegrationTest {
 
     @Test
     void getOcidKey() {
-        String key = characterApiService.getOcidKey("도적");
+        String key = characterApiService.getOcidKey("나로펫팔라딘");
         System.out.println("---------------");
         System.out.println(key);
 
@@ -37,7 +37,7 @@ public class CharacterApiServiceIntegrationTest {
     @Test
     void 기본정보_조회_테스트() {
         CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-        assertThat(characterBasicDto.getCharacter_class()).isEqualTo("아델");
+        assertThat(characterBasicDto.getCharacter_class()).isEqualTo("나로펫팔라딘");
     }
 
     @Test
