@@ -86,6 +86,11 @@ public class CharacterSchedule {
 			}
 
 			CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+			if(characterBasicDto.getCharacter_name() == null || characterBasicDto.getCharacter_name().isBlank()) {
+				redisTemplate.opsForSet().remove("addCharacterToDB", characterName);
+				continue;
+			}
+
 			String combatPower = characterApiService.getCharacterStat(ocid).get("전투력");
 			String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 			List<Union> unionList = rankingApiService.getRankingUnion(ocid, characterBasicDto.getWorld_name());
