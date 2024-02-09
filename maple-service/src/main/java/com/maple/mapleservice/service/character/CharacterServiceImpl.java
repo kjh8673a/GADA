@@ -242,7 +242,12 @@ public class CharacterServiceImpl implements CharacterService {
 		if (characterBasicDto.getCharacter_level() == null || characterBasicDto.getCharacter_level() == 0) {
 			return null;
 		}
-		String prevName = characterRepository.findByOcid(ocid).getPrev_name();
+
+		Character character = characterRepository.findByOcid(ocid);
+		String prevName = "";
+		if(character != null) {
+			prevName = character.getPrev_name();
+		}
 		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
 		addGuildInformationToDB(oguildId);
 		Integer popularity = characterApiService.getCharacterPopularity(ocid);
