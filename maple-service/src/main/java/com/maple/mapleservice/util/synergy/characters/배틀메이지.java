@@ -55,6 +55,18 @@ public class 배틀메이지 {
 			"모든 오라와 사신의 힘을 하나로 한다. 유니온 오라 사용 중 오라류 스킬을 사용할 수 없고 파티원 배틀메이지의 유니온 오라 적용 중에는 디버프 오라, 유니온 오라를 제외한 오라류 스킬을 사용할 수 없다. 유니온 오라 종료 시 유니온 오라 사용 이전 적용 중이던 오라 스킬이 자동으로 발동된다.",
 			"초당 MP 100 소비, 40초 동안 모든 오라 효과 동시에 적용, 자신은 마력 60 추가 증가\n블로우류 스킬이 MP를 75 소모, 최대 10명의 적을 300%로 12번 공격하는 사신의 낫으로 강화, 추가 크리티컬 확률 50%, 몬스터 방어율 50% 추가 무시\n재사용 대기시간 90초",
 			"https://open.api.nexon.com/static/maplestory/SkillIcon/KBPCLFPBMG.png"
+		),
+		new SynergySkill(
+			"다크 오라-보스 킬러",
+			"다크 오라에 보스 몬스터 공격 시 데미지를 증가시키는 기능을 추가한다.",
+			"보스 몬스터 공격 시 데미지 5% 증가",
+			"https://open.api.nexon.com/static/maplestory/SkillIcon/KFMAKFOBKA.png"
+		),
+		new SynergySkill(
+			"디버프 오라-엘리멘탈 리셋",
+			"디버프 오라에 적의 속성 내성을 감소시키는 기능과 적이 받는 최종 데미지가 증가하는 기능을 추가한다.\n소울마스터의 <트루 사이트-인핸스>, 플레임위자드의 <스피릿 오브 플레임> 파티원 적용으로 인한 속성 내성 감소와 중복 적용되지 않는다.",
+			"공격 속성 내성 10% 감소, 적이 받는 최종 데미지 8% 증가",
+			"https://open.api.nexon.com/static/maplestory/SkillIcon/KFMAKFOBKB.png"
 		)
 	);
 
@@ -78,9 +90,9 @@ public class 배틀메이지 {
 		.plus_magic_power(0)
 		.multiply_attack_power(1.0)
 		.multiply_magic_power(1.0)
-		.plus_boss_damage(0)
+		.plus_boss_damage(5)
 		.plus_damage(10)
-		.plus_final_damage(0)
+		.plus_final_damage(8)
 		.plus_critical_damage(0)
 		.build();
 
