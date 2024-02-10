@@ -14,8 +14,8 @@ export const UNION_GRID_INNER = [
   { left: "55%", top: "30%" },
   { left: "68%", top: "40%" },
   { left: "68%", top: "56%" },
-  { left: "40%", top: "65%" },
   { left: "55%", top: "65%" },
+  { left: "40%", top: "65%" },
   { left: "27%", top: "56%" },
   { left: "27%", top: "40%" },
 ];
@@ -75,3 +75,4 @@ export type CharacterUnionArtifactType = {
     union_artifact_crystal: ArtifactCrystalType[];
   };
 };
+
