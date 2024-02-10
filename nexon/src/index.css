@@ -29,6 +29,7 @@
 :root {
   --primary-bg-color: #1d2527;
   --secondary-bg-color: #283338;
+  --third-bg-color: #465054;
   --main-border-color: #777;
   --custom-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
@@ -50,3 +51,4 @@ button {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
