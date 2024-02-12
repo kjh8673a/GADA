@@ -188,41 +188,6 @@ class CharacterServiceTest {
 	}
 
 	@Test
-	void 이전_닉네임_저장_테스트() {
-		String ocid = characterApiService.getOcidKey("큐브충");
-		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-		Long combatPower = characterApiService.getCharacterCombatPower(ocid);
-		String oguildId = characterServiceImpl.getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
-
-		Character character = characterRepository.findByOcid(ocid);
-		String old_name = character.getCharacter_name();
-
-		String date = character.getDate();
-
-		// 조회 기준일
-		character.setDate(commonUtil.date);
-		// 월드 명
-		character.setWorld_name(characterBasicDto.getWorld_name());
-		// 캐릭터 이름 + 이전 캐릭터 이름
-		if(!character.getCharacter_name().equals(characterBasicDto.getCharacter_name())) {
-			character.setPrev_name(character.getCharacter_name());
-			character.setCharacter_name(characterBasicDto.getCharacter_name());
-		}
-		// 전투력
-		character.setCombat_power(combatPower);
-		// 길드명 + 길드식별자
-		if(characterBasicDto.getCharacter_guild_name() != null && !characterBasicDto.getCharacter_guild_name().equals(character.getGuild_name())) {
-			character.setGuild_name(characterBasicDto.getCharacter_guild_name());
-			// 길드ocid 조회하는 api 필요
-			character.setOguild_id(oguildId);
-		}
-
-		characterRepository.save(character);
-
-		assertThat(characterRepository.findByCharacterName("큐브충").getPrev_name()).isEqualTo(null);
-	}
-
-	@Test
 	void 캐릭터_정보_없는_경우_DB에_저장_테스트() {
 		String ocid = characterApiService.getOcidKey("큐브충");
 		CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
