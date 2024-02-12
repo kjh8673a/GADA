@@ -1,14 +1,14 @@
 # 🍄 GADA
 
-## ⌛ 프로젝트 진행 기간
+## 🎞️ Description
 
-- 2024.01.02 ~
+## 📑 Main Feature
 
-## 🎞️ 개요
+## 🔨 Server Architecture
 
-## 📑 주요 기능
+<img src="./docs/image/아키텍처_설계도.jpg" alt=""/>
 
-## 🛠️ 기술 스택
+## 🛠️ Stack
 
 <details open>
     <summary><b style="font-size: 18px">Application and Data</b></summary>
