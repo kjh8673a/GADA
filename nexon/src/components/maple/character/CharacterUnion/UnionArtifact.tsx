@@ -71,7 +71,6 @@ const StyledNoData = styled.div`
 
 const UnionArtifact = () => {
   const { unionArtifact } = useCharacterUnion();
-  console.log(unionArtifact);
   return (
     <StyledBox>
       <HeaderBox>

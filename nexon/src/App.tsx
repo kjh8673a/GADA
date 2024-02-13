@@ -51,11 +51,9 @@ function App() {
   ]);
 
   return (
-    <>
-      <UserAgentBoundary>
-        <RouterProvider router={router} />
-      </UserAgentBoundary>
-    </>
+    <UserAgentBoundary>
+      <RouterProvider router={router} />
+    </UserAgentBoundary>
   );
 }
 
