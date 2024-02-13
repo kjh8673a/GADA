@@ -30,3 +30,4 @@ const CharacterFetchContainer = () => {
 };
 
 export default CharacterFetchContainer;
+

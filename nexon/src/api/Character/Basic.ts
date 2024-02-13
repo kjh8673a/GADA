@@ -15,3 +15,4 @@ export const getExpHistory = async (characterName: string) => {
     params: { characterName },
   });
 };
+
