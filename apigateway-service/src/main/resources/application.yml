@@ -48,3 +48,9 @@ spring:
             - Path=/maple-service/**
           filters:
             - CustomFilter
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "prometheus"
