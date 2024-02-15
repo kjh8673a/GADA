@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Domain, DownConatiner, UpContainer, PageHeader, DomainLogo } from "../../style/header";
-
 import { useNavigate } from "react-router-dom";
 import StyledInput from "../../style/StyledInput";
+import { useRecoilState } from "recoil";
+import { TabNameType } from "../../@types/maple/TabTypes";
+import { atomTabName } from "../../atoms/maple/characterTabState";
 
 const Header = () => {
   const [headerName, setHeaderName] = useState<string>("");
+  const [, setTabName] = useRecoilState<TabNameType>(atomTabName);
   const navigate = useNavigate();
 
   //헤더에 있는 Input창에 닉네임 또는 길드명 입력
@@ -17,6 +20,7 @@ const Header = () => {
   const headerInputEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     //엔터 클릭시 이름가지고 SearchPage로 이동해야함.
     if (e.key === "Enter") {
+      setTabName("CHARACTER");
       navigate(`/Search/${headerName}`);
     }
   };

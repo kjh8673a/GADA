@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from 'react';
 import { skillType } from '../../../@types/maple/CharacterSkillType';
 import styled from 'styled-components';
-import SkillDetail from '../character/CharacterSkill/SkillDetail';
+import GuildSkillHover from './GuildSkillHover';
 
 interface Props {
     skill: skillType;
@@ -54,7 +54,7 @@ const GuildSkillDetail: React.FC<Props> = ({ skill }) => {
         >
             <SkillImg src={skill.skill_icon} />
             <LevelPosition>{skill.skill_level}</LevelPosition>
-            {isHovered && <SkillDetail skill={skill}/>}
+            {isHovered && <GuildSkillHover skill={skill}/>}
         </SkillBox>
     );
 };

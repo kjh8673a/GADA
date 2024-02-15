@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { GuildBasicInfo, GuildType } from '../../../@types/maple/GuildTypes';
+import { useParams } from 'react-router-dom';
+import { GuildBasicInfo } from '../../../@types/maple/GuildTypes';
 import styled from 'styled-components';
 import GuildSkill from './GuildSkill';
 import GuildMember from './GuildMember';

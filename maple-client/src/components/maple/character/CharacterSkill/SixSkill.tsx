@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SkillBox from "./SkillBox";
 import SkillSquare from "./SkillSquare";
-import { skillType } from "../../../../@types/maple/CharacterSkillType";
+import { erda, skillType } from "../../../../@types/maple/CharacterSkillType";
 import styled from "styled-components";
 import SolErda from "./SolErda";
 import NoSkill from "./NoSkill";
@@ -9,8 +9,7 @@ import DashedLine from "../../../common/DashedLine";
 
 interface Props {
   skillList: skillType[];
-  solErdaEnergy: number;
-  solErdaFragment: number;
+  erda: erda;
   haveSixSkill: boolean;
 }
 
@@ -28,7 +27,7 @@ export const SkillDegree = styled.div`
   font-weight: 800;
 `;
 
-const SixSkill: React.FC<Props> = ({ skillList, solErdaEnergy, solErdaFragment, haveSixSkill }) => {
+const SixSkill: React.FC<Props> = ({ skillList, erda, haveSixSkill }) => {
   return (
     <SkillContainer>
       <SkillDegree>6차 스킬</SkillDegree>
@@ -41,7 +40,7 @@ const SixSkill: React.FC<Props> = ({ skillList, solErdaEnergy, solErdaFragment, 
             ))}
           </SkillBox>
           <DashedLine />
-          <SolErda solErdaEnergy={solErdaEnergy} solErdaFragment={solErdaFragment} />
+          <SolErda solErdaEnergy={erda.used_sol_erda_energy} solErdaFragment={erda.used_sol_erda_fragment} />
         </>
       ) : (
         <NoSkill />
