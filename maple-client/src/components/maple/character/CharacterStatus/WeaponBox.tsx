@@ -16,6 +16,15 @@ interface Props {
 
 const BoxContainer = styled.div`
   position: relative;
+  width: 56px;
+  height: 56px;
+`;
+
+const HoverBox = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: black;
 `;
 
 const VoidBox = styled.div`
@@ -26,8 +35,8 @@ const VoidBox = styled.div`
 
 const ItemBox = styled.div<StylesProps>`
   position: relative;
-  width: 56px;
-  height: 56px;
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
   border-radius: 4px;
   background-image: url(${(props) => (props.$img ? props.$img.trim() : "")});
@@ -73,24 +82,27 @@ const ItemBox = styled.div<StylesProps>`
 const WeaponBox: React.FC<Props> = ({ data, title }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
-  const hoverInHandler = useCallback(() => {
+  const hoverInHandler = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     setIsHovered(true);
   }, []);
 
-  const hoverOutHandler = useCallback(() => {
+  const hoverOutHandler = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     setIsHovered(false);
   }, []);
 
   if (data === undefined && (title === undefined || title === null)) return <VoidBox />;
   return (
-    <BoxContainer onMouseEnter={hoverInHandler} onMouseLeave={hoverOutHandler}>
-      {data && <ItemBox $img={data.item_icon} $grade={data.potential_option_grade} />}
-      {data === null && <ItemBox $nodata={true} $img={`${process.env.PUBLIC_URL}/assets/question-mark.png`} />}
-      {title && <ItemBox $img={title.title_icon} $grade="" />}
+    <BoxContainer>
+      <HoverBox onMouseEnter={hoverInHandler} onMouseLeave={hoverOutHandler}>
+        {data && <ItemBox $img={data.item_icon} $grade={data.potential_option_grade} />}
+        {data === null && <ItemBox $nodata={true} $img={`${process.env.PUBLIC_URL}/assets/question-mark.png`} />}
+        {title && <ItemBox $img={title.title_icon} $grade="" />}
+      </HoverBox>
       {isHovered && <WeaponBoxDetail data={data} title={title} />}
     </BoxContainer>
   );
 };
 
 export default WeaponBox;
-

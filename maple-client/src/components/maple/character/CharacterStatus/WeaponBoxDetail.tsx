@@ -16,6 +16,7 @@ const StyledBox = styled.div`
   border-radius: 16px;
   border: 2px solid #777;
   padding-bottom: 8px;
+  overflow: hidden;
 `;
 
 interface Props {
