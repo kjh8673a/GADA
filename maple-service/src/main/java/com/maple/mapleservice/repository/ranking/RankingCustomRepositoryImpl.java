@@ -93,12 +93,10 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 		List<CharacterCombatPowerRankingResponseDto> content = query2
 			.select(Projections.constructor(CharacterCombatPowerRankingResponseDto.class,
 				Expressions.asNumber(SQLExpressions.rank().over().orderBy(character.combat_power.desc())).add(pageable.getOffset()),
-				character.ocid,
 				character.world_name,
 				character.character_name,
 				character.combat_power,
 				character.guild_name,
-				character.oguild_id,
 				character.character_class,
 				character.character_level,
 				character.character_image
