@@ -74,10 +74,25 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 		log.info("worldName : " + worldName);
 		log.info("characterClass : " + characterClass);
 
-		JPASQLQuery<?> query = new JPASQLQuery<>(em, sqlTemplates);
-		List<CharacterCombatPowerRankingResponseDto> content = query
+		JPAQueryFactory query = querydslConfig.jpaQueryFactory();
+		List<String> ocids = query
+			.select(character.ocid)
+			.from(character)
+			.where(
+				worldNameEq(worldName),
+				characterClassEq(characterClass)
+			)
+			.orderBy(character.combat_power.desc())
+			.offset(pageable.getOffset())
+			.limit(pageable.getPageSize())
+			.fetch();
+
+		log.info("ocids : " + ocids.size());
+
+		JPASQLQuery<?> query2 = new JPASQLQuery<>(em, sqlTemplates);
+		List<CharacterCombatPowerRankingResponseDto> content = query2
 			.select(Projections.constructor(CharacterCombatPowerRankingResponseDto.class,
-				Expressions.asNumber(SQLExpressions.rank().over().orderBy(character.combat_power.desc())),
+				Expressions.asNumber(SQLExpressions.rank().over().orderBy(character.combat_power.desc())).add(pageable.getOffset()),
 				character.ocid,
 				character.world_name,
 				character.character_name,
@@ -89,12 +104,7 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 				character.character_image
 				))
 			.from(character)
-			.where(
-				worldNameEq(worldName),
-				characterClassEq(characterClass)
-			)
-			.offset(pageable.getOffset())
-			.limit(pageable.getPageSize())
+			.where(character.ocid.in(ocids))
 			.fetch();
 
 		log.info("content size : " + content.size());
