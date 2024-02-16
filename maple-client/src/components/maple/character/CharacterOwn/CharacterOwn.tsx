@@ -7,6 +7,7 @@ import { userNickName } from "../../../../atoms/maple/characterName";
 import { useParams } from "react-router-dom";
 import { useCharacterSearch } from "../../../../hooks/maple/useCharacterSearch";
 import { CharacterType } from "../../../../@types/maple/CharacterSearch";
+import { userOwnCharacter } from "../../../../atoms/maple/characterOwn";
 
 const CharacterContainer = styled.div`
   display: flex;
@@ -18,7 +19,7 @@ const CharacterContainer = styled.div`
 
 const CharacterOwn = () => {
   const params = useParams<{ Charactername: string }>();
-  const [characterInfo, setCharacterInfo] = useState<CharacterType[]>([]);
+  const [characterInfo] = useRecoilState(userOwnCharacter);
   const [characterName, setCharacterName] = useRecoilState<string>(userNickName);
   const { getCharacter } = useCharacterSearch();
 
@@ -31,12 +32,9 @@ const CharacterOwn = () => {
         }
       }
     }
-    getCharacter(characterName).then((res) => {
-      if (res) {
-        setCharacterInfo(res);
-      }
-    });
+    getCharacter(characterName);
   }, []);
+
   return (
     <CharacterContainer>
       {characterInfo.map((_, index) => (

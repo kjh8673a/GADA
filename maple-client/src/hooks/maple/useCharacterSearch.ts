@@ -1,8 +1,12 @@
 import { useCallback } from 'react';
 import { getMyCharacter } from '../../api/Character/Character';
 import { CharacterType } from '../../@types/maple/CharacterSearch';
+import { userOwnCharacter } from '../../atoms/maple/characterOwn';
+import { useRecoilState } from 'recoil';
 
 export const useCharacterSearch = () => {
+    const [myCharacterList, setMyCharacterList] = useRecoilState(userOwnCharacter);
+
     const getCharacter = useCallback(
         async (characterName: string) => {
             try {
@@ -20,7 +24,7 @@ export const useCharacterSearch = () => {
                         world_name : res.data.data[i].world_name,
                     }
                 }
-                return characterList;
+                setMyCharacterList(characterList);
             } catch (e) {
                 console.log(e);
                 
@@ -29,6 +33,7 @@ export const useCharacterSearch = () => {
         },[]
     )
     return {
-        getCharacter
+        getCharacter,
+        myCharacterList,
     }
 }
