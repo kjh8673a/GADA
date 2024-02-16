@@ -8,14 +8,20 @@ import Loading from "../../common/Loading";
 import CharacterFetchContainer from "./CharacterFetchContainer";
 import FetchErrorBoundary from "../../common/FetchErrorBoundary";
 import DeferredComponent from "../../common/DeferredComponent";
+import { atomLoadingTime } from "../../../atoms/maple/charaterSkill";
+import { userOwnCharacter } from "../../../atoms/maple/characterOwn";
 
 const Character = () => {
   const params = useParams();
   const setUserName = useSetRecoilState(userNickName);
+  const setLoadingTime = useSetRecoilState(atomLoadingTime);
+  const resetCharacterList = useSetRecoilState(userOwnCharacter);
   const { getCharacterBasic } = useCharacterBasic();
 
   useEffect(() => {
     getCharacterBasic(params.Charactername as string);
+    setLoadingTime(true);
+    resetCharacterList([]);
   }, [params.Charactername, getCharacterBasic]);
 
   useEffect(() => {

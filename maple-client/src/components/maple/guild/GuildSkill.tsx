@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { skillType } from "../../../@types/maple/CharacterSkillType";
 import styled from "styled-components";
-import GuildSkillDetail from "../search/GuildSkillDetail";
+import GuildSkillDetail from "./GuildSkillDetail";
 
 interface Props {
   skill: skillType[] | undefined;

@@ -12,6 +12,7 @@ interface Props {
 }
 
 const FiveSkill: React.FC<Props> = ({ skillList, haveFiveSkill }) => {
+
   return (
     <SkillContainer>
       <SkillDegree>5차 스킬</SkillDegree>
