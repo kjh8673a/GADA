@@ -1,6 +1,10 @@
 package com.maple.mapleservice.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.querydsl.jpa.sql.JPASQLQuery;
+import com.querydsl.sql.MySQLTemplates;
+import com.querydsl.sql.SQLTemplates;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,8 +17,12 @@ public class QuerydslConfig {
 	private EntityManager em;
 
 	@Bean
-	public JPAQueryFactory jpaQueryFactory(){
+	public JPAQueryFactory jpaQueryFactory() {
 		return new JPAQueryFactory(em);
 	}
 
+	@Bean
+	public SQLTemplates mysqlTemplates() {
+		return MySQLTemplates.builder().build();
+	}
 }
