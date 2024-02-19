@@ -1,5 +1,8 @@
 server:
-  port: 8081
+  port: 8080
+  tomcat:
+    mbeanregistry:
+      enabled: true
 
 spring:
   application:
@@ -40,6 +43,20 @@ spring:
 #          - ${redis.sentinel-3}
 #        password: ${redis.password}
 
+
 logging:
   level:
-    com.maple.mapleservice: debug
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          trace
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "prometheus"
+
+cloudfront:
+  utl: ${cloudfront.url}

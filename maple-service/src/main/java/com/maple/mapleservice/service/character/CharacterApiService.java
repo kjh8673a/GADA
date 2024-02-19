@@ -3,8 +3,10 @@ package com.maple.mapleservice.service.character;
 
 import com.maple.mapleservice.dto.feign.character.*;
 import com.maple.mapleservice.dto.model.character.HyperStat;
+import com.maple.mapleservice.dto.model.character.stats.CharacterFinalStatDto;
+import com.maple.mapleservice.dto.model.character.stats.CharacterHyperStatsDto;
 
-import java.util.List;
+import java.util.Map;
 
 public interface CharacterApiService {
     String getOcidKey(String characterName);
@@ -13,11 +15,11 @@ public interface CharacterApiService {
 
     Integer getCharacterPopularity(String ocid);
 
-    String getCharacterCombatPower(String ocid);
+    Long getCharacterCombatPower(String ocid);
 
-    CharacterStatDto getCharacterStat(String ocid);
+    Map<String,String> getCharacterStat(String ocid);
 
-    List<HyperStat> getCharacterHyperStat(String ocid);
+    Map<String, HyperStat> getCharacterHyperStat(String ocid);
 
     CharacterAbilityDto getCharacterAbility(String ocid);
 
@@ -28,4 +30,16 @@ public interface CharacterApiService {
     CharacterSymbolDto getCharacterSymbol(String ocid);
 
     CharacterPetDto getCharacterPet(String ocid);
+
+    CharacterBasicDto getCharacterBasicCustomDate(String ocid, String date);
+
+    CharacterVMatrixDto getCharacterVMatrixDto(String ocid);
+
+    CharacterSkillDto getCharacterSkill(String ocid, String character_skill_grade);
+
+    CharacterLinkSkillDto getCharacterLinkSkill(String ocid);
+
+    CharacterHexaMatrixDto getCharacterHexaMatrix(String ocid);
+
+    CharacterHexaMatrixStatDto getCharacterHexaMatrixStatDto(String ocid);
 }

@@ -1,10 +1,12 @@
 package com.maple.mapleservice.dto.response;
 
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Builder
+@Getter
 public class SuccessResponse {
 
     private LocalDateTime timestamp;
