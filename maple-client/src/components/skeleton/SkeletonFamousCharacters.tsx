@@ -24,7 +24,7 @@ const ShimmerAnimation = styled.div`
 const StyledBox = styled.ul`
   margin: 0;
   padding: 0;
-  width: 400px;
+  width: 352px;
   box-shadow: var(--custom-shadow);
   background-color: var(--secondary-bg-color);
   list-style: none;
