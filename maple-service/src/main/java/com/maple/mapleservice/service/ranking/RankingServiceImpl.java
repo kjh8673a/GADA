@@ -3,7 +3,9 @@ package com.maple.mapleservice.service.ranking;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.maple.mapleservice.dto.model.character.CharacterCombatPowerPageable;
 import com.maple.mapleservice.dto.model.ranking.Guild;
+import com.maple.mapleservice.dto.response.Character.CharacterCombatPowerRankingResponseDtoWrapper;
 import com.maple.mapleservice.dto.response.Ranking.GuildCombatPowerRankingResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -43,13 +45,14 @@ public class RankingServiceImpl implements RankingService {
 	@Override
 	@Transactional
 	@RedisCacheable(value = "ranking-combatPower", key = "#world_name + '_' + #character_class + '_' + #page_number")
-	public List<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String world_name, String character_class,
+	public CharacterCombatPowerRankingResponseDtoWrapper getCombatPowerRanking(String world_name, String character_class,
 		Pageable pageable, int page_number) {
 
 		log.info("전투력 랭킹 조회 : " + world_name + " : " + character_class + " : " + pageable.getPageNumber());
-		List<CharacterCombatPowerRankingResponseDto> result = rankingRepository.getCombatPowerRanking(world_name, character_class, pageable);
+		Page<CharacterCombatPowerRankingResponseDto> result = rankingRepository.getCombatPowerRanking(world_name, character_class, pageable);
+		CharacterCombatPowerPageable characterCombatPowerPageable = CharacterCombatPowerPageable.of(result.getPageable());
 
-		return result;
+		return CharacterCombatPowerRankingResponseDtoWrapper.of(result, characterCombatPowerPageable);
 	}
 
 	@Override
