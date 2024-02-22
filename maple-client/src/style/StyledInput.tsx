@@ -14,7 +14,7 @@ interface Props {
 
 const StyledBox = styled.input<Props>`
   width: ${(props) => props.$width}px;
-  margin: 0;
+  margin: 0 24px;
   padding: ${(props) => (props.$height ? props.$height : "10")}px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;

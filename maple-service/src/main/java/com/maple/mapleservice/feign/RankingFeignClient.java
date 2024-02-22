@@ -1,5 +1,6 @@
 package com.maple.mapleservice.feign;
 
+import com.maple.mapleservice.dto.feign.ranking.RankingGuildDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,5 +16,15 @@ public interface RankingFeignClient {
 
 	@GetMapping("/overall")
 	RankingOverallDto rankingOverallDto(@RequestParam String date, @RequestParam int world_type, @RequestParam int page);
+
+	@GetMapping("/overall")
+	RankingOverallDto rankingOverallDto(@RequestParam String date, @RequestParam int page);
+
+	@GetMapping("/guild")
+	RankingGuildDto rankingGuildDto(@RequestParam String date, @RequestParam String world_name, @RequestParam int ranking_type, @RequestParam int page);
+
+	@GetMapping("/guild")
+	RankingGuildDto rankingGuildDtoForData(@RequestParam String date, @RequestParam int ranking_type, @RequestParam int page);
+
 
 }
