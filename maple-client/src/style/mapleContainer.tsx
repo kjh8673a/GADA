@@ -37,7 +37,7 @@ export const CheckButton = styled.img`
   width: 16px;
   margin: 0;
   position: absolute;
-  right: 16px;
+  right: 36px;
 `;
 
 export const BookmarkBox = styled.div`
