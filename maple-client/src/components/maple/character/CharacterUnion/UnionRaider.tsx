@@ -53,7 +53,7 @@ const LevelBox = styled.div`
 const UnionRaider: React.FC<Props> = ({ block_class, block_level, class_image, grade }) => {
   return (
     <StyledBox>
-      <ClassImg src={class_image} alt={"class image"} />
+      <ClassImg src={class_image} alt={"class preview"} />
       <WrapperBox>
         <GradeBox>{grade}</GradeBox>
         <ClassBox>{block_class}</ClassBox>
@@ -64,3 +64,4 @@ const UnionRaider: React.FC<Props> = ({ block_class, block_level, class_image, g
 };
 
 export default UnionRaider;
+

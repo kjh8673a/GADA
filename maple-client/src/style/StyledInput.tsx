@@ -14,12 +14,13 @@ interface Props {
 
 const StyledBox = styled.input<Props>`
   width: ${(props) => props.$width}px;
-  margin: 0 32px;
+  margin: 0;
   padding: ${(props) => (props.$height ? props.$height : "10")}px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   transition: border-color 0.3s ease;
   text-align: ${(props) => props.$align || "left"};
+  box-sizing: border-box;
 
   &:focus {
     border-color: #007bff; /* 포커스되었을 때 테두리 색상 변경 */

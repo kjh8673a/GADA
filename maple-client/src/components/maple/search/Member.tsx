@@ -63,7 +63,7 @@ const Member: React.FC<Props> = ({ member }) => {
   return (
     <MemberContainer onClick={searchCharacter}>
       <MemberBox>
-        <ImgBox src={member?.character_image} />
+        <ImgBox src={member?.character_image} alt="character preview" />
         <DescriptionBox>
           <div>닉네임 : {member?.character_name}</div>
           <div>직업 : {member?.character_class}</div>

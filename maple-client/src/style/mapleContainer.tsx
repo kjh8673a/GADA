@@ -7,7 +7,7 @@ export const MapleConatiner = styled.div`
   justify-content: center;
   align-items: center;
   flex: 1;
-  padding-top: 30vh;
+  padding-top: 24vh;
 `;
 
 export const MainImg = styled.img`
@@ -22,6 +22,7 @@ export const NameSearch = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 400px;
 `;
 
 export const NicknameSearch = styled.input`
@@ -35,18 +36,18 @@ export const NicknameSearch = styled.input`
 export const CheckButton = styled.img`
   width: 16px;
   margin: 0;
-  position: relative;
-  right: 56px;
+  position: absolute;
+  right: 16px;
 `;
 
 export const BookmarkBox = styled.div`
-  margin-top: 20px;
+  margin: 8px 0;
   width: 320px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-`
+`;
 
 export const BookmarkItemWrapper = styled.div`
   font-size: 0.8rem;
@@ -57,5 +58,5 @@ export const BookmarkItemWrapper = styled.div`
   text-align: center;
   border-radius: 10px;
   background-color: var(--secondary-bg-color);
-`
+`;
 
