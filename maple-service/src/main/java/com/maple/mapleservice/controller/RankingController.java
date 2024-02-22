@@ -31,14 +31,12 @@ public class RankingController {
 		@RequestParam(required = false) String world_name, @RequestParam(required = false) String character_class) {
 
 		PageRequest pageable = PageRequest.of(page - 1, 20);
-		List<CharacterCombatPowerRankingResponseDto> combatPowerRanking = rankingService.getCombatPowerRanking(
+		CharacterCombatPowerRankingResponseDtoWrapper combatPowerRanking = rankingService.getCombatPowerRanking(
 			world_name, character_class, pageable, page - 1);
-
-		CharacterCombatPowerRankingResponseDtoWrapper characterCombatPowerRankingResponseDtoWrapper = CharacterCombatPowerRankingResponseDtoWrapper.of(combatPowerRanking);
 
 		return ResponseEntity
 			.status(HttpStatus.OK)
-			.body(SuccessResponse.of(characterCombatPowerRankingResponseDtoWrapper));
+			.body(SuccessResponse.of(combatPowerRanking));
 	}
 
 	@RequestMapping("/guildWaterway")
