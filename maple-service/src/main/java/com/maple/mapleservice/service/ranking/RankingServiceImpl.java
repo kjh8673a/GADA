@@ -18,6 +18,7 @@ import com.maple.mapleservice.repository.character.CharacterRepository;
 import com.maple.mapleservice.repository.ranking.RankingRepository;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.maple.mapleservice.service.character.CharacterService;
+import com.maple.mapleservice.util.cache.RedisCacheable;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,11 +42,12 @@ public class RankingServiceImpl implements RankingService {
 
 	@Override
 	@Transactional
-	public Page<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String world_name, String character_class,
-		Pageable pageable) {
+	@RedisCacheable(value = "ranking-combatPower", key = "#world_name + '_' + #character_class + '_' + #page_number")
+	public List<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String world_name, String character_class,
+		Pageable pageable, int page_number) {
 
 		log.info("전투력 랭킹 조회 : " + world_name + " : " + character_class + " : " + pageable.getPageNumber());
-		Page<CharacterCombatPowerRankingResponseDto> result = rankingRepository.getCombatPowerRanking(world_name, character_class, pageable);
+		List<CharacterCombatPowerRankingResponseDto> result = rankingRepository.getCombatPowerRanking(world_name, character_class, pageable);
 
 		return result;
 	}

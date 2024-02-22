@@ -50,12 +50,12 @@ public class RankingCustomRepositoryImpl implements RankingCustomRepository {
 
 	@Override
 	@Transactional
-	public Page<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String worldName, String characterClass, Pageable pageable) {
+	public List<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String worldName, String characterClass, Pageable pageable) {
 		List<CharacterCombatPowerRankingResponseDto> content = getCharacterCombatPowerRankingResponseDto(worldName, characterClass, pageable);
 
 		Long count = getCount(worldName, characterClass);
 
-		return new PageImpl<>(content, pageable, count);
+		return content;
 	}
 
 	@Override

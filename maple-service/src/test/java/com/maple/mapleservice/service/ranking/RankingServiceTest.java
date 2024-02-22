@@ -60,9 +60,9 @@ class RankingServiceTest {
 	void 전투력_랭킹_페이징_통합_테스트() {
 		PageRequest pageable = PageRequest.of(0, 20);
 
-		Page<CharacterCombatPowerRankingResponseDto> list = rankingService.getCombatPowerRanking(null, null, pageable);
+		List<CharacterCombatPowerRankingResponseDto> list = rankingService.getCombatPowerRanking(null, null, pageable, pageable.getPageNumber());
 
-		assertThat(list.getContent().size()).isEqualTo(20);
+		assertThat(list.size()).isEqualTo(20);
 	}
 
 	// @Test
