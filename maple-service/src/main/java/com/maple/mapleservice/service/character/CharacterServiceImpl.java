@@ -419,7 +419,7 @@ public class CharacterServiceImpl implements CharacterService {
 	public void addCharacterViewCount(String ocid) {
 		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
 		String key = "characterViewCount::" + ocid;
-		setOperations.add(key, LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusDays(30).toString());
+		setOperations.add(key, LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusDays(7).toString());
 	}
 
 	@Override
