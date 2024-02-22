@@ -12,6 +12,7 @@ import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterStatsResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterViewRankingResponseDto;
 import com.maple.mapleservice.dto.response.SuccessResponse;
 import com.maple.mapleservice.dto.response.union.UnionArtifactResponseDto;
 import com.maple.mapleservice.dto.response.union.UnionInfoResponseDto;
@@ -59,6 +60,7 @@ public class CharacterController {
 	@RequestMapping("/getCharacterBasicInfo")
 	public ResponseEntity<SuccessResponse> getCharacterBasicInfo(@RequestParam String characterName) {
 		CharacterBasicInfoResponseDto characterBasicInfoDto = characterService.getCharacterBasicInfo(characterName);
+		characterService.addCharacterViewCount(characterBasicInfoDto.getOcid());
 
 		return ResponseEntity
 			.status(HttpStatus.OK)
@@ -147,6 +149,15 @@ public class CharacterController {
 		return ResponseEntity
 			.status(HttpStatus.OK)
 			.body(SuccessResponse.of(characterCompareResponseDto));
+	}
+
+	@RequestMapping("/getPopularCharacters")
+	public ResponseEntity<SuccessResponse> getPopularCharacters() {
+		CharacterViewRankingResponseDto characterViewRankingResponseDto = characterService.getPopularCharacters();
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterViewRankingResponseDto));
 	}
 
 }

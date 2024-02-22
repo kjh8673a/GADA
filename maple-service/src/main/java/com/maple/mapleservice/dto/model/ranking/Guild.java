@@ -6,7 +6,6 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Guild {
-
     Long ranking;
     String guild_name;
     String world_name;

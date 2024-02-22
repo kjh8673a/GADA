@@ -1,21 +1,30 @@
 package com.maple.mapleservice.service.character;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.maple.mapleservice.dto.model.character.HyperStat;
 
+import com.maple.mapleservice.dto.model.character.ViewRanking;
+import com.maple.mapleservice.dto.response.Character.CharacterViewRankingResponseDto;
 import com.maple.mapleservice.service.guild.GuildService;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import com.maple.mapleservice.dto.feign.character.CharacterAbilityDto;
@@ -74,16 +83,17 @@ public class CharacterServiceImpl implements CharacterService {
 		String key = "addCharacterToDB";
 		setOperations.add(key, characterName);
 	}
+
 	@Override
 	public void addCharacterInformationToDB(List<String> characterNames) {
 		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
 		String key = "addCharacterToDB";
-		for(String characterName : characterNames) {
+		for (String characterName : characterNames) {
 			setOperations.add(key, characterName);
 		}
 	}
 
-	public void addGuildInformationToDB(String oguildId){
+	public void addGuildInformationToDB(String oguildId) {
 		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
 		String key = "addGuildToDB";
 		setOperations.add(key, oguildId);
@@ -136,7 +146,9 @@ public class CharacterServiceImpl implements CharacterService {
 			.map(CharacterResponseDto::of)
 			.collect(Collectors.toList());
 
-		List<String> characterNames = list.stream().map(CharacterResponseDto::getCharacter_name).collect(Collectors.toList());
+		List<String> characterNames = list.stream()
+			.map(CharacterResponseDto::getCharacter_name)
+			.collect(Collectors.toList());
 		addCharacterInformationToDB(characterNames);
 
 		return list;
@@ -173,7 +185,8 @@ public class CharacterServiceImpl implements CharacterService {
 			.oguild_id(oguildId)
 			.character_class(characterBasicDto.getCharacter_class())
 			.character_class_level(characterBasicDto.getCharacter_class_level())
-			.character_level(Long.valueOf(Optional.ofNullable(characterBasicDto.getCharacter_level()).orElseGet(() -> 0)))
+			.character_level(
+				Long.valueOf(Optional.ofNullable(characterBasicDto.getCharacter_level()).orElseGet(() -> 0)))
 			.character_image(characterBasicDto.getCharacter_image())
 			.build();
 
@@ -245,7 +258,7 @@ public class CharacterServiceImpl implements CharacterService {
 
 		Character character = characterRepository.findByOcid(ocid);
 		String prevName = "";
-		if(character != null) {
+		if (character != null) {
 			prevName = character.getPrev_name();
 		}
 		String oguildId = getOguildId(characterBasicDto.getCharacter_guild_name(), characterBasicDto.getWorld_name());
@@ -396,6 +409,33 @@ public class CharacterServiceImpl implements CharacterService {
 		String characterCombatPower = characterApiService.getCharacterStat(ocid).get("전투력");
 
 		return CharacterBasicInfoResponseDto.ofGuildMember(ocid, characterBasicDto, popularity, characterCombatPower);
+	}
+
+	/**
+	 * 캐릭터 조회수 Redis set에 저장하기
+	 * @param ocid
+	 */
+	@Override
+	public void addCharacterViewCount(String ocid) {
+		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
+		String key = "characterViewCount::" + ocid;
+		setOperations.add(key, LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusDays(30).toString());
+	}
+
+	@Override
+	public CharacterViewRankingResponseDto getPopularCharacters() {
+		List<ViewRanking> rankings = new ArrayList<>();
+		Set<ZSetOperations.TypedTuple<String>> ranking = redisTemplate.opsForZSet()
+			.reverseRangeWithScores("characterViewRank", 0, 4);
+		int rank = 1;
+		for (ZSetOperations.TypedTuple<String> data : ranking) {
+			String ocid = data.getValue();
+			CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
+			ViewRanking viewRanking = ViewRanking.of(rank++, characterBasicDto);
+			rankings.add(viewRanking);
+		}
+
+		return CharacterViewRankingResponseDto.builder().ranking(rankings).build();
 	}
 
 	public CharacterCompareEachCharacterResponseDto getCharacterForCompare(String characterName) {

@@ -13,6 +13,7 @@ import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterStatsResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterViewRankingResponseDto;
 
 public interface CharacterService {
 	CharacterBasicInfoResponseDto getCharacterBasicInfo(String characterName);
@@ -45,4 +46,8 @@ public interface CharacterService {
 	CharacterCompareResponseDto getCharacterCompare(String leftCharacterName, String rightCharacterName);
 
 	CharacterBasicInfoResponseDto getCharacterBasicInfoForGuildMember(String characterName);
+
+	void addCharacterViewCount(String ocid);
+
+	CharacterViewRankingResponseDto getPopularCharacters();
 }
