@@ -35,7 +35,7 @@ const UnionArtifactItem: React.FC<{ item: ArtifactCrystalType }> = ({ item }) =>
   const [isHover, setIsHover] = useState(false);
   return (
     <StyledBox onMouseOver={() => setIsHover(true)} onMouseOut={() => setIsHover(false)}>
-      <CrystalImg src={item.crystal_icon} alt={"crystal image"} $hovered={isHover} />
+      <CrystalImg src={item.crystal_icon} alt={"crystal preview"} $hovered={isHover} />
       {isHover && (
         <HoverItem>
           <div style={{ fontSize: "1.2rem", marginBottom: "4px" }}>{item.name.slice(7) + " Lv. " + item.level}</div>
@@ -49,3 +49,4 @@ const UnionArtifactItem: React.FC<{ item: ArtifactCrystalType }> = ({ item }) =>
 };
 
 export default UnionArtifactItem;
+

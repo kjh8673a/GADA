@@ -34,7 +34,7 @@ const Header = () => {
             e.preventDefault();
           }}
         >
-          <DomainLogo src={`${process.env.PUBLIC_URL}/assets/gadalogo.webp`} />
+          <DomainLogo src={`${process.env.PUBLIC_URL}/assets/gadalogo.webp`} alt="site logo" />
         </Domain>
         <StyledInput
           $width={180}

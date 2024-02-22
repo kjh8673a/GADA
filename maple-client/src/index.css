@@ -1,4 +1,5 @@
 @font-face {
+  font-display: swap;
   font-family: "Maplestory_Bold";
   src: url("@fonts/Maplestory_Bold.ttf") format("truetype");
   font-weight: normal;
@@ -6,6 +7,7 @@
 }
 
 @font-face {
+  font-display: swap;
   font-family: "Maplestory_Light";
   src: url("@fonts/Maplestory_Light.ttf") format("truetype");
   font-weight: normal;
@@ -13,6 +15,7 @@
 }
 
 @font-face {
+  font-display: swap;
   font-family: "Maplestory_OTF_Bold";
   src: url("@fonts/Maplestory_OTF_Bold.otf") format("opentype");
   font-weight: normal;
@@ -20,6 +23,7 @@
 }
 
 @font-face {
+  font-display: swap;
   font-family: "Maplestory_OTF_Light";
   src: url("@fonts/Maplestory_OTF_Light.otf") format("opentype");
   font-weight: normal;

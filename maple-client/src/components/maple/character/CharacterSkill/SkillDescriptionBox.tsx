@@ -35,7 +35,7 @@ const SkillDescriptionBox: React.FC<Props> = ({ imgRoad, description }) => {
   return (
     <DescriptionContainer>
       <ImgBox>
-        <SkillImg src={imgRoad} />
+        <SkillImg src={imgRoad} alt="skill preview" />
       </ImgBox>
       <DescriptionBox>
         <SkillDescription>{description}</SkillDescription>
@@ -45,3 +45,4 @@ const SkillDescriptionBox: React.FC<Props> = ({ imgRoad, description }) => {
 };
 
 export default SkillDescriptionBox;
+

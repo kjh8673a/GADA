@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { CharacterBasicType } from "../../../@types/maple/CharacterBasicTypes";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -101,7 +101,7 @@ const CharacterInfo: React.FC<Props> = ({ characterBasic }) => {
       <BigContainer>
         <ClickBox onClick={searchCharacter}>
           <CharacterImg>
-            <img src={characterBasic.data?.character_image} />
+            <img src={characterBasic.data?.character_image} alt="character preview" />
             {characterBasic.data?.character_name}
           </CharacterImg>
           <CharacterDescription>
@@ -118,3 +118,4 @@ const CharacterInfo: React.FC<Props> = ({ characterBasic }) => {
 };
 
 export default CharacterInfo;
+

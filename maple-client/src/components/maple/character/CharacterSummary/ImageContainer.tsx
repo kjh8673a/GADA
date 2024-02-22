@@ -12,14 +12,10 @@ const ImageContainer = () => {
   const { characterBasic } = useCharacterBasic();
   return (
     <ImageBox>
-      <img
-        src={characterBasic.data?.character_image}
-        width={"50%"}
-        height={"35%"}
-        alt="character img"
-      />
+      <img src={characterBasic.data?.character_image} width={"50%"} height={"35%"} alt="character preview" />
     </ImageBox>
   );
 };
 
 export default ImageContainer;
+

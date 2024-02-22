@@ -1,10 +1,19 @@
-import React, { useState } from "react";
-import { BookmarkBox, BookmarkItemWrapper, CheckButton, MainImg, MapleConatiner, NameSearch, NicknameSearch } from "../../style/mapleContainer";
+import React, { Suspense, useState } from "react";
+import {
+  BookmarkBox,
+  BookmarkItemWrapper,
+  CheckButton,
+  MainImg,
+  MapleConatiner,
+  NameSearch,
+} from "../../style/mapleContainer";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userNickName } from "../../atoms/maple/characterName";
 import StyledInput from "../../style/StyledInput";
 import useLocalStorage from "../../hooks/maple/useLocalStorage";
+import FamousCharacters from "./famousCharacters/FamousCharacters";
+import SkeletonFamousCharacter from "../skeleton/SkeletonFamousCharacters";
 
 const Maple = () => {
   const [nickname, setNickname] = useState<string>("");
@@ -37,7 +46,7 @@ const Maple = () => {
       <MainImg src="/assets/pinkbin.gif" alt="pinkbin" />
       <NameSearch>
         <StyledInput
-          $width={320}
+          $width={400}
           type="text"
           placeholder="닉네임 입력"
           onChange={searchName}
@@ -46,11 +55,20 @@ const Maple = () => {
         <CheckButton src="/assets/search_button.png" alt="search" onClick={SearchClickkName} />
       </NameSearch>
       <BookmarkBox>
-        {bookmark.map((v, i) => (<BookmarkItemWrapper key={i}>
-          <div style={{cursor: "pointer"}} onClick={() => navigate(`/Character/${v}`)}>{v}</div>
-          <div style={{cursor: "pointer"}} onClick={() => deleteBookmark(v)}>{"X"}</div>
-        </BookmarkItemWrapper>))}
+        {bookmark.map((v, i) => (
+          <BookmarkItemWrapper key={i}>
+            <div style={{ cursor: "pointer" }} onClick={() => navigate(`/Character/${v}`)}>
+              {v}
+            </div>
+            <div style={{ cursor: "pointer" }} onClick={() => deleteBookmark(v)}>
+              {"X"}
+            </div>
+          </BookmarkItemWrapper>
+        ))}
       </BookmarkBox>
+      <Suspense fallback={<SkeletonFamousCharacter />}>
+        <FamousCharacters />
+      </Suspense>
     </MapleConatiner>
   );
 };

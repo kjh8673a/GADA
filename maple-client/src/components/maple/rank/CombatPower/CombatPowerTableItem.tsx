@@ -48,7 +48,7 @@ const CombatPowerTableItem: React.FC<Props> = ({
   return (
     <StyledBox onClick={() => clickHandler(character_name)}>
       <ContentBox>{ranking}</ContentBox>
-      <ImgBox style={{ justifySelf: "center" }} src={character_image} alt={"character image"} />
+      <ImgBox style={{ justifySelf: "center" }} src={character_image} alt={"character preview"} />
       <ContentBox>{character_name}</ContentBox>
       <ContentBox>{character_level}</ContentBox>
       <ContentBox>{combat_power.toLocaleString("ko-kr")}</ContentBox>

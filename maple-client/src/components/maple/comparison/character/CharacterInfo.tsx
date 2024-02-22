@@ -33,7 +33,7 @@ const CharacterInfo: React.FC<Props> = ({ type, data }) => {
       )}
       <StyledImgBox
         src={data?.character_image || `${process.env.PUBLIC_URL}/assets/question-mark.png`}
-        alt="character_image"
+        alt="character preview"
       />
       {type === "right" && (
         <BasicStatBox
