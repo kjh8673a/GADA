@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import com.maple.mapleservice.dto.response.Ranking.CharacterCombatPowerRankingResponseDto;
 
 public interface RankingCustomRepository {
-	Page<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String worldName, String characterClass, Pageable pageable);
+	List<CharacterCombatPowerRankingResponseDto> getCombatPowerRanking(String worldName, String characterClass, Pageable pageable);
 
 	Page<GuildCombatPowerRankingResponseDto> getGuildCombatPowerRanking(String worldName, Pageable pageable);
 
