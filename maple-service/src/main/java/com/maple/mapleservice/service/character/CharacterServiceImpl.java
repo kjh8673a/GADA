@@ -58,6 +58,7 @@ import com.maple.mapleservice.repository.character.CharacterRepository;
 import com.maple.mapleservice.service.guild.GuildApiService;
 import com.maple.mapleservice.service.ranking.RankingApiService;
 import com.maple.mapleservice.util.CommonUtil;
+import com.maple.mapleservice.util.cache.RedisCacheEvict;
 import com.maple.mapleservice.util.cache.RedisCacheable;
 
 @Service
@@ -423,6 +424,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
+	@RedisCacheable(value = "character-view-ranking")
 	public CharacterViewRankingResponseDto getPopularCharacters() {
 		List<ViewRanking> rankings = new ArrayList<>();
 		Set<ZSetOperations.TypedTuple<String>> ranking = redisTemplate.opsForZSet()

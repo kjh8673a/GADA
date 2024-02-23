@@ -36,7 +36,10 @@ public class RedisCacheAspect {
 		Method method = signature.getMethod();
 		RedisCacheable redisCacheable = method.getAnnotation(RedisCacheable.class);
 
-		String key = (String) customSpELParser(signature.getParameterNames(), joinPoint.getArgs(), redisCacheable.key());
+		String key = "";
+		if(!redisCacheable.key().isBlank() && redisCacheable.key() != null) {
+			key = (String) customSpELParser(signature.getParameterNames(), joinPoint.getArgs(), redisCacheable.key());
+		}
 
 		final String cacheKey = generateKey(redisCacheable.value(), key);
 
@@ -63,6 +66,22 @@ public class RedisCacheAspect {
 		return methodReturnValue;
 	}
 
+	@Around("@annotation(RedisCacheEvict)")
+	public void cacheEvictProcess(ProceedingJoinPoint joinPoint) throws Throwable {
+		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+		Method method = signature.getMethod();
+		RedisCacheEvict redisCacheEvict = method.getAnnotation(RedisCacheEvict.class);
+
+		String key = "";
+		if(!redisCacheEvict.key().isBlank() && redisCacheEvict.key() != null) {
+			key = (String) customSpELParser(signature.getParameterNames(), joinPoint.getArgs(), redisCacheEvict.key());
+		}
+
+		final String cacheKey = generateKey(redisCacheEvict.value(), key);
+
+		redisTemplate.delete(cacheKey);
+	}
+
 	private Object customSpELParser(String[] parameterNames, Object[] args, String name) {
 		ExpressionParser parser = new SpelExpressionParser();
 		EvaluationContext context = new StandardEvaluationContext();
@@ -75,6 +94,9 @@ public class RedisCacheAspect {
 	}
 
 	private String generateKey(String cacheName, String key) {
+		if(key.isBlank() || key == null) {
+			return cacheName;
+		}
 		return String.format("%s::%s", cacheName, key);
 	}
 }
