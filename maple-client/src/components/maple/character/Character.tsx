@@ -10,6 +10,7 @@ import FetchErrorBoundary from "../../common/FetchErrorBoundary";
 import DeferredComponent from "../../common/DeferredComponent";
 import { atomLoadingTime } from "../../../atoms/maple/charaterSkill";
 import { userOwnCharacter } from "../../../atoms/maple/characterOwn";
+import AdBoxHorizon from "../../adsense/AdBoxHorizon";
 
 const Character = () => {
   const params = useParams();
@@ -46,4 +47,3 @@ const Character = () => {
 };
 
 export default Character;
-
