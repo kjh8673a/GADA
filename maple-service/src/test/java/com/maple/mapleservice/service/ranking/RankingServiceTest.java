@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.maple.mapleservice.dto.feign.guild.GuildBasicDto;
+import com.maple.mapleservice.dto.response.Character.CharacterCombatPowerRankingResponseDtoWrapper;
 import com.maple.mapleservice.dto.response.Ranking.GuildCombatPowerRankingResponseDto;
 import com.maple.mapleservice.entity.Character;
 import com.maple.mapleservice.entity.Guild;
@@ -60,7 +61,7 @@ class RankingServiceTest {
 	void 전투력_랭킹_페이징_통합_테스트() {
 		PageRequest pageable = PageRequest.of(0, 20);
 
-		Page<CharacterCombatPowerRankingResponseDto> list = rankingService.getCombatPowerRanking(null, null, pageable);
+		CharacterCombatPowerRankingResponseDtoWrapper list = rankingService.getCombatPowerRanking(null, null, pageable, pageable.getPageNumber());
 
 		assertThat(list.getContent().size()).isEqualTo(20);
 	}

@@ -25,6 +25,7 @@ import com.maple.mapleservice.repository.character.CharacterRepository;
 import com.maple.mapleservice.service.guild.GuildApiService;
 import com.maple.mapleservice.service.ranking.RankingApiService;
 import com.maple.mapleservice.util.CommonUtil;
+import com.maple.mapleservice.util.cache.RedisCacheEvict;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -90,7 +91,7 @@ public class CharacterSchedule {
 			}
 
 			CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-			if(characterBasicDto.getCharacter_name() == null || characterBasicDto.getCharacter_name().isBlank()) {
+			if(characterBasicDto == null || characterBasicDto.getCharacter_name() == null || characterBasicDto.getCharacter_name().isBlank()) {
 				redisTemplate.opsForSet().remove("addCharacterToDB", characterName);
 				continue;
 			}
@@ -165,6 +166,9 @@ public class CharacterSchedule {
 				redisTemplate.opsForZSet().add("characterViewRank", ocid, size);
 			}
 		);
+		//
+		// log.info("캐시에서 검색기록 삭제");
+		// deleteCharacterViewRankingFromCache();
 	}
 
 	// 매일 00시에 기간 만료된 인기검색어 set에서 제거

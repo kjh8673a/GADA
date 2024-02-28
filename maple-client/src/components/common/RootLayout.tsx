@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import { Container } from "../../style/style";
 import styled from "styled-components";
 import RouterTrackerForGA from "./RouterTrackerForGA";
+import AdBoxVertical from "../adsense/AdBoxVertical";
 
 // header, nav, footer는 고정px
 // header: 64px & nav: 40px & footer: 120px;
@@ -17,6 +18,7 @@ const OutletPositioner = styled.div`
 const RootLayout = () => {
   return (
     <RouterTrackerForGA>
+      {/* <AdBoxVertical position="left" /> */}
       <Container>
         <Header />
         <OutletPositioner>
@@ -24,6 +26,7 @@ const RootLayout = () => {
         </OutletPositioner>
         <Footer />
       </Container>
+      {/* <AdBoxVertical position="right" /> */}
     </RouterTrackerForGA>
   );
 };

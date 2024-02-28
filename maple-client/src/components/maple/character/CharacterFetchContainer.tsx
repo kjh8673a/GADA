@@ -5,6 +5,7 @@ import CharacterInfo from "./CharacterInfo";
 import CharacterSummary from "./CharacterSummary/CharacterSummary";
 import CharacterTab from "./CharacterTab";
 import { useCharacterData } from "../../../hooks/maple/useCharacterData";
+import AdBoxHorizon from "../../adsense/AdBoxHorizon";
 
 const CharacterFetchContainer = () => {
   const { getCharacterStats, getCharacterWeapons } = useCharacterData();
@@ -17,6 +18,7 @@ const CharacterFetchContainer = () => {
 
   return (
     <>
+      {/* <AdBoxHorizon /> */}
       {/* 여기에 조회된 캐릭터 정보 표시 */}
       <CharacterSummary />
       {/* 아래에 안내문구 표시 */}

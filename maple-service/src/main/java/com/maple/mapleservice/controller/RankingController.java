@@ -1,6 +1,7 @@
 package com.maple.mapleservice.controller;
 
 import com.maple.mapleservice.dto.model.ranking.Guild;
+import com.maple.mapleservice.dto.response.Character.CharacterCombatPowerRankingResponseDtoWrapper;
 import com.maple.mapleservice.dto.response.Ranking.GuildCombatPowerRankingResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,8 +31,8 @@ public class RankingController {
 		@RequestParam(required = false) String world_name, @RequestParam(required = false) String character_class) {
 
 		PageRequest pageable = PageRequest.of(page - 1, 20);
-		Page<CharacterCombatPowerRankingResponseDto> combatPowerRanking = rankingService.getCombatPowerRanking(
-			world_name, character_class, pageable);
+		CharacterCombatPowerRankingResponseDtoWrapper combatPowerRanking = rankingService.getCombatPowerRanking(
+			world_name, character_class, pageable, page - 1);
 
 		return ResponseEntity
 			.status(HttpStatus.OK)
