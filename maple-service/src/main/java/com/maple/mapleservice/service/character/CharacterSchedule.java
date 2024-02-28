@@ -91,7 +91,7 @@ public class CharacterSchedule {
 			}
 
 			CharacterBasicDto characterBasicDto = characterApiService.getCharacterBasic(ocid);
-			if(characterBasicDto.getCharacter_name() == null || characterBasicDto.getCharacter_name().isBlank()) {
+			if(characterBasicDto == null || characterBasicDto.getCharacter_name() == null || characterBasicDto.getCharacter_name().isBlank()) {
 				redisTemplate.opsForSet().remove("addCharacterToDB", characterName);
 				continue;
 			}

@@ -49,8 +49,18 @@ public class CharacterApiServiceImpl implements CharacterApiService {
     @Override
     @RedisCacheable(value = "character-api-basic", key = "#ocid")
     public CharacterBasicDto getCharacterBasic(String ocid) {
-        log.info("api 적용 날짜 : " + commonUtil.date);
-        return characterFeignClient.getCharacterBasicDto(ocid, commonUtil.date);
+        CharacterBasicDto characterBasicDto = null;
+        try {
+            characterBasicDto = characterFeignClient.getCharacterBasicDto(ocid, commonUtil.date);
+            if(characterBasicDto == null) {
+                throw new CustomException(ErrorCode.ID_NOT_FOUND);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Exception ERROR: {} ", e.getMessage());
+        }
+
+        return characterBasicDto;
     }
 
     @Override
