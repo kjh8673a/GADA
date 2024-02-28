@@ -171,13 +171,6 @@ public class CharacterSchedule {
 		// deleteCharacterViewRankingFromCache();
 	}
 
-	// zset 갱신에 맞춰서 캐시 삭제
-	@RedisCacheEvict(value = "character-view-ranking")
-	@Scheduled(cron = "0 0/30 * * * ?")
-	public void deleteCharacterViewRankingFromCache() {
-		log.info("캐시에서 검색기록 삭제");
-	}
-
 	// 매일 00시에 기간 만료된 인기검색어 set에서 제거
 	@Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
 	public void removeFromsetCharacterViewRank() {

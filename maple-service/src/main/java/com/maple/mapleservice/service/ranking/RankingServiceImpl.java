@@ -44,7 +44,7 @@ public class RankingServiceImpl implements RankingService {
 
 	@Override
 	@Transactional
-	@RedisCacheable(value = "ranking-combatPower", key = "#world_name + '_' + #character_class + '_' + #page_number")
+	// @RedisCacheable(value = "ranking-combatPower", key = "#world_name + '_' + #character_class + '_' + #page_number")
 	public CharacterCombatPowerRankingResponseDtoWrapper getCombatPowerRanking(String world_name, String character_class,
 		Pageable pageable, int page_number) {
 
