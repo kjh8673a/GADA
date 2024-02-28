@@ -8,8 +8,6 @@ import com.maple.mapleservice.dto.feign.guild.GuildBasicDto;
 import com.maple.mapleservice.dto.model.ranking.Overall;
 import com.maple.mapleservice.entity.Character;
 import com.maple.mapleservice.entity.Guild;
-import com.maple.mapleservice.exception.CustomException;
-import com.maple.mapleservice.exception.ErrorCode;
 import com.maple.mapleservice.repository.character.CharacterRepository;
 import com.maple.mapleservice.repository.guild.GuildRepository;
 import com.maple.mapleservice.service.character.CharacterService;
@@ -138,5 +136,12 @@ public class RankingSchedule {
 		guildService.addGuildInformationToDB(oguildIds);
 		characterService.addCharacterInformationToDB(characterNames);
 	}
+
+	// zset 갱신에 맞춰서 캐시 삭제
+	// @RedisCacheEvict(value = "character-view-ranking")
+	// @Scheduled(cron = "0 0/30 * * * ?")
+	// public void deleteCharacterViewRankingFromCache() {
+	// 	log.info("캐시에서 검색기록 삭제");
+	// }
 
 }
