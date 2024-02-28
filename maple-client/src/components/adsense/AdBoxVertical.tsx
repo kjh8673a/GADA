@@ -3,8 +3,8 @@ import styled from "styled-components";
 const StyledBox = styled.div<{ $position: "left" | "right" }>`
   position: fixed;
   top: 112px;
-  ${(props) => props.$position}: 160px;
-  width: 160px;
+  ${(props) => props.$position}: 4px;
+  width: 140px;
   height: 600px;
   background-color: #eee;
 `;
@@ -18,3 +18,4 @@ const AdBoxVertical: React.FC<Props> = ({ position }) => {
 };
 
 export default AdBoxVertical;
+

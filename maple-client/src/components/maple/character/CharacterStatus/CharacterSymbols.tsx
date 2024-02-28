@@ -10,7 +10,7 @@ const StyledBox = styled.div`
   background-color: var(--secondary-bg-color);
   box-shadow: var(--custom-shadow);
   border-radius: 4px;
-  padding: 16px;
+  padding: 16px 8px;
   box-sizing: border-box;
 `;
 

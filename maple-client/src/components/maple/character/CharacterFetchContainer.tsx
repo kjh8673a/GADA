@@ -18,7 +18,7 @@ const CharacterFetchContainer = () => {
 
   return (
     <>
-      <AdBoxHorizon />
+      {/* <AdBoxHorizon /> */}
       {/* 여기에 조회된 캐릭터 정보 표시 */}
       <CharacterSummary />
       {/* 아래에 안내문구 표시 */}
@@ -32,3 +32,4 @@ const CharacterFetchContainer = () => {
 };
 
 export default CharacterFetchContainer;
+
