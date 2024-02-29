@@ -8,4 +8,19 @@ spring:
   profiles:
     include: infra
 
+  cache:
+    type: redis
 
+  data:
+    redis:
+      host: ${redis.host}
+      port: ${redis.port}
+      password: ${redis.password}
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          trace

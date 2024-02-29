@@ -2,9 +2,12 @@ package com.dnf.dnfservice.service.character;
 
 import org.springframework.stereotype.Service;
 
+import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
 import com.dnf.dnfservice.feign.CharacterFeignClient;
+import com.dnf.dnfservice.util.cache.RedisCacheable;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -14,6 +17,17 @@ public class CharacterApiServiceImpl implements CharacterApiService {
 
 	@Override
 	public CharacterSearchDto searchCharacters(String characterName) {
-		return characterFeignClient.searchCharacters(characterName, "full");
+		return characterFeignClient.searchCharacters("all", characterName, "full");
+	}
+
+	@Override
+	public CharacterSearchDto searchCharacters(String serverId, String characterName) {
+		return characterFeignClient.searchCharacters(serverId, characterName, "match");
+	}
+
+	@Override
+	@RedisCacheable(value = "character-api-basic-info", key = "#serverId + '_' + #characterId")
+	public CharacterBasicInfoDto getCharacterBasicInfo(String serverId, String characterId) {
+		return characterFeignClient.getCharacterBasicInfo(serverId, characterId);
 	}
 }
