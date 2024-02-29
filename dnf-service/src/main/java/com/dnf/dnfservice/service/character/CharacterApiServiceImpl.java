@@ -21,6 +21,7 @@ public class CharacterApiServiceImpl implements CharacterApiService {
 	}
 
 	@Override
+	@RedisCacheable(value = "character-api-search-characters", key = "#serverId + '_' + #characterName")
 	public CharacterSearchDto searchCharacters(String serverId, String characterName) {
 		return characterFeignClient.searchCharacters(serverId, characterName, "match");
 	}
