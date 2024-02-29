@@ -4,7 +4,7 @@ import ImageContainer from "./ImageContainer";
 import InfoContainer from "./InfoContainer";
 
 const CharacterSummaryBox = styled.div`
-  width: 1140px;
+  width: 100%;
   border-radius: 5px;
   display: grid;
   grid-template-columns: 1fr 1.8fr 1.8fr;
@@ -14,6 +14,13 @@ const CharacterSummaryBox = styled.div`
       "0"
     )}.png")
     0% 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  @media (max-width: 768px) {
+    display: flex;
+    position: relative;
+  }
 `;
 
 const CharacterSummary = () => {

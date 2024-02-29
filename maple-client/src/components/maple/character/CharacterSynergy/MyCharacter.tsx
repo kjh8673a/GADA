@@ -7,17 +7,27 @@ import MySynergy from "./MySynergy";
 const StyledBox = styled.div`
   padding: 1%;
   width: 98%;
-  display: grid;
-  grid-template-columns: 1fr 0.5fr 0.5fr;
+  display: flex;
   border-radius: 5px;
   background-color: var(--primary-bg-color);
+
+  @media (max-width: 768px) {
+    align-items: center;
+    flex-direction: column;
+  }
 `;
 
 const Container = styled.div`
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 16px 0;
+  }
 `;
 
 const WrapperBox = styled.div`

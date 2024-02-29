@@ -5,9 +5,10 @@ import OptionCharactersItem from "./OptionCharactersItem";
 import OptionCharactersOrder from "./OptionCharactersOrder";
 
 const StyledBox = styled.div`
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
   border-radius: 5px;
-  width: 98%;
-  padding: 1%;
   background-color: var(--secondary-bg-color);
   display: flex;
   gap: 10px;
