@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
 import com.dnf.dnfservice.feign.CharacterFeignClient;
 import com.dnf.dnfservice.util.cache.RedisCacheable;
 
@@ -27,8 +28,14 @@ public class CharacterApiServiceImpl implements CharacterApiService {
 	}
 
 	@Override
-	@RedisCacheable(value = "character-api-basic-info", key = "#serverId + '_' + #characterId")
+	@RedisCacheable(value = "character-api-character-basic-info", key = "#serverId + '_' + #characterId")
 	public CharacterBasicInfoDto getCharacterBasicInfo(String serverId, String characterId) {
 		return characterFeignClient.getCharacterBasicInfo(serverId, characterId);
+	}
+
+	@Override
+	@RedisCacheable(value = "character-api-character-status", key = "#serverId + '_' + #characterId")
+	public CharacterStatusDto getCharacterStatus(String serverId, String characterId) {
+		return characterFeignClient.getCharacterStatus(serverId, characterId);
 	}
 }

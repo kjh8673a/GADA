@@ -25,4 +25,21 @@ public class CharacterController {
 			.status(HttpStatus.OK)
 			.body(SuccessResponse.of(characterService.searchCharacters(characterName)));
 	}
+
+	@RequestMapping("/getCharacterBasicInfo")
+	public ResponseEntity<SuccessResponse> getCharacterBasicInfo(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterBasicInfo(serverName, characterName)));
+	}
+
+	@RequestMapping("/getCharacterStat")
+	public ResponseEntity<SuccessResponse> getCharacterStat(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterStat(serverName, characterName)));
+	}
+
 }

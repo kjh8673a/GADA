@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.dnf.dnfservice.dto.response.character.CharacterBasicInfoResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterStatResponseDto;
 import com.dnf.dnfservice.repository.character.CharactersRepository;
 import com.dnf.dnfservice.service.character.CharacterService;
 
@@ -31,6 +32,13 @@ class CharacterServiceTest {
 		System.out.println(characterBasicInfoResponseDto.getServerName());
 		System.out.println(characterBasicInfoResponseDto.getJobRanking());
 		System.out.println(characterBasicInfoResponseDto.getGuildName());
+	}
+
+	@Test
+	void 캐릭터스탯조회() {
+		CharacterStatResponseDto characterStatResponseDto = characterService.getCharacterStat("카인", "우타마루");
+		System.out.println(characterStatResponseDto.getBuff().size());
+		System.out.println(characterStatResponseDto.getStatus().size());
 	}
 
 }
