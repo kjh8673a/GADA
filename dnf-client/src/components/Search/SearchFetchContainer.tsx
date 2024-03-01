@@ -20,7 +20,7 @@ const SearchFetchContainer: React.FC<Props> = ({ searchCharacters }) => {
   return (
     <StyledBox>
       {searchCharacters.read()?.data?.map((v: any, i: any) => {
-        return <SearchCharacterItem key={i} data={v}/>;
+        return <SearchCharacterItem key={i} data={v} />;
       })}
     </StyledBox>
   );

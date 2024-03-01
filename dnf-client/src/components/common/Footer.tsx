@@ -34,7 +34,9 @@ const Footer = () => {
         서비스 문의 : &nbsp; <CopiableText text="gadadev202@gmail.com" />
       </div>
       <div>&copy;{year} GADA All rights reserved.</div>
-      <div>This site is not associated with NEXON Korea. Data sourced from NEXON OpenAPI.</div>
+      <a href="http://developers.neople.co.kr" target="_blank">
+        <img src="/assets/neople.png" alt="Neople 오픈 API" />
+      </a>
     </FooterContainer>
   );
 };
