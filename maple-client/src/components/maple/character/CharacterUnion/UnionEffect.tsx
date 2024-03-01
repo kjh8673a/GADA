@@ -6,6 +6,7 @@ import useCharacterUnion from "../../../../hooks/maple/useCharacterUnion";
 
 const StyledBox = styled.div`
   width: 420px;
+  max-width: 100%;
   padding: 16px;
   box-sizing: border-box;
   flex-direction: column;
