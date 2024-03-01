@@ -38,8 +38,8 @@ export const CharacterName = styled.div`
 
 export const BookmarkButton = styled.button`
   border: none;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 32px;
+  height: 32px;
   color: #fff;
   border-radius: 0.5rem;
   display: flex;
