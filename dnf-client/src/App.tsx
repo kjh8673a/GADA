@@ -14,12 +14,12 @@ const App = () => {
       children: [
         { index: true, element: <Dnf /> },
         {
-          path: "/Search",
+          path: "/search",
           element: <Search />,
           errorElement: <Error />,
         },
         {
-          path: "/Character/:CharacterName",
+          path: "/character",
           element: <Character />,
           errorElement: <Error />,
         },
@@ -31,4 +31,3 @@ const App = () => {
 };
 
 export default App;
-

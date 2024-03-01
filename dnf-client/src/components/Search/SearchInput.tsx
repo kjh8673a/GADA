@@ -1,33 +1,16 @@
 import React, { useState } from "react";
 import StyledInput from "../../style/StyledInput";
-import { useRecoilState } from "recoil";
-import { atomCharacterName } from "../../atoms/characterName";
 import { CheckButton, NameSearch } from "../../style/dnfContainer";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import useSearch from "../../hooks/useSearch";
 
 const SearchInput = () => {
-  const [characterName, setCharacterName] = useRecoilState(atomCharacterName);
-  const [nickname, setNickname] = useState<string>(characterName);
-
-  const SearchClickkName = (
-    e: React.MouseEvent<HTMLImageElement, MouseEvent>
-  ) => {
-    if (1 < nickname.length && nickname.length < 13) {
-      setCharacterName(nickname);
-    }
-  };
-
-  const searchName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-  };
-
-  const SearchEnterName = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      if (1 < nickname.length && nickname.length < 13) {
-        setCharacterName(nickname);
-      }
-    }
-  };
-
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [nickname, setNickname] = useState<string>(
+    searchParams.get("input") as string
+  );
+  const { searchClickName, searchEnterName, changeHandler } = useSearch();
   return (
     <NameSearch>
       <StyledInput
@@ -35,13 +18,13 @@ const SearchInput = () => {
         type="text"
         value={nickname}
         placeholder="닉네임(2 ~ 12자) 입력"
-        onChange={searchName}
-        onKeyDown={SearchEnterName}
+        onChange={(e) => changeHandler(setNickname, e)}
+        onKeyDown={(e) => searchEnterName(navigate, e, nickname)}
       />
       <CheckButton
         src="/assets/search_button.png"
         alt="search"
-        onClick={SearchClickkName}
+        onClick={(e) => searchClickName(navigate, e, nickname)}
       />
     </NameSearch>
   );
