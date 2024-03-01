@@ -23,6 +23,10 @@ const HighLightedBox = styled.div`
   font-size: 1.1rem;
   font-weight: 600;
   color: #eefced;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 interface Props {
@@ -40,3 +44,4 @@ const CharacterStatusBattlePoint: React.FC<Props> = ({ combatPower }) => {
 };
 
 export default CharacterStatusBattlePoint;
+

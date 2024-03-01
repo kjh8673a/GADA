@@ -27,8 +27,31 @@ export const TagBox = styled.div`
   background-color: gray;
   color: white;
   border-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
   padding: 2px 7px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  @media (max-width: 768px) {
+    max-width: 70px;
+  }
+`;
+
+const TagClassName = styled.div`
+  text-align: center;
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+`;
+
+const TagCombatPower = styled.div`
+  font-size: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+  }
 `;
 
 const OptionCharactersItem: React.FC<{
@@ -42,8 +65,8 @@ const OptionCharactersItem: React.FC<{
       }}
     >
       <TagBoxWrapper style={{ justifyContent: "space-around" }}>
-        <div style={{ fontSize: "1.1rem" }}>{data.character_class}</div>
-        <div>{"+ " + data.increase_combat_power.toLocaleString("ko-kr")}</div>
+        <TagClassName>{data.character_class}</TagClassName>
+        <TagCombatPower>{"+ " + data.increase_combat_power.toLocaleString("ko-kr")}</TagCombatPower>
       </TagBoxWrapper>
       <TagBoxWrapper>
         <TagBox
@@ -62,3 +85,4 @@ const OptionCharactersItem: React.FC<{
 };
 
 export default OptionCharactersItem;
+

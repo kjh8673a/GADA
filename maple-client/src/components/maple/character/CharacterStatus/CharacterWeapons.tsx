@@ -8,15 +8,15 @@ import { useRecoilValue } from "recoil";
 import { atomCharacterWeapon } from "../../../../atoms/maple/characterWeaponState";
 
 const StyledBox = styled.div`
-  width: 320px;
+  width: 100%;
   box-sizing: border-box;
   padding: 16px 8px;
   background-color: var(--secondary-bg-color);
   box-shadow: var(--custom-shadow);
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
   border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const StyledTitle = styled.h3`
@@ -28,6 +28,14 @@ const StyledTitle = styled.h3`
   font-weight: 700;
   color: #fff;
   text-align: center;
+`;
+
+const StyledInnerBox = styled.div`
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px;
 `;
 
 const CharacterWeapons = () => {
@@ -51,7 +59,7 @@ const CharacterWeapons = () => {
       <StyledTitle>장착 장비</StyledTitle>
       {!myWeapons && "조회된 장비가 없습니다."}
       {myWeapons && (
-        <>
+        <StyledInnerBox>
           {/* 첫 줄 */}
           <WeaponBox data={WEAPONS.get("반지4")} />
           <WeaponBox />
@@ -88,7 +96,7 @@ const CharacterWeapons = () => {
           <WeaponBox data={WEAPONS.get("신발")} />
           <WeaponBox />
           <WeaponBox data={WEAPONS.get("기계_심장")} />
-        </>
+        </StyledInnerBox>
       )}
     </StyledBox>
   );

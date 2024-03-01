@@ -8,7 +8,15 @@ type Props = {
   grade: string;
 };
 
+const StyledOuterBox = styled.div`
+  width: 33%;
+  padding: 4px;
+  box-sizing: border-box;
+`;
+
 const StyledBox = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -21,6 +29,11 @@ const StyledBox = styled.div`
 
   &:hover {
     border: 1px solid #eee;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: space-between;
   }
 `;
 
@@ -35,7 +48,12 @@ const WrapperBox = styled.div`
 
 const ClassImg = styled.img`
   width: 5rem;
-  height: 5rem;
+
+  @media (max-width: 768px) {
+    width: auto;
+    height: 5rem;
+    margin-bottom: 8px;
+  }
 `;
 
 const GradeBox = styled.div`
@@ -52,14 +70,16 @@ const LevelBox = styled.div`
 
 const UnionRaider: React.FC<Props> = ({ block_class, block_level, class_image, grade }) => {
   return (
-    <StyledBox>
-      <ClassImg src={class_image} alt={"class preview"} />
-      <WrapperBox>
-        <GradeBox>{grade}</GradeBox>
-        <ClassBox>{block_class}</ClassBox>
-        <LevelBox>{"Lv. " + block_level}</LevelBox>
-      </WrapperBox>
-    </StyledBox>
+    <StyledOuterBox>
+      <StyledBox>
+        <ClassImg src={class_image} alt={"class preview"} />
+        <WrapperBox>
+          <GradeBox>{grade}</GradeBox>
+          <ClassBox>{block_class}</ClassBox>
+          <LevelBox>{"Lv. " + block_level}</LevelBox>
+        </WrapperBox>
+      </StyledBox>
+    </StyledOuterBox>
   );
 };
 

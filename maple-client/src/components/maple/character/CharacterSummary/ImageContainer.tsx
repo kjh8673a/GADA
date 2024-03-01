@@ -6,6 +6,14 @@ const ImageBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  img {
+    object-fit: contain;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const ImageContainer = () => {

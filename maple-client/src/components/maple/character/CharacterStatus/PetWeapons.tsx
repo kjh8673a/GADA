@@ -2,13 +2,15 @@ import styled from "styled-components";
 import PetList from "./PetList";
 
 const StyledBox = styled.div`
-  width: 320px;
+  width: 100%;
   background-color: var(--secondary-bg-color);
   box-shadow: var(--custom-shadow);
   margin-top: 8px;
   border-radius: 4px;
-  padding: 16px;
+  padding: 16px 0;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledTitle = styled.h3`

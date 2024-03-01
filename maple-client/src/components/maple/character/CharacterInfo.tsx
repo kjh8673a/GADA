@@ -15,6 +15,12 @@ const StyledBox = styled.div`
 const StyledImg = styled.img`
   width: 40px;
   margin-right: 12px;
+  object-fit: contain;
+
+  @media (max-width: 768px) {
+    width: 32px;
+    margin-right: 8px;
+  }
 `;
 
 const StyledPara = styled.p`
@@ -25,6 +31,11 @@ const StyledPara = styled.p`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    font-size: 0.6rem;
+    line-height: 1rem;
+  }
 `;
 
 const StyleTextBold = styled.span`

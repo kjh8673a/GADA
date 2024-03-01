@@ -6,9 +6,10 @@ import MyCharacter from "./MyCharacter";
 import DashedLine from "../../../common/DashedLine";
 
 const StyledBox = styled.div`
-  width: 98%;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
   border-radius: 5px;
-  padding: 1%;
   background-color: var(--secondary-bg-color);
   display: flex;
   flex-direction: column;
