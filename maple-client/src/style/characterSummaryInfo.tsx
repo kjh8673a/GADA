@@ -7,13 +7,17 @@ export const InfoBox = styled.div`
   grid-template-rows: 3fr 7.5fr;
   border-radius: 0.625rem;
   background-color: var(--secondary-bg-color);
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const InfoBoxHeader = styled.div`
   margin: 2%;
   margin-bottom: 0%;
   display: grid;
-  grid-template-area
+  grid-template-area;
 `;
 
 export const InfoBoxHeaderTitle = styled.div`
@@ -64,3 +68,4 @@ export const InfoBoxBody = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
 `;
+

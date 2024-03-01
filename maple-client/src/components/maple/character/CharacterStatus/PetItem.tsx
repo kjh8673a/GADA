@@ -6,6 +6,7 @@ const StyledLi = styled.li`
   padding: 4px;
   box-sizing: border-box;
   display: flex;
+  justify-content: center;
 `;
 
 interface StyledIconBoxProps {
@@ -80,3 +81,4 @@ const PetItem: React.FC<Props> = ({ petIcon, petNickname, petName, petWeapon }) 
 };
 
 export default PetItem;
+

@@ -15,6 +15,7 @@ const SkillHoverBox = styled.div`
   z-index: 2;
   box-sizing: border-box;
   width: 400px;
+  max-width: 100vw;
   bottom: 100%;
   transform: translateX(-200px);
   background-color: #2b2c2a;
@@ -60,3 +61,4 @@ const SynergySkill: React.FC<{ data: SkillType }> = ({ data }) => {
 };
 
 export default SynergySkill;
+
