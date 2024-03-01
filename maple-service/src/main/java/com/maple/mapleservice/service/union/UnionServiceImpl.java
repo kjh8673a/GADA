@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.maple.mapleservice.dto.feign.union.UnionArtifactDto;
@@ -66,7 +65,7 @@ public class UnionServiceImpl implements UnionService {
 			union_artifact_crystal.add(UnionArtifactCrystalWithImage.of(u, cloudfrontUrl))
 		);
 
-		return UnionArtifactResponseDto.of(unionDto.getArtifact_level(),
+		return UnionArtifactResponseDto.of(unionDto.getUnion_artifact_level(),
 			unionArtifactDto.getUnion_artifact_effect(), union_artifact_crystal);
 	}
 
