@@ -10,17 +10,26 @@ import UnionArtifact from "./UnionArtifact";
 const StyledBox = styled.div`
   width: 100%;
   min-height: 1200px;
+`;
+
+const BottomContainers = styled.div`
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
+  gap: 10px;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 10px;
+
+  @media (max-width: 1140px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const UnionWrapper = styled.div`
-  width: 704px;
+  max-width: 704px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
 `;
 
@@ -36,13 +45,16 @@ const CharacterUnion = () => {
   return (
     <StyledBox>
       <UnionArtifact />
-      <UnionWrapper>
-        <UnionGrid />
-        <UnionRaid />
-      </UnionWrapper>
-      <UnionEffect />
+      <BottomContainers>
+        <UnionWrapper>
+          <UnionGrid />
+          <UnionRaid />
+        </UnionWrapper>
+        <UnionEffect />
+      </BottomContainers>
     </StyledBox>
   );
 };
 
 export default CharacterUnion;
+

@@ -7,6 +7,7 @@ import UnionArtifactItem from "./UnionArtifactItem";
 const StyledBox = styled.div`
   width: 100%;
   padding: 16px;
+  margin-bottom: 16px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -30,26 +31,37 @@ const ArtifactLevel = styled.span`
 
 const ContentBox = styled.div`
   width: 100%;
-  display: grid;
-  grid-template-columns: 3fr 2fr;
+  display: flex;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const ArtifactWrapper = styled.div`
+  width: 60%;
   display: flex;
   flex-wrap: wrap;
 
-  &:hover {
-    cursor: pointer;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-bottom: 16px;
   }
 `;
 
 const TotalStatWrapper = styled.div`
+  width: 40%;
   display: flex;
   flex-direction: column;
   align-items: start;
   padding: 2%;
   border-left: 1px dashed #777;
   gap: 10px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    border: none;
+  }
 `;
 
 const StatItem = styled.span`

@@ -23,10 +23,9 @@ const HeaderBox = styled.div`
 
 const ContentWrapper = styled.div`
   width: 100%;
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   padding-top: 8px;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
   border-radius: 4px;
 `;
 
@@ -55,3 +54,4 @@ const UnionRaid = () => {
 };
 
 export default UnionRaid;
+

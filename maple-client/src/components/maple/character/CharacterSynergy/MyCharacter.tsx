@@ -41,7 +41,6 @@ const TextBox = styled.div``;
 
 const TagBox = styled.div`
   padding: 5px 10px;
-  font-size: 1.2rem;
 `;
 
 const MyCharacter = () => {
@@ -58,7 +57,7 @@ const MyCharacter = () => {
         </WrapperBox>
         <TextBox style={{ fontSize: "1.5rem" }}>{" + "}</TextBox>
         <WrapperBox>
-          <TextBox>전투력 상승치</TextBox>
+          <TextBox>전투력 상승</TextBox>
           <TagBox>
             {Number(
               characterSynergy.data?.main_character.increased_combat_power

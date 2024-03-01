@@ -3,14 +3,23 @@ import styled from "styled-components";
 import { ArtifactCrystalType } from "../../../../@types/maple/CharacterUnionTypes";
 
 const StyledBox = styled.div`
+  width: 140px;
   position: relative;
   display: flex;
   align-items: center;
   margin: 0 8px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    width: 20%;
+  }
 `;
 
 const CrystalImg = styled.img<{ $hovered: boolean }>`
-  width: 140px;
+  width: 100%;
   z-index: 1;
   opacity: ${(props) => (props.$hovered ? "0.2" : "1")};
 `;
