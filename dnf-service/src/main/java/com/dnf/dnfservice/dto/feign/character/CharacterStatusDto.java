@@ -9,16 +9,6 @@ import lombok.Getter;
 
 @Getter
 public class CharacterStatusDto {
-	String characterId;
-	String characterName;
-	Integer level;
-	String jobId;
-	String jobGrowId;
-	String jobName;
-	String jobGrowName;
-	String adventureName;
-	String guildId;
-	String guildName;
 	List<CharacterBuff> buff;
 	List<CharacterStatus> status;
 }

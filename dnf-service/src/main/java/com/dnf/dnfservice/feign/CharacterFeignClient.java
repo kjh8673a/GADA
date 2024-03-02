@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dnf.dnfservice.config.FeignConfig;
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
 
-@FeignClient(name = "servers-api", url = "${feign.dnf.url}" + "/servers", configuration = FeignConfig.class)
+@FeignClient(name = "character-api", url = "${feign.dnf.url}" + "/servers", configuration = FeignConfig.class)
 public interface CharacterFeignClient {
 
 	@GetMapping("/{serverId}/characters")
@@ -21,4 +22,11 @@ public interface CharacterFeignClient {
 
 	@GetMapping("/{serverId}/characters/{characterId}/status")
 	CharacterStatusDto getCharacterStatus(@PathVariable String serverId, @PathVariable String characterId);
+
+	@GetMapping("/{serverId}/characters/{characterId}/equip/equipment")
+	CharacterEquipmentDto getCharacterEquipment(@PathVariable String serverId, @PathVariable String characterId);
+
+
+
+
 }

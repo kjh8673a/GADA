@@ -35,14 +35,12 @@ class CharacterApiServiceTest {
 	@Test
 	void 캐릭터_스탯조회_세부스탯없는캐릭터() {
 		CharacterStatusDto characterStatusDto = characterApiService.getCharacterStatus("cain", "10082980942c8d833fb26a2b7b58dc9f");
-		System.out.println(characterStatusDto.getCharacterName());
 		System.out.println(characterStatusDto.getStatus().size());
 	}
 
 	@Test
 	void 캐릭터_스탯조회_세부스탯있는캐릭터() {
 		CharacterStatusDto characterStatusDto = characterApiService.getCharacterStatus("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
-		System.out.println(characterStatusDto.getCharacterName());
 		System.out.println(characterStatusDto.getStatus().size());
 	}
 }

@@ -3,6 +3,7 @@ package com.dnf.dnfservice.service.character;
 import org.springframework.stereotype.Service;
 
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
 import com.dnf.dnfservice.feign.CharacterFeignClient;
@@ -37,5 +38,11 @@ public class CharacterApiServiceImpl implements CharacterApiService {
 	@RedisCacheable(value = "character-api-character-status", key = "#serverId + '_' + #characterId")
 	public CharacterStatusDto getCharacterStatus(String serverId, String characterId) {
 		return characterFeignClient.getCharacterStatus(serverId, characterId);
+	}
+
+	@Override
+	@RedisCacheable(value = "character-api-character-equipment", key = "#serverId + '_' + #characterId")
+	public CharacterEquipmentDto getCharacterEquipment(String serverId, String characterId) {
+		return characterFeignClient.getCharacterEquipment(serverId, characterId);
 	}
 }
