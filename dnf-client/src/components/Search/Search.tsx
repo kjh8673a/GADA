@@ -13,7 +13,7 @@ const Search = () => {
     <CenteredBox>
       <SearchInput />
       {isValidInput(searchParams.get("input")) ? (
-        <Suspense fallback={<Loading text="캐릭터 정보를 조회 중 입니다" />}>
+        <Suspense fallback={<Loading text="로딩중입니다" play={true} />}>
           <SearchFetchContainer
             searchCharacters={fetchSearchCharacters(
               searchParams.get("input") as string
@@ -21,7 +21,10 @@ const Search = () => {
           />
         </Suspense>
       ) : (
-        "캐릭터 이름은 2자이상 12자이하만 검색 가능합니다."
+        <Loading
+          text="닉네임은 2자이상 12자이하만 검색 가능합니다."
+          play={false}
+        />
       )}
     </CenteredBox>
   );

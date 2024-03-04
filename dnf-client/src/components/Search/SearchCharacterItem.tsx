@@ -10,29 +10,27 @@ interface Props {
   data: TSearchCharacter;
 }
 
+// 높이 px 고정
 const StyledBox = styled.div`
   position: relative;
   background-image: url("${process.env
     .PUBLIC_URL}/assets/search_character_bg.svg");
+  background-color: black;
   background-position: top;
   background-size: contain;
   background-repeat: no-repeat;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
   &:hover {
     transition: 0.2s;
     cursor: pointer;
     transform: scale(1.05);
   }
+  height: 18rem;
 `;
 
 const CharacterImg = styled.img``;
-
-const BlackBox = styled.div`
-  overflow: hidden;
-  background-color: black;
-  height: 3rem;
-  border-radius: 0px 0px 10px 10px;
-`;
 
 const SearchCharacterItem: React.FC<Props> = ({ data }) => {
   const navigate = useNavigate();
@@ -44,7 +42,6 @@ const SearchCharacterItem: React.FC<Props> = ({ data }) => {
       }
     >
       <CharacterImg src={data.characterImage} alt={"character image"} />
-      <BlackBox></BlackBox>
       <SearchCharacterText
         serverName={data.serverName}
         characterName={data.characterName}
