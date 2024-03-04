@@ -25,7 +25,7 @@ public class ItemDetailDto {
 	ItemObtainInfo obtainInfo;
 	String setItemId;
 	String setItemName;
-	// List<ItemStatus> itemStatus;
+	List<ItemStatus> itemStatus;
 	ItemFixedOption fixedOption;
 	ItemBuff itemBuff;
 	List<String> hashtag;
