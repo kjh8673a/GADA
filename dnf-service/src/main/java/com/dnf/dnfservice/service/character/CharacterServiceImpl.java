@@ -126,6 +126,6 @@ public class CharacterServiceImpl implements CharacterService {
 		CharacterEquipmentTraitDto characterEquipmentTraitDto = characterApiService.getCharacterEquipmentTrait(serverId, characterId);
 
 
-		return CharacterEquipmentResponseDto.of(equipment, characterEquipmentTraitDto.getEquipmentTrait());
+		return CharacterEquipmentResponseDto.of(equipment, characterEquipmentDto.getSetItemInfo(), characterEquipmentTraitDto.getEquipmentTrait());
 	}
 }
