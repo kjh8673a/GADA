@@ -35,15 +35,13 @@ const Graph = () => {
         if (res.status === 200) {
           setData({
             ...res.data,
-            data: res.data.data.filter(
-              (v: CharacterExpItemType) => v.character_level > 0
-            ),
+            data: res.data.data.filter((v: CharacterExpItemType) => v.character_level > 0),
           });
         }
       })
       .catch((res) => {
         if (res.response.status === 500) {
-          console.log("Error getExpHistory");
+          console.error("Error getExpHistory");
         }
       });
   }, [setData, params.Charactername]);
@@ -66,9 +64,7 @@ const Graph = () => {
     const radius = 4;
     drawLevelLine(ctx, xCoords, h, m, lineWidth, radius, levelArr, "orange");
 
-    const dateArr = data.data.map((v) =>
-      v.character_level > 0 ? v.date.slice(8, 10) + "일" : ""
-    );
+    const dateArr = data.data.map((v) => (v.character_level > 0 ? v.date.slice(8, 10) + "일" : ""));
     const fontSize = 14;
     drawXScale(ctx, w, h, m, xCoords, lineWidth, fontSize, dateArr, "#666a7a");
 
@@ -83,14 +79,8 @@ const Graph = () => {
       const canvas = canvasRef.current as HTMLCanvasElement;
       const len = data.data.length;
       if (len < 1) return false;
-      if (
-        canvas.offsetLeft + 10 < xy.x &&
-        canvas.offsetLeft + canvas.offsetWidth - 10 > xy.x
-      ) {
-        if (
-          canvas.offsetTop + 10 < xy.y &&
-          canvas.offsetTop + canvas.offsetHeight - 10 > xy.y
-        ) {
+      if (canvas.offsetLeft + 10 < xy.x && canvas.offsetLeft + canvas.offsetWidth - 10 > xy.x) {
+        if (canvas.offsetTop + 10 < xy.y && canvas.offsetTop + canvas.offsetHeight - 10 > xy.y) {
           const width = canvas.offsetWidth - 2 * m;
           const intervalX = width / 8;
           let x = canvas.offsetLeft + m + intervalX * 0.5;
@@ -120,16 +110,11 @@ const Graph = () => {
         onMouseOut={() => setIsHover(false)}
       ></GraphCanvas>
       {isHover && (
-        <GraphHoverItem
-          x={xy.x}
-          y={xy.y}
-          character_level={props.character_level}
-          exp={props.exp}
-          date={props.date}
-        />
+        <GraphHoverItem x={xy.x} y={xy.y} character_level={props.character_level} exp={props.exp} date={props.date} />
       )}
     </>
   );
 };
 
 export default Graph;
+

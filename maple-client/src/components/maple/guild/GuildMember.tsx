@@ -36,7 +36,6 @@ const GuildMember: React.FC<Props> = ({ name, worldName }) => {
       });
     }
   }, [name, worldName, getMember, setMember]);
-  console.log(member);
 
   return (
     <MemberContainer>
