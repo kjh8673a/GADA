@@ -3,6 +3,7 @@ package com.dnf.dnfservice.service.character;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,9 @@ public class CharacterServiceImpl implements CharacterService {
 
 	private ServerTable serverTable = new ServerTable();
 	private final RedisTemplate redisTemplate;
+
+	@Value("${cloudfront.url}")
+	private String cloudfrontUrl;
 
 	@Override
 	public List<CharacterSearchResponseDto> searchCharacters(String characterName) {
@@ -87,7 +91,15 @@ public class CharacterServiceImpl implements CharacterService {
 		Long jobRanking = charactersRepository.getRankByjobAndFame(characterSearchInfo.getJobName(),
 			characterSearchInfo.getFame());
 
-		return CharacterBasicInfoResponseDto.of(characterSearchInfo, serverName, characterBasicInfoDto, jobRanking);
+		String jobImage = cloudfrontUrl;
+		if(characterBasicInfoDto.getJobGrowName().startsWith("眞")) {
+			jobImage += characterBasicInfoDto.getJobName() + "_" + characterBasicInfoDto.getJobGrowName() + ".png";
+		}else {
+			jobImage += characterBasicInfoDto.getJobName() + ".png";
+		}
+
+
+		return CharacterBasicInfoResponseDto.of(characterSearchInfo, serverName, characterBasicInfoDto, jobRanking, jobImage);
 	}
 
 	@Override
