@@ -40,3 +40,6 @@ logging:
         SQL: DEBUG
         type:
           trace
+
+cloudfront:
+  utl: ${cloudfront.url}
