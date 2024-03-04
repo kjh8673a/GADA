@@ -17,6 +17,7 @@ public class EquipmentWithDetail {
 	String slotName;
 	String itemId;
 	String itemName;
+	String itemImage;
 	String itemTypeId;
 	String itemType;
 	String itemTypeDetailId;
@@ -45,6 +46,7 @@ public class EquipmentWithDetail {
 			.slotName(characterEqipment.getSlotName())
 			.itemId(characterEqipment.getItemId())
 			.itemName(characterEqipment.getItemName())
+			.itemImage("https://img-api.neople.co.kr/df/items/" + characterEqipment.getItemId())
 			.itemTypeId(characterEqipment.getItemTypeId())
 			.itemType(characterEqipment.getItemType())
 			.itemTypeDetailId(characterEqipment.getItemTypeDetailId())
