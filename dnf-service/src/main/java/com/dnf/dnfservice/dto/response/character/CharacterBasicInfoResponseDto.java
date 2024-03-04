@@ -18,6 +18,7 @@ public class CharacterBasicInfoResponseDto {
 	Integer level;
 	String jobName;
 	String jobGrowName;
+	String jobImage;
 	Long fame;
 	String characterImage;
 	String adventureName;
@@ -25,13 +26,14 @@ public class CharacterBasicInfoResponseDto {
 	String guildName;
 
 	public static CharacterBasicInfoResponseDto of(CharacterSearchInfo characterSearchInfo, String serverName,
-		CharacterBasicInfoDto characterBasicInfoDto, Long jobRanking) {
+		CharacterBasicInfoDto characterBasicInfoDto, Long jobRanking, String jobImage) {
 		return CharacterBasicInfoResponseDto.builder()
 			.serverName(serverName)
 			.characterName(characterSearchInfo.getCharacterName())
 			.level(characterSearchInfo.getLevel())
 			.jobName(characterSearchInfo.getJobName())
 			.jobGrowName(characterSearchInfo.getJobGrowName())
+			.jobImage(jobImage)
 			.fame(characterSearchInfo.getFame())
 			.characterImage(
 				"https://img-api.neople.co.kr/df/servers/" + characterSearchInfo.getServerId() + "/characters/"

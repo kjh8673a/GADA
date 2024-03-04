@@ -19,7 +19,7 @@ public class ItemApiServiceTest {
 
 	@Test
 	void 아이템_상세정보조회() {
-		CharacterEquipmentDto characterEquipmentDto = characterApiService.getCharacterEquipment("hilder", "63f0da745d2c5fb06df125801e81b43f");
+		CharacterEquipmentDto characterEquipmentDto = characterApiService.getCharacterEquipment("hilder", "486ed989d4fe9ca601a31ab5a9c8df85");
 		characterEquipmentDto.getEquipment().stream().forEach(data -> {
 			System.out.println(data.getItemName());
 			ItemDetailDto itemDetailDto = itemApiService.getItemDetail(data.getItemId());

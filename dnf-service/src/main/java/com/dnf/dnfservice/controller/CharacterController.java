@@ -31,6 +31,7 @@ public class CharacterController {
 		if(update) {
 			characterService.removeCharacterInformation(serverName, characterName);
 		}
+		characterService.addCharacterViewCount(serverName, characterName);
 
 		return ResponseEntity
 			.status(HttpStatus.OK)

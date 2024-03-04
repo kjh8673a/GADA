@@ -20,4 +20,6 @@ public interface CharacterService {
 	CharacterStatResponseDto getCharacterStat(String serverName, String characterName);
 
 	CharacterEquipmentResponseDto getCharacterEquipment(String serverName, String characterName);
+
+	void addCharacterViewCount(String serverName, String characterName);
 }

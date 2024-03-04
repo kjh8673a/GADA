@@ -31,12 +31,6 @@ public class Characters {
 	@Column(name = "level", columnDefinition = "INT")
 	private Long level;
 
-	@Column(name = "job_id", columnDefinition = "VARCHAR(200)")
-	private String jobId;
-
-	@Column(name = "job_grow_id", columnDefinition = "VARCHAR(200)")
-	private String jobGrowId;
-
 	@Column(name = "job_name", columnDefinition = "VARCHAR(20)")
 	private String jobName;
 
@@ -45,9 +39,6 @@ public class Characters {
 
 	@Column(name = "adventure_name", columnDefinition = "VARCHAR(20)")
 	private String adventureName;
-
-	@Column(name = "guild_id", columnDefinition = "VARCHAR(200)")
-	private String guildId;
 
 	@Column(name = "guild_name", columnDefinition = "VARCHAR(20)")
 	private String guildName;
