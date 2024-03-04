@@ -1,20 +1,13 @@
 import { useCallback } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  atomCharacterSynergy,
-  atomOptionOrder,
-  atomSelectedCharacters,
-} from "../../atoms/maple/characterSynergyState";
+import { atomCharacterSynergy, atomOptionOrder, atomSelectedCharacters } from "../../atoms/maple/characterSynergyState";
 import { userNickName } from "../../atoms/maple/characterName";
 import { getCharacterSynergy } from "../../api/Character/Synergy";
 
 const useCharacterSynergy = () => {
-  const [characterSynergy, setCharacterSynergy] =
-    useRecoilState(atomCharacterSynergy);
+  const [characterSynergy, setCharacterSynergy] = useRecoilState(atomCharacterSynergy);
   const characterName = useRecoilValue(userNickName);
-  const [selectedCharacters, setSelectedCharacters] = useRecoilState(
-    atomSelectedCharacters
-  );
+  const [selectedCharacters, setSelectedCharacters] = useRecoilState(atomSelectedCharacters);
   const [optionOrder, setOptionOrder] = useRecoilState(atomOptionOrder);
 
   const getSynergy = useCallback(
@@ -27,7 +20,7 @@ const useCharacterSynergy = () => {
         })
         .catch((res) => {
           if (res.response.status === 500) {
-            console.log("Error getCharacterSynergy");
+            console.error("Error getCharacterSynergy");
           }
         });
     },
@@ -67,8 +60,7 @@ const useCharacterSynergy = () => {
       setOptionOrder((prev) => {
         return {
           ...prev,
-          skill_type:
-            skillType === "전체" ? [] : [...prev.skill_type, skillType],
+          skill_type: skillType === "전체" ? [] : [...prev.skill_type, skillType],
         };
       });
     }
@@ -90,3 +82,4 @@ const useCharacterSynergy = () => {
 };
 
 export default useCharacterSynergy;
+

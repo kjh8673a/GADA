@@ -7,8 +7,9 @@ import useCharacterSynergy from "../../../../hooks/maple/useCharacterSynergy";
 
 const StyledBox = styled.div`
   position: relative;
-  padding: 1%;
   width: 98%;
+  padding: 8px 40px;
+  box-sizing: border-box;
   border-radius: 5px;
   background-color: var(--primary-bg-color);
   display: grid;
@@ -30,8 +31,9 @@ const HeaderBox = styled.div`
 `;
 
 const SkillWrapper = styled.div`
-  display:flex;
+  display: flex;
   align-items: center;
+  flex-wrap: wrap;
 `;
 
 const HoverItem = styled.div`
@@ -42,7 +44,7 @@ const HoverItem = styled.div`
   background-color: var(--primary-bg-color);
   font-size: 1rem;
   top: 50%;
-  right: 20px;
+  right: 8px;
   transform: translate(0%, -50%);
   opacity: 0.9;
   &:hover {
@@ -50,11 +52,10 @@ const HoverItem = styled.div`
   }
 `;
 
-const SelectedCharactersItem: React.FC<{ data: SelectedCharactersType, index: number }> = ({
-  data, index
-}) => {
+const SelectedCharactersItem: React.FC<{ data: SelectedCharactersType; index: number }> = ({ data, index }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const { deleteSelectedHandler } = useCharacterSynergy();
+
   return (
     <StyledBox onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <GridContainer>
@@ -62,7 +63,7 @@ const SelectedCharactersItem: React.FC<{ data: SelectedCharactersType, index: nu
         <TagBoxWrapper>
           <TagBox
             style={{
-              backgroundColor: "rgb(180, 203, 50)"
+              backgroundColor: "rgb(180, 203, 50)",
             }}
           >
             {data.cycle > 0 ? data.cycle + " min" : "기타"}
@@ -76,7 +77,7 @@ const SelectedCharactersItem: React.FC<{ data: SelectedCharactersType, index: nu
         <div>시너지 스킬</div>
         <SkillWrapper>
           {data.skill_desc.map((v, i) => {
-            return <SynergySkill key={i} data={v}/>;
+            return <SynergySkill key={i} data={v} />;
           })}
         </SkillWrapper>
       </GridContainer>
@@ -86,3 +87,4 @@ const SelectedCharactersItem: React.FC<{ data: SelectedCharactersType, index: nu
 };
 
 export default SelectedCharactersItem;
+

@@ -1,19 +1,29 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import SkillDetail from "./SkillDetail";
 import { skillType } from "../../../../@types/maple/CharacterSkillType";
+
+const OuterBox = styled.div`
+  position: relative;
+  width: 60px;
+  heigth: 48px;
+`;
 
 export const Box = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   border: 1px;
-  width: 60px;
-  heigth: 48px;
+  width: 100%;
+  heigth: 100%;
   padding: 8px;
   z-index: 10;
-  position: relative;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
+
 export const ImgBox = styled.img`
   display: flex;
   width: 48px;
@@ -41,24 +51,46 @@ interface Props {
 
 const SkillSquare: React.FC<Props> = ({ skill }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [offsetX, setOffsetX] = useState<number>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const hoverInHandler = useCallback(() => {
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      resetBoxOffset();
+    });
+
+    resetBoxOffset();
+  }, []);
+
+  const resetBoxOffset = () => {
+    if (containerRef && containerRef.current) {
+      setOffsetX(containerRef.current.offsetLeft);
+    }
+  };
+
+  const hoverInHandler = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     setIsHovered(true);
   }, []);
 
-  const hoverOutHandler = useCallback(() => {
+  const hoverOutHandler = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     setIsHovered(false);
   }, []);
+
   if (skill.skill_level !== 0 && skill.skill_effect !== null) {
     return (
-      <Box onMouseEnter={hoverInHandler} onMouseLeave={hoverOutHandler}>
-        <ImgBox src={skill.skill_icon} />
-        <LevelPosition>{skill.skill_level}</LevelPosition>
-        {isHovered && <SkillDetail skill={skill} />}
-      </Box>
+      <OuterBox ref={containerRef}>
+        <Box onMouseEnter={hoverInHandler} onMouseLeave={hoverOutHandler}>
+          <ImgBox src={skill.skill_icon} />
+          <LevelPosition>{skill.skill_level}</LevelPosition>
+        </Box>
+        {isHovered && <SkillDetail skill={skill} offsetX={offsetX} />}
+      </OuterBox>
     );
   }
   return null;
 };
 
 export default SkillSquare;
+

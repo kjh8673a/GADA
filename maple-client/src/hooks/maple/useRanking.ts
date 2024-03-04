@@ -1,7 +1,4 @@
-import {
-  getGuildCombatPower,
-  getGuildWaterway,
-} from "./../../api/Ranking/Ranking";
+import { getGuildCombatPower, getGuildWaterway } from "./../../api/Ranking/Ranking";
 import { useCallback } from "react";
 import { getCombatPowerRanking } from "../../api/Ranking/Ranking";
 import { useRecoilState } from "recoil";
@@ -20,12 +17,9 @@ import { useNavigate } from "react-router-dom";
 
 const useRanking = () => {
   const navigate = useNavigate();
-  const [combatPowerRanking, setCombatPowerRanking] = useRecoilState(
-    atomCombatPowerRanking
-  );
+  const [combatPowerRanking, setCombatPowerRanking] = useRecoilState(atomCombatPowerRanking);
   const [guildWaterway, setGuildWaterway] = useRecoilState(atomGuildWaterway);
-  const [guildCombatPower, setGuildCombatPower] =
-    useRecoilState(atomGuildCombatPower);
+  const [guildCombatPower, setGuildCombatPower] = useRecoilState(atomGuildCombatPower);
   const [rankTab, setRankTab] = useRecoilState(atomRankTab);
   const [worldTab, setWorldTab] = useRecoilState(atomWorldTab);
   const [classTab, setClassTab] = useRecoilState(atomClassTab);
@@ -42,7 +36,7 @@ const useRanking = () => {
           }
         })
         .catch(() => {
-          console.log("Error getCombatPowerRanking");
+          console.error("Error getCombatPowerRanking");
         });
     },
     [setCombatPowerRanking, setTotalPage]
@@ -76,7 +70,7 @@ const useRanking = () => {
           }
         })
         .catch(() => {
-          console.log("Error getGuildCombatPowerRanking");
+          console.error("Error getGuildCombatPowerRanking");
         });
     },
     [setGuildCombatPower, setTotalPage]
@@ -95,8 +89,7 @@ const useRanking = () => {
   const worldTabClickHandler = (world_name: string | undefined) => {
     setWorldTab(world_name);
     setRankPage(1);
-    if (rankTab === "개인 전투력 랭킹")
-      getCombatPowerRank(1, world_name, classTab);
+    if (rankTab === "개인 전투력 랭킹") getCombatPowerRank(1, world_name, classTab);
     if (rankTab === "길드 수로 랭킹") {
       setTotalPage(9999);
       getGuildWaterwayData(1, world_name);
@@ -164,3 +157,4 @@ const useRanking = () => {
 };
 
 export default useRanking;
+

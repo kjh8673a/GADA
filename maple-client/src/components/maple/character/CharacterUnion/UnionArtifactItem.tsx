@@ -14,7 +14,7 @@ const StyledBox = styled.div`
   }
 
   @media (max-width: 768px) {
-    width: 20%;
+    width: 28%;
   }
 `;
 
@@ -40,6 +40,11 @@ const HoverItem = styled.div`
   font-weight: 600;
 `;
 
+const StyledTitle = styled.div`
+  fontsize: 1.2rem;
+  marginbottom: 4px;
+`;
+
 const UnionArtifactItem: React.FC<{ item: ArtifactCrystalType }> = ({ item }) => {
   const [isHover, setIsHover] = useState(false);
   return (
@@ -47,7 +52,7 @@ const UnionArtifactItem: React.FC<{ item: ArtifactCrystalType }> = ({ item }) =>
       <CrystalImg src={item.crystal_icon} alt={"crystal preview"} $hovered={isHover} />
       {isHover && (
         <HoverItem>
-          <div style={{ fontSize: "1.2rem", marginBottom: "4px" }}>{item.name.slice(7) + " Lv. " + item.level}</div>
+          <StyledTitle>{item.name.slice(7) + " Lv. " + item.level}</StyledTitle>
           <div>{item.crystal_option_name_1}</div>
           <div>{item.crystal_option_name_2}</div>
           <div>{item.crystal_option_name_3}</div>

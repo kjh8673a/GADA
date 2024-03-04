@@ -22,7 +22,11 @@ export const NameSearch = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 400px;
+  max-width: 400px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const NicknameSearch = styled.input`
