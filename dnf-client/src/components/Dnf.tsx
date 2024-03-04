@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import {
   CheckButton,
   MainImg,
-  DnfConatiner,
   NameSearch,
+  DnfContainer,
 } from "../style/dnfContainer";
 import { useNavigate } from "react-router-dom";
 import StyledInput from "../style/StyledInput";
@@ -15,7 +15,7 @@ const Dnf = () => {
   const { searchClickName, searchEnterName, changeHandler } = useSearch();
 
   return (
-    <DnfConatiner>
+    <DnfContainer>
       <MainImg src="/assets/danzin.png" alt="Danzin" />
       <NameSearch>
         <StyledInput
@@ -31,7 +31,7 @@ const Dnf = () => {
           onClick={(e) => searchClickName(navigate, e, nickname)}
         />
       </NameSearch>
-    </DnfConatiner>
+    </DnfContainer>
   );
 };
 

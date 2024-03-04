@@ -14,7 +14,7 @@ const SearchInput = () => {
   return (
     <NameSearch>
       <StyledInput
-        $width={1140}
+        $width={400}
         type="text"
         value={nickname}
         placeholder="닉네임(2 ~ 12자) 입력"

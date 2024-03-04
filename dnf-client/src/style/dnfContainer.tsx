@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DnfConatiner = styled.div`
+export const DnfContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;

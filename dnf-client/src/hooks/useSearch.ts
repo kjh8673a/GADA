@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { getSearchCharacters } from "../api/Character/getSearchCharacters";
+import { getSearchCharacters } from "../api/Search/getSearchCharacters";
 import { TSearchCharacters } from "../@types/SearchTypes";
 import { NavigateFunction } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const useSearch = () => {
     const suspender = getSearchCharacters(characterName)
       .then((response) => {
         data = response.data;
-        status = "fulfilled";
+        setTimeout(() => (status = "fulfilled"), 1000);
       })
       .catch((e) => {
         data = e;
@@ -25,17 +25,28 @@ const useSearch = () => {
     };
   }, []);
 
-  const searchClickName = (navigate: NavigateFunction, e: React.MouseEvent<HTMLImageElement, MouseEvent>, nickname: string) => {
+  const searchClickName = (
+    navigate: NavigateFunction,
+    e: React.MouseEvent<HTMLImageElement, MouseEvent>,
+    nickname: string
+  ) => {
     navigate(`/search?input=${nickname}`);
   };
 
-  const searchEnterName = (navigate: NavigateFunction, e: React.KeyboardEvent<HTMLInputElement>, nickname: string) => {
+  const searchEnterName = (
+    navigate: NavigateFunction,
+    e: React.KeyboardEvent<HTMLInputElement>,
+    nickname: string
+  ) => {
     if (e.key === "Enter") {
-        navigate(`/search?input=${nickname}`);
+      navigate(`/search?input=${nickname}`);
     }
   };
 
-  const changeHandler = (set: React.Dispatch<React.SetStateAction<string>>,e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeHandler = (
+    set: React.Dispatch<React.SetStateAction<string>>,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     set(e.target.value);
   };
 
@@ -43,11 +54,15 @@ const useSearch = () => {
     if (value === null) return false;
     if (1 < value.length && value.length < 13) return true;
     else return false;
-  }
+  };
 
-  const characterClickHandler = (navigate: NavigateFunction, characterName: string, serverName: string) => {
+  const characterClickHandler = (
+    navigate: NavigateFunction,
+    characterName: string,
+    serverName: string
+  ) => {
     navigate(`/character?server=${serverName}&character=${characterName}`);
-  }
+  };
 
   return {
     fetchSearchCharacters,
