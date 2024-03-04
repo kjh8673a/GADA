@@ -2,11 +2,12 @@ import styled from "styled-components";
 import { IPetWeaponDataType } from "../../../../@types/maple/WeaponTypes";
 
 const StyledLi = styled.li`
+  width: 100%;
   margin: 0;
   padding: 4px;
+  padding-left: 15%;
   box-sizing: border-box;
   display: flex;
-  justify-content: center;
 `;
 
 interface StyledIconBoxProps {

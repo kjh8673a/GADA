@@ -108,7 +108,7 @@ const WeaponBox: React.FC<Props> = ({ data, title }) => {
         {data === null && <ItemBox $nodata={true} $img={`${process.env.PUBLIC_URL}/assets/question-mark.png`} />}
         {title && <ItemBox $img={title.title_icon} $grade="" />}
       </HoverBox>
-      {isHovered && <WeaponBoxDetail data={data} title={title} offsetX={posX} />}
+      {isHovered && data && <WeaponBoxDetail data={data} title={title} offsetX={posX} />}
     </BoxContainer>
   );
 };
