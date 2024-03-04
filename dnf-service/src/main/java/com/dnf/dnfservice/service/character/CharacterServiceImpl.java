@@ -1,10 +1,13 @@
 package com.dnf.dnfservice.service.character;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Service;
 
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
@@ -63,6 +66,10 @@ public class CharacterServiceImpl implements CharacterService {
 	@Override
 	@RedisCacheable(value = "character-information", key = "#serverName + '_' + #characterName")
 	public CharacterInformationResponseDto getCharacterInformation(String serverName, String characterName) {
+		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
+		String key = "addCharacterToDB";
+		String value = serverName + "_" + characterName;
+		setOperations.add(key, value);
 
 		CharacterBasicInfoResponseDto characterBasicInfoResponseDto = getCharacterBasicInfo(serverName, characterName);
 		CharacterStatResponseDto characterStatResponseDto = getCharacterStat(serverName, characterName);
@@ -139,5 +146,12 @@ public class CharacterServiceImpl implements CharacterService {
 
 
 		return CharacterEquipmentResponseDto.of(equipment, characterEquipmentDto.getSetItemInfo(), characterEquipmentTraitDto.getEquipmentTrait());
+	}
+
+	@Override
+	public void addCharacterViewCount(String serverName, String characterName) {
+		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
+		String key = "characterViewCount::" + serverName + "_" + characterName;
+		setOperations.add(key, LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusDays(7).toString());
 	}
 }

@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.dnf.dnfservice.dto.response.character.CharacterBasicInfoResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterStatResponseDto;
+import com.dnf.dnfservice.entity.Characters;
 import com.dnf.dnfservice.repository.character.CharactersRepository;
 import com.dnf.dnfservice.service.character.CharacterService;
 
@@ -39,6 +40,11 @@ class CharacterServiceTest {
 		CharacterStatResponseDto characterStatResponseDto = characterService.getCharacterStat("카인", "우타마루");
 		System.out.println(characterStatResponseDto.getBuff().size());
 		System.out.println(characterStatResponseDto.getStatus().size());
+	}
+
+	@Test
+	void 캐릭터db조회() {
+		Characters c = charactersRepository.findByServerNameAndCharacterName("카인", "우타마루");
 	}
 
 }
