@@ -26,6 +26,17 @@ public class CharacterController {
 			.body(SuccessResponse.of(characterService.searchCharacters(characterName)));
 	}
 
+	@RequestMapping("/getCharacterInformation")
+	public ResponseEntity<SuccessResponse> getCharacterInformation(@RequestParam String serverName, @RequestParam String characterName, @RequestParam Integer type) {
+		if(type == 1) {
+			characterService.removeCharacterInformation(serverName, characterName);
+		}
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterInformation(serverName, characterName)));
+	}
+
 	@RequestMapping("/getCharacterBasicInfo")
 	public ResponseEntity<SuccessResponse> getCharacterBasicInfo(@RequestParam String serverName, @RequestParam String characterName) {
 
@@ -40,6 +51,14 @@ public class CharacterController {
 		return ResponseEntity
 			.status(HttpStatus.OK)
 			.body(SuccessResponse.of(characterService.getCharacterStat(serverName, characterName)));
+	}
+
+	@RequestMapping("/getCharacterEquipment")
+	public ResponseEntity<SuccessResponse> getCharacterEquipment(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterEquipment(serverName, characterName)));
 	}
 
 }

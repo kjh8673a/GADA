@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
 import com.dnf.dnfservice.service.character.CharacterApiService;
@@ -14,9 +16,10 @@ class CharacterApiServiceTest {
 	@Autowired
 	CharacterApiService characterApiService;
 
+	// hilder 63f0da745d2c5fb06df125801e81b43f
 	@Test
 	void 캐릭터조회_캐릭터이름만() {
-		CharacterSearchDto characterSearchDto = characterApiService.searchCharacters("aa");
+		CharacterSearchDto characterSearchDto = characterApiService.searchCharacters("아트");
 		characterSearchDto.getRows().stream().forEach(data -> System.out.println(data.getServerId() + " " + data.getCharacterName() + " " + data.getCharacterId()));
 	}
 
@@ -42,5 +45,16 @@ class CharacterApiServiceTest {
 	void 캐릭터_스탯조회_세부스탯있는캐릭터() {
 		CharacterStatusDto characterStatusDto = characterApiService.getCharacterStatus("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
 		System.out.println(characterStatusDto.getStatus().size());
+	}
+
+	@Test
+	void 캐릭터_장비조회() {
+		// CharacterEquipmentDto characterEquipmentDto = characterApiService.getCharacterEquipment("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
+		CharacterEquipmentDto characterEquipmentDto = characterApiService.getCharacterEquipment("hilder", "63f0da745d2c5fb06df125801e81b43f");
+	}
+
+	@Test
+	void 캐릭터_장비특성조회() {
+		CharacterEquipmentTraitDto characterEquipmentTraitDto = characterApiService.getCharacterEquipmentTrait("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
 	}
 }

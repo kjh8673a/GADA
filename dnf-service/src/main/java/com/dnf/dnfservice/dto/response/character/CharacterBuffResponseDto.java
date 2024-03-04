@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.dnf.dnfservice.dto.model.character.CharacterBuff;
-import com.dnf.dnfservice.dto.model.character.CharacterStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

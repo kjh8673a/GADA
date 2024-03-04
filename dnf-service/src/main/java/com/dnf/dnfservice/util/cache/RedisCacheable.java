@@ -17,5 +17,5 @@ public @interface RedisCacheable {
 
 	String key() default "";
 
-	long expire() default 600;
+	long expire() default -1L;
 }

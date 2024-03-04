@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
 import com.dnf.dnfservice.feign.CharacterFeignClient;
@@ -23,26 +24,28 @@ public class CharacterApiServiceImpl implements CharacterApiService {
 	}
 
 	@Override
-	@RedisCacheable(value = "character-api-search-characters", key = "#serverId + '_' + #characterName")
+	@RedisCacheable(value = "character-api-search-characters", key = "#serverId + '_' + #characterName", expire = 600)
 	public CharacterSearchDto searchCharacters(String serverId, String characterName) {
 		return characterFeignClient.searchCharacters(serverId, characterName, "match");
 	}
 
 	@Override
-	@RedisCacheable(value = "character-api-character-basic-info", key = "#serverId + '_' + #characterId")
 	public CharacterBasicInfoDto getCharacterBasicInfo(String serverId, String characterId) {
 		return characterFeignClient.getCharacterBasicInfo(serverId, characterId);
 	}
 
 	@Override
-	@RedisCacheable(value = "character-api-character-status", key = "#serverId + '_' + #characterId")
 	public CharacterStatusDto getCharacterStatus(String serverId, String characterId) {
 		return characterFeignClient.getCharacterStatus(serverId, characterId);
 	}
 
 	@Override
-	@RedisCacheable(value = "character-api-character-equipment", key = "#serverId + '_' + #characterId")
 	public CharacterEquipmentDto getCharacterEquipment(String serverId, String characterId) {
 		return characterFeignClient.getCharacterEquipment(serverId, characterId);
+	}
+
+	@Override
+	public CharacterEquipmentTraitDto getCharacterEquipmentTrait(String serverId, String characterId) {
+		return characterFeignClient.getCharacterEquipmentTrait(serverId, characterId);
 	}
 }

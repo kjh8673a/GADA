@@ -5,7 +5,6 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class ItemObtainInfo {
-	List<DungeonObtain> dungeon;
-	List<ShopObtain> shop;
+public class ShopObtain {
+	List<ShopObtainDetail> rows;
 }
