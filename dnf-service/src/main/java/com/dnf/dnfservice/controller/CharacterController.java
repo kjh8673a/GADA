@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dnf.dnfservice.dto.response.SuccessResponse;
+import com.dnf.dnfservice.dto.response.character.CharacterInformationResponseDto;
 import com.dnf.dnfservice.service.character.CharacterService;
 
 import jakarta.validation.constraints.Size;
@@ -31,35 +32,37 @@ public class CharacterController {
 		if(update) {
 			characterService.removeCharacterInformation(serverName, characterName);
 		}
+
+		CharacterInformationResponseDto characterInformationResponseDto = characterService.getCharacterInformation(serverName, characterName);
 		characterService.addCharacterViewCount(serverName, characterName);
 
 		return ResponseEntity
 			.status(HttpStatus.OK)
-			.body(SuccessResponse.of(characterService.getCharacterInformation(serverName, characterName)));
+			.body(SuccessResponse.of(characterInformationResponseDto));
 	}
 
-	@RequestMapping("/getCharacterBasicInfo")
-	public ResponseEntity<SuccessResponse> getCharacterBasicInfo(@RequestParam String serverName, @RequestParam String characterName) {
-
-		return ResponseEntity
-			.status(HttpStatus.OK)
-			.body(SuccessResponse.of(characterService.getCharacterBasicInfo(serverName, characterName)));
-	}
-
-	@RequestMapping("/getCharacterStat")
-	public ResponseEntity<SuccessResponse> getCharacterStat(@RequestParam String serverName, @RequestParam String characterName) {
-
-		return ResponseEntity
-			.status(HttpStatus.OK)
-			.body(SuccessResponse.of(characterService.getCharacterStat(serverName, characterName)));
-	}
-
-	@RequestMapping("/getCharacterEquipment")
-	public ResponseEntity<SuccessResponse> getCharacterEquipment(@RequestParam String serverName, @RequestParam String characterName) {
-
-		return ResponseEntity
-			.status(HttpStatus.OK)
-			.body(SuccessResponse.of(characterService.getCharacterEquipment(serverName, characterName)));
-	}
+	// @RequestMapping("/getCharacterBasicInfo")
+	// public ResponseEntity<SuccessResponse> getCharacterBasicInfo(@RequestParam String serverName, @RequestParam String characterName) {
+	//
+	// 	return ResponseEntity
+	// 		.status(HttpStatus.OK)
+	// 		.body(SuccessResponse.of(characterService.getCharacterBasicInfo(serverName, characterName)));
+	// }
+	//
+	// @RequestMapping("/getCharacterStat")
+	// public ResponseEntity<SuccessResponse> getCharacterStat(@RequestParam String serverName, @RequestParam String characterName) {
+	//
+	// 	return ResponseEntity
+	// 		.status(HttpStatus.OK)
+	// 		.body(SuccessResponse.of(characterService.getCharacterStat(serverName, characterName)));
+	// }
+	//
+	// @RequestMapping("/getCharacterEquipment")
+	// public ResponseEntity<SuccessResponse> getCharacterEquipment(@RequestParam String serverName, @RequestParam String characterName) {
+	//
+	// 	return ResponseEntity
+	// 		.status(HttpStatus.OK)
+	// 		.body(SuccessResponse.of(characterService.getCharacterEquipment(serverName, characterName)));
+	// }
 
 }

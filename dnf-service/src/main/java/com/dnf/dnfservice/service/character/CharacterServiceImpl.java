@@ -24,6 +24,8 @@ import com.dnf.dnfservice.dto.response.character.CharacterEquipmentResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterInformationResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterSearchResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterStatResponseDto;
+import com.dnf.dnfservice.exception.CustomException;
+import com.dnf.dnfservice.exception.ErrorCode;
 import com.dnf.dnfservice.repository.character.CharactersRepository;
 import com.dnf.dnfservice.service.item.ItemApiService;
 import com.dnf.dnfservice.util.ServerTable;
@@ -66,6 +68,16 @@ public class CharacterServiceImpl implements CharacterService {
 	@Override
 	@RedisCacheable(value = "character-information", key = "#serverName + '_' + #characterName")
 	public CharacterInformationResponseDto getCharacterInformation(String serverName, String characterName) {
+		String serverId = serverTable.serverNameToId.get(serverName);
+		if(serverId == null || serverId.isBlank()) {
+			throw new CustomException(ErrorCode.SERVER_NOT_FOUND);
+		}
+
+		CharacterSearchDto searchCharacters = characterApiService.searchCharacters(serverId, characterName);
+		if(searchCharacters.getRows().size() == 0) {
+			throw new CustomException(ErrorCode.CHARACATER_NOT_FOUND);
+		}
+
 		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
 		String key = "addCharacterToDB";
 		String value = serverName + "_" + characterName;

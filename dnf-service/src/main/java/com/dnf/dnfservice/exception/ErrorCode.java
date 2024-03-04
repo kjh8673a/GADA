@@ -10,7 +10,8 @@ import lombok.Getter;
 public enum ErrorCode {
 
 	// 400 BAD_REQUEST : 잘못된 요청
-
+	CHARACATER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 캐릭터입니다."),
+	SERVER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 서버입니다."),
 	// 404 NOT_FOUND : 리소스를 찾을 수 없음
 
 	// Server Error 5xx
