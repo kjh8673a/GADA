@@ -25,4 +25,40 @@ public class CharacterController {
 			.status(HttpStatus.OK)
 			.body(SuccessResponse.of(characterService.searchCharacters(characterName)));
 	}
+
+	@RequestMapping("/getCharacterInformation")
+	public ResponseEntity<SuccessResponse> getCharacterInformation(@RequestParam String serverName, @RequestParam String characterName, @RequestParam(required = false) boolean update) {
+		if(update) {
+			characterService.removeCharacterInformation(serverName, characterName);
+		}
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterInformation(serverName, characterName)));
+	}
+
+	@RequestMapping("/getCharacterBasicInfo")
+	public ResponseEntity<SuccessResponse> getCharacterBasicInfo(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterBasicInfo(serverName, characterName)));
+	}
+
+	@RequestMapping("/getCharacterStat")
+	public ResponseEntity<SuccessResponse> getCharacterStat(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterStat(serverName, characterName)));
+	}
+
+	@RequestMapping("/getCharacterEquipment")
+	public ResponseEntity<SuccessResponse> getCharacterEquipment(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterEquipment(serverName, characterName)));
+	}
+
 }
