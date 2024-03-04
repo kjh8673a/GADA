@@ -27,8 +27,8 @@ public class CharacterController {
 	}
 
 	@RequestMapping("/getCharacterInformation")
-	public ResponseEntity<SuccessResponse> getCharacterInformation(@RequestParam String serverName, @RequestParam String characterName, @RequestParam Integer type) {
-		if(type == 1) {
+	public ResponseEntity<SuccessResponse> getCharacterInformation(@RequestParam String serverName, @RequestParam String characterName, @RequestParam(required = false) boolean update) {
+		if(update) {
 			characterService.removeCharacterInformation(serverName, characterName);
 		}
 
