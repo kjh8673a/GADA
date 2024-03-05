@@ -13,8 +13,13 @@ const useCharacter = () => {
           setTimeout(() => (status = "fulfilled"), 1000);
         })
         .catch((e) => {
-          data = e;
-          status = "reject";
+          if (e.response.status === 404) {
+            data = {};
+            status = "fulfilled";
+          } else {
+            data = e;
+            status = "reject";
+          }
         });
       return {
         read() {

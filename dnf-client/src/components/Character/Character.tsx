@@ -20,7 +20,7 @@ const Character = () => {
           />
         </Suspense>
       ) : (
-        "캐릭터명과 서버명이 올바른지 확인해주세요."
+        <Loading text="캐릭터명(2자 ~ 12자이내)과 서버명이 올바른지 확인해주세요." play={false} />
       )}
     </CenteredBox>
   );
