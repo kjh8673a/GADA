@@ -1,9 +1,12 @@
 package com.dnf.dnfservice.dto.response.character;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.dnf.dnfservice.dto.model.character.CharacterBuff;
+import com.dnf.dnfservice.dto.model.character.buff.BuffSkillAvatarBuffAvatarWithImage;
+import com.dnf.dnfservice.dto.model.character.buff.BuffSkillBuffSkillInfo;
+import com.dnf.dnfservice.dto.model.character.buff.BuffSkillCreatureBuffCreatureWithImage;
+import com.dnf.dnfservice.dto.model.character.buff.BuffSkillEquipmentBuffEquipmentWithImage;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,19 +18,35 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CharacterBuffResponseDto {
-	String name;
-	Integer level;
-	Map<String, Double> status;
+	BuffSkillBuffSkillInfo skillInfo;
+	List<BuffSkillEquipmentBuffEquipmentWithImage> equipment;
+	List<BuffSkillAvatarBuffAvatarWithImage> avatar;
+	List<BuffSkillCreatureBuffCreatureWithImage> creature;
 
-	public static CharacterBuffResponseDto of(CharacterBuff characterBuff) {
-		Map<String, Double> status = new LinkedHashMap<>();
-		characterBuff.getStatus().stream().forEach(data -> status.put(data.getName(), data.getValue()));
+	public static CharacterBuffResponseDto of(CharacterBuffEquipmentResponseDto characterBuffEquipmentResponseDto,
+		CharacterBuffAvatarResponseDto characterBuffAvatarResponseDto,
+		CharacterBuffCreatureResponseDto characterBuffCreatureResponseDto) {
+
+		List<BuffSkillEquipmentBuffEquipmentWithImage> equipment = new ArrayList<>();
+		characterBuffEquipmentResponseDto.getEquipmentBuffSkill().getEquipment().stream().forEach(data -> {
+			equipment.add(BuffSkillEquipmentBuffEquipmentWithImage.of(data));
+		});
+
+		List<BuffSkillAvatarBuffAvatarWithImage> avatar = new ArrayList<>();
+		characterBuffAvatarResponseDto.getAvatarBuffSkill().getAvatar().stream().forEach(data -> {
+			avatar.add(BuffSkillAvatarBuffAvatarWithImage.of(data));
+		});
+
+		List<BuffSkillCreatureBuffCreatureWithImage> creature = new ArrayList<>();
+		characterBuffCreatureResponseDto.getCreatureBuffSkill().getCreature().stream().forEach(data -> {
+			creature.add(BuffSkillCreatureBuffCreatureWithImage.of(data));
+		});
 
 		return CharacterBuffResponseDto.builder()
-			.name(characterBuff.getName())
-			.level(characterBuff.getLevel())
-			.status(status)
+			.skillInfo(characterBuffEquipmentResponseDto.getEquipmentBuffSkill().getSkillInfo())
+			.equipment(equipment)
+			.avatar(avatar)
+			.creature(creature)
 			.build();
 	}
-
 }

@@ -16,10 +16,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CharacterStatResponseDto {
-	List<CharacterBuffResponseDto> buff;
+	List<CharacterStatBuffResponseDto> buff;
 	Map<String, Double> status;
 
-	public static CharacterStatResponseDto of(List<CharacterBuffResponseDto> buff, List<CharacterStatus> statusList) {
+	public static CharacterStatResponseDto of(List<CharacterStatBuffResponseDto> buff, List<CharacterStatus> statusList) {
 		Map<String, Double> status = new LinkedHashMap<>();
 		statusList.stream().forEach(data -> status.put(data.getName(), data.getValue()));
 

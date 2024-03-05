@@ -1,5 +1,8 @@
 package com.dnf.dnfservice.service.character;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -75,6 +78,23 @@ public class CharacterSchedule {
 				String ocid = data.split("::")[1];
 				Long size = redisTemplate.opsForSet().size(data);
 				redisTemplate.opsForZSet().add("characterViewRank", ocid, size);
+			}
+		);
+	}
+
+	// 매일 00시에 기간 만료된 인기검색어 set에서 제거
+	@Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
+	public void removeFromSetCharacterViewRank() {
+		log.info("기간 만료된 검색 기록 삭제");
+		Set<String> redisKeys = redisTemplate.keys("characterViewCount*");
+		Objects.requireNonNull(redisKeys).forEach(
+			data -> {
+				Set<String> redisExpireTime = redisTemplate.opsForSet().members(data);
+				redisExpireTime.stream().forEach(expire -> {
+					if(LocalDateTime.parse(expire).toLocalDate().isBefore(LocalDate.now(ZoneId.of("Asia/Seoul")))) {
+						redisTemplate.opsForSet().remove(data, expire);
+					}
+				});
 			}
 		);
 	}
