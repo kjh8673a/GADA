@@ -19,7 +19,11 @@ import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
 import com.dnf.dnfservice.dto.model.character.CharacterSearchInfo;
 import com.dnf.dnfservice.dto.model.character.equipment.EquipmentWithDetail;
 import com.dnf.dnfservice.dto.response.character.CharacterBasicInfoResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterBuffAvatarResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterBuffCreatureResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterBuffEquipmentResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterStatBuffResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterEquipmentResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterInformationResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterSearchResponseDto;
@@ -69,12 +73,12 @@ public class CharacterServiceImpl implements CharacterService {
 	@RedisCacheable(value = "character-information", key = "#serverName + '_' + #characterName")
 	public CharacterInformationResponseDto getCharacterInformation(String serverName, String characterName) {
 		String serverId = serverTable.serverNameToId.get(serverName);
-		if(serverId == null || serverId.isBlank()) {
+		if (serverId == null || serverId.isBlank()) {
 			throw new CustomException(ErrorCode.SERVER_NOT_FOUND);
 		}
 
 		CharacterSearchDto searchCharacters = characterApiService.searchCharacters(serverId, characterName);
-		if(searchCharacters.getRows().size() == 0) {
+		if (searchCharacters.getRows().size() == 0) {
 			throw new CustomException(ErrorCode.CHARACATER_NOT_FOUND);
 		}
 
@@ -86,8 +90,15 @@ public class CharacterServiceImpl implements CharacterService {
 		CharacterBasicInfoResponseDto characterBasicInfoResponseDto = getCharacterBasicInfo(serverName, characterName);
 		CharacterStatResponseDto characterStatResponseDto = getCharacterStat(serverName, characterName);
 		CharacterEquipmentResponseDto characterEquipmentResponseDto = getCharacterEquipment(serverName, characterName);
+		CharacterBuffResponseDto characterBuffResponseDto = getCharacterBuff(serverName, characterName);
 
-		return CharacterInformationResponseDto.of(characterBasicInfoResponseDto, characterStatResponseDto, characterEquipmentResponseDto);
+		return CharacterInformationResponseDto.of(characterBasicInfoResponseDto, characterStatResponseDto,
+			characterEquipmentResponseDto, characterBuffResponseDto);
+	}
+
+	private CharacterBuffResponseDto getCharacterBuff(String serverName, String characterName) {
+		return CharacterBuffResponseDto.of(getCharacterBuffEquipment(serverName, characterName),
+			getCharacterBuffAvatar(serverName, characterName), getCharacterBuffCreature(serverName, characterName));
 	}
 
 	@Override
@@ -111,29 +122,25 @@ public class CharacterServiceImpl implements CharacterService {
 			characterSearchInfo.getFame());
 
 		String jobImage = cloudfrontUrl;
-		if(characterBasicInfoDto.getJobGrowName().startsWith("眞")) {
+		if (characterBasicInfoDto.getJobGrowName().startsWith("眞")) {
 			jobImage += characterBasicInfoDto.getJobName() + "_" + characterBasicInfoDto.getJobGrowName() + ".png";
-		}else {
+		} else {
 			jobImage += characterBasicInfoDto.getJobName() + ".png";
 		}
 
-
-		return CharacterBasicInfoResponseDto.of(characterSearchInfo, serverName, characterBasicInfoDto, jobRanking, jobImage);
+		return CharacterBasicInfoResponseDto.of(characterSearchInfo, serverName, characterBasicInfoDto, jobRanking,
+			jobImage);
 	}
 
 	@Override
 	public CharacterStatResponseDto getCharacterStat(String serverName, String characterName) {
 		String serverId = serverTable.serverNameToId.get(serverName);
-
-		CharacterSearchInfo characterSearchInfo = characterApiService.searchCharacters(serverId, characterName)
-			.getRows()
-			.get(0);
-		String characterId = characterSearchInfo.getCharacterId();
+		String characterId = getCharacterId(serverId, characterName);
 
 		CharacterStatusDto characterStatusDto = characterApiService.getCharacterStatus(serverId, characterId);
 
-		List<CharacterBuffResponseDto> buff = new ArrayList<>();
-		characterStatusDto.getBuff().stream().forEach(data -> buff.add(CharacterBuffResponseDto.of(data)));
+		List<CharacterStatBuffResponseDto> buff = new ArrayList<>();
+		characterStatusDto.getBuff().stream().forEach(data -> buff.add(CharacterStatBuffResponseDto.of(data)));
 
 		return CharacterStatResponseDto.of(buff, characterStatusDto.getStatus());
 	}
@@ -141,11 +148,7 @@ public class CharacterServiceImpl implements CharacterService {
 	@Override
 	public CharacterEquipmentResponseDto getCharacterEquipment(String serverName, String characterName) {
 		String serverId = serverTable.serverNameToId.get(serverName);
-
-		CharacterSearchInfo characterSearchInfo = characterApiService.searchCharacters(serverId, characterName)
-			.getRows()
-			.get(0);
-		String characterId = characterSearchInfo.getCharacterId();
+		String characterId = getCharacterId(serverId, characterName);
 
 		List<EquipmentWithDetail> equipment = new ArrayList<>();
 		CharacterEquipmentDto characterEquipmentDto = characterApiService.getCharacterEquipment(serverId, characterId);
@@ -154,10 +157,11 @@ public class CharacterServiceImpl implements CharacterService {
 			equipment.add(EquipmentWithDetail.of(data, itemDetailDto));
 		});
 
-		CharacterEquipmentTraitDto characterEquipmentTraitDto = characterApiService.getCharacterEquipmentTrait(serverId, characterId);
+		CharacterEquipmentTraitDto characterEquipmentTraitDto = characterApiService.getCharacterEquipmentTrait(serverId,
+			characterId);
 
-
-		return CharacterEquipmentResponseDto.of(equipment, characterEquipmentDto.getSetItemInfo(), characterEquipmentTraitDto.getEquipmentTrait());
+		return CharacterEquipmentResponseDto.of(equipment, characterEquipmentDto.getSetItemInfo(),
+			characterEquipmentTraitDto.getEquipmentTrait());
 	}
 
 	@Override
@@ -165,5 +169,39 @@ public class CharacterServiceImpl implements CharacterService {
 		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
 		String key = "characterViewCount::" + serverName + "_" + characterName;
 		setOperations.add(key, LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusDays(7).toString());
+	}
+
+	@Override
+	public CharacterBuffEquipmentResponseDto getCharacterBuffEquipment(String serverName, String characterName) {
+		String serverId = serverTable.serverNameToId.get(serverName);
+		String characterId = getCharacterId(serverId, characterName);
+
+		return CharacterBuffEquipmentResponseDto.of(
+			characterApiService.getCharacterBuffEquipment(serverId, characterId));
+	}
+
+	@Override
+	public CharacterBuffAvatarResponseDto getCharacterBuffAvatar(String serverName, String characterName) {
+		String serverId = serverTable.serverNameToId.get(serverName);
+		String characterId = getCharacterId(serverId, characterName);
+
+		return CharacterBuffAvatarResponseDto.of(characterApiService.getCharacterBuffAvatar(serverId, characterId));
+	}
+
+	@Override
+	public CharacterBuffCreatureResponseDto getCharacterBuffCreature(String serverName, String characterName) {
+		String serverId = serverTable.serverNameToId.get(serverName);
+		String characterId = getCharacterId(serverId, characterName);
+
+		return CharacterBuffCreatureResponseDto.of(characterApiService.getCharacterBuffCreature(serverId, characterId));
+	}
+
+	private String getCharacterId(String serverId, String characterName) {
+		CharacterSearchInfo characterSearchInfo = characterApiService.searchCharacters(serverId, characterName)
+			.getRows()
+			.get(0);
+		String characterId = characterSearchInfo.getCharacterId();
+
+		return characterId;
 	}
 }

@@ -1,5 +1,7 @@
 package com.dnf.dnfservice.dto.response.character;
 
+import java.time.LocalDateTime;
+
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.model.character.CharacterSearchInfo;
 
@@ -13,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CharacterBasicInfoResponseDto {
+	LocalDateTime updatedTime;
 	String serverName;
 	String characterName;
 	Integer level;
@@ -28,6 +31,7 @@ public class CharacterBasicInfoResponseDto {
 	public static CharacterBasicInfoResponseDto of(CharacterSearchInfo characterSearchInfo, String serverName,
 		CharacterBasicInfoDto characterBasicInfoDto, Long jobRanking, String jobImage) {
 		return CharacterBasicInfoResponseDto.builder()
+			.updatedTime(LocalDateTime.now())
 			.serverName(serverName)
 			.characterName(characterSearchInfo.getCharacterName())
 			.level(characterSearchInfo.getLevel())

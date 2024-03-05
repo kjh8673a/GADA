@@ -1,9 +1,11 @@
 package com.dnf.dnfservice.dto.response.character;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 
-import com.dnf.dnfservice.dto.model.character.CharacterBuff;
+import com.dnf.dnfservice.dto.model.character.buff.BuffSkillAvatarBuffAvatar;
+import com.dnf.dnfservice.dto.model.character.buff.BuffSkillBuffSkillInfo;
+import com.dnf.dnfservice.dto.model.character.buff.BuffSkillCreatureBuffCreature;
+import com.dnf.dnfservice.dto.model.character.buff.BuffSkillEquipmentBuffEquipment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,19 +17,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CharacterBuffResponseDto {
-	String name;
-	Integer level;
-	Map<String, Double> status;
+	BuffSkillBuffSkillInfo skillInfo;
+	List<BuffSkillEquipmentBuffEquipment> equipment;
+	List<BuffSkillAvatarBuffAvatar> avatar;
+	List<BuffSkillCreatureBuffCreature> creature;
 
-	public static CharacterBuffResponseDto of(CharacterBuff characterBuff) {
-		Map<String, Double> status = new LinkedHashMap<>();
-		characterBuff.getStatus().stream().forEach(data -> status.put(data.getName(), data.getValue()));
-
+	public static CharacterBuffResponseDto of(CharacterBuffEquipmentResponseDto characterBuffEquipmentResponseDto, CharacterBuffAvatarResponseDto characterBuffAvatarResponseDto, CharacterBuffCreatureResponseDto characterBuffCreatureResponseDto) {
 		return CharacterBuffResponseDto.builder()
-			.name(characterBuff.getName())
-			.level(characterBuff.getLevel())
-			.status(status)
+			.skillInfo(characterBuffEquipmentResponseDto.getEquipmentBuffSkill().getSkillInfo())
+			.equipment(characterBuffEquipmentResponseDto.getEquipmentBuffSkill().getEquipment())
+			.avatar(characterBuffAvatarResponseDto.getAvatarBuffSkill().getAvatar())
+			.creature(characterBuffCreatureResponseDto.getCreatureBuffSkill().getCreature())
 			.build();
 	}
-
 }

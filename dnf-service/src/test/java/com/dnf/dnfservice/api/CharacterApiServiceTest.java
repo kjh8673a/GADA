@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterBuffAvatarDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterBuffCreatureDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterBuffEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
@@ -25,7 +28,7 @@ class CharacterApiServiceTest {
 
 	@Test
 	void 캐릭터조회_서버와이름() {
-		CharacterSearchDto characterSearchDto = characterApiService.searchCharacters("cain", "우타마루");
+		CharacterSearchDto characterSearchDto = characterApiService.searchCharacters("cain", "꿈처럼연주함");
 		characterSearchDto.getRows().stream().forEach(data -> System.out.println(data.getServerId() + " " + data.getCharacterName() + " " + data.getCharacterId()));
 	}
 
@@ -57,4 +60,20 @@ class CharacterApiServiceTest {
 	void 캐릭터_장비특성조회() {
 		CharacterEquipmentTraitDto characterEquipmentTraitDto = characterApiService.getCharacterEquipmentTrait("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
 	}
+
+	@Test
+	void 캐릭터_버프스킬강화장비조회() {
+		CharacterBuffEquipmentDto characterBuffEquipmentDto = characterApiService.getCharacterBuffEquipment("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
+	}
+
+	@Test
+	void 캐릭터_버프스킬아바타조회() {
+		CharacterBuffAvatarDto characterBuffAvatarDto = characterApiService.getCharacterBuffAvatar("cain", "10082980942c8d833fb26a2b7b58dc9f");
+	}
+
+	@Test
+	void 캐릭터_버프스킬캐릭터조회() {
+		CharacterBuffCreatureDto characterBuffCreatureDto = characterApiService.getCharacterBuffCreature("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
+	}
+
 }
