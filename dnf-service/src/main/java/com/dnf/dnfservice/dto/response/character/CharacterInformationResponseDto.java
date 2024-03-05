@@ -1,7 +1,5 @@
 package com.dnf.dnfservice.dto.response.character;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,17 +10,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CharacterInformationResponseDto {
-	LocalDateTime updatedTime;
 	CharacterBasicInfoResponseDto basic;
 	CharacterStatResponseDto stat;
 	CharacterEquipmentResponseDto equipment;
+	CharacterBuffResponseDto buff;
 
-	public static CharacterInformationResponseDto of(CharacterBasicInfoResponseDto basic, CharacterStatResponseDto stat, CharacterEquipmentResponseDto equipment) {
+	public static CharacterInformationResponseDto of(CharacterBasicInfoResponseDto basic, CharacterStatResponseDto stat, CharacterEquipmentResponseDto equipment, CharacterBuffResponseDto buff) {
 		return CharacterInformationResponseDto.builder()
-			.updatedTime(LocalDateTime.now())
 			.basic(basic)
 			.stat(stat)
 			.equipment(equipment)
+			.buff(buff)
 			.build();
 	}
 

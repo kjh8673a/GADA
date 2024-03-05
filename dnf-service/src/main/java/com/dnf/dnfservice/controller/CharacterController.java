@@ -20,7 +20,7 @@ public class CharacterController {
 	private final CharacterService characterService;
 
 	@RequestMapping("/searchCharacters")
-	public ResponseEntity<SuccessResponse> searchCharacters(@RequestParam @Size(min = 2, max = 12) String characterName) {
+	public ResponseEntity<SuccessResponse> searchCharacters(@RequestParam @Size(min = 1, max = 12) String characterName) {
 
 		return ResponseEntity
 			.status(HttpStatus.OK)
@@ -64,5 +64,29 @@ public class CharacterController {
 	// 		.status(HttpStatus.OK)
 	// 		.body(SuccessResponse.of(characterService.getCharacterEquipment(serverName, characterName)));
 	// }
+
+	@RequestMapping("/getCharacterBuffEquipment")
+	public ResponseEntity<SuccessResponse> getCharacterBuffEquipment(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterBuffEquipment(serverName, characterName)));
+	}
+
+	@RequestMapping("/getCharacterBuffAvatar")
+	public ResponseEntity<SuccessResponse> getCharacterBuffAvatar(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterBuffAvatar(serverName, characterName)));
+	}
+
+	@RequestMapping("/getCharacterBuffCreature")
+	public ResponseEntity<SuccessResponse> getCharacterBuffCreature(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterBuffCreature(serverName, characterName)));
+	}
 
 }
