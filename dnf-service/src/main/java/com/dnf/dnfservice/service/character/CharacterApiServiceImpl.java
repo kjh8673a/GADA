@@ -9,6 +9,7 @@ import com.dnf.dnfservice.dto.feign.character.CharacterBuffEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterSkillStyleDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
 import com.dnf.dnfservice.feign.CharacterFeignClient;
 import com.dnf.dnfservice.util.cache.RedisCacheable;
@@ -68,5 +69,10 @@ public class CharacterApiServiceImpl implements CharacterApiService {
 	@Override
 	public CharacterBuffCreatureDto getCharacterBuffCreature(String serverId, String characterId) {
 		return characterFeignClient.getCharacterBuffCreature(serverId, characterId);
+	}
+
+	@Override
+	public CharacterSkillStyleDto getCharacterSkillStyle(String serverId, String characterId) {
+		return characterFeignClient.getCharacterSkillStyle(serverId, characterId);
 	}
 }

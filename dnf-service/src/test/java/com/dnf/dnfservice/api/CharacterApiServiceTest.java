@@ -11,6 +11,7 @@ import com.dnf.dnfservice.dto.feign.character.CharacterBuffEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterSkillStyleDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
 import com.dnf.dnfservice.service.character.CharacterApiService;
 
@@ -22,7 +23,7 @@ class CharacterApiServiceTest {
 	// hilder 63f0da745d2c5fb06df125801e81b43f
 	@Test
 	void 캐릭터조회_캐릭터이름만() {
-		CharacterSearchDto characterSearchDto = characterApiService.searchCharacters("안녕");
+		CharacterSearchDto characterSearchDto = characterApiService.searchCharacters("To인챈트리스");
 		characterSearchDto.getRows().stream().forEach(data -> System.out.println(data.getServerId() + " " + data.getCharacterName() + " " + data.getCharacterId()));
 	}
 
@@ -74,6 +75,11 @@ class CharacterApiServiceTest {
 	@Test
 	void 캐릭터_버프스킬캐릭터조회() {
 		CharacterBuffCreatureDto characterBuffCreatureDto = characterApiService.getCharacterBuffCreature("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
+	}
+
+	@Test
+	void 캐릭터_스킬조회() {
+		CharacterSkillStyleDto characterSkillStyleDto = characterApiService.getCharacterSkillStyle("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
 	}
 
 }
