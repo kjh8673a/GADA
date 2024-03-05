@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 interface Props {
   fame: number;
@@ -19,8 +19,7 @@ const FameIcon = styled.img`
   height: 1.2rem;
 `;
 
-const FameText = styled.div`
-`;
+const FameText = styled.div``;
 
 const FameBox: React.FC<Props> = ({ fame }) => {
   return (

@@ -1,17 +1,23 @@
 export const SERVER_LIST = ["힐더", "카인", "카시야스", "프레이", "안톤", "시로코", "디레지에", "바칼"];
 
+export type TBookmark = {
+  server: string;
+  character: string;
+}
+
 export type TCharacterBasic = {
-  serverName: string;
-  characterName: string;
-  level: number;
-  jobName: string;
-  jobGrowName: string;
-  jobImage: string;
-  fame: number;
-  characterImage: string;
-  adventureName: string;
-  jobRanking: number;
-  guildName: string;
+  updatedTime?: string;
+  serverName?: string;
+  characterName?: string;
+  level?: number;
+  jobName?: string;
+  jobGrowName?: string;
+  jobImage?: string;
+  fame?: number;
+  characterImage?: string;
+  adventureName?: string;
+  jobRanking?: number;
+  guildName?: string;
 };
 
 export type TCharacterBuff = {
@@ -26,40 +32,40 @@ export type TCharacterBuff = {
 };
 
 export type TCharacterStat = {
-  buff: TCharacterBuff[];
-  status: {
+  buff?: TCharacterBuff[];
+  status?: {
     [key: string]: number;
   };
 };
 
 export type TCharacterEquip = {
-  slotId: string;
-  slotName: string;
-  itemId: string;
-  itemName: string;
-  itemImage: string;
-  itemTypeId: string;
-  itemType: string;
-  itemTypeDetailId: string;
-  itemTypeDetail: string;
-  itemAvailableLevel: number;
-  itemRarity: string;
-  setItemId: string | null;
-  setItemName: string | null;
-  skin: {
+  slotId?: string;
+  slotName?: string;
+  itemId?: string;
+  itemName?: string;
+  itemImage?: string;
+  itemTypeId?: string;
+  itemType?: string;
+  itemTypeDetailId?: string;
+  itemTypeDetail?: string;
+  itemAvailableLevel?: number;
+  itemRarity?: string;
+  setItemId?: string | null;
+  setItemName?: string | null;
+  skin?: {
     itemId: string;
     itemName: string;
     itemRarity: string;
   };
-  reinforce: number;
-  itemGradeName: string;
-  enchant: {
+  reinforce?: number;
+  itemGradeName?: string;
+  enchant?: {
     reinforceSkill: string | null;
     status: { [key: string]: string }[];
   };
-  amplificationName: string;
-  refine: number;
-  bakalInfo: {
+  amplificationName?: string;
+  refine?: number;
+  bakalInfo?: {
     options: {
       damage: number | null;
       buff: number;
@@ -68,11 +74,11 @@ export type TCharacterEquip = {
       transfer: boolean;
     }[];
   };
-  upgradeInfo: {
+  upgradeInfo?: {
     itemId: string;
     itemName: string;
   };
-  fixedOption: {
+  fixedOption?: {
     damage: number;
     buff: number;
     level: number;
@@ -80,10 +86,10 @@ export type TCharacterEquip = {
     explain: string;
     explainDetail: string;
   };
-  engraveName: true;
-  machineRevolutionInfo: string | null;
-  customOption: string | null;
-  detail: {
+  engraveName?: true;
+  machineRevolutionInfo?: string | null;
+  customOption?: string | null;
+  detail?: {
     itemId: string;
     itemName: string;
     itemRarity: string;
@@ -120,26 +126,26 @@ export type TCharacterEquip = {
 };
 
 export type TCharacterSetItem = {
-  setItemId: string;
-  setItemName: string;
-  slotInfo: {
+  setItemId?: string;
+  setItemName?: string;
+  slotInfo?: {
     slotId: string;
     slotName: string;
     itemRarity: string;
   }[];
-  activeSetNo: number;
+  activeSetNo?: number;
 };
 
 export type TCharacterEquipTrait = {
-  total: {
+  total?: {
     point: number;
   };
-  category: {
+  category?: {
     id: string;
     name: string;
     explain: string;
   };
-  options: {
+  options?: {
     id: string;
     name: string;
     level: number;
@@ -153,7 +159,6 @@ export type TCharacterEquipTrait = {
 export type TCharacterData = {
   timestamp?: string;
   data?: {
-    updatedTime: string;
     basic: TCharacterBasic;
     stat: TCharacterStat;
     equipment: {

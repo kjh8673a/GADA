@@ -10,7 +10,7 @@ const useSearch = () => {
     const suspender = getSearchCharacters(characterName)
       .then((response) => {
         data = response.data;
-        setTimeout(() => (status = "fulfilled"), 1000);
+        setTimeout(() => (status = "fulfilled"), 500);
       })
       .catch((e) => {
         data = e;
@@ -25,11 +25,7 @@ const useSearch = () => {
     };
   }, []);
 
-  const searchClickName = (
-    navigate: NavigateFunction,
-    e: React.MouseEvent<HTMLImageElement, MouseEvent>,
-    nickname: string
-  ) => {
+  const searchClickName = (navigate: NavigateFunction, nickname: string) => {
     navigate(`/search?input=${nickname}`);
   };
 
@@ -52,7 +48,7 @@ const useSearch = () => {
 
   const isValidInput = (value: string | null): boolean => {
     if (value === null) return false;
-    if (1 < value.length && value.length < 13) return true;
+    if (0 < value.length && value.length < 13) return true;
     else return false;
   };
 
