@@ -6,6 +6,15 @@
   font-style: normal;
 }
 
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 :root {
   --primary-bg-color: #1d2527;
   --secondary-bg-color: #283338;
@@ -28,5 +37,6 @@ button {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }

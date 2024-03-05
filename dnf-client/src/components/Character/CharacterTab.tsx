@@ -8,7 +8,7 @@ const StyledTab = styled.div`
   width: 100%;
   box-sizing: border-box;
   height: 44px;
-  border-radius: 4px;
+  border-radius: 10px;
   overflow: hidden;
   display: flex;
   margin: 12px 0;

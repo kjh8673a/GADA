@@ -1,25 +1,31 @@
-import React, { useEffect } from "react";
-import CharacterSummary from "./CharacterSummary/CharacterSummary";
+import React, { useEffect, useState } from "react";
+import CharacterSummary from "./Summary/Summary";
 import CharacterTab from "./CharacterTab";
 import CharacterDetail from "./CharacterDetail";
 import { TCharacterData } from "../../@types/CharacterTypes";
-import { useSetRecoilState } from "recoil";
-import { atomCharacterState } from "../../atoms/characterState";
+import Loading from "../common/Loading";
+import useCharacter from "../../hooks/useCharacter";
 
 interface Props {
   characterData: { read(): TCharacterData | undefined };
 }
 
 const CharacterFetchContainer: React.FC<Props> = ({ characterData }) => {
-  const setCharacterInfo = useSetRecoilState(atomCharacterState);
+  const [data, setData] = useState<TCharacterData>({});
   useEffect(() => {
-    setCharacterInfo(characterData.read()!);
+    setData(characterData.read()!);
   }, [characterData.read()]);
   return (
     <React.Fragment>
-      <CharacterSummary />
-      <CharacterTab />
-      <CharacterDetail />
+      {data.data ? (
+        <>
+          <CharacterSummary />
+          <CharacterTab />
+          <CharacterDetail />
+        </>
+      ) : (
+        <Loading text="해당하는 캐릭터가 없습니다." play={false} />
+      )}
     </React.Fragment>
   );
 };

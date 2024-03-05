@@ -61,3 +61,9 @@ export const BookmarkItemWrapper = styled.div`
   border-radius: 10px;
   background-color: var(--secondary-bg-color);
 `;
+
+export const PointerText = styled.span`
+  &:hover {
+    cursor: pointer;
+  }
+`;

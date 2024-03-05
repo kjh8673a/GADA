@@ -17,14 +17,14 @@ const SearchInput = () => {
         $width={400}
         type="text"
         value={nickname}
-        placeholder="닉네임(2 ~ 12자) 입력"
+        placeholder="닉네임(12자이내) 입력"
         onChange={(e) => changeHandler(setNickname, e)}
         onKeyDown={(e) => searchEnterName(navigate, e, nickname)}
       />
       <CheckButton
         src="/assets/search_button.png"
         alt="search"
-        onClick={(e) => searchClickName(navigate, e, nickname)}
+        onClick={() => searchClickName(navigate, nickname)}
       />
     </NameSearch>
   );

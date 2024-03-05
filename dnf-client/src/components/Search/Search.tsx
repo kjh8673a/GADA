@@ -21,10 +21,7 @@ const Search = () => {
           />
         </Suspense>
       ) : (
-        <Loading
-          text="닉네임은 2자이상 12자이하만 검색 가능합니다."
-          play={false}
-        />
+        <Loading text="닉네임은 12자이내만 검색 가능합니다." play={false} />
       )}
     </CenteredBox>
   );
