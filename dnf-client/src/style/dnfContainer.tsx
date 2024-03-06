@@ -44,7 +44,7 @@ export const CheckButton = styled.img`
 
 export const BookmarkBox = styled.div`
   margin: 8px 0;
-  width: 320px;
+  width: 400px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;

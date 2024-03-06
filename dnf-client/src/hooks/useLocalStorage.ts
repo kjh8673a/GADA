@@ -7,7 +7,7 @@ const useLocalStorage = () => {
   const [bookmark, setBookmark] = useRecoilState(atomCharacterBookmark);
 
   useEffect(() => {
-    window.localStorage.setItem("DnfBookmark", JSON.stringify(bookmark));
+    window.localStorage.setItem("Bookmark", JSON.stringify(bookmark));
   }, [bookmark]);
 
   const deleteBookmark = (server: string, character: string) =>
