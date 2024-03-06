@@ -89,4 +89,12 @@ public class CharacterController {
 			.body(SuccessResponse.of(characterService.getCharacterBuffCreature(serverName, characterName)));
 	}
 
+	@RequestMapping("/getCharacterSkill")
+	public ResponseEntity<SuccessResponse> getCharacterSkill(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterSkill(serverName, characterName)));
+	}
+
 }

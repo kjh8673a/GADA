@@ -14,15 +14,17 @@ public class CharacterInformationResponseDto {
 	CharacterStatResponseDto stat;
 	CharacterEquipmentResponseDto equipment;
 	CharacterBuffResponseDto buff;
+	CharacterSkillResponseDto skill;
 
-	public static CharacterInformationResponseDto of(CharacterBasicInfoResponseDto basic, CharacterStatResponseDto stat, CharacterEquipmentResponseDto equipment, CharacterBuffResponseDto buff) {
+	public static CharacterInformationResponseDto of(CharacterBasicInfoResponseDto basic, CharacterStatResponseDto stat,
+		CharacterEquipmentResponseDto equipment, CharacterBuffResponseDto buff, CharacterSkillResponseDto skill) {
 		return CharacterInformationResponseDto.builder()
 			.basic(basic)
 			.stat(stat)
 			.equipment(equipment)
 			.buff(buff)
+			.skill(skill)
 			.build();
 	}
-
 
 }

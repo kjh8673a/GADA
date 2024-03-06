@@ -3,7 +3,10 @@ package com.dnf.dnfservice.service.character;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,15 +17,21 @@ import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterSkillStyleDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
 import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
+import com.dnf.dnfservice.dto.feign.skill.SkillDetailInfoDto;
 import com.dnf.dnfservice.dto.model.character.CharacterSearchInfo;
 import com.dnf.dnfservice.dto.model.character.equipment.EquipmentWithDetail;
+import com.dnf.dnfservice.dto.model.character.skill.SkillDetail;
+import com.dnf.dnfservice.dto.model.character.skill.SkillDetailWithDesc;
+import com.dnf.dnfservice.dto.model.skill.SkillDetailInfo;
 import com.dnf.dnfservice.dto.response.character.CharacterBasicInfoResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffAvatarResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffCreatureResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffEquipmentResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterSkillResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterStatBuffResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterEquipmentResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterInformationResponseDto;
@@ -30,6 +39,7 @@ import com.dnf.dnfservice.dto.response.character.CharacterSearchResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterStatResponseDto;
 import com.dnf.dnfservice.exception.CustomException;
 import com.dnf.dnfservice.exception.ErrorCode;
+import com.dnf.dnfservice.feign.SkillFeignClient;
 import com.dnf.dnfservice.repository.character.CharactersRepository;
 import com.dnf.dnfservice.service.item.ItemApiService;
 import com.dnf.dnfservice.util.ServerTable;
@@ -43,6 +53,7 @@ import lombok.RequiredArgsConstructor;
 public class CharacterServiceImpl implements CharacterService {
 	private final CharacterApiService characterApiService;
 	private final ItemApiService itemApiService;
+	private final SkillFeignClient skillFeignClient;
 
 	private final CharactersRepository charactersRepository;
 
@@ -91,9 +102,10 @@ public class CharacterServiceImpl implements CharacterService {
 		CharacterStatResponseDto characterStatResponseDto = getCharacterStat(serverName, characterName);
 		CharacterEquipmentResponseDto characterEquipmentResponseDto = getCharacterEquipment(serverName, characterName);
 		CharacterBuffResponseDto characterBuffResponseDto = getCharacterBuff(serverName, characterName);
+		CharacterSkillResponseDto characterSkillResponseDto = getCharacterSkill(serverName, characterName);
 
 		return CharacterInformationResponseDto.of(characterBasicInfoResponseDto, characterStatResponseDto,
-			characterEquipmentResponseDto, characterBuffResponseDto);
+			characterEquipmentResponseDto, characterBuffResponseDto, characterSkillResponseDto);
 	}
 
 	private CharacterBuffResponseDto getCharacterBuff(String serverName, String characterName) {
@@ -194,6 +206,42 @@ public class CharacterServiceImpl implements CharacterService {
 		String characterId = getCharacterId(serverId, characterName);
 
 		return CharacterBuffCreatureResponseDto.of(characterApiService.getCharacterBuffCreature(serverId, characterId));
+	}
+
+	@Override
+	public CharacterSkillResponseDto getCharacterSkill(String serverName, String characterName) {
+		String serverId = serverTable.serverNameToId.get(serverName);
+		String characterId = getCharacterId(serverId, characterName);
+
+		CharacterSkillStyleDto characterSkillStyleDto = characterApiService.getCharacterSkillStyle(serverId,
+			characterId);
+
+		List<SkillDetailWithDesc> active = getSkillDetailWithDescList(
+			characterSkillStyleDto.getSkill().getStyle().getActive(), characterSkillStyleDto.getJobId());
+		List<SkillDetailWithDesc> passive = getSkillDetailWithDescList(
+			characterSkillStyleDto.getSkill().getStyle().getPassive(), characterSkillStyleDto.getJobId());
+
+		return CharacterSkillResponseDto.of(active, passive);
+	}
+
+	private List<SkillDetailWithDesc> getSkillDetailWithDescList(List<SkillDetail> skillDetailList, String jobId) {
+		List<SkillDetailWithDesc> result = new ArrayList<>();
+		Optional.ofNullable(skillDetailList)
+			.map(Collection::stream)
+			.orElseGet(Stream::empty).forEach(data -> {
+				SkillDetailInfoDto skillDetailInfoDto = null;
+				try {
+					skillDetailInfoDto = skillFeignClient.getSkillDetail(jobId, data.getSkillId());
+					if (skillDetailInfoDto == null) {
+						throw new CustomException(ErrorCode.SKILL_NOT_FOUND);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				result.add(SkillDetailWithDesc.of(data, SkillDetailInfo.of(skillDetailInfoDto)));
+			});
+
+		return result;
 	}
 
 	private String getCharacterId(String serverId, String characterName) {

@@ -23,13 +23,13 @@ class CharacterApiServiceTest {
 	// hilder 63f0da745d2c5fb06df125801e81b43f
 	@Test
 	void 캐릭터조회_캐릭터이름만() {
-		CharacterSearchDto characterSearchDto = characterApiService.searchCharacters("To인챈트리스");
+		CharacterSearchDto characterSearchDto = characterApiService.searchCharacters("프리스트");
 		characterSearchDto.getRows().stream().forEach(data -> System.out.println(data.getServerId() + " " + data.getCharacterName() + " " + data.getCharacterId()));
 	}
 
 	@Test
 	void 캐릭터조회_서버와이름() {
-		CharacterSearchDto characterSearchDto = characterApiService.searchCharacters("cain", "꿈처럼연주함");
+		CharacterSearchDto characterSearchDto = characterApiService.searchCharacters("prey", "프리스트");
 		characterSearchDto.getRows().stream().forEach(data -> System.out.println(data.getServerId() + " " + data.getCharacterName() + " " + data.getCharacterId()));
 	}
 
@@ -69,7 +69,7 @@ class CharacterApiServiceTest {
 
 	@Test
 	void 캐릭터_버프스킬아바타조회() {
-		CharacterBuffAvatarDto characterBuffAvatarDto = characterApiService.getCharacterBuffAvatar("cain", "10082980942c8d833fb26a2b7b58dc9f");
+		CharacterBuffAvatarDto characterBuffAvatarDto = characterApiService.getCharacterBuffAvatar("prey", "93051314d48e4826bed20a43e68831dd");
 	}
 
 	@Test
