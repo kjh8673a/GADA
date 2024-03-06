@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
 
 import com.dnf.dnfservice.dto.feign.character.CharacterAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
-import com.dnf.dnfservice.dto.feign.character.CharacterCreatureDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterFlagDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSkillStyleDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
@@ -26,9 +26,10 @@ import com.dnf.dnfservice.dto.feign.skill.SkillDetailInfoDto;
 import com.dnf.dnfservice.dto.model.character.CharacterSearchInfo;
 import com.dnf.dnfservice.dto.model.character.avatar.CharacterAvatarWithImageAndDetail;
 import com.dnf.dnfservice.dto.model.character.avatar.CharacterItemCloneWithImageAndDetail;
-import com.dnf.dnfservice.dto.model.character.creature.CreatureArtifact;
 import com.dnf.dnfservice.dto.model.character.creature.CreatureArtifactWithImageAndDetail;
 import com.dnf.dnfservice.dto.model.character.equipment.EquipmentWithDetail;
+import com.dnf.dnfservice.dto.model.character.flag.CharacterFlag;
+import com.dnf.dnfservice.dto.model.character.flag.FlagGemWithImageAndDetail;
 import com.dnf.dnfservice.dto.model.character.skill.SkillDetail;
 import com.dnf.dnfservice.dto.model.character.skill.SkillDetailWithDesc;
 import com.dnf.dnfservice.dto.model.skill.SkillDetailInfo;
@@ -38,8 +39,9 @@ import com.dnf.dnfservice.dto.response.character.CharacterBuffAvatarResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffCreatureResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffEquipmentResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffResponseDto;
-import com.dnf.dnfservice.dto.response.character.CharacterCreature;
+import com.dnf.dnfservice.dto.model.character.creature.CharacterCreature;
 import com.dnf.dnfservice.dto.response.character.CharacterCreatureResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterFlagResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterSkillResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterStatBuffResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterEquipmentResponseDto;
@@ -115,10 +117,11 @@ public class CharacterServiceImpl implements CharacterService {
 		CharacterSkillResponseDto characterSkillResponseDto = getCharacterSkill(serverName, characterName);
 		CharacterAvatarResponseDto characterAvatarResponseDto = getCharacterAvatar(serverName, characterName);
 		CharacterCreatureResponseDto characterCreatureResponseDto = getCharacterCreature(serverName, characterName);
+		CharacterFlagResponseDto characterFlagResponseDto = getCharacterFlag(serverName, characterName);
 
 		return CharacterInformationResponseDto.of(characterBasicInfoResponseDto, characterStatResponseDto,
 			characterEquipmentResponseDto, characterBuffResponseDto, characterSkillResponseDto,
-			characterAvatarResponseDto, characterCreatureResponseDto);
+			characterAvatarResponseDto, characterCreatureResponseDto, characterFlagResponseDto);
 	}
 
 	private CharacterBuffResponseDto getCharacterBuff(String serverName, String characterName) {
@@ -248,15 +251,18 @@ public class CharacterServiceImpl implements CharacterService {
 		Optional.ofNullable(characterAvatarDto.getAvatar()).map(Collection::stream).orElseGet(Stream::empty)
 			.forEach(data -> {
 				ItemDetailDto itemDetail = null;
-				if(data.getItemId() != null && !data.getItemId().isBlank()) {
+				if (data.getItemId() != null && !data.getItemId().isBlank()) {
 					itemDetail = itemApiService.getItemDetail(data.getItemId());
 				}
 
 				ItemDetailDto cloneDetail = null;
-				if(data.getClone() != null && data.getClone().getItemId() != null && !data.getClone().getItemId().isBlank()) {
+				if (data.getClone() != null && data.getClone().getItemId() != null && !data.getClone()
+					.getItemId()
+					.isBlank()) {
 					cloneDetail = itemApiService.getItemDetail(data.getClone().getItemId());
 				}
-				CharacterItemCloneWithImageAndDetail clone = CharacterItemCloneWithImageAndDetail.of(data.getClone(), cloneDetail);
+				CharacterItemCloneWithImageAndDetail clone = CharacterItemCloneWithImageAndDetail.of(data.getClone(),
+					cloneDetail);
 				list.add(CharacterAvatarWithImageAndDetail.of(data, clone, itemDetail));
 			});
 
@@ -269,29 +275,57 @@ public class CharacterServiceImpl implements CharacterService {
 		String characterId = getCharacterId(serverId, characterName);
 
 		CharacterCreature creature = characterApiService.getCharacterCreature(serverId, characterId).getCreature();
+		if (creature == null) {
+			return null;
+		}
 
 		ItemDetailDto cloneDetail = null;
-		if(creature.getClone() != null && creature.getClone().getItemId() != null && !creature.getClone().getItemId().isBlank()) {
+		if (creature.getClone() != null && creature.getClone().getItemId() != null && !creature.getClone()
+			.getItemId()
+			.isBlank()) {
 			cloneDetail = itemApiService.getItemDetail(creature.getClone().getItemId());
 		}
-		CharacterItemCloneWithImageAndDetail clone = CharacterItemCloneWithImageAndDetail.of(creature.getClone(), cloneDetail);
+		CharacterItemCloneWithImageAndDetail clone = CharacterItemCloneWithImageAndDetail.of(creature.getClone(),
+			cloneDetail);
 
 		List<CreatureArtifactWithImageAndDetail> artifact = new ArrayList<>();
 		Optional.ofNullable(creature.getArtifact()).map(Collection::stream).orElseGet(Stream::empty)
 			.forEach(data -> {
 				ItemDetailDto artifactDetail = null;
-				if(data.getItemId() != null && !data.getItemId().isBlank()) {
+				if (data.getItemId() != null && !data.getItemId().isBlank()) {
 					artifactDetail = itemApiService.getItemDetail(data.getItemId());
 				}
 				artifact.add(CreatureArtifactWithImageAndDetail.of(data, artifactDetail));
 			});
 
-		ItemDetailDto detail = null;
-		if(creature.getItemId() != null && !creature.getItemId().isBlank()) {
-			itemApiService.getItemDetail(creature.getItemId());
-		}
+		ItemDetailDto detail = itemApiService.getItemDetail(creature.getItemId());
 
 		return CharacterCreatureResponseDto.of(creature, clone, artifact, detail);
+	}
+
+	@Override
+	public CharacterFlagResponseDto getCharacterFlag(String serverName, String characterName) {
+		String serverId = serverTable.serverNameToId.get(serverName);
+		String characterId = getCharacterId(serverId, characterName);
+
+		CharacterFlag flag = characterApiService.getCharacterFlag(serverId, characterId).getFlag();
+		if (flag == null) {
+			return null;
+		}
+
+		ItemDetailDto detail = itemApiService.getItemDetail(flag.getItemId());
+
+		List<FlagGemWithImageAndDetail> gems = new ArrayList<>();
+		Optional.ofNullable(flag.getGems()).map(Collection::stream).orElseGet(Stream::empty)
+			.forEach(data -> {
+				ItemDetailDto gemDetail = null;
+				if (data.getItemId() != null && !data.getItemId().isBlank()) {
+					gemDetail = itemApiService.getItemDetail(data.getItemId());
+				}
+				gems.add(FlagGemWithImageAndDetail.of(data, gemDetail));
+			});
+
+		return CharacterFlagResponseDto.of(flag, detail, gems);
 	}
 
 	private List<SkillDetailWithDesc> getSkillDetailWithDescList(List<SkillDetail> skillDetailList, String jobId) {

@@ -21,9 +21,11 @@ public class CharacterInformationResponseDto {
 	CharacterSkillResponseDto skill;
 	List<CharacterAvatarWithImageAndDetail> avatar;
 	CharacterCreatureResponseDto creature;
+	CharacterFlagResponseDto flag;
 
 	public static CharacterInformationResponseDto of(CharacterBasicInfoResponseDto basic, CharacterStatResponseDto stat,
-		CharacterEquipmentResponseDto equipment, CharacterBuffResponseDto buff, CharacterSkillResponseDto skill, CharacterAvatarResponseDto avatar, CharacterCreatureResponseDto creature) {
+		CharacterEquipmentResponseDto equipment, CharacterBuffResponseDto buff, CharacterSkillResponseDto skill,
+		CharacterAvatarResponseDto avatar, CharacterCreatureResponseDto creature, CharacterFlagResponseDto flag) {
 		return CharacterInformationResponseDto.builder()
 			.basic(basic)
 			.stat(stat)
@@ -32,6 +34,7 @@ public class CharacterInformationResponseDto {
 			.skill(skill)
 			.avatar(avatar.getAvatar())
 			.creature(creature)
+			.flag(flag)
 			.build();
 	}
 

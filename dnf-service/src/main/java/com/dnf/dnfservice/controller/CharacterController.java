@@ -113,4 +113,11 @@ public class CharacterController {
 			.body(SuccessResponse.of(characterService.getCharacterCreature(serverName, characterName)));
 	}
 
+	@RequestMapping("/getCharacterFlag")
+	public ResponseEntity<SuccessResponse> getCharacterFlag(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterFlag(serverName, characterName)));
+	}
 }

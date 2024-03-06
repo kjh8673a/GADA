@@ -1,4 +1,4 @@
-package com.dnf.dnfservice.dto.response.character;
+package com.dnf.dnfservice.dto.model.character.creature;
 
 import java.util.List;
 
