@@ -70,7 +70,6 @@ public class CharacterServiceImpl implements CharacterService {
 		List<CharacterSearchResponseDto> characterSearchResponseDtos = new ArrayList<>();
 		characterSearchDto.getRows()
 			.stream()
-			.filter(data -> data.getFame() != null)
 			.forEach(data -> {
 					characterSearchResponseDtos.add(
 						CharacterSearchResponseDto.of(data, serverTable.serverIdToName.get(data.getServerId())));
