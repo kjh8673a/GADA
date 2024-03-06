@@ -37,7 +37,7 @@ class CharacterServiceTest {
 
 	@Test
 	void 캐릭터스탯조회() {
-		CharacterStatResponseDto characterStatResponseDto = characterService.getCharacterStat("카인", "우타마루");
+		CharacterStatResponseDto characterStatResponseDto = characterService.getCharacterStat("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
 		System.out.println(characterStatResponseDto.getBuff().size());
 		System.out.println(characterStatResponseDto.getStatus().size());
 	}
