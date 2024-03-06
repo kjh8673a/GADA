@@ -10,8 +10,10 @@ interface Props {
   data: TSearchCharacter;
 }
 
-// 높이 px 고정
+// 가로, 세로 고정
 const StyledBox = styled.div`
+  width: 200px;
+  height: 18rem;
   position: relative;
   background-image: url("${process.env
     .PUBLIC_URL}/assets/search_character_bg.svg");
@@ -27,7 +29,6 @@ const StyledBox = styled.div`
     cursor: pointer;
     transform: scale(1.05);
   }
-  height: 18rem;
 `;
 
 const CharacterImg = styled.img``;

@@ -13,7 +13,7 @@ export type TCharacterBasic = {
   jobName?: string;
   jobGrowName?: string;
   jobImage?: string;
-  fame?: number;
+  fame?: number | null;
   characterImage?: string;
   adventureName?: string;
   jobRanking?: number;
@@ -149,7 +149,7 @@ export type TCharacterEquipTrait = {
     id: string;
     name: string;
     level: number;
-    fame: number;
+    fame: number | null;
     buff: number;
     explain: string;
     explainDetail: string;

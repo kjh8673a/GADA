@@ -29,7 +29,7 @@ const Dnf = () => {
         <StyledInput
           $width={400}
           type="text"
-          placeholder="닉네임(2 ~ 12자) 입력"
+          placeholder="닉네임(12자이내) 입력"
           onChange={(e) => changeHandler(setNickname, e)}
           onKeyDown={(e) => searchEnterName(navigate, e, nickname)}
         />
