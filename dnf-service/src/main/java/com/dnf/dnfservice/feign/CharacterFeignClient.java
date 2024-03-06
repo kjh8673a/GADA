@@ -14,9 +14,11 @@ import com.dnf.dnfservice.dto.feign.character.CharacterBuffEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterCreatureDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterFlagDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSkillStyleDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterTalismanDto;
 
 @FeignClient(name = "character-api", url = "${feign.dnf.url}" + "/servers", configuration = FeignConfig.class)
 public interface CharacterFeignClient {
@@ -54,4 +56,9 @@ public interface CharacterFeignClient {
 	@GetMapping("/{serverId}/characters/{characterId}/equip/creature")
 	CharacterCreatureDto getCharacterCreature(@PathVariable String serverId, @PathVariable String characterId);
 
+	@GetMapping("/{serverId}/characters/{characterId}/equip/flag")
+	CharacterFlagDto getCharacterFlag(@PathVariable String serverId, @PathVariable String characterId);
+
+	@GetMapping("/{serverId}/characters/{characterId}/equip/talisman")
+	CharacterTalismanDto getCharacterTalisman(@PathVariable String serverId, @PathVariable String characterId);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
 import com.dnf.dnfservice.dto.model.character.avatar.CharacterItemCloneWithImageAndDetail;
+import com.dnf.dnfservice.dto.model.character.creature.CharacterCreature;
 import com.dnf.dnfservice.dto.model.character.creature.CreatureArtifactWithImageAndDetail;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +25,9 @@ public class CharacterCreatureResponseDto {
 	List<CreatureArtifactWithImageAndDetail> artifact;
 	ItemDetailDto detail;
 
-	public static CharacterCreatureResponseDto of(CharacterCreature creature, CharacterItemCloneWithImageAndDetail clone, List<CreatureArtifactWithImageAndDetail> artifact, ItemDetailDto detail) {
+	public static CharacterCreatureResponseDto of(CharacterCreature creature,
+		CharacterItemCloneWithImageAndDetail clone, List<CreatureArtifactWithImageAndDetail> artifact,
+		ItemDetailDto detail) {
 		return CharacterCreatureResponseDto.builder()
 			.itemId(creature.getItemId())
 			.itemName(creature.getItemName())

@@ -12,9 +12,11 @@ import com.dnf.dnfservice.dto.feign.character.CharacterBuffEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterCreatureDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterFlagDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSkillStyleDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterTalismanDto;
 import com.dnf.dnfservice.service.character.CharacterApiService;
 
 @SpringBootTest
@@ -95,4 +97,13 @@ class CharacterApiServiceTest {
 		CharacterCreatureDto characterCreatureDto = characterApiService.getCharacterCreature("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
 	}
 
+	@Test
+	void 캐릭터_휘장조회() {
+		CharacterFlagDto characterFlagDto = characterApiService.getCharacterFlag("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
+	}
+
+	@Test
+	void 캐릭터_탈리스만조회() {
+		CharacterTalismanDto characterTalismanDto = characterApiService.getCharacterTalisman("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
+	}
 }

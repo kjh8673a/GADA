@@ -8,9 +8,11 @@ import com.dnf.dnfservice.dto.feign.character.CharacterBuffEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterCreatureDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterFlagDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSkillStyleDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterTalismanDto;
 
 public interface CharacterApiService {
 	CharacterSearchDto searchCharacters(String characterName);
@@ -36,4 +38,8 @@ public interface CharacterApiService {
 	CharacterAvatarDto getCharacterAvatar(String serverId, String characterId);
 
 	CharacterCreatureDto getCharacterCreature(String serverId, String characterId);
+
+	CharacterFlagDto getCharacterFlag(String serverId, String characterId);
+
+	CharacterTalismanDto getCharacterTalisman(String serverId, String characterId);
 }
