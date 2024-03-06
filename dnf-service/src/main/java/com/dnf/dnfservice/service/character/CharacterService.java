@@ -2,6 +2,7 @@ package com.dnf.dnfservice.service.character;
 
 import java.util.List;
 
+import com.dnf.dnfservice.dto.response.character.CharacterAvatarResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBasicInfoResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffAvatarResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffCreatureResponseDto;
@@ -34,4 +35,6 @@ public interface CharacterService {
 	CharacterBuffCreatureResponseDto getCharacterBuffCreature(String serverName, String characterName);
 
 	CharacterSkillResponseDto getCharacterSkill(String serverName, String characterName);
+
+	CharacterAvatarResponseDto getCharacterAvatar(String serverName, String characterName);
 }

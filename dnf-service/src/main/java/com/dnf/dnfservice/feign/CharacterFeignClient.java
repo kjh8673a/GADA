@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dnf.dnfservice.config.FeignConfig;
+import com.dnf.dnfservice.dto.feign.character.CharacterAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffCreatureDto;
@@ -45,5 +46,8 @@ public interface CharacterFeignClient {
 
 	@GetMapping("/{serverId}/characters/{characterId}/skill/style")
 	CharacterSkillStyleDto getCharacterSkillStyle(@PathVariable String serverId, @PathVariable String characterId);
+
+	@GetMapping("/{serverId}/characters/{characterId}/equip/avatar")
+	CharacterAvatarDto getCharacterAvatar(@PathVariable String serverId, @PathVariable String characterId);
 
 }

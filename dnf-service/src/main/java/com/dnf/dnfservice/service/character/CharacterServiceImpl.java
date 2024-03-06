@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Service;
 
+import com.dnf.dnfservice.dto.feign.character.CharacterAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
@@ -22,10 +23,12 @@ import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
 import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
 import com.dnf.dnfservice.dto.feign.skill.SkillDetailInfoDto;
 import com.dnf.dnfservice.dto.model.character.CharacterSearchInfo;
+import com.dnf.dnfservice.dto.model.character.avatar.CharacterAvatarWithImage;
 import com.dnf.dnfservice.dto.model.character.equipment.EquipmentWithDetail;
 import com.dnf.dnfservice.dto.model.character.skill.SkillDetail;
 import com.dnf.dnfservice.dto.model.character.skill.SkillDetailWithDesc;
 import com.dnf.dnfservice.dto.model.skill.SkillDetailInfo;
+import com.dnf.dnfservice.dto.response.character.CharacterAvatarResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBasicInfoResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffAvatarResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffCreatureResponseDto;
@@ -102,9 +105,11 @@ public class CharacterServiceImpl implements CharacterService {
 		CharacterEquipmentResponseDto characterEquipmentResponseDto = getCharacterEquipment(serverName, characterName);
 		CharacterBuffResponseDto characterBuffResponseDto = getCharacterBuff(serverName, characterName);
 		CharacterSkillResponseDto characterSkillResponseDto = getCharacterSkill(serverName, characterName);
+		CharacterAvatarResponseDto characterAvatarResponseDto = getCharacterAvatar(serverName, characterName);
 
 		return CharacterInformationResponseDto.of(characterBasicInfoResponseDto, characterStatResponseDto,
-			characterEquipmentResponseDto, characterBuffResponseDto, characterSkillResponseDto);
+			characterEquipmentResponseDto, characterBuffResponseDto, characterSkillResponseDto,
+			characterAvatarResponseDto);
 	}
 
 	private CharacterBuffResponseDto getCharacterBuff(String serverName, String characterName) {
@@ -221,6 +226,20 @@ public class CharacterServiceImpl implements CharacterService {
 			characterSkillStyleDto.getSkill().getStyle().getPassive(), characterSkillStyleDto.getJobId());
 
 		return CharacterSkillResponseDto.of(active, passive);
+	}
+
+	@Override
+	public CharacterAvatarResponseDto getCharacterAvatar(String serverName, String characterName) {
+		String serverId = serverTable.serverNameToId.get(serverName);
+		String characterId = getCharacterId(serverId, characterName);
+
+		CharacterAvatarDto characterAvatarDto = characterApiService.getCharacterAvatar(serverId, characterId);
+
+		List<CharacterAvatarWithImage> list = new ArrayList<>();
+		Optional.ofNullable(characterAvatarDto.getAvatar()).map(Collection::stream).orElseGet(Stream::empty)
+			.forEach(data -> list.add(CharacterAvatarWithImage.of(data)));
+
+		return CharacterAvatarResponseDto.of(list);
 	}
 
 	private List<SkillDetailWithDesc> getSkillDetailWithDescList(List<SkillDetail> skillDetailList, String jobId) {

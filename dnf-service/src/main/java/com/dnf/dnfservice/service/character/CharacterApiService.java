@@ -1,5 +1,6 @@
 package com.dnf.dnfservice.service.character;
 
+import com.dnf.dnfservice.dto.feign.character.CharacterAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffCreatureDto;
@@ -30,4 +31,6 @@ public interface CharacterApiService {
 	CharacterBuffCreatureDto getCharacterBuffCreature(String serverId, String characterId);
 
 	CharacterSkillStyleDto getCharacterSkillStyle(String serverId, String characterId);
+
+	CharacterAvatarDto getCharacterAvatar(String serverId, String characterId);
 }

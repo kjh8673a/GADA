@@ -2,6 +2,7 @@ package com.dnf.dnfservice.service.character;
 
 import org.springframework.stereotype.Service;
 
+import com.dnf.dnfservice.dto.feign.character.CharacterAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffCreatureDto;
@@ -74,5 +75,10 @@ public class CharacterApiServiceImpl implements CharacterApiService {
 	@Override
 	public CharacterSkillStyleDto getCharacterSkillStyle(String serverId, String characterId) {
 		return characterFeignClient.getCharacterSkillStyle(serverId, characterId);
+	}
+
+	@Override
+	public CharacterAvatarDto getCharacterAvatar(String serverId, String characterId) {
+		return characterFeignClient.getCharacterAvatar(serverId, characterId);
 	}
 }

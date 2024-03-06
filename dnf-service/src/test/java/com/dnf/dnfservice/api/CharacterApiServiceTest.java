@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.dnf.dnfservice.dto.feign.character.CharacterAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffCreatureDto;
@@ -80,6 +81,12 @@ class CharacterApiServiceTest {
 	@Test
 	void 캐릭터_스킬조회() {
 		CharacterSkillStyleDto characterSkillStyleDto = characterApiService.getCharacterSkillStyle("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
+	}
+
+	@Test
+	void 캐릭터_아바타조회() {
+		CharacterAvatarDto characterAvatarDto = characterApiService.getCharacterAvatar("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
+		System.out.println(characterAvatarDto.getAvatar().size());
 	}
 
 }
