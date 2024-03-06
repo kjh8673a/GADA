@@ -1,7 +1,10 @@
 package com.dnf.dnfservice.dto.response.character;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import com.dnf.dnfservice.dto.model.character.buff.BuffSkillAvatarBuffAvatarWithImage;
 import com.dnf.dnfservice.dto.model.character.buff.BuffSkillBuffSkillInfo;
@@ -28,19 +31,19 @@ public class CharacterBuffResponseDto {
 		CharacterBuffCreatureResponseDto characterBuffCreatureResponseDto) {
 
 		List<BuffSkillEquipmentBuffEquipmentWithImage> equipment = new ArrayList<>();
-		characterBuffEquipmentResponseDto.getEquipmentBuffSkill().getEquipment().stream().forEach(data -> {
-			equipment.add(BuffSkillEquipmentBuffEquipmentWithImage.of(data));
-		});
+		Optional.ofNullable(characterBuffEquipmentResponseDto.getEquipmentBuffSkill().getEquipment())
+			.map(Collection::stream)
+			.orElseGet(Stream::empty).forEach(data -> equipment.add(BuffSkillEquipmentBuffEquipmentWithImage.of(data)));
 
 		List<BuffSkillAvatarBuffAvatarWithImage> avatar = new ArrayList<>();
-		characterBuffAvatarResponseDto.getAvatarBuffSkill().getAvatar().stream().forEach(data -> {
-			avatar.add(BuffSkillAvatarBuffAvatarWithImage.of(data));
-		});
+		Optional.ofNullable(characterBuffAvatarResponseDto.getAvatarBuffSkill().getAvatar())
+			.map(Collection::stream)
+			.orElseGet(Stream::empty).forEach(data -> avatar.add(BuffSkillAvatarBuffAvatarWithImage.of(data)));
 
 		List<BuffSkillCreatureBuffCreatureWithImage> creature = new ArrayList<>();
-		characterBuffCreatureResponseDto.getCreatureBuffSkill().getCreature().stream().forEach(data -> {
-			creature.add(BuffSkillCreatureBuffCreatureWithImage.of(data));
-		});
+		Optional.ofNullable(characterBuffCreatureResponseDto.getCreatureBuffSkill().getCreature())
+			.map(Collection::stream)
+			.orElseGet(Stream::empty).forEach(data -> creature.add(BuffSkillCreatureBuffCreatureWithImage.of(data)));
 
 		return CharacterBuffResponseDto.builder()
 			.skillInfo(characterBuffEquipmentResponseDto.getEquipmentBuffSkill().getSkillInfo())
