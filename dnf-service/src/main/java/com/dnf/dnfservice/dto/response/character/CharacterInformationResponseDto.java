@@ -2,7 +2,7 @@ package com.dnf.dnfservice.dto.response.character;
 
 import java.util.List;
 
-import com.dnf.dnfservice.dto.model.character.avatar.CharacterAvatarWithImage;
+import com.dnf.dnfservice.dto.model.character.avatar.CharacterAvatarWithImageAndDetail;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,10 +19,11 @@ public class CharacterInformationResponseDto {
 	CharacterEquipmentResponseDto equipment;
 	CharacterBuffResponseDto buff;
 	CharacterSkillResponseDto skill;
-	List<CharacterAvatarWithImage> avatar;
+	List<CharacterAvatarWithImageAndDetail> avatar;
+	CharacterCreatureResponseDto creature;
 
 	public static CharacterInformationResponseDto of(CharacterBasicInfoResponseDto basic, CharacterStatResponseDto stat,
-		CharacterEquipmentResponseDto equipment, CharacterBuffResponseDto buff, CharacterSkillResponseDto skill, CharacterAvatarResponseDto avatar) {
+		CharacterEquipmentResponseDto equipment, CharacterBuffResponseDto buff, CharacterSkillResponseDto skill, CharacterAvatarResponseDto avatar, CharacterCreatureResponseDto creature) {
 		return CharacterInformationResponseDto.builder()
 			.basic(basic)
 			.stat(stat)
@@ -30,6 +31,7 @@ public class CharacterInformationResponseDto {
 			.buff(buff)
 			.skill(skill)
 			.avatar(avatar.getAvatar())
+			.creature(creature)
 			.build();
 	}
 

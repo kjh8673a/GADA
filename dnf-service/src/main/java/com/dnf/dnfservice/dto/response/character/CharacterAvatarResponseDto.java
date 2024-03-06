@@ -2,7 +2,7 @@ package com.dnf.dnfservice.dto.response.character;
 
 import java.util.List;
 
-import com.dnf.dnfservice.dto.model.character.avatar.CharacterAvatarWithImage;
+import com.dnf.dnfservice.dto.model.character.avatar.CharacterAvatarWithImageAndDetail;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CharacterAvatarResponseDto {
-	List<CharacterAvatarWithImage> avatar;
+	List<CharacterAvatarWithImageAndDetail> avatar;
 
-	public static CharacterAvatarResponseDto of(List<CharacterAvatarWithImage> avatar) {
+	public static CharacterAvatarResponseDto of(List<CharacterAvatarWithImageAndDetail> avatar) {
 		return CharacterAvatarResponseDto.builder()
 			.avatar(avatar)
 			.build();

@@ -7,6 +7,7 @@ import com.dnf.dnfservice.dto.response.character.CharacterBasicInfoResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffAvatarResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffCreatureResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffEquipmentResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterCreatureResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterEquipmentResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterInformationResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterSearchResponseDto;
@@ -37,4 +38,6 @@ public interface CharacterService {
 	CharacterSkillResponseDto getCharacterSkill(String serverName, String characterName);
 
 	CharacterAvatarResponseDto getCharacterAvatar(String serverName, String characterName);
+
+	CharacterCreatureResponseDto getCharacterCreature(String serverName, String characterName);
 }

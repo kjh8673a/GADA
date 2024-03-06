@@ -7,6 +7,7 @@ import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffCreatureDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffEquipmentDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterCreatureDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
@@ -15,7 +16,6 @@ import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
 import com.dnf.dnfservice.feign.CharacterFeignClient;
 import com.dnf.dnfservice.util.cache.RedisCacheable;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -80,5 +80,10 @@ public class CharacterApiServiceImpl implements CharacterApiService {
 	@Override
 	public CharacterAvatarDto getCharacterAvatar(String serverId, String characterId) {
 		return characterFeignClient.getCharacterAvatar(serverId, characterId);
+	}
+
+	@Override
+	public CharacterCreatureDto getCharacterCreature(String serverId, String characterId) {
+		return characterFeignClient.getCharacterCreature(serverId, characterId);
 	}
 }

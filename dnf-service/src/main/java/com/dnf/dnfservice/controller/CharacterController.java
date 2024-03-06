@@ -105,4 +105,12 @@ public class CharacterController {
 			.body(SuccessResponse.of(characterService.getCharacterAvatar(serverName, characterName)));
 	}
 
+	@RequestMapping("/getCharacterCreature")
+	public ResponseEntity<SuccessResponse> getCharacterCreature(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterCreature(serverName, characterName)));
+	}
+
 }

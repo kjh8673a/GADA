@@ -26,7 +26,7 @@ public class EquipmentWithDetail {
 	String itemRarity;
 	String setItemId;
 	String setItemName;
-	EquipmentSkin skin;
+	EquipmentSkinWithImage skin;
 	Integer reinforce;
 	String itemGradeName;
 	EquipmentEnchant enchant;
@@ -55,7 +55,7 @@ public class EquipmentWithDetail {
 			.itemRarity(characterEqipment.getItemRarity())
 			.setItemId(characterEqipment.getSetItemId())
 			.setItemName(characterEqipment.getSetItemName())
-			.skin(characterEqipment.getSkin())
+			.skin(EquipmentSkinWithImage.of(characterEqipment.getSkin()))
 			.reinforce(characterEqipment.getReinforce())
 			.itemGradeName(characterEqipment.getItemGradeName())
 			.enchant(characterEqipment.getEnchant())

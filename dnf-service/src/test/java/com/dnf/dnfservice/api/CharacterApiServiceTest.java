@@ -9,6 +9,7 @@ import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffCreatureDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffEquipmentDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterCreatureDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
@@ -87,6 +88,11 @@ class CharacterApiServiceTest {
 	void 캐릭터_아바타조회() {
 		CharacterAvatarDto characterAvatarDto = characterApiService.getCharacterAvatar("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
 		System.out.println(characterAvatarDto.getAvatar().size());
+	}
+
+	@Test
+	void 캐릭터_크리쳐조회() {
+		CharacterCreatureDto characterCreatureDto = characterApiService.getCharacterCreature("cain", "9b675e44d8ecbe2b7d5ac8b79e50206a");
 	}
 
 }

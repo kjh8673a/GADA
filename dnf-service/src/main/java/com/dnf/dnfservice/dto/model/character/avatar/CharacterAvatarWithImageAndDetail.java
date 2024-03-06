@@ -2,7 +2,7 @@ package com.dnf.dnfservice.dto.model.character.avatar;
 
 import java.util.List;
 
-import com.dnf.dnfservice.dto.model.character.CharacterItemClone;
+import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
 import com.dnf.dnfservice.dto.model.character.buff.BuffSkillAvatarEmblem;
 
 import lombok.AllArgsConstructor;
@@ -14,28 +14,30 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CharacterAvatarWithImage {
+public class CharacterAvatarWithImageAndDetail {
 	String slotId;
 	String slotName;
 	String itemId;
 	String itemName;
 	String itemImage;
 	String itemRarity;
-	CharacterItemClone clone;
+	CharacterItemCloneWithImageAndDetail clone;
 	String optionAbility;
 	List<BuffSkillAvatarEmblem> emblems;
+	ItemDetailDto detail;
 
-	public static CharacterAvatarWithImage of(CharacterAvatar avatar) {
-		return CharacterAvatarWithImage.builder()
+	public static CharacterAvatarWithImageAndDetail of(CharacterAvatar avatar, CharacterItemCloneWithImageAndDetail clone, ItemDetailDto detail) {
+		return CharacterAvatarWithImageAndDetail.builder()
 			.slotId(avatar.getSlotId())
 			.slotName(avatar.getSlotName())
 			.itemId(avatar.getItemId())
 			.itemName(avatar.getItemName())
 			.itemImage("https://img-api.neople.co.kr/df/items/" + avatar.getItemId())
 			.itemRarity(avatar.getItemRarity())
-			.clone(avatar.getClone())
+			.clone(clone)
 			.optionAbility(avatar.getOptionAbility())
 			.emblems(avatar.getEmblems())
+			.detail(detail)
 			.build();
 	}
 }

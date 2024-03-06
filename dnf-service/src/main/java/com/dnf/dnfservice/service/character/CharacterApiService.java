@@ -5,6 +5,7 @@ import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffCreatureDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffEquipmentDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterCreatureDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
@@ -33,4 +34,6 @@ public interface CharacterApiService {
 	CharacterSkillStyleDto getCharacterSkillStyle(String serverId, String characterId);
 
 	CharacterAvatarDto getCharacterAvatar(String serverId, String characterId);
+
+	CharacterCreatureDto getCharacterCreature(String serverId, String characterId);
 }

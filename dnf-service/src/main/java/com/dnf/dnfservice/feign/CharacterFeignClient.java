@@ -11,6 +11,7 @@ import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffCreatureDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBuffEquipmentDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterCreatureDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
@@ -49,5 +50,8 @@ public interface CharacterFeignClient {
 
 	@GetMapping("/{serverId}/characters/{characterId}/equip/avatar")
 	CharacterAvatarDto getCharacterAvatar(@PathVariable String serverId, @PathVariable String characterId);
+
+	@GetMapping("/{serverId}/characters/{characterId}/equip/creature")
+	CharacterCreatureDto getCharacterCreature(@PathVariable String serverId, @PathVariable String characterId);
 
 }
