@@ -14,6 +14,7 @@ import com.dnf.dnfservice.dto.response.character.CharacterInformationResponseDto
 import com.dnf.dnfservice.dto.response.character.CharacterSearchResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterSkillResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterStatResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterTalismanResponseDto;
 
 public interface CharacterService {
 	List<CharacterSearchResponseDto> searchCharacters(String characterName);
@@ -24,23 +25,25 @@ public interface CharacterService {
 
 	CharacterBasicInfoResponseDto getCharacterBasicInfo(String serverName, String characterName);
 
-	CharacterStatResponseDto getCharacterStat(String serverName, String characterName);
+	CharacterStatResponseDto getCharacterStat(String serverId, String characterId);
 
-	CharacterEquipmentResponseDto getCharacterEquipment(String serverName, String characterName);
+	CharacterEquipmentResponseDto getCharacterEquipment(String serverId, String characterId);
 
 	void addCharacterViewCount(String serverName, String characterName);
 
-	CharacterBuffEquipmentResponseDto getCharacterBuffEquipment(String serverName, String characterName);
+	CharacterBuffEquipmentResponseDto getCharacterBuffEquipment(String serverId, String characterId);
 
-	CharacterBuffAvatarResponseDto getCharacterBuffAvatar(String serverName, String characterName);
+	CharacterBuffAvatarResponseDto getCharacterBuffAvatar(String serverId, String characterId);
 
-	CharacterBuffCreatureResponseDto getCharacterBuffCreature(String serverName, String characterName);
+	CharacterBuffCreatureResponseDto getCharacterBuffCreature(String serverId, String characterId);
 
-	CharacterSkillResponseDto getCharacterSkill(String serverName, String characterName);
+	CharacterSkillResponseDto getCharacterSkill(String serverId, String characterId);
 
-	CharacterAvatarResponseDto getCharacterAvatar(String serverName, String characterName);
+	CharacterAvatarResponseDto getCharacterAvatar(String serverId, String characterId);
 
-	CharacterCreatureResponseDto getCharacterCreature(String serverName, String characterName);
+	CharacterCreatureResponseDto getCharacterCreature(String serverId, String characterId);
 
-	CharacterFlagResponseDto getCharacterFlag(String serverName, String characterName);
+	CharacterFlagResponseDto getCharacterFlag(String serverId, String characterId);
+
+	CharacterTalismanResponseDto getCharacterTalisman(String serverId, String characterId);
 }

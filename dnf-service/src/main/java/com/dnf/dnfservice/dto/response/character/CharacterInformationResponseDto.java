@@ -22,10 +22,11 @@ public class CharacterInformationResponseDto {
 	List<CharacterAvatarWithImageAndDetail> avatar;
 	CharacterCreatureResponseDto creature;
 	CharacterFlagResponseDto flag;
+	CharacterTalismanResponseDto talisman;
 
 	public static CharacterInformationResponseDto of(CharacterBasicInfoResponseDto basic, CharacterStatResponseDto stat,
 		CharacterEquipmentResponseDto equipment, CharacterBuffResponseDto buff, CharacterSkillResponseDto skill,
-		CharacterAvatarResponseDto avatar, CharacterCreatureResponseDto creature, CharacterFlagResponseDto flag) {
+		CharacterAvatarResponseDto avatar, CharacterCreatureResponseDto creature, CharacterFlagResponseDto flag, CharacterTalismanResponseDto talisman) {
 		return CharacterInformationResponseDto.builder()
 			.basic(basic)
 			.stat(stat)
@@ -35,6 +36,7 @@ public class CharacterInformationResponseDto {
 			.avatar(avatar.getAvatar())
 			.creature(creature)
 			.flag(flag)
+			.talisman(talisman)
 			.build();
 	}
 

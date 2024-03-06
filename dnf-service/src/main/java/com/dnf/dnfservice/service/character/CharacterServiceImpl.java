@@ -17,10 +17,10 @@ import com.dnf.dnfservice.dto.feign.character.CharacterAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
-import com.dnf.dnfservice.dto.feign.character.CharacterFlagDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSkillStyleDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterTalismanDto;
 import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
 import com.dnf.dnfservice.dto.feign.skill.SkillDetailInfoDto;
 import com.dnf.dnfservice.dto.model.character.CharacterSearchInfo;
@@ -32,6 +32,10 @@ import com.dnf.dnfservice.dto.model.character.flag.CharacterFlag;
 import com.dnf.dnfservice.dto.model.character.flag.FlagGemWithImageAndDetail;
 import com.dnf.dnfservice.dto.model.character.skill.SkillDetail;
 import com.dnf.dnfservice.dto.model.character.skill.SkillDetailWithDesc;
+import com.dnf.dnfservice.dto.model.character.talisman.CharacterTalisman;
+import com.dnf.dnfservice.dto.model.character.talisman.CharacterTalismanForResponse;
+import com.dnf.dnfservice.dto.model.character.talisman.TalismanInfoWithImageAndDetail;
+import com.dnf.dnfservice.dto.model.character.talisman.TalismanRuneWithImageAndDetail;
 import com.dnf.dnfservice.dto.model.skill.SkillDetailInfo;
 import com.dnf.dnfservice.dto.response.character.CharacterAvatarResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBasicInfoResponseDto;
@@ -48,6 +52,7 @@ import com.dnf.dnfservice.dto.response.character.CharacterEquipmentResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterInformationResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterSearchResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterStatResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterTalismanResponseDto;
 import com.dnf.dnfservice.exception.CustomException;
 import com.dnf.dnfservice.exception.ErrorCode;
 import com.dnf.dnfservice.feign.SkillFeignClient;
@@ -99,6 +104,7 @@ public class CharacterServiceImpl implements CharacterService {
 		if (serverId == null || serverId.isBlank()) {
 			throw new CustomException(ErrorCode.SERVER_NOT_FOUND);
 		}
+		String characterId = getCharacterId(serverId, characterName);
 
 		CharacterSearchDto searchCharacters = characterApiService.searchCharacters(serverId, characterName);
 		if (searchCharacters.getRows().size() == 0) {
@@ -111,22 +117,24 @@ public class CharacterServiceImpl implements CharacterService {
 		setOperations.add(key, value);
 
 		CharacterBasicInfoResponseDto characterBasicInfoResponseDto = getCharacterBasicInfo(serverName, characterName);
-		CharacterStatResponseDto characterStatResponseDto = getCharacterStat(serverName, characterName);
-		CharacterEquipmentResponseDto characterEquipmentResponseDto = getCharacterEquipment(serverName, characterName);
-		CharacterBuffResponseDto characterBuffResponseDto = getCharacterBuff(serverName, characterName);
-		CharacterSkillResponseDto characterSkillResponseDto = getCharacterSkill(serverName, characterName);
-		CharacterAvatarResponseDto characterAvatarResponseDto = getCharacterAvatar(serverName, characterName);
-		CharacterCreatureResponseDto characterCreatureResponseDto = getCharacterCreature(serverName, characterName);
-		CharacterFlagResponseDto characterFlagResponseDto = getCharacterFlag(serverName, characterName);
+		CharacterStatResponseDto characterStatResponseDto = getCharacterStat(serverId, characterId);
+		CharacterEquipmentResponseDto characterEquipmentResponseDto = getCharacterEquipment(serverId, characterId);
+		CharacterBuffResponseDto characterBuffResponseDto = getCharacterBuff(serverId, characterId);
+		CharacterSkillResponseDto characterSkillResponseDto = getCharacterSkill(serverId, characterId);
+		CharacterAvatarResponseDto characterAvatarResponseDto = getCharacterAvatar(serverId, characterId);
+		CharacterCreatureResponseDto characterCreatureResponseDto = getCharacterCreature(serverId, characterId);
+		CharacterFlagResponseDto characterFlagResponseDto = getCharacterFlag(serverId, characterId);
+		CharacterTalismanResponseDto characterTalismanResponseDto = getCharacterTalisman(serverId, characterId);
 
 		return CharacterInformationResponseDto.of(characterBasicInfoResponseDto, characterStatResponseDto,
 			characterEquipmentResponseDto, characterBuffResponseDto, characterSkillResponseDto,
-			characterAvatarResponseDto, characterCreatureResponseDto, characterFlagResponseDto);
+			characterAvatarResponseDto, characterCreatureResponseDto, characterFlagResponseDto,
+			characterTalismanResponseDto);
 	}
 
-	private CharacterBuffResponseDto getCharacterBuff(String serverName, String characterName) {
-		return CharacterBuffResponseDto.of(getCharacterBuffEquipment(serverName, characterName),
-			getCharacterBuffAvatar(serverName, characterName), getCharacterBuffCreature(serverName, characterName));
+	private CharacterBuffResponseDto getCharacterBuff(String serverId, String characterId) {
+		return CharacterBuffResponseDto.of(getCharacterBuffEquipment(serverId, characterId),
+			getCharacterBuffAvatar(serverId, characterId), getCharacterBuffCreature(serverId, characterId));
 	}
 
 	@Override
@@ -161,10 +169,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	public CharacterStatResponseDto getCharacterStat(String serverName, String characterName) {
-		String serverId = serverTable.serverNameToId.get(serverName);
-		String characterId = getCharacterId(serverId, characterName);
-
+	public CharacterStatResponseDto getCharacterStat(String serverId, String characterId) {
 		CharacterStatusDto characterStatusDto = characterApiService.getCharacterStatus(serverId, characterId);
 
 		List<CharacterStatBuffResponseDto> buff = new ArrayList<>();
@@ -174,10 +179,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	public CharacterEquipmentResponseDto getCharacterEquipment(String serverName, String characterName) {
-		String serverId = serverTable.serverNameToId.get(serverName);
-		String characterId = getCharacterId(serverId, characterName);
-
+	public CharacterEquipmentResponseDto getCharacterEquipment(String serverId, String characterId) {
 		List<EquipmentWithDetail> equipment = new ArrayList<>();
 		CharacterEquipmentDto characterEquipmentDto = characterApiService.getCharacterEquipment(serverId, characterId);
 		characterEquipmentDto.getEquipment().stream().forEach(data -> {
@@ -200,34 +202,26 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	public CharacterBuffEquipmentResponseDto getCharacterBuffEquipment(String serverName, String characterName) {
-		String serverId = serverTable.serverNameToId.get(serverName);
-		String characterId = getCharacterId(serverId, characterName);
+	public CharacterBuffEquipmentResponseDto getCharacterBuffEquipment(String serverId, String characterId) {
 
 		return CharacterBuffEquipmentResponseDto.of(
 			characterApiService.getCharacterBuffEquipment(serverId, characterId));
 	}
 
 	@Override
-	public CharacterBuffAvatarResponseDto getCharacterBuffAvatar(String serverName, String characterName) {
-		String serverId = serverTable.serverNameToId.get(serverName);
-		String characterId = getCharacterId(serverId, characterName);
+	public CharacterBuffAvatarResponseDto getCharacterBuffAvatar(String serverId, String characterId) {
 
 		return CharacterBuffAvatarResponseDto.of(characterApiService.getCharacterBuffAvatar(serverId, characterId));
 	}
 
 	@Override
-	public CharacterBuffCreatureResponseDto getCharacterBuffCreature(String serverName, String characterName) {
-		String serverId = serverTable.serverNameToId.get(serverName);
-		String characterId = getCharacterId(serverId, characterName);
+	public CharacterBuffCreatureResponseDto getCharacterBuffCreature(String serverId, String characterId) {
 
 		return CharacterBuffCreatureResponseDto.of(characterApiService.getCharacterBuffCreature(serverId, characterId));
 	}
 
 	@Override
-	public CharacterSkillResponseDto getCharacterSkill(String serverName, String characterName) {
-		String serverId = serverTable.serverNameToId.get(serverName);
-		String characterId = getCharacterId(serverId, characterName);
+	public CharacterSkillResponseDto getCharacterSkill(String serverId, String characterId) {
 
 		CharacterSkillStyleDto characterSkillStyleDto = characterApiService.getCharacterSkillStyle(serverId,
 			characterId);
@@ -241,9 +235,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	public CharacterAvatarResponseDto getCharacterAvatar(String serverName, String characterName) {
-		String serverId = serverTable.serverNameToId.get(serverName);
-		String characterId = getCharacterId(serverId, characterName);
+	public CharacterAvatarResponseDto getCharacterAvatar(String serverId, String characterId) {
 
 		CharacterAvatarDto characterAvatarDto = characterApiService.getCharacterAvatar(serverId, characterId);
 
@@ -270,9 +262,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	public CharacterCreatureResponseDto getCharacterCreature(String serverName, String characterName) {
-		String serverId = serverTable.serverNameToId.get(serverName);
-		String characterId = getCharacterId(serverId, characterName);
+	public CharacterCreatureResponseDto getCharacterCreature(String serverId, String characterId) {
 
 		CharacterCreature creature = characterApiService.getCharacterCreature(serverId, characterId).getCreature();
 		if (creature == null) {
@@ -304,9 +294,7 @@ public class CharacterServiceImpl implements CharacterService {
 	}
 
 	@Override
-	public CharacterFlagResponseDto getCharacterFlag(String serverName, String characterName) {
-		String serverId = serverTable.serverNameToId.get(serverName);
-		String characterId = getCharacterId(serverId, characterName);
+	public CharacterFlagResponseDto getCharacterFlag(String serverId, String characterId) {
 
 		CharacterFlag flag = characterApiService.getCharacterFlag(serverId, characterId).getFlag();
 		if (flag == null) {
@@ -326,6 +314,36 @@ public class CharacterServiceImpl implements CharacterService {
 			});
 
 		return CharacterFlagResponseDto.of(flag, detail, gems);
+	}
+
+	@Override
+	public CharacterTalismanResponseDto getCharacterTalisman(String serverId, String characterId) {
+
+		CharacterTalismanDto characterTalismanDto = characterApiService.getCharacterTalisman(serverId, characterId);
+
+		List<CharacterTalismanForResponse> talismans = new ArrayList<>();
+		Optional.ofNullable(characterTalismanDto.getTalismans()).map(Collection::stream).orElseGet(Stream::empty)
+			.forEach(data -> {
+				ItemDetailDto talismanDetail = null;
+				if (data.getTalisman().getItemId() != null && !data.getTalisman().getItemId().isBlank()) {
+					talismanDetail = itemApiService.getItemDetail(data.getTalisman().getItemId());
+				}
+
+				List<TalismanRuneWithImageAndDetail> runes = new ArrayList<>();
+				Optional.ofNullable(data.getRunes()).map(Collection::stream).orElseGet(Stream::empty)
+					.forEach(rune -> {
+						ItemDetailDto runeDetail = null;
+						if (rune.getItemId() != null && !rune.getItemId().isBlank()) {
+							runeDetail = itemApiService.getItemDetail(rune.getItemId());
+						}
+						runes.add(TalismanRuneWithImageAndDetail.of(rune, runeDetail));
+					});
+
+				talismans.add(CharacterTalismanForResponse.of(
+					TalismanInfoWithImageAndDetail.of(data.getTalisman(), talismanDetail), runes));
+			});
+
+		return CharacterTalismanResponseDto.of(talismans);
 	}
 
 	private List<SkillDetailWithDesc> getSkillDetailWithDescList(List<SkillDetail> skillDetailList, String jobId) {

@@ -14,6 +14,7 @@ import com.dnf.dnfservice.dto.feign.character.CharacterFlagDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSkillStyleDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterTalismanDto;
 import com.dnf.dnfservice.feign.CharacterFeignClient;
 import com.dnf.dnfservice.util.cache.RedisCacheable;
 
@@ -91,5 +92,10 @@ public class CharacterApiServiceImpl implements CharacterApiService {
 	@Override
 	public CharacterFlagDto getCharacterFlag(String serverId, String characterId) {
 		return characterFeignClient.getCharacterFlag(serverId, characterId);
+	}
+
+	@Override
+	public CharacterTalismanDto getCharacterTalisman(String serverId, String characterId) {
+		return characterFeignClient.getCharacterTalisman(serverId, characterId);
 	}
 }
