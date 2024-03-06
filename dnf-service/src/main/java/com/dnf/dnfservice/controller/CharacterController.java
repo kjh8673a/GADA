@@ -89,4 +89,28 @@ public class CharacterController {
 			.body(SuccessResponse.of(characterService.getCharacterBuffCreature(serverName, characterName)));
 	}
 
+	@RequestMapping("/getCharacterSkill")
+	public ResponseEntity<SuccessResponse> getCharacterSkill(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterSkill(serverName, characterName)));
+	}
+
+	@RequestMapping("/getCharacterAvatar")
+	public ResponseEntity<SuccessResponse> getCharacterAvatar(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterAvatar(serverName, characterName)));
+	}
+
+	@RequestMapping("/getCharacterCreature")
+	public ResponseEntity<SuccessResponse> getCharacterCreature(@RequestParam String serverName, @RequestParam String characterName) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterService.getCharacterCreature(serverName, characterName)));
+	}
+
 }

@@ -14,6 +14,7 @@ public class SkillDetailInfoDto {
 	String desc;
 	String descDetail;
 	String consumeItem;
+	String descSpecial;
 	Integer maxLevel;
 	Integer requiredLevel;
 	String jobName;

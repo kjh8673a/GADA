@@ -3,26 +3,44 @@ package com.dnf.dnfservice.service.character;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Service;
 
+import com.dnf.dnfservice.dto.feign.character.CharacterAvatarDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterBasicInfoDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterCreatureDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentTraitDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterSearchDto;
+import com.dnf.dnfservice.dto.feign.character.CharacterSkillStyleDto;
 import com.dnf.dnfservice.dto.feign.character.CharacterStatusDto;
 import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
+import com.dnf.dnfservice.dto.feign.skill.SkillDetailInfoDto;
 import com.dnf.dnfservice.dto.model.character.CharacterSearchInfo;
+import com.dnf.dnfservice.dto.model.character.avatar.CharacterAvatarWithImageAndDetail;
+import com.dnf.dnfservice.dto.model.character.avatar.CharacterItemCloneWithImageAndDetail;
+import com.dnf.dnfservice.dto.model.character.creature.CreatureArtifact;
+import com.dnf.dnfservice.dto.model.character.creature.CreatureArtifactWithImageAndDetail;
 import com.dnf.dnfservice.dto.model.character.equipment.EquipmentWithDetail;
+import com.dnf.dnfservice.dto.model.character.skill.SkillDetail;
+import com.dnf.dnfservice.dto.model.character.skill.SkillDetailWithDesc;
+import com.dnf.dnfservice.dto.model.skill.SkillDetailInfo;
+import com.dnf.dnfservice.dto.response.character.CharacterAvatarResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBasicInfoResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffAvatarResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffCreatureResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffEquipmentResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterBuffResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterCreature;
+import com.dnf.dnfservice.dto.response.character.CharacterCreatureResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterSkillResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterStatBuffResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterEquipmentResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterInformationResponseDto;
@@ -30,6 +48,7 @@ import com.dnf.dnfservice.dto.response.character.CharacterSearchResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterStatResponseDto;
 import com.dnf.dnfservice.exception.CustomException;
 import com.dnf.dnfservice.exception.ErrorCode;
+import com.dnf.dnfservice.feign.SkillFeignClient;
 import com.dnf.dnfservice.repository.character.CharactersRepository;
 import com.dnf.dnfservice.service.item.ItemApiService;
 import com.dnf.dnfservice.util.ServerTable;
@@ -37,12 +56,15 @@ import com.dnf.dnfservice.util.cache.RedisCacheEvict;
 import com.dnf.dnfservice.util.cache.RedisCacheable;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CharacterServiceImpl implements CharacterService {
 	private final CharacterApiService characterApiService;
 	private final ItemApiService itemApiService;
+	private final SkillFeignClient skillFeignClient;
 
 	private final CharactersRepository charactersRepository;
 
@@ -59,7 +81,6 @@ public class CharacterServiceImpl implements CharacterService {
 		List<CharacterSearchResponseDto> characterSearchResponseDtos = new ArrayList<>();
 		characterSearchDto.getRows()
 			.stream()
-			.filter(data -> data.getFame() != null)
 			.forEach(data -> {
 					characterSearchResponseDtos.add(
 						CharacterSearchResponseDto.of(data, serverTable.serverIdToName.get(data.getServerId())));
@@ -91,9 +112,13 @@ public class CharacterServiceImpl implements CharacterService {
 		CharacterStatResponseDto characterStatResponseDto = getCharacterStat(serverName, characterName);
 		CharacterEquipmentResponseDto characterEquipmentResponseDto = getCharacterEquipment(serverName, characterName);
 		CharacterBuffResponseDto characterBuffResponseDto = getCharacterBuff(serverName, characterName);
+		CharacterSkillResponseDto characterSkillResponseDto = getCharacterSkill(serverName, characterName);
+		CharacterAvatarResponseDto characterAvatarResponseDto = getCharacterAvatar(serverName, characterName);
+		CharacterCreatureResponseDto characterCreatureResponseDto = getCharacterCreature(serverName, characterName);
 
 		return CharacterInformationResponseDto.of(characterBasicInfoResponseDto, characterStatResponseDto,
-			characterEquipmentResponseDto, characterBuffResponseDto);
+			characterEquipmentResponseDto, characterBuffResponseDto, characterSkillResponseDto,
+			characterAvatarResponseDto, characterCreatureResponseDto);
 	}
 
 	private CharacterBuffResponseDto getCharacterBuff(String serverName, String characterName) {
@@ -194,6 +219,99 @@ public class CharacterServiceImpl implements CharacterService {
 		String characterId = getCharacterId(serverId, characterName);
 
 		return CharacterBuffCreatureResponseDto.of(characterApiService.getCharacterBuffCreature(serverId, characterId));
+	}
+
+	@Override
+	public CharacterSkillResponseDto getCharacterSkill(String serverName, String characterName) {
+		String serverId = serverTable.serverNameToId.get(serverName);
+		String characterId = getCharacterId(serverId, characterName);
+
+		CharacterSkillStyleDto characterSkillStyleDto = characterApiService.getCharacterSkillStyle(serverId,
+			characterId);
+
+		List<SkillDetailWithDesc> active = getSkillDetailWithDescList(
+			characterSkillStyleDto.getSkill().getStyle().getActive(), characterSkillStyleDto.getJobId());
+		List<SkillDetailWithDesc> passive = getSkillDetailWithDescList(
+			characterSkillStyleDto.getSkill().getStyle().getPassive(), characterSkillStyleDto.getJobId());
+
+		return CharacterSkillResponseDto.of(active, passive);
+	}
+
+	@Override
+	public CharacterAvatarResponseDto getCharacterAvatar(String serverName, String characterName) {
+		String serverId = serverTable.serverNameToId.get(serverName);
+		String characterId = getCharacterId(serverId, characterName);
+
+		CharacterAvatarDto characterAvatarDto = characterApiService.getCharacterAvatar(serverId, characterId);
+
+		List<CharacterAvatarWithImageAndDetail> list = new ArrayList<>();
+		Optional.ofNullable(characterAvatarDto.getAvatar()).map(Collection::stream).orElseGet(Stream::empty)
+			.forEach(data -> {
+				ItemDetailDto itemDetail = null;
+				if(data.getItemId() != null && !data.getItemId().isBlank()) {
+					itemDetail = itemApiService.getItemDetail(data.getItemId());
+				}
+
+				ItemDetailDto cloneDetail = null;
+				if(data.getClone() != null && data.getClone().getItemId() != null && !data.getClone().getItemId().isBlank()) {
+					cloneDetail = itemApiService.getItemDetail(data.getClone().getItemId());
+				}
+				CharacterItemCloneWithImageAndDetail clone = CharacterItemCloneWithImageAndDetail.of(data.getClone(), cloneDetail);
+				list.add(CharacterAvatarWithImageAndDetail.of(data, clone, itemDetail));
+			});
+
+		return CharacterAvatarResponseDto.of(list);
+	}
+
+	@Override
+	public CharacterCreatureResponseDto getCharacterCreature(String serverName, String characterName) {
+		String serverId = serverTable.serverNameToId.get(serverName);
+		String characterId = getCharacterId(serverId, characterName);
+
+		CharacterCreature creature = characterApiService.getCharacterCreature(serverId, characterId).getCreature();
+
+		ItemDetailDto cloneDetail = null;
+		if(creature.getClone() != null && creature.getClone().getItemId() != null && !creature.getClone().getItemId().isBlank()) {
+			cloneDetail = itemApiService.getItemDetail(creature.getClone().getItemId());
+		}
+		CharacterItemCloneWithImageAndDetail clone = CharacterItemCloneWithImageAndDetail.of(creature.getClone(), cloneDetail);
+
+		List<CreatureArtifactWithImageAndDetail> artifact = new ArrayList<>();
+		Optional.ofNullable(creature.getArtifact()).map(Collection::stream).orElseGet(Stream::empty)
+			.forEach(data -> {
+				ItemDetailDto artifactDetail = null;
+				if(data.getItemId() != null && !data.getItemId().isBlank()) {
+					artifactDetail = itemApiService.getItemDetail(data.getItemId());
+				}
+				artifact.add(CreatureArtifactWithImageAndDetail.of(data, artifactDetail));
+			});
+
+		ItemDetailDto detail = null;
+		if(creature.getItemId() != null && !creature.getItemId().isBlank()) {
+			itemApiService.getItemDetail(creature.getItemId());
+		}
+
+		return CharacterCreatureResponseDto.of(creature, clone, artifact, detail);
+	}
+
+	private List<SkillDetailWithDesc> getSkillDetailWithDescList(List<SkillDetail> skillDetailList, String jobId) {
+		List<SkillDetailWithDesc> result = new ArrayList<>();
+		Optional.ofNullable(skillDetailList)
+			.map(Collection::stream)
+			.orElseGet(Stream::empty).forEach(data -> {
+				SkillDetailInfoDto skillDetailInfoDto = null;
+				try {
+					skillDetailInfoDto = skillFeignClient.getSkillDetail(jobId, data.getSkillId());
+					if (skillDetailInfoDto == null) {
+						throw new CustomException(ErrorCode.SKILL_NOT_FOUND);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				result.add(SkillDetailWithDesc.of(data, SkillDetailInfo.of(skillDetailInfoDto)));
+			});
+
+		return result;
 	}
 
 	private String getCharacterId(String serverId, String characterName) {
