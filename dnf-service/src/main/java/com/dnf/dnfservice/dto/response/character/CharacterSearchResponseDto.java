@@ -1,5 +1,7 @@
 package com.dnf.dnfservice.dto.response.character;
 
+import java.util.Optional;
+
 import com.dnf.dnfservice.dto.model.character.CharacterSearchInfo;
 
 import lombok.AllArgsConstructor;
@@ -21,13 +23,17 @@ public class CharacterSearchResponseDto {
 	String characterImage;
 
 	public static CharacterSearchResponseDto of(CharacterSearchInfo characterSearchInfo, String serverName) {
+		long fame = 0;
+		if(characterSearchInfo.getFame() != null) {
+			fame = characterSearchInfo.getFame();
+		}
 		return CharacterSearchResponseDto.builder()
 			.serverName(serverName)
 			.characterName(characterSearchInfo.getCharacterName())
 			.level(characterSearchInfo.getLevel())
 			.jobName(characterSearchInfo.getJobName())
 			.jobGrowName(characterSearchInfo.getJobGrowName())
-			.fame(characterSearchInfo.getFame())
+			.fame(fame)
 			.characterImage("https://img-api.neople.co.kr/df/servers/" + characterSearchInfo.getServerId() + "/characters/" + characterSearchInfo.getCharacterId() + "?zoom=1")
 			.build();
 	}

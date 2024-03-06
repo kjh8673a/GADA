@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class SkillApiServiceImpl implements SkillApiService{
+public class SkillApiServiceImpl implements SkillApiService {
 	private final SkillFeignClient skillFeignClient;
 
 	@Override
