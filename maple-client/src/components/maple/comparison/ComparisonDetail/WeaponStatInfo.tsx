@@ -11,6 +11,10 @@ const StyledBox = styled.div`
 const StyledStat = styled.div`
   display: flex;
   padding: 1px 0;
+
+  @media (max-width: 768px) {
+    padding: 2px 0;
+  }
 `;
 
 const StyledTitle = styled.span`
@@ -19,6 +23,7 @@ const StyledTitle = styled.span`
   background: #000;
   padding: 2px 4px;
   border-radius: 2px;
+  text-align: center;
 `;
 
 const StyledStatData = styled.p<{ $highlight: string | undefined }>`

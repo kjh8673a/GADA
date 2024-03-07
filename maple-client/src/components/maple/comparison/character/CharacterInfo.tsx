@@ -6,11 +6,20 @@ const StyledBox = styled.div`
   width: calc((100% - 64px - 64px) / 2);
   box-sizing: border-box;
   display: flex;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
 const StyledImgBox = styled.img`
   width: 120px;
   height: 120px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 interface Props {

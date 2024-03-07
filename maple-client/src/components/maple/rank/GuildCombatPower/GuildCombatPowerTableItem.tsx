@@ -21,6 +21,13 @@ const ContentBox = styled.div`
   align-items: center;
 `;
 
+const SubContentBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ccc;
+`;
+
 const GuildCombatPowerTableItem: React.FC<{
   props: GuildCombatPowerContentType;
   clickHandler: (guildName: string, worldName: string) => void;
@@ -33,12 +40,13 @@ const GuildCombatPowerTableItem: React.FC<{
     >
       <ContentBox>{props.rank}</ContentBox>
       <ContentBox>{props.name}</ContentBox>
-      <ContentBox>{props.combatPower.toLocaleString("ko-kr")}</ContentBox>
-      <ContentBox>{props.level}</ContentBox>
-      <ContentBox>{props.masterName}</ContentBox>
-      <ContentBox>{props.worldName}</ContentBox>
+      <SubContentBox>{props.combatPower.toLocaleString("ko-kr")}</SubContentBox>
+      <SubContentBox>{props.level}</SubContentBox>
+      <SubContentBox>{props.masterName}</SubContentBox>
+      <SubContentBox>{props.worldName}</SubContentBox>
     </StyledBox>
   );
 };
 
 export default GuildCombatPowerTableItem;
+

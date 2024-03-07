@@ -12,12 +12,23 @@ const StyledBox = styled.div`
   padding: 16px 0;
   background-color: var(--secondary-bg-color);
   box-shadow: var(--custom-shadow);
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 8px;
+  }
 `;
 
 const StyledVersus = styled.img`
   width: 64px;
   height: 64px;
   margin: 32px;
+
+  @media (max-width: 768px) {
+    width: 32px;
+    height: 32px;
+    margin: 8px;
+  }
 `;
 
 interface Props {
