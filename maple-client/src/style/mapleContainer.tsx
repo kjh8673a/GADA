@@ -22,7 +22,7 @@ export const NameSearch = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 400px;
+  max-width: 352px;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -41,7 +41,7 @@ export const CheckButton = styled.img`
   width: 16px;
   margin: 0;
   position: absolute;
-  right: 36px;
+  right: 12px;
 `;
 
 export const BookmarkBox = styled.div`

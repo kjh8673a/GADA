@@ -32,6 +32,10 @@ export const UpContainer = styled.div`
   align-items: center;
   background-color: var(--primary-bg-color);
   height: 64px;
+
+  @media (max-width: 768px) {
+    padding: 0 12px;
+  }
 `;
 
 export const Container = styled.div`
@@ -46,6 +50,10 @@ export const DownConatiner = styled.div`
   align-items: center;
   background-color: var(--secondary-bg-color);
   height: 40px;
+
+  @media (max-width: 768px) {
+    padding: 0 16px;
+  }
 `;
 
 export const PageHeader = styled.a`
