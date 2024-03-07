@@ -8,6 +8,7 @@ import DashedLine from "../../../common/DashedLine";
 const StyledBox = styled.div`
   width: 100%;
   border-radius: 10px;
+  box-sizing: border-box;
   border: 2px solid #3d444c;
   overflow: hidden;
 `;
@@ -38,3 +39,4 @@ const GuildWaterwayTable = () => {
 };
 
 export default GuildWaterwayTable;
+

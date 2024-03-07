@@ -13,6 +13,7 @@ const StyledBox = styled.ul`
   flex-direction: column;
   align-items: center;
   margin: 0;
+  padding: 0;
   padding-bottom: 24px;
 `;
 

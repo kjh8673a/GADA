@@ -16,6 +16,11 @@ const StyledStatName = styled.span`
   font-size: 0.9rem;
   margin: 2px 8px;
   text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+    word-break: keep-all;
+  }
 `;
 
 interface Props {

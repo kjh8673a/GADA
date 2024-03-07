@@ -7,7 +7,7 @@ type StyledListBoxProps = {
 };
 
 const StyledListBox = styled.ul<StyledListBoxProps>`
-  width: 100%;
+  width: calc(100% - 64px);
   margin: 0;
   box-sizing: border-box;
   padding: 24px;
@@ -16,6 +16,11 @@ const StyledListBox = styled.ul<StyledListBoxProps>`
   display: flex;
   flex-direction: column;
   align-items: ${(props) => (props.$align === "left" ? "flex-end" : "flex-start")};
+
+  @media (max-width: 768px) {
+    width: auto;
+    padding: 8px;
+  }
 `;
 
 const StyledLi = styled.li`
@@ -78,6 +83,10 @@ const StyledTitle = styled.h2`
 
   &:hover {
     cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
   }
 `;
 

@@ -10,6 +10,11 @@ const StyledBox = styled.div`
   border-radius: 10px;
   border: 2px solid #3d444c;
   overflow: hidden;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const GuildCombatPowerTable = () => {
@@ -20,15 +25,8 @@ const GuildCombatPowerTable = () => {
       {guildCombatPower.data?.content.map((v, i) => {
         return (
           <React.Fragment key={i}>
-            <GuildCombatPowerTableItem
-              props={v}
-              clickHandler={guildClickHandler}
-            />
-            {i !== guildCombatPower.data!.content.length - 1 ? (
-              <DashedLine />
-            ) : (
-              <></>
-            )}
+            <GuildCombatPowerTableItem props={v} clickHandler={guildClickHandler} />
+            {i !== guildCombatPower.data!.content.length - 1 ? <DashedLine /> : <></>}
           </React.Fragment>
         );
       })}
@@ -37,3 +35,4 @@ const GuildCombatPowerTable = () => {
 };
 
 export default GuildCombatPowerTable;
+
