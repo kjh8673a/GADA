@@ -22,12 +22,24 @@ const StyledBox = styled.div`
     transition: 0.2s;
     cursor: pointer;
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const ContentBox = styled.div`
   display: flex;
+  width: 100%;
   justify-content: center;
   align-items: center;
+`;
+
+const SubContentBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ccc;
 `;
 
 const GuildWaterwayTableItem: React.FC<Props> = ({
@@ -47,12 +59,13 @@ const GuildWaterwayTableItem: React.FC<Props> = ({
     >
       <ContentBox>{ranking}</ContentBox>
       <ContentBox>{guild_name}</ContentBox>
-      <ContentBox>{guild_point.toLocaleString("ko-kr")}</ContentBox>
-      <ContentBox>{guild_level}</ContentBox>
-      <ContentBox>{guild_master_name}</ContentBox>
-      <ContentBox>{world_name}</ContentBox>
+      <SubContentBox>{guild_point.toLocaleString("ko-kr")}</SubContentBox>
+      <SubContentBox>{guild_level}</SubContentBox>
+      <SubContentBox>{guild_master_name}</SubContentBox>
+      <SubContentBox>{world_name}</SubContentBox>
     </StyledBox>
   );
 };
 
 export default GuildWaterwayTableItem;
+

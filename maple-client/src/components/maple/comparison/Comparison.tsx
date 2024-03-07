@@ -11,6 +11,11 @@ const StyledTitle = styled.h2`
   width: 100%;
   font-size: 1.2rem;
   font-weight: 800;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 12px;
+  }
 `;
 
 const Comparison = () => {

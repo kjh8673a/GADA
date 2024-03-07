@@ -4,6 +4,7 @@ import styled from "styled-components";
 interface Props {
   $width: number;
   $height?: number;
+  $margin?: number;
   value?: string;
   type?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -14,7 +15,7 @@ interface Props {
 
 const StyledBox = styled.input<Props>`
   width: ${(props) => props.$width}px;
-  margin: 0 24px;
+  margin: 0 ${(props) => props.$margin}px;
   padding: ${(props) => (props.$height ? props.$height : "10")}px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -29,7 +30,17 @@ const StyledBox = styled.input<Props>`
   }
 `;
 
-const StyledInput: React.FC<Props> = ({ $width, $height, value, type, onChange, onKeyDown, placeholder, $align }) => {
+const StyledInput: React.FC<Props> = ({
+  $width,
+  $height,
+  $margin,
+  value,
+  type,
+  onChange,
+  onKeyDown,
+  placeholder,
+  $align,
+}) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const selectAllText = () => {
     if (inputRef && inputRef.current) {
@@ -42,6 +53,7 @@ const StyledInput: React.FC<Props> = ({ $width, $height, value, type, onChange, 
       <StyledBox
         $width={$width}
         $height={$height}
+        $margin={$margin}
         value={value}
         type={type}
         onChange={onChange}

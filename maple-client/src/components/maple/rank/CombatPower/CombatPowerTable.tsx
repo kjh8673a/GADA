@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CombatPowerTableHeader from "./CombatPowerTableHeader";
 import CombatPowerTableItem from "./CombatPowerTableItem";
@@ -9,6 +9,7 @@ const StyledBox = styled.div`
   width: 100%;
   border-radius: 10px;
   border: 2px solid #3d444c;
+  box-sizing: border-box;
   overflow: hidden;
   box-shadow: var(--custom-shadow);
 `;
@@ -23,9 +24,20 @@ const ErrorBox = styled.div`
 
 const CombatPowerTable = () => {
   const { combatPowerRanking, rankPage, combatPowerItemClickHandler } = useRanking();
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", resizeHandler);
+    resizeHandler();
+  }, []);
+
+  const resizeHandler = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
   return (
     <StyledBox>
-      <CombatPowerTableHeader />
+      <CombatPowerTableHeader windowWidth={windowWidth} />
       {combatPowerRanking.data?.totalPages! > 0 ? (
         combatPowerRanking.data?.content.map((v, i) => {
           return (
@@ -40,6 +52,7 @@ const CombatPowerTable = () => {
                 guild_name={v.guild_name}
                 world_name={v.world_name}
                 clickHandler={combatPowerItemClickHandler}
+                windowWidth={windowWidth}
               />
               {i !== combatPowerRanking.data!.content.length - 1 ? <DashedLine /> : <></>}
             </React.Fragment>
