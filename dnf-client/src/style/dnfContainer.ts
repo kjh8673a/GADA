@@ -6,8 +6,7 @@ export const DnfContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 1;
-  padding-top: 12vh;
+  min-height: calc(100vh - 64px - 40px - 120px);
 `;
 
 export const MainImg = styled.img`

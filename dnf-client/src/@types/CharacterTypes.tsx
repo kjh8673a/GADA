@@ -88,11 +88,6 @@ export const SUB_EXTRA_STAT_LIST = [
   ["지속피해", true],
 ];
 
-export type TBookmark = {
-  server: string;
-  character: string;
-};
-
 export type TCharacterBasic = {
   updatedTime?: string;
   serverName?: string;

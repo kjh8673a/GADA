@@ -1,6 +1,5 @@
 import { atom } from "recoil";
 import {
-  TBookmark,
   TCharacterBasic,
   TCharacterBuffEquip,
   TCharacterEquip,
@@ -47,9 +46,4 @@ export const atomUpdate = atom<boolean>({
 export const atomLoading = atom<boolean>({
   key: "atomLoading",
   default: false,
-});
-
-export const atomCharacterBookmark = atom<TBookmark[]>({
-  key: "atomCharacterBookmark",
-  default: JSON.parse(window.localStorage.getItem("Bookmark")!) || [],
 });

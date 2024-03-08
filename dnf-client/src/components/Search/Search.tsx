@@ -5,6 +5,7 @@ import SearchFetchContainer from "./SearchFetchContainer";
 import useSearch from "../../hooks/useSearch";
 import SearchInput from "./SearchInput";
 import { useSearchParams } from "react-router-dom";
+import RecentSearch from "./RecentSearch";
 
 const Search = () => {
   const [searchParams] = useSearchParams();
@@ -12,6 +13,7 @@ const Search = () => {
   return (
     <CenteredBox>
       <SearchInput />
+      <RecentSearch />
       {isValidInput(searchParams.get("input")) ? (
         <Suspense fallback={<Loading text="로딩중입니다" play={true} />}>
           <SearchFetchContainer

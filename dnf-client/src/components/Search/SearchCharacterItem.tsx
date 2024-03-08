@@ -27,7 +27,7 @@ const StyledBox = styled.div`
   &:hover {
     transition: 0.2s;
     cursor: pointer;
-    transform: scale(1.05);
+    transform: translateY(-10px);
   }
 `;
 

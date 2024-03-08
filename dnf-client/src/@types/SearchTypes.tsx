@@ -12,3 +12,10 @@ export type TSearchCharacters = {
   timestamp?: string;
   data?: TSearchCharacter[];
 };
+
+export type TBookmark = {
+  server: string;
+  character: string;
+};
+
+export type TRecentSearch = string[];
