@@ -1,8 +1,7 @@
 import { atom } from "recoil";
 import {
-  TBookmark,
   TCharacterBasic,
-  TCharacterData,
+  TCharacterBuffEquip,
   TCharacterEquip,
   TCharacterEquipTrait,
   TCharacterSetItem,
@@ -34,6 +33,11 @@ export const atomCharacterEquipTrait = atom<TCharacterEquipTrait>({
   default: {},
 });
 
+export const atomCharacterBuffEquip = atom<TCharacterBuffEquip>({
+  key: "atomCharacterBuffEquip",
+  default: {},
+})
+
 export const atomUpdate = atom<boolean>({
   key: "atomUpdate",
   default: true,
@@ -42,9 +46,4 @@ export const atomUpdate = atom<boolean>({
 export const atomLoading = atom<boolean>({
   key: "atomLoading",
   default: false,
-});
-
-export const atomCharacterBookmark = atom<TBookmark[]>({
-  key: "atomCharacterBookmark",
-  default: JSON.parse(window.localStorage.getItem("DnfBookmark")!) || [],
 });

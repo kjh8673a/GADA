@@ -12,15 +12,16 @@ import { useNavigate } from "react-router-dom";
 import StyledInput from "../style/StyledInput";
 import useSearch from "../hooks/useSearch";
 import { useRecoilValue } from "recoil";
-import { atomCharacterBookmark } from "../atoms/characterState";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { atomCharacterBookmark } from "../atoms/localStorageState";
 
 const Dnf = () => {
   const [nickname, setNickname] = useState<string>("");
   const bookmark = useRecoilValue(atomCharacterBookmark);
   const navigate = useNavigate();
   const { searchClickName, searchEnterName, changeHandler } = useSearch();
-  const { deleteBookmark, clickMyBookmarkHandler } = useLocalStorage();
+  const { addRecentSearch, deleteBookmark, clickMyBookmarkHandler } =
+    useLocalStorage();
 
   return (
     <DnfContainer>
@@ -29,14 +30,22 @@ const Dnf = () => {
         <StyledInput
           $width={400}
           type="text"
-          placeholder="닉네임(2 ~ 12자) 입력"
+          placeholder="닉네임(12자이내) 입력"
           onChange={(e) => changeHandler(setNickname, e)}
-          onKeyDown={(e) => searchEnterName(navigate, e, nickname)}
+          onKeyDown={(e) => {
+            searchEnterName(navigate, e, nickname);
+            if (e.key === "Enter") {
+              addRecentSearch(nickname);
+            }
+          }}
         />
         <CheckButton
           src="/assets/search_button.png"
           alt="search"
-          onClick={() => searchClickName(navigate, nickname)}
+          onClick={() => {
+            searchClickName(navigate, nickname);
+            addRecentSearch(nickname);
+          }}
         />
       </NameSearch>
       <BookmarkBox>

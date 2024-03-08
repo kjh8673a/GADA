@@ -12,13 +12,19 @@ interface CenteredDivProps {
 
 const CenteredDiv = styled.div<CenteredDivProps>`
   max-width: 1140px;
+  box-sizing: border-box;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   flex-direction: ${(props) => props.$direction};
-  margin: 0 auto;
+  gap: 15px;
 `;
 
-const CenteredBox: React.FC<Props> = ({ children, direction = "column", clickHandler }) => {
+const CenteredBox: React.FC<Props> = ({
+  children,
+  direction = "column",
+  clickHandler,
+}) => {
   if (clickHandler) {
     return (
       <CenteredDiv $direction={direction} onClick={clickHandler}>

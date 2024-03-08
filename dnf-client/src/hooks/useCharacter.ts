@@ -4,6 +4,7 @@ import { getCharacterInfo } from "../api/Character/getCharacterInfo";
 import { useSetRecoilState } from "recoil";
 import {
   atomCharacterBasic,
+  atomCharacterBuffEquip,
   atomCharacterEquip,
   atomCharacterEquipTrait,
   atomCharacterSetItem,
@@ -18,10 +19,10 @@ const useCharacter = () => {
   const setEquipTrait = useSetRecoilState(atomCharacterEquipTrait);
   const setItem = useSetRecoilState(atomCharacterSetItem);
   const setIsLoading = useSetRecoilState(atomLoading);
+  const setBuff = useSetRecoilState(atomCharacterBuffEquip);
 
   const fetchCharacterInfo = useCallback(
     (serverName: string, characterName: string, update?: boolean) => {
-      console.log("fetchCharacterInfo");
       let status = "pending";
       let data: TCharacterData;
       const suspender = getCharacterInfo(serverName, characterName, update)
@@ -57,6 +58,7 @@ const useCharacter = () => {
     setEquip(data.data?.equipment.equipment!);
     setEquipTrait(data.data?.equipment.equipmentTrait!);
     setItem(data.data?.equipment.setItemInfo!);
+    setBuff(data.data?.buff!);
   };
 
   const isValid = (server: any, character: any): boolean => {
