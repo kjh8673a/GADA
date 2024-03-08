@@ -1,7 +1,5 @@
 package com.dnf.dnfservice.dto.model.character.buff;
 
-import com.dnf.dnfservice.dto.response.character.CharacterBuffEquipmentResponseDto;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
