@@ -1,5 +1,5 @@
 import useCharacterTab from "../../hooks/useCharacterTab";
-import CharacterStat from "./Stat/CharacterStat";
+import CharacterStat from "./Stat/Stat";
 
 const CharacterDetail = () => {
   const { tabName } = useCharacterTab();

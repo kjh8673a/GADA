@@ -67,3 +67,30 @@ export const PointerText = styled.span`
     cursor: pointer;
   }
 `;
+
+export const Line = styled.div`
+  box-sizing: border-box;
+  width: 100%;
+  border-bottom: 2px solid rgba(64, 64, 64, 1);
+`;
+
+export const DnfHeader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 5px 0px;
+  border-top: 1px black solid;
+  border-bottom: 1px black solid;
+  color: #dbc68d;
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(122, 122, 122, 0) 38.6%,
+      rgba(0, 0, 0, 0.12) 100%
+    ),
+    #102c55;
+  border-width: 1px 0px;
+  border-style: solid;
+  border-color: #497d93;
+`;

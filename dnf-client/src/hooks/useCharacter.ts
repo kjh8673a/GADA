@@ -23,7 +23,6 @@ const useCharacter = () => {
 
   const fetchCharacterInfo = useCallback(
     (serverName: string, characterName: string, update?: boolean) => {
-      console.log("fetchCharacterInfo");
       let status = "pending";
       let data: TCharacterData;
       const suspender = getCharacterInfo(serverName, characterName, update)
