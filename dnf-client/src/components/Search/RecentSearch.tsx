@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { ColorText } from "../../style/CharacterStat";
 import { useNavigate } from "react-router-dom";
 
 const StyledBox = styled.div<{ visbility: string }>`

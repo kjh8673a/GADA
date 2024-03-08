@@ -5,7 +5,6 @@ import Loading from "../common/Loading";
 import useCharacter from "../../hooks/useCharacter";
 import { useSearchParams } from "react-router-dom";
 
-
 const Character = () => {
   const [searchParams] = useSearchParams();
   const { fetchCharacterInfo, isValid } = useCharacter();

@@ -17,15 +17,11 @@ const StyledBox = styled.span`
   justify-content: space-between;
 `;
 
-const SubStatItem: React.FC<Props> = ({
-  title,
-  value,
-  isPercent,
-}) => {
+const SubStatItem: React.FC<Props> = ({ title, value, isPercent }) => {
   return (
     <StyledBox>
       <ColorText color={"#a0844b"}>{title}</ColorText>
-      <ColorText color={value === 0 ? "#6a6a6a" :"#78C82F"}>
+      <ColorText color={value === 0 ? "#6a6a6a" : "#78C82F"}>
         {value.toLocaleString("ko-kr")}
         {isPercent ? "%" : ""}
       </ColorText>

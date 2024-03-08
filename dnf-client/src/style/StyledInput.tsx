@@ -29,7 +29,16 @@ const StyledBox = styled.input<Props>`
   }
 `;
 
-const StyledInput: React.FC<Props> = ({ $width, $height, value, type, onChange, onKeyDown, placeholder, $align }) => {
+const StyledInput: React.FC<Props> = ({
+  $width,
+  $height,
+  value,
+  type,
+  onChange,
+  onKeyDown,
+  placeholder,
+  $align,
+}) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const selectAllText = () => {
     if (inputRef && inputRef.current) {

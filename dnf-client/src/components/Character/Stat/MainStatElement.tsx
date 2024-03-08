@@ -2,7 +2,10 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { atomCharacterStat } from "../../../atoms/characterState";
-import { MAIN_STAT_ELEMENT_LIST, TCharacterStat } from "../../../@types/CharacterTypes";
+import {
+  MAIN_STAT_ELEMENT_LIST,
+  TCharacterStat,
+} from "../../../@types/CharacterTypes";
 
 interface Props {
   data: TCharacterStat;
