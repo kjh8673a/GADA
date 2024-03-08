@@ -19,7 +19,7 @@ const useLocalStorage = () => {
 
   const deleteBookmark = (server: string, character: string) =>
     setBookmark((prev) =>
-      prev.filter((v) => v.server !== server && v.character !== character)
+      prev.filter((v) => v.server !== server || v.character !== character)
     );
 
   const isBookmark = (server: string, character: string) =>
