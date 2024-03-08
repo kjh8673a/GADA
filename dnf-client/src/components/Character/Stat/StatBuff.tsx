@@ -1,8 +1,8 @@
-import React from 'react';
-import { StatBox, StatHeader } from '../../../style/CharacterStat';
-import { TCharacterStat } from '../../../@types/CharacterTypes';
-import { Line } from '../../../style/dnfContainer';
-import StatBuffItem from './StatBuffItem';
+import React from "react";
+import { StatBox, StatHeader } from "../../../style/CharacterStat";
+import { TCharacterStat } from "../../../@types/CharacterTypes";
+import { Line } from "../../../style/dnfContainer";
+import StatBuffItem from "./StatBuffItem";
 
 interface Props {
   width: number;
@@ -15,7 +15,7 @@ const StatBuff: React.FC<Props> = ({ width, data }) => {
       <StatHeader>스탯 버프</StatHeader>
       <Line />
       {data.buff?.map((v, i) => {
-        return (<StatBuffItem key={i} data={v}/>)
+        return <StatBuffItem key={i} data={v} />;
       })}
     </StatBox>
   );

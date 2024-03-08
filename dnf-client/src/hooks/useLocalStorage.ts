@@ -51,19 +51,25 @@ const useLocalStorage = () => {
   }, [recentSearch]);
 
   const addRecentSearch = (input: string) => {
-    if (recentSearch.includes(input)) return;
-    setRecentSearch((prev: string[]) => {
-      if (prev.length > 4) {
-        return [...prev.slice(1, 5), input];
-      } else {
-        return [...prev, input];
-      }
-    });
+    if (recentSearch.includes(input)) {
+      setRecentSearch((prev: string[]) => {
+        return [input, ...prev.filter((v) => input !== v)];
+      });
+    } else {
+      setRecentSearch((prev: string[]) => {
+        if (prev.length > 4) {
+          return [input, ...prev.slice(0, 4)];
+        } else {
+          return [input, ...prev];
+        }
+      });
+    }
   };
 
   const clickRecentSearch = (navigate: NavigateFunction, input: string) => {
     navigate(`/search?input=${input}`);
   };
+  // -----------------------------------------------------
 
   return {
     bookmark,

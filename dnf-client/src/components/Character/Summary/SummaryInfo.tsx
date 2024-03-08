@@ -43,7 +43,10 @@ const SummaryInfo = () => {
           data.updatedTime!
         )}`}</UpdatedText>
         <Line />
-        <ContentItem title={"명성"} value={data.fame ? data.fame.toString() : "0"} />
+        <ContentItem
+          title={"명성"}
+          value={data.fame ? data.fame.toString() : "0"}
+        />
         <ContentItem title={"서버"} value={data.serverName!} />
         <ContentItem title={"직업 랭킹"} value={data.jobRanking! + "위"} />
         <ContentItem title={"모험단"} value={data.adventureName!} />
