@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import com.dnf.dnfservice.dto.feign.character.CharacterAvatarDto;
@@ -24,6 +26,7 @@ import com.dnf.dnfservice.dto.feign.character.CharacterTalismanDto;
 import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
 import com.dnf.dnfservice.dto.feign.skill.SkillDetailInfoDto;
 import com.dnf.dnfservice.dto.model.character.CharacterSearchInfo;
+import com.dnf.dnfservice.dto.model.character.CharacterViewRanking;
 import com.dnf.dnfservice.dto.model.character.avatar.CharacterAvatarWithImageAndDetail;
 import com.dnf.dnfservice.dto.model.character.avatar.CharacterItemCloneWithImageAndDetail;
 import com.dnf.dnfservice.dto.model.character.creature.CreatureArtifactWithImageAndDetail;
@@ -32,7 +35,6 @@ import com.dnf.dnfservice.dto.model.character.flag.CharacterFlag;
 import com.dnf.dnfservice.dto.model.character.flag.FlagGemWithImageAndDetail;
 import com.dnf.dnfservice.dto.model.character.skill.SkillDetail;
 import com.dnf.dnfservice.dto.model.character.skill.SkillDetailWithDesc;
-import com.dnf.dnfservice.dto.model.character.talisman.CharacterTalisman;
 import com.dnf.dnfservice.dto.model.character.talisman.CharacterTalismanForResponse;
 import com.dnf.dnfservice.dto.model.character.talisman.TalismanInfoWithImageAndDetail;
 import com.dnf.dnfservice.dto.model.character.talisman.TalismanRuneWithImageAndDetail;
@@ -53,6 +55,7 @@ import com.dnf.dnfservice.dto.response.character.CharacterInformationResponseDto
 import com.dnf.dnfservice.dto.response.character.CharacterSearchResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterStatResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterTalismanResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterViewRankingResponseDto;
 import com.dnf.dnfservice.exception.CustomException;
 import com.dnf.dnfservice.exception.ErrorCode;
 import com.dnf.dnfservice.feign.SkillFeignClient;
@@ -344,6 +347,28 @@ public class CharacterServiceImpl implements CharacterService {
 			});
 
 		return CharacterTalismanResponseDto.of(talismans);
+	}
+
+	@Override
+	@RedisCacheable(value = "character-view-ranking", expire = 600)
+	public CharacterViewRankingResponseDto getPopularCharacters() {
+		List<CharacterViewRanking> rankings = new ArrayList<>();
+		Set<ZSetOperations.TypedTuple<String>> ranking = redisTemplate.opsForZSet()
+			.reverseRangeWithScores("characterViewRank", 0, 4);
+
+		int rank = 1;
+		for (ZSetOperations.TypedTuple<String> data : ranking) {
+			String serverName = data.getValue().split("_")[0];
+			String characterName = data.getValue().split("_")[1];
+
+			CharacterSearchDto characterSearchDto = characterApiService.searchCharacters(serverTable.serverNameToId.get(serverName), characterName);
+			CharacterSearchInfo characterSearchInfo = characterSearchDto.getRows().get(0);
+
+			CharacterViewRanking viewRanking = CharacterViewRanking.of(rank++, serverName, characterSearchInfo);
+			rankings.add(viewRanking);
+		}
+
+		return CharacterViewRankingResponseDto.builder().ranking(rankings).build();
 	}
 
 	private List<SkillDetailWithDesc> getSkillDetailWithDescList(List<SkillDetail> skillDetailList, String jobId) {

@@ -30,23 +30,42 @@ public class CharacterBuffResponseDto {
 		CharacterBuffAvatarResponseDto characterBuffAvatarResponseDto,
 		CharacterBuffCreatureResponseDto characterBuffCreatureResponseDto) {
 
-		List<BuffSkillEquipmentBuffEquipmentWithImage> equipment = new ArrayList<>();
-		Optional.ofNullable(characterBuffEquipmentResponseDto.getEquipmentBuffSkill().getEquipment())
-			.map(Collection::stream)
-			.orElseGet(Stream::empty).forEach(data -> equipment.add(BuffSkillEquipmentBuffEquipmentWithImage.of(data)));
+		BuffSkillBuffSkillInfo skillInfo = null;
+		if(characterBuffEquipmentResponseDto.getEquipmentBuffSkill() != null) {
+			skillInfo = characterBuffEquipmentResponseDto.getEquipmentBuffSkill().getSkillInfo();
+		}else if(characterBuffAvatarResponseDto.getAvatarBuffSkill() != null) {
+			skillInfo = characterBuffAvatarResponseDto.getAvatarBuffSkill().getSkillInfo();
+		}else if(characterBuffCreatureResponseDto.getCreatureBuffSkill() != null) {
+			skillInfo = characterBuffCreatureResponseDto.getCreatureBuffSkill().getSkillInfo();
+		}
 
+		if(skillInfo == null) {
+			return null;
+		}
+
+		List<BuffSkillEquipmentBuffEquipmentWithImage> equipment = new ArrayList<>();
+		if(characterBuffEquipmentResponseDto.getEquipmentBuffSkill() != null) {
+			Optional.ofNullable(characterBuffEquipmentResponseDto.getEquipmentBuffSkill().getEquipment())
+				.map(Collection::stream)
+				.orElseGet(Stream::empty).forEach(data -> equipment.add(BuffSkillEquipmentBuffEquipmentWithImage.of(data)));
+		}
 		List<BuffSkillAvatarBuffAvatarWithImage> avatar = new ArrayList<>();
-		Optional.ofNullable(characterBuffAvatarResponseDto.getAvatarBuffSkill().getAvatar())
-			.map(Collection::stream)
-			.orElseGet(Stream::empty).forEach(data -> avatar.add(BuffSkillAvatarBuffAvatarWithImage.of(data)));
+		if(characterBuffAvatarResponseDto.getAvatarBuffSkill() != null) {
+			Optional.ofNullable(characterBuffAvatarResponseDto.getAvatarBuffSkill().getAvatar())
+				.map(Collection::stream)
+				.orElseGet(Stream::empty).forEach(data -> avatar.add(BuffSkillAvatarBuffAvatarWithImage.of(data)));
+		}
+
 
 		List<BuffSkillCreatureBuffCreatureWithImage> creature = new ArrayList<>();
-		Optional.ofNullable(characterBuffCreatureResponseDto.getCreatureBuffSkill().getCreature())
-			.map(Collection::stream)
-			.orElseGet(Stream::empty).forEach(data -> creature.add(BuffSkillCreatureBuffCreatureWithImage.of(data)));
+		if(characterBuffCreatureResponseDto.getCreatureBuffSkill() != null) {
+			Optional.ofNullable(characterBuffCreatureResponseDto.getCreatureBuffSkill().getCreature())
+				.map(Collection::stream)
+				.orElseGet(Stream::empty).forEach(data -> creature.add(BuffSkillCreatureBuffCreatureWithImage.of(data)));
+		}
 
 		return CharacterBuffResponseDto.builder()
-			.skillInfo(characterBuffEquipmentResponseDto.getEquipmentBuffSkill().getSkillInfo())
+			.skillInfo(skillInfo)
 			.equipment(equipment)
 			.avatar(avatar)
 			.creature(creature)
