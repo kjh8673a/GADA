@@ -1,13 +1,15 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { lazy } from "react";
 import Maple from "./components/maple/Maple";
 import RootLayout from "./components/common/RootLayout";
-import Character from "./components/maple/character/Character";
-import Error from "./components/common/Error";
-import CGsearch from "./components/maple/search/CGsearch";
-import Comparison from "./components/maple/comparison/Comparison";
-import Rank from "./components/maple/rank/Rank";
-import UserAgentBoundary from "./components/common/UserAgentBoundary";
-import Guild from "./components/maple/guild/Guild";
+// import UserAgentBoundary from "./components/common/UserAgentBoundary";
+
+const Character = lazy(() => import("./components/maple/character/Character"));
+const Comparison = lazy(() => import("./components/maple/comparison/Comparison"));
+const Rank = lazy(() => import("./components/maple/rank/Rank"));
+const Guild = lazy(() => import("./components/maple/guild/Guild"));
+const CGsearch = lazy(() => import("./components/maple/search/CGsearch"));
+const Error = lazy(() => import("./components/common/Error"));
 
 function App() {
   const router = createBrowserRouter([

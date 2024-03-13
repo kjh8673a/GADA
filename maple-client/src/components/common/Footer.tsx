@@ -6,7 +6,7 @@ const FooterContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   font-size: 12px;
-  height: 120px;
+  height: 140px;
   padding: 32px;
   width: 100%;
   box-sizing: border-box;
@@ -33,7 +33,7 @@ const Footer = () => {
       <div style={{ display: "flex" }}>
         서비스 문의 : &nbsp; <CopiableText text="gadadev202@gmail.com" />
       </div>
-      <div>&copy;{year} GADA All rights reserved.</div>
+      <div>&copy; {year} GADA All rights reserved.</div>
       <div>This site is not associated with NEXON Korea. Data sourced from NEXON OpenAPI.</div>
     </FooterContainer>
   );

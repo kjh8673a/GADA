@@ -27,6 +27,12 @@ const Graph = () => {
   const [m] = useState(20);
   const [props, setProps] = useState({ character_level: 0, exp: 0, date: "" });
   const [isHover, setIsHover] = useState(false);
+  const [offsetW, setOffsetW] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => setOffsetW(window.innerWidth));
+    setOffsetW(window.innerWidth);
+  }, [window.innerWidth]);
 
   // 히스토리 조회
   useEffect(() => {
@@ -56,7 +62,7 @@ const Graph = () => {
     const xCoords = getXCoords(w, m, data.data.length);
 
     const expArr = data.data.map((v) => +v.character_exp_rate);
-    const barWidth = 24;
+    const barWidth = offsetW > 1024 ? 24 : 18;
     drawExpBar(ctx, xCoords, h, m, barWidth, expArr, "#B4CB32");
 
     const levelArr = data.data.map((v) => v.character_level);
@@ -65,13 +71,13 @@ const Graph = () => {
     drawLevelLine(ctx, xCoords, h, m, lineWidth, radius, levelArr, "orange");
 
     const dateArr = data.data.map((v) => (v.character_level > 0 ? v.date.slice(8, 10) + "일" : ""));
-    const fontSize = 14;
+    const fontSize = offsetW >= 1024 ? 14 : 10;
     drawXScale(ctx, w, h, m, xCoords, lineWidth, fontSize, dateArr, "#666a7a");
 
     return () => {
       ctx.clearRect(0, 0, w, h);
     };
-  }, [data, m]);
+  }, [data, m, offsetW]);
 
   // hover 기능
   useEffect(() => {
