@@ -63,9 +63,7 @@ export const CompareButton = styled.button`
 `;
 
 export const InfoBoxBody = styled.div`
-  margin: 1%;
-  margin-bottom: 2%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  display: flex;
 `;
 

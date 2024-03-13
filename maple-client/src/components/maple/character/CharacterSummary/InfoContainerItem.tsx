@@ -5,18 +5,24 @@ import { BasicPropsType } from "../../../../@types/maple/CharacterBasicTypes";
 const InfoItemBox = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   height: 100%;
   margin: 4px;
 `;
 
 const InfoItemTitle = styled.div`
+  box-sizing: border-box;
   color: #fff;
-  font-size: 0.9rem;
+  font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   margin-top: 8px;
+  margin-bottom: 2px;
   padding-left: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const InfoItemValue = styled.div<{ $isClickable: boolean }>`
