@@ -1,7 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { lazy } from "react";
+import { Suspense, lazy } from "react";
 import Maple from "./components/maple/Maple";
 import RootLayout from "./components/common/RootLayout";
+import DeferredComponent from "./components/common/DeferredComponent";
+import Loading from "./components/common/Loading";
 // import UserAgentBoundary from "./components/common/UserAgentBoundary";
 
 const Character = lazy(() => import("./components/maple/character/Character"));
@@ -21,19 +23,49 @@ function App() {
         //캐릭터 정보 조회 페이지
         {
           path: "/Character/:Charactername",
-          element: <Character />,
+          element: (
+            <Suspense
+              fallback={
+                <DeferredComponent>
+                  <Loading text="캐릭터 정보를 조회 중 입니다" />
+                </DeferredComponent>
+              }
+            >
+              <Character />
+            </Suspense>
+          ),
           errorElement: <Error />,
         },
         //캐릭터/길드 조회 페이지
         {
           path: "/Search/:name",
-          element: <CGsearch />,
+          element: (
+            <Suspense
+              fallback={
+                <DeferredComponent>
+                  <Loading text="캐릭터 및 길드 정보를 조회 중 입니다" />
+                </DeferredComponent>
+              }
+            >
+              <CGsearch />
+            </Suspense>
+          ),
           errorElement: <Error />,
         },
         //길드 페이지
         {
           path: "/Search/Guild/:worldName/:name",
-          element: <Guild />,
+          element: (
+            <Suspense
+              fallback={
+                <DeferredComponent>
+                  <Loading text="캐릭터 및 길드 정보를 조회 중 입니다" />
+                </DeferredComponent>
+              }
+            >
+              <Guild />
+            </Suspense>
+          ),
           errorElement: <Error />,
         },
         //랭킹 페이지
