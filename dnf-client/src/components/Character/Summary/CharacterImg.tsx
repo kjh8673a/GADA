@@ -12,9 +12,11 @@ const StyledBox = styled.div`
 const StyledImg = styled.img`
   object-fit: cover;
   transform: scale(1.2);
+  z-index: 1;
 `;
 
 const StyledTextBox = styled.div`
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;

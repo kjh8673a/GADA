@@ -23,4 +23,5 @@ export const StatHeader = styled.div`
 
 export const ColorText = styled.span<{ color: string }>`
   color: ${(props) => props.color};
+  white-space: pre-line;
 `;

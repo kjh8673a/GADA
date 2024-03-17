@@ -20,7 +20,7 @@ const Wrapper = styled.div<{ width: number }>`
   gap: 10px;
 `;
 
-const CharacterStat = () => {
+const Stat = () => {
   const data = useRecoilValue(atomCharacterStat);
   return (
     <ComponentBox>
@@ -61,4 +61,4 @@ const CharacterStat = () => {
   );
 };
 
-export default CharacterStat;
+export default Stat;
