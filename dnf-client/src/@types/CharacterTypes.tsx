@@ -16,7 +16,7 @@ export const MAIN_EQUIP_LIST = [
   "하의",
   "벨트",
   "신발",
-]
+];
 
 export const MAIN_STAT_LIST = [
   ["HP", false, false],
@@ -97,15 +97,15 @@ export const SUB_EXTRA_STAT_LIST = [
   ["지속피해", true],
 ];
 
-export type ITEM_RARITY = 
-  "커먼" |
-  "언커먼" |
-  "레어" |
-  "크로니클" |
-  "유니크" |
-  "레전더리" |
-  "에픽" |
-  "신화";
+export type ITEM_RARITY =
+  | "커먼"
+  | "언커먼"
+  | "레어"
+  | "크로니클"
+  | "유니크"
+  | "레전더리"
+  | "에픽"
+  | "신화";
 
 export const ITEM_TYPE_COLOR = {
   커먼: "#bebebe",
@@ -187,15 +187,17 @@ export type TCharacterEquip = {
   reinforce?: number;
   itemGradeName?: string | null;
   enchant?: {
-    reinforceSkill: {
-      jobId: string;
-      jobName: string;
-      skills: {
-        skillId: string;
-        name: string;
-        value: number;
-      }[];
-    }[] | null;
+    reinforceSkill:
+      | {
+          jobId: string;
+          jobName: string;
+          skills: {
+            skillId: string;
+            name: string;
+            value: number;
+          }[];
+        }[]
+      | null;
     status: { [key: string]: string }[];
   };
   amplificationName?: string | null;
@@ -306,14 +308,22 @@ export type TBuffEquip = {
   itemTypeDetailId: string;
   itemTypeDetail: string;
   itemAvailableLevel: number;
-  itemRarity: string;
+  itemRarity: ITEM_RARITY;
   setItemId: string | null;
   setItemName: string | null;
   reinforce: number;
   amplificationName: string | null;
   refine: number;
   enchant: {
-    reinforceSkill: string | null;
+    reinforceSkill: {
+      jobId: string;
+      jobName: string;
+      skills: {
+        skillId: string;
+        name: string;
+        value: number;
+      }[];
+    }[] | null;
     status: { [key: string]: string }[];
   };
 };
@@ -324,7 +334,7 @@ export type TBuffAvartar = {
   itemId: string;
   itemName: string;
   itemImage: string;
-  itemRarity: string;
+  itemRarity: ITEM_RARITY;
   cloneAvatarName: string | null;
   optionAbility: string;
   emblems: {
@@ -339,14 +349,18 @@ export type TBuffCreature = {
   itemId: string;
   itemName: string;
   itemImage: string;
-  itemRarity: string;
+  itemRarity: ITEM_RARITY;
 };
 
 export type TCharacterBuffEquip = {
   skillInfo?: {
     skillId: string;
     name: string;
-    option: any | null;
+    option: {
+      level: number;
+      desc: string;
+      values: string[];
+    } | null;
   };
   equipment?: TBuffEquip[];
   avatar?: TBuffAvartar[];

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { TCharacterEquip } from "../../../@types/CharacterTypes";
 import EquipHeader from "./EquipHeader";
 import { Line } from "../../../style/dnfContainer";
 import EquipType from "./EquipType";
@@ -11,6 +10,7 @@ import { ColorText } from "../../../style/CharacterStat";
 import EquipBuff from "./EquipBuff";
 import EquipFixed from "./EquipFixed";
 import EquipBakal from "./EquipBakal";
+import { TCharacterEquip } from "../../../@types/CharacterTypes";
 
 interface Props {
   data: TCharacterEquip;
