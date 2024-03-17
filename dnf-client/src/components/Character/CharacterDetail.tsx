@@ -1,11 +1,12 @@
 import useCharacterTab from "../../hooks/useCharacterTab";
-import CharacterStat from "./Stat/Stat";
+import Equipment from "./Equipment/Equipment";
+import Stat from "./Stat/Stat";
 
 const CharacterDetail = () => {
   const { tabName } = useCharacterTab();
 
-  if (tabName === "STAT") return <CharacterStat />;
-  // if (tabName === "EQUIPMENT") return < />;
+  if (tabName === "STAT") return <Stat />;
+  if (tabName === "EQUIPMENT") return <Equipment />;
   // if (tabName === "BUFF") return < />;
   // if (tabName === "SKILL") return < />;
   // if (tabName === "AVATAR") return < />;

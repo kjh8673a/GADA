@@ -9,6 +9,15 @@ export const SERVER_LIST = [
   "바칼",
 ];
 
+export const MAIN_EQUIP_LIST = [
+  "무기",
+  "머리어깨",
+  "상의",
+  "하의",
+  "벨트",
+  "신발",
+]
+
 export const MAIN_STAT_LIST = [
   ["HP", false, false],
   ["MP", false, false],
@@ -88,6 +97,41 @@ export const SUB_EXTRA_STAT_LIST = [
   ["지속피해", true],
 ];
 
+export type ITEM_RARITY = 
+  "커먼" |
+  "언커먼" |
+  "레어" |
+  "크로니클" |
+  "유니크" |
+  "레전더리" |
+  "에픽" |
+  "신화";
+
+export const ITEM_TYPE_COLOR = {
+  커먼: "#bebebe",
+  언커먼: "#00ffff",
+  레어: "#8A2BE2",
+  크로니클: "#CD5C5C",
+  유니크: "#FF1493",
+  레전더리: "#FF7800",
+  에픽: "#FFB400",
+  신화: "#FFB400",
+  // "background: linear-gradient(180deg, #FFB400 0%, #8A2BE2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent;"
+};
+
+export const ITEM_BASIC_STAT = [
+  "모험가 명성",
+  "물리 공격력",
+  "마법 공격력",
+  "독립 공격력",
+  "물리 방어력",
+  "마법 방어력",
+  "힘",
+  "지능",
+  "체력",
+  "정신력",
+];
+
 export type TCharacterBasic = {
   updatedTime?: string;
   serverName?: string;
@@ -132,7 +176,7 @@ export type TCharacterEquip = {
   itemTypeDetailId?: string;
   itemTypeDetail?: string;
   itemAvailableLevel?: number;
-  itemRarity?: string;
+  itemRarity?: ITEM_RARITY;
   setItemId?: string | null;
   setItemName?: string | null;
   skin?: {
@@ -143,7 +187,15 @@ export type TCharacterEquip = {
   reinforce?: number;
   itemGradeName?: string | null;
   enchant?: {
-    reinforceSkill: string | null;
+    reinforceSkill: {
+      jobId: string;
+      jobName: string;
+      skills: {
+        skillId: string;
+        name: string;
+        value: number;
+      }[];
+    }[] | null;
     status: { [key: string]: string }[];
   };
   amplificationName?: string | null;

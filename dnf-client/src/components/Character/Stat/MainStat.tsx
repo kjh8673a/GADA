@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import MainStatItem from "./MainStatItem";
 import { MAIN_STAT_LIST, TCharacterStat } from "../../../@types/CharacterTypes";
 import { Line } from "../../../style/dnfContainer";
