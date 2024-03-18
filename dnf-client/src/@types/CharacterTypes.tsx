@@ -377,6 +377,6 @@ export type TCharacterData = {
       setItemInfo: TCharacterSetItem[];
       equipmentTrait: TCharacterEquipTrait | null;
     };
-    buff: TCharacterBuffEquip;
+    buff?: TCharacterBuffEquip;
   };
 };

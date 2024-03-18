@@ -3,9 +3,9 @@ import styled from "styled-components";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
 
-const StyledBox = styled.div<{ visbility: string }>`
+const StyledBox = styled.div<{ $visbility: string }>`
   display: flex;
-  visibility: ${(props) => props.visbility};
+  visibility: ${(props) => props.$visbility};
   align-items: center;
   font-size: 0.8rem;
   gap: 10px;
@@ -27,7 +27,7 @@ const RecentSearch = () => {
   const { recentSearch, clickRecentSearch } = useLocalStorage();
   const navigate = useNavigate();
   return (
-    <StyledBox visbility={recentSearch.length < 1 ? "hide" : "visible"}>
+    <StyledBox $visbility={recentSearch.length < 1 ? "hide" : "visible"}>
       {recentSearch.map((v, i) => {
         return (
           <RecentSearchItem
