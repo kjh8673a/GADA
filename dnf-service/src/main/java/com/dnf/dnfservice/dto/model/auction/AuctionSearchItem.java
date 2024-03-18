@@ -9,6 +9,8 @@ public class AuctionSearchItem {
 	String expireDate;
 	String itemId;
 	String itemName;
+	String itemRarity;
+	String itemType;
 	String itemTypeDetail;
 	Long count;
 	Long price;
