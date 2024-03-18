@@ -1,5 +1,7 @@
 package com.dnf.dnfservice.dto.model.auction;
 
+import com.dnf.dnfservice.dto.model.item.SearchItem;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,15 +14,19 @@ import lombok.NoArgsConstructor;
 public class AuctionSearchItemInfo {
 	String itemId;
 	String itemName;
+	String itemType;
 	String itemTypeDetail;
 	String itemImage;
+	boolean isInAuction;
 
-	public static AuctionSearchItemInfo of(AuctionSearchItem item) {
+	public static AuctionSearchItemInfo of(SearchItem item, boolean isInAuction) {
 		return AuctionSearchItemInfo.builder()
 			.itemId(item.getItemId())
 			.itemName(item.getItemName())
+			.itemType(item.getItemType())
 			.itemTypeDetail(item.getItemTypeDetail())
 			.itemImage("https://img-api.neople.co.kr/df/items/" + item.getItemId())
+			.isInAuction(isInAuction)
 			.build();
 	}
 }

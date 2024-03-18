@@ -10,8 +10,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.dnf.dnfservice.dto.feign.auction.AuctionSearchDto;
+import com.dnf.dnfservice.dto.feign.item.ItemSearchDto;
 import com.dnf.dnfservice.dto.model.auction.AuctionSearchItemInfo;
 import com.dnf.dnfservice.dto.response.auction.AuctionSearchResponseDto;
+import com.dnf.dnfservice.service.item.ItemApiService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,14 +21,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuctionServiceImpl implements AuctionService {
 	private final AuctionApiService auctionApiService;
+	private final ItemApiService itemApiService;
 
 	@Override
 	public AuctionSearchResponseDto searchAuctionItems(String itemName) {
 		AuctionSearchDto searchDto = auctionApiService.searchAuctionItems(itemName);
-
-		List<AuctionSearchItemInfo> list = searchDto.getRows().stream()
+		List<String> inAuctionList = searchDto.getRows().stream()
 			.filter(distinctByKey(data -> data.getItemId()))
-			.map(data -> AuctionSearchItemInfo.of(data))
+			.map(data -> data.getItemId())
+			.collect(Collectors.toList());
+
+		ItemSearchDto itemSearchDto = itemApiService.searchItems(itemName);
+		List<AuctionSearchItemInfo> list = itemSearchDto.getRows().stream()
+			.map(data ->AuctionSearchItemInfo.of(data, inAuctionList.contains(data.getItemId())))
 			.collect(Collectors.toList());
 
 		return AuctionSearchResponseDto.of(list);
