@@ -6,7 +6,9 @@ import {
   TCharacterEquip,
   TCharacterEquipTrait,
   TCharacterSetItem,
+  TCharacterSkill,
   TCharacterStat,
+  TCharacterTalismans,
 } from "../@types/CharacterTypes";
 
 export const atomCharacterBasic = atom<TCharacterBasic>({
@@ -31,6 +33,16 @@ export const atomCharacterSetItem = atom<TCharacterSetItem[]>({
 
 export const atomCharacterEquipTrait = atom<TCharacterEquipTrait>({
   key: "atomCharacterEquipTrait",
+  default: {},
+});
+
+export const atomCharacterSkill = atom<TCharacterSkill>({
+  key: "atomCharacterSkill",
+  default: {},
+});
+
+export const atomCharacterTalismans = atom<TCharacterTalismans>({
+  key: "atomCharacterTalismans",
   default: {},
 });
 

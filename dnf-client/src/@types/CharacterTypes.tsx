@@ -1,9 +1,20 @@
-export const SERVER_LIST = ["힐더", "카인", "카시야스", "프레이", "안톤", "시로코", "디레지에", "바칼"];
+import { StringLiteral } from "typescript";
+
+export const SERVER_LIST = [
+  "힐더",
+  "카인",
+  "카시야스",
+  "프레이",
+  "안톤",
+  "시로코",
+  "디레지에",
+  "바칼",
+];
 
 export type TBookmark = {
   server: string;
   character: string;
-}
+};
 
 export type TCharacterBasic = {
   updatedTime?: string;
@@ -156,6 +167,115 @@ export type TCharacterEquipTrait = {
   }[];
 };
 
+export type TCharacterSkill = {
+  active?: {
+    costType?: string;
+    detail?: {
+      consumeItem: string;
+      desc: string;
+      descDetail: string;
+      descSpecial: string;
+      masterLevel: number;
+      maxLevel: number;
+      requiredLevel: number;
+    };
+    level: number;
+    name: string;
+    requiredLevel: number;
+    skillId: string;
+  }[];
+  passive?: {
+    costType?: string;
+    detail?: {
+      consumeItem: string;
+      desc: string;
+      descDetail: string;
+      descSpecial: string;
+      masterLevel: number;
+      maxLevel: number;
+      requiredLevel: number;
+    };
+    level: number;
+    name: string;
+    requiredLevel: number;
+    skillId: string;
+  }[];
+};
+
+export type TCharacterTalisman = {
+  detail?: {
+    fixedOption: string;
+    hashtag: string;
+    itemAvailableLevel: number;
+    itemBuff: string;
+    itemExplain: string;
+    itemExplainDetail: string;
+    itemFlavorText: string;
+    itemId: string;
+    itemName: string;
+    itemRarity: string;
+    itemStatus: {}[];
+    itemType: string;
+    itemTypeDetail: string;
+    itemTypeDetailId: string;
+    itemTypeId: string;
+    mythologyInfo: string;
+    obtainInfo: {
+      dungeon: string;
+      shop: {
+        name: string;
+        value: number;
+      }[];
+    };
+  };
+  itemId?: string;
+  itemImage?: string;
+  itemName?: string;
+  runeTypes: {}[];
+  slotNo?: number;
+};
+
+export type TCharacterRune = {
+  detail?: {
+    fixedOption: string;
+    hashtag: string;
+    itemAvailableLevel: number;
+    itemBuff: string;
+    itemExplain: string;
+    itemExplainDetail: string;
+    itemFlavorText: string;
+    itemId: string;
+    itemName: string;
+    itemRarity: string;
+    itemStatus: {}[];
+    itemType: string;
+    itemTypeDetail: string;
+    itemTypeDetailId: string;
+    itemTypeId: string;
+    mythologyInfo: string;
+    obtainInfo: {
+      dungeon: string;
+      shop: {
+        name: string;
+        value: number;
+      }[];
+    };
+    setItemId: string;
+    setItemName: string;
+  };
+  itemId?: string;
+  itemImage?: string;
+  itemName?: string;
+  slotNo?: number;
+};
+
+export type TCharacterTalismans = {
+  talismans?: {
+    runes?: TCharacterRune[];
+    talisman?: TCharacterTalisman;
+  }[];
+};
+
 export type TCharacterData = {
   timestamp?: string;
   data?: {
@@ -166,5 +286,7 @@ export type TCharacterData = {
       setItemInfo: TCharacterSetItem[];
       equipmentTrait: TCharacterEquipTrait;
     };
+    skill: TCharacterSkill;
+    talisman: TCharacterTalismans;
   };
 };
