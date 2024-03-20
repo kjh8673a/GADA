@@ -111,7 +111,7 @@ public class CharacterServiceImpl implements CharacterService {
 
 		CharacterSearchDto searchCharacters = characterApiService.searchCharacters(serverId, characterName);
 		if (searchCharacters.getRows().size() == 0) {
-			throw new CustomException(ErrorCode.CHARACATER_NOT_FOUND);
+			throw new CustomException(ErrorCode.CHARACTER_NOT_FOUND);
 		}
 
 		SetOperations<String, String> setOperations = redisTemplate.opsForSet();

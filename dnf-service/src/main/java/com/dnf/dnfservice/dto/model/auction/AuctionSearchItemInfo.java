@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class AuctionSearchItemInfo {
 	String itemId;
 	String itemName;
+	String itemRarity;
 	String itemType;
 	String itemTypeDetail;
 	String itemImage;
@@ -23,6 +24,7 @@ public class AuctionSearchItemInfo {
 		return AuctionSearchItemInfo.builder()
 			.itemId(item.getItemId())
 			.itemName(item.getItemName())
+			.itemRarity(item.getItemRarity())
 			.itemType(item.getItemType())
 			.itemTypeDetail(item.getItemTypeDetail())
 			.itemImage("https://img-api.neople.co.kr/df/items/" + item.getItemId())

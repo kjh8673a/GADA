@@ -25,4 +25,12 @@ public class AuctionController {
 			.status(HttpStatus.OK)
 			.body(SuccessResponse.of(auctionService.searchAuctionItems(itemName)));
 	}
+
+	@RequestMapping("/getAuctionItem")
+	public ResponseEntity<SuccessResponse> getAuctionItemInformation(@RequestParam String itemId) {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(auctionService.getAuctionItemInformation(itemId)));
+	}
 }
