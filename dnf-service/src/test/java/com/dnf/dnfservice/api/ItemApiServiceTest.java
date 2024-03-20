@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.dnf.dnfservice.dto.feign.character.CharacterEquipmentDto;
 import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
+import com.dnf.dnfservice.dto.feign.item.ItemSearchDto;
 import com.dnf.dnfservice.service.character.CharacterApiService;
 import com.dnf.dnfservice.service.item.ItemApiService;
 
@@ -24,5 +25,12 @@ public class ItemApiServiceTest {
 			System.out.println(data.getItemName());
 			ItemDetailDto itemDetailDto = itemApiService.getItemDetail(data.getItemId());
 		});
+	}
+
+	@Test
+	void 아이템_목록_검색() {
+		ItemSearchDto itemSearchDto = itemApiService.searchItems("무색");
+
+		itemSearchDto.getRows().stream().forEach(data -> System.out.println(data.getItemName()));
 	}
 }

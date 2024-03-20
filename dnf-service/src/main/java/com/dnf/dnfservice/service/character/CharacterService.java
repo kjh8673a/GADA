@@ -15,6 +15,7 @@ import com.dnf.dnfservice.dto.response.character.CharacterSearchResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterSkillResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterStatResponseDto;
 import com.dnf.dnfservice.dto.response.character.CharacterTalismanResponseDto;
+import com.dnf.dnfservice.dto.response.character.CharacterViewRankingResponseDto;
 
 public interface CharacterService {
 	List<CharacterSearchResponseDto> searchCharacters(String characterName);
@@ -46,4 +47,6 @@ public interface CharacterService {
 	CharacterFlagResponseDto getCharacterFlag(String serverId, String characterId);
 
 	CharacterTalismanResponseDto getCharacterTalisman(String serverId, String characterId);
+
+	CharacterViewRankingResponseDto getPopularCharacters();
 }
