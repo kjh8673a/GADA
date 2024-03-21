@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -91,6 +92,9 @@ public class CharacterServiceImpl implements CharacterService {
 		List<CharacterSearchResponseDto> characterSearchResponseDtos = new ArrayList<>();
 		characterSearchDto.getRows()
 			.stream()
+			.sorted(
+				Comparator.comparing(CharacterSearchInfo::getFame, Comparator.nullsLast(Comparator.reverseOrder()))
+			)
 			.forEach(data -> {
 					characterSearchResponseDtos.add(
 						CharacterSearchResponseDto.of(data, serverTable.serverIdToName.get(data.getServerId())));
@@ -361,7 +365,8 @@ public class CharacterServiceImpl implements CharacterService {
 			String serverName = data.getValue().split("_")[0];
 			String characterName = data.getValue().split("_")[1];
 
-			CharacterSearchDto characterSearchDto = characterApiService.searchCharacters(serverTable.serverNameToId.get(serverName), characterName);
+			CharacterSearchDto characterSearchDto = characterApiService.searchCharacters(
+				serverTable.serverNameToId.get(serverName), characterName);
 			CharacterSearchInfo characterSearchInfo = characterSearchDto.getRows().get(0);
 
 			CharacterViewRanking viewRanking = CharacterViewRanking.of(rank++, serverName, characterSearchInfo);

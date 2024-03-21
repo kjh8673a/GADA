@@ -2,6 +2,7 @@ package com.dnf.dnfservice.dto.feign.item;
 
 import java.util.List;
 
+import com.dnf.dnfservice.dto.model.character.talisman.TalismanExplain;
 import com.dnf.dnfservice.dto.model.item.ItemBuff;
 import com.dnf.dnfservice.dto.model.item.ItemFixedOption;
 import com.dnf.dnfservice.dto.model.item.ItemMythology;
@@ -31,4 +32,5 @@ public class ItemDetailDto {
 	ItemMythology mythologyInfo;
 	ItemBuff itemBuff;
 	List<String> hashtag;
+	TalismanExplain talismanInfo;
 }
