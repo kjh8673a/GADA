@@ -28,15 +28,15 @@ public class CharacterApiServiceImpl implements CharacterApiService {
 	@Override
 	public CharacterSearchDto searchCharacters(String characterName) {
 		if(characterName.length() == 1) {
-			return characterFeignClient.searchCharacters("all", characterName, "match");
+			return characterFeignClient.searchCharacters("all", characterName, "match", 20);
 		}
-		return characterFeignClient.searchCharacters("all", characterName, "full");
+		return characterFeignClient.searchCharacters("all", characterName, "full", 20);
 	}
 
 	@Override
 	@RedisCacheable(value = "character-api-search-characters", key = "#serverId + '_' + #characterName", expire = 600)
 	public CharacterSearchDto searchCharacters(String serverId, String characterName) {
-		return characterFeignClient.searchCharacters(serverId, characterName, "match");
+		return characterFeignClient.searchCharacters(serverId, characterName, "match", 20);
 	}
 
 	@Override

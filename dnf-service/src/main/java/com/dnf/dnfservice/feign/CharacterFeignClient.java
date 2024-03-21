@@ -24,7 +24,7 @@ import com.dnf.dnfservice.dto.feign.character.CharacterTalismanDto;
 public interface CharacterFeignClient {
 
 	@GetMapping("/{serverId}/characters")
-	CharacterSearchDto searchCharacters(@PathVariable String serverId, @RequestParam String characterName, @RequestParam String wordType);
+	CharacterSearchDto searchCharacters(@PathVariable String serverId, @RequestParam String characterName, @RequestParam String wordType, @RequestParam Integer limit);
 
 	@GetMapping("/{serverId}/characters/{characterId}")
 	CharacterBasicInfoDto getCharacterBasicInfo(@PathVariable String serverId, @PathVariable String characterId);

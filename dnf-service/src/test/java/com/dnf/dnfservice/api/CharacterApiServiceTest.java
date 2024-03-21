@@ -29,7 +29,8 @@ class CharacterApiServiceTest {
 	// prey 당근 54ec840ec55803a1f8dcc4f1b3951395
 	@Test
 	void 캐릭터조회_캐릭터이름만() {
-		CharacterSearchDto characterSearchDto = characterApiService.searchCharacters("당근");
+		CharacterSearchDto characterSearchDto = characterApiService.searchCharacters("전설");
+		System.out.println(characterSearchDto.getRows().size());
 		characterSearchDto.getRows().stream().forEach(data -> System.out.println(data.getServerId() + " " + data.getCharacterName() + " " + data.getCharacterId()));
 	}
 
