@@ -8,7 +8,9 @@ import {
   atomCharacterEquip,
   atomCharacterEquipTrait,
   atomCharacterSetItem,
+  atomCharacterSkill,
   atomCharacterStat,
+  atomCharacterTalismans,
   atomLoading,
 } from "../atoms/characterState";
 
@@ -20,6 +22,8 @@ const useCharacter = () => {
   const setItem = useSetRecoilState(atomCharacterSetItem);
   const setIsLoading = useSetRecoilState(atomLoading);
   const setBuff = useSetRecoilState(atomCharacterBuffEquip);
+  const setSkill = useSetRecoilState(atomCharacterSkill);
+  const setTalismans = useSetRecoilState(atomCharacterTalismans);
 
   const fetchCharacterInfo = useCallback(
     (serverName: string, characterName: string, update?: boolean) => {
@@ -59,6 +63,8 @@ const useCharacter = () => {
     setEquipTrait(data.data?.equipment.equipmentTrait!);
     setItem(data.data?.equipment.setItemInfo!);
     setBuff(data.data?.buff!);
+    setSkill(data.data?.skill!);
+    setTalismans(data.data?.talisman!);
   };
 
   const isValid = (server: any, character: any): boolean => {

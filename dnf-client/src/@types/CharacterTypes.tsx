@@ -315,15 +315,17 @@ export type TBuffEquip = {
   amplificationName: string | null;
   refine: number;
   enchant: {
-    reinforceSkill: {
-      jobId: string;
-      jobName: string;
-      skills: {
-        skillId: string;
-        name: string;
-        value: number;
-      }[];
-    }[] | null;
+    reinforceSkill:
+      | {
+          jobId: string;
+          jobName: string;
+          skills: {
+            skillId: string;
+            name: string;
+            value: number;
+          }[];
+        }[]
+      | null;
     status: { [key: string]: string }[];
   };
 };
@@ -367,6 +369,115 @@ export type TCharacterBuffEquip = {
   creature?: TBuffCreature[];
 };
 
+export type TCharacterSkill = {
+  active?: {
+    costType?: string;
+    detail?: {
+      consumeItem: string;
+      desc: string;
+      descDetail: string;
+      descSpecial: string;
+      masterLevel: number;
+      maxLevel: number;
+      requiredLevel: number;
+    };
+    level: number;
+    name: string;
+    requiredLevel: number;
+    skillId: string;
+  }[];
+  passive?: {
+    costType?: string;
+    detail?: {
+      consumeItem: string;
+      desc: string;
+      descDetail: string;
+      descSpecial: string;
+      masterLevel: number;
+      maxLevel: number;
+      requiredLevel: number;
+    };
+    level: number;
+    name: string;
+    requiredLevel: number;
+    skillId: string;
+  }[];
+};
+
+export type TCharacterTalisman = {
+  detail?: {
+    fixedOption: string;
+    hashtag: string;
+    itemAvailableLevel: number;
+    itemBuff: string;
+    itemExplain: string;
+    itemExplainDetail: string;
+    itemFlavorText: string;
+    itemId: string;
+    itemName: string;
+    itemRarity: string;
+    itemStatus: {}[];
+    itemType: string;
+    itemTypeDetail: string;
+    itemTypeDetailId: string;
+    itemTypeId: string;
+    mythologyInfo: string;
+    obtainInfo: {
+      dungeon: string;
+      shop: {
+        name: string;
+        value: number;
+      }[];
+    };
+  };
+  itemId?: string;
+  itemImage?: string;
+  itemName?: string;
+  runeTypes: {}[];
+  slotNo?: number;
+};
+
+export type TCharacterRune = {
+  detail?: {
+    fixedOption: string;
+    hashtag: string;
+    itemAvailableLevel: number;
+    itemBuff: string;
+    itemExplain: string;
+    itemExplainDetail: string;
+    itemFlavorText: string;
+    itemId: string;
+    itemName: string;
+    itemRarity: string;
+    itemStatus: {}[];
+    itemType: string;
+    itemTypeDetail: string;
+    itemTypeDetailId: string;
+    itemTypeId: string;
+    mythologyInfo: string;
+    obtainInfo: {
+      dungeon: string;
+      shop: {
+        name: string;
+        value: number;
+      }[];
+    };
+    setItemId: string;
+    setItemName: string;
+  };
+  itemId?: string;
+  itemImage?: string;
+  itemName?: string;
+  slotNo?: number;
+};
+
+export type TCharacterTalismans = {
+  talismans?: {
+    runes?: TCharacterRune[];
+    talisman?: TCharacterTalisman;
+  }[];
+};
+
 export type TCharacterData = {
   timestamp?: string;
   data?: {
@@ -378,5 +489,7 @@ export type TCharacterData = {
       equipmentTrait: TCharacterEquipTrait | null;
     };
     buff?: TCharacterBuffEquip;
+    skill: TCharacterSkill;
+    talisman: TCharacterTalismans;
   };
 };
