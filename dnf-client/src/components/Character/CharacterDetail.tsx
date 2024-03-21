@@ -2,7 +2,7 @@ import useCharacterTab from "../../hooks/useCharacterTab";
 import BuffEquip from "./BuffEquip/BuffEquip";
 import Equipment from "./Equipment/Equipment";
 import Stat from "./Stat/Stat";
-
+import CharacterTalisman from "./Talisman/Talisman";
 const CharacterDetail = () => {
   const { tabName } = useCharacterTab();
 
@@ -12,7 +12,7 @@ const CharacterDetail = () => {
   // if (tabName === "SKILL") return < />;
   // if (tabName === "AVATAR") return < />;
   // if (tabName === "INSIGNIA") return < />;
-  // if (tabName === "TALISMAN") return < />;
+  if (tabName === "TALISMAN") return <CharacterTalisman />;
 
   return <span>현재 탭 : {tabName}</span>;
 };
