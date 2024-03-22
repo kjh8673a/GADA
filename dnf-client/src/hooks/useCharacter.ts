@@ -1,6 +1,13 @@
 import React, { useCallback } from "react";
-import { SERVER_LIST, TCharacterData } from "../@types/CharacterTypes";
-import { getCharacterInfo } from "../api/Character/getCharacterInfo";
+import {
+  SERVER_LIST,
+  TCharacterData,
+  TPopularCharacters,
+} from "../@types/CharacterTypes";
+import {
+  getCharacterInfo,
+  getPopularCharacters,
+} from "../api/Character/getCharacterInfo";
 import { useSetRecoilState } from "recoil";
 import {
   atomCharacterBasic,
@@ -108,12 +115,34 @@ const useCharacter = () => {
     }
   };
 
+  const fetchPopularCharacters = useCallback(() => {
+    let status = "pending";
+    let data: TPopularCharacters;
+    const suspender = getPopularCharacters()
+      .then((res) => {
+        data = res.data;
+        status = "fullfilled";
+      })
+      .catch((e) => {
+        data = e;
+        status = "reject";
+      });
+    return {
+      read() {
+        if (status === "pending") throw suspender;
+        else if (status === "reject") throw data;
+        else if (status === "fullfilled") return data;
+      }
+    }
+  }, []);
+
   return {
     fetchCharacterInfo,
     isValid,
     setCharacter,
     getTimeDiffer,
     updateClickHandler,
+    fetchPopularCharacters,
   };
 };
 
