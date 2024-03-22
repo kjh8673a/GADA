@@ -2,11 +2,12 @@ import { useRef } from "react";
 import styled from "styled-components";
 
 interface Props {
+  inputRef?: React.RefObject<HTMLInputElement>;
   $width: number;
   $height?: number;
   value?: string;
   type?: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
   $align?: "center" | "left";
@@ -38,8 +39,9 @@ const StyledInput: React.FC<Props> = ({
   onKeyDown,
   placeholder,
   $align,
+  inputRef,
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  // const inputRef = useRef<HTMLInputElement>(null);
   const selectAllText = () => {
     if (inputRef && inputRef.current) {
       inputRef.current.select();

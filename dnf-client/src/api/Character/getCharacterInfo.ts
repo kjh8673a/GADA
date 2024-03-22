@@ -11,3 +11,10 @@ export const getCharacterInfo = async (
     params: { serverName, characterName, update },
   });
 };
+
+export const getPopularCharacters = async () => {
+  return await https({
+    method: "get",
+    url: "/character/getPopularCharacters",
+  });
+};

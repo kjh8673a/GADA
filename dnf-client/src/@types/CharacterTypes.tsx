@@ -116,7 +116,6 @@ export const ITEM_TYPE_COLOR = {
   레전더리: "#FF7800",
   에픽: "#FFB400",
   신화: "#FFB400",
-  // "background: linear-gradient(180deg, #FFB400 0%, #8A2BE2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent;"
 };
 
 export const ITEM_BASIC_STAT = [
@@ -491,5 +490,23 @@ export type TCharacterData = {
     buff?: TCharacterBuffEquip;
     skill: TCharacterSkill;
     talisman: TCharacterTalismans;
+  };
+};
+
+export type TPopularCharacter = {
+  rank: number;
+  characterName: string;
+  serverName: string;
+  level: number;
+  jobName: string;
+  jobGrowName: string;
+  characterImage: string;
+  fame: number;
+};
+
+export type TPopularCharacters = {
+  timestamp?: string;
+  data?: {
+    ranking: TPopularCharacter[];
   };
 };
