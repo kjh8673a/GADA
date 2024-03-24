@@ -2,12 +2,12 @@ import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { atomCharacterTalismans } from "../../../atoms/characterState";
-import { TCharacterRune } from "../../../@types/CharacterTypes";
+import { TCharacterFlagGem } from "../../../@types/CharacterTypes";
 import useTalismanLocation from "../../../hooks/useItemImageLocation";
 import { atomtalismanInfo } from "../../../atoms/talismanItemState";
 
 interface Props {
-  value: TCharacterRune[];
+  value: TCharacterFlagGem;
   idx: number;
 }
 
@@ -34,22 +34,20 @@ const RuneItem: React.FC<Props> = ({ value, idx }) => {
   const location = [0, 1, 2].map((x) => RuneLocation(idx, x));
   // console.log(c, idx);
   // value.map((x) => console.log(x.itemImage));
+  // console.log(value);
   return (
     <StyledBox>
-      {value.map((obj, index) => (
-        <RuneImg
-          key={index}
-          src={obj.itemImage}
-          alt={"rune Image"}
-          $top={location[index][0]}
-          $left={location[index][1]}
-          onClick={() => {
-            // console.log(`룬: ${idx} ${index}`);
-            // console.log(obj);
-            setTalismanInfo(obj);
-          }}
-        ></RuneImg>
-      ))}
+      <RuneImg
+        src={value.itemImage}
+        alt={"rune Image"}
+        $top={location[1][0]}
+        $left={location[1][1]}
+        onClick={() => {
+          // console.log(`룬: ${idx} ${index}`);
+          // console.log(obj);
+          // setTalismanInfo(obj);
+        }}
+      ></RuneImg>
     </StyledBox>
   );
 };

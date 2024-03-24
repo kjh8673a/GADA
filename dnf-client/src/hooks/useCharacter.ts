@@ -14,6 +14,7 @@ import {
   atomCharacterBuffEquip,
   atomCharacterEquip,
   atomCharacterEquipTrait,
+  atomCharacterFlag,
   atomCharacterSetItem,
   atomCharacterSkill,
   atomCharacterStat,
@@ -31,6 +32,7 @@ const useCharacter = () => {
   const setBuff = useSetRecoilState(atomCharacterBuffEquip);
   const setSkill = useSetRecoilState(atomCharacterSkill);
   const setTalismans = useSetRecoilState(atomCharacterTalismans);
+  const setFlag = useSetRecoilState(atomCharacterFlag);
 
   const fetchCharacterInfo = useCallback(
     (serverName: string, characterName: string, update?: boolean) => {
@@ -72,6 +74,7 @@ const useCharacter = () => {
     setBuff(data.data?.buff!);
     setSkill(data.data?.skill!);
     setTalismans(data.data?.talisman!);
+    setFlag(data.data?.flag!);
   };
 
   const isValid = (server: any, character: any): boolean => {
@@ -132,8 +135,8 @@ const useCharacter = () => {
         if (status === "pending") throw suspender;
         else if (status === "reject") throw data;
         else if (status === "fullfilled") return data;
-      }
-    }
+      },
+    };
   }, []);
 
   return {

@@ -403,32 +403,60 @@ export type TCharacterSkill = {
   }[];
 };
 
-export type TCharacterTalisman = {
-  detail?: {
-    fixedOption: string;
-    hashtag: string;
-    itemAvailableLevel: number;
-    itemBuff: string;
-    itemExplain: string;
-    itemExplainDetail: string;
-    itemFlavorText: string;
-    itemId: string;
-    itemName: string;
-    itemRarity: string;
-    itemStatus: {}[];
-    itemType: string;
-    itemTypeDetail: string;
-    itemTypeDetailId: string;
-    itemTypeId: string;
-    mythologyInfo: string;
-    obtainInfo: {
-      dungeon: string;
-      shop: {
-        name: string;
-        value: number;
-      }[];
-    };
+export type TCharacterFlagGem = {
+  detail?: TCharacterItemDetail;
+  itemId: string;
+  itemImage: string;
+  itemName: string;
+  itemRarity: string;
+  slotNo: number;
+};
+
+export type TCharacterFlag = {
+  detail?: TCharacterItemDetail;
+  gems?: TCharacterFlagGem[];
+  itemId?: string;
+  itemImage?: string;
+  itemName?: string;
+  itemRarity?: string;
+  reinforce?: number;
+  reinforceStatus?: {
+    name: string;
+    value: string;
+  }[];
+};
+
+export type TCharacterItemDetail = {
+  fixedOption: string;
+  hashtag: string;
+  itemAvailableLevel: number;
+  itemBuff: string;
+  itemExplain: string;
+  itemExplainDetail: string;
+  itemFlavorText: string;
+  itemId: string;
+  itemName: string;
+  itemRarity: string;
+  itemStatus: {
+    name: string;
+    value: string;
+  }[];
+  itemType: string;
+  itemTypeDetail: string;
+  itemTypeDetailId: string;
+  itemTypeId: string;
+  mythologyInfo: string;
+  obtainInfo: {
+    dungeon: string;
+    shop: {
+      name: string;
+      value: number;
+    }[];
   };
+};
+
+export type TCharacterTalisman = {
+  detail?: TCharacterItemDetail;
   itemId?: string;
   itemImage?: string;
   itemName?: string;
@@ -437,33 +465,7 @@ export type TCharacterTalisman = {
 };
 
 export type TCharacterRune = {
-  detail?: {
-    fixedOption: string;
-    hashtag: string;
-    itemAvailableLevel: number;
-    itemBuff: string;
-    itemExplain: string;
-    itemExplainDetail: string;
-    itemFlavorText: string;
-    itemId: string;
-    itemName: string;
-    itemRarity: string;
-    itemStatus: {}[];
-    itemType: string;
-    itemTypeDetail: string;
-    itemTypeDetailId: string;
-    itemTypeId: string;
-    mythologyInfo: string;
-    obtainInfo: {
-      dungeon: string;
-      shop: {
-        name: string;
-        value: number;
-      }[];
-    };
-    setItemId: string;
-    setItemName: string;
-  };
+  detail?: TCharacterItemDetail;
   itemId?: string;
   itemImage?: string;
   itemName?: string;
@@ -490,6 +492,7 @@ export type TCharacterData = {
     buff?: TCharacterBuffEquip;
     skill: TCharacterSkill;
     talisman: TCharacterTalismans;
+    flag: TCharacterFlag;
   };
 };
 

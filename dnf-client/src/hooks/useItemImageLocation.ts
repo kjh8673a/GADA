@@ -3,7 +3,7 @@ const location = {
   y: 0,
 };
 
-const useTalismanLocation = () => {
+const useItemImageLocation = () => {
   const TalismanLocation = (idx: number): number[] => {
     if (idx === 0) {
       location.x = 34.1;
@@ -83,4 +83,4 @@ const useTalismanLocation = () => {
   };
 };
 
-export default useTalismanLocation;
+export default useItemImageLocation;
