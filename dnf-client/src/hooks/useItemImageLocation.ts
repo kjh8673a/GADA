@@ -77,16 +77,34 @@ const useItemImageLocation = () => {
     return [location.x, location.y];
   };
 
-  const FlagLocation = () => {
-    location.x = 56.8;
-    location.y = 46;
+  const GemLocation = (idx: number): number[] => {
+    if (idx === 0) {
+      location.x = 76.2;
+      location.y = 20.9;
+      return [location.x, location.y];
+    }
+    if (idx === 1) {
+      location.x = 88;
+      location.y = 36.4;
+      return [location.x, location.y];
+    }
+    if (idx === 2) {
+      location.x = 88;
+      location.y = 55.9;
+      return [location.x, location.y];
+    }
+    if (idx === 3) {
+      location.x = 76.2;
+      location.y = 71.4;
+      return [location.x, location.y];
+    }
     return [location.x, location.y];
   };
 
   return {
     TalismanLocation,
     RuneLocation,
-    FlagLocation,
+    GemLocation,
   };
 };
 

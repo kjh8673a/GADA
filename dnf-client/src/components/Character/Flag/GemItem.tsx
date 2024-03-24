@@ -2,9 +2,12 @@ import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { atomCharacterTalismans } from "../../../atoms/characterState";
-import { TCharacterFlagGem } from "../../../@types/CharacterTypes";
+import {
+  ITEM_TYPE_COLOR,
+  TCharacterFlagGem,
+} from "../../../@types/CharacterTypes";
 import useTalismanLocation from "../../../hooks/useItemImageLocation";
-import { atomtalismanInfo } from "../../../atoms/ItemInfoState";
+import { atomFlagInfo } from "../../../atoms/ItemInfoState";
 
 interface Props {
   value: TCharacterFlagGem;
@@ -14,6 +17,7 @@ interface Props {
 interface StyledProps {
   $top: number;
   $left: number;
+  $rarityColor: string;
 }
 
 const StyledBox = styled.div``;
@@ -22,16 +26,17 @@ const RuneImg = styled.img<StyledProps>`
   transform: scale(1.3);
   margin: 0px 0px 0px 0px;
   cursor: pointer;
-  border: 1px solid #b727ba;
+  border: 1.5px solid ${(props) => props.$rarityColor};
   border-radius: 1px;
   margin-top: ${(props) => props.$top}%;
   margin-left: ${(props) => props.$left}%;
 `;
 
 const RuneItem: React.FC<Props> = ({ value, idx }) => {
-  const { RuneLocation } = useTalismanLocation();
-  const setTalismanInfo = useSetRecoilState(atomtalismanInfo);
-  const location = [0, 1, 2].map((x) => RuneLocation(idx, x));
+  const { GemLocation } = useTalismanLocation();
+  const setGemInfo = useSetRecoilState(atomFlagInfo);
+  const location = [0, 1, 2, 3].map((x) => GemLocation(idx));
+  const rarityColor = ITEM_TYPE_COLOR[value.itemRarity!];
   // console.log(c, idx);
   // value.map((x) => console.log(x.itemImage));
   // console.log(value);
@@ -39,13 +44,14 @@ const RuneItem: React.FC<Props> = ({ value, idx }) => {
     <StyledBox>
       <RuneImg
         src={value.itemImage}
-        alt={"rune Image"}
-        $top={location[1][0]}
-        $left={location[1][1]}
+        alt={"Gem Image"}
+        $top={location[idx][0]}
+        $left={location[idx][1]}
+        $rarityColor={rarityColor}
         onClick={() => {
-          // console.log(`룬: ${idx} ${index}`);
-          // console.log(obj);
-          // setTalismanInfo(obj);
+          // console.log(`젬: ${idx}`);
+          // console.log(value);
+          setGemInfo(value);
         }}
       ></RuneImg>
     </StyledBox>

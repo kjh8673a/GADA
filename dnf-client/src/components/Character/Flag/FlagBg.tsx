@@ -9,7 +9,7 @@ const StyledBox = styled.div`
   position: relative;
   width: 350px;
   height: 565px;
-  background-image: url("${process.env.PUBLIC_URL}/assets/flag_bg.png");
+  background-image: url("${process.env.PUBLIC_URL}/assets/flag_bg.svg");
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 10px;
@@ -20,7 +20,6 @@ const StyledBox = styled.div`
 
 const FlagBg = () => {
   const data = useRecoilValue(atomCharacterFlag);
-  // console.log(data);
   return (
     <StyledBox>
       <FlagItem />

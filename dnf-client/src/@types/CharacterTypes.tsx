@@ -408,7 +408,7 @@ export type TCharacterFlagGem = {
   itemId: string;
   itemImage: string;
   itemName: string;
-  itemRarity: string;
+  itemRarity: ITEM_RARITY;
   slotNo: number;
 };
 
@@ -418,7 +418,7 @@ export type TCharacterFlag = {
   itemId?: string;
   itemImage?: string;
   itemName?: string;
-  itemRarity?: string;
+  itemRarity?: ITEM_RARITY;
   reinforce?: number;
   reinforceStatus?: {
     name: string;
