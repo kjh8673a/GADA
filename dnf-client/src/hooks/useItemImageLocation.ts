@@ -77,9 +77,16 @@ const useItemImageLocation = () => {
     return [location.x, location.y];
   };
 
+  const FlagLocation = () => {
+    location.x = 56.8;
+    location.y = 46;
+    return [location.x, location.y];
+  };
+
   return {
     TalismanLocation,
     RuneLocation,
+    FlagLocation,
   };
 };
 

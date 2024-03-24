@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { atomCharacterTalismans } from "../../../atoms/characterState";
 import { TCharacterTalisman } from "../../../@types/CharacterTypes";
 import useTalismanLocation from "../../../hooks/useItemImageLocation";
-import { atomtalismanInfo } from "../../../atoms/talismanItemState";
+import { atomtalismanInfo } from "../../../atoms/ItemInfoState";
 
 interface Props {
   value: TCharacterTalisman;

@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { atomCharacterFlag } from "../../../atoms/characterState";
-import { TCharacterTalisman } from "../../../@types/CharacterTypes";
 import useTalismanLocation from "../../../hooks/useItemImageLocation";
-import { atomtalismanInfo } from "../../../atoms/talismanItemState";
+import { atomFlagInfo } from "../../../atoms/ItemInfoState";
 
 interface StyledProps {
   $top: number;
@@ -14,7 +13,7 @@ interface StyledProps {
 const StyledBox = styled.div``;
 const TalismanImg = styled.img<StyledProps>`
   position: absolute;
-  transform: scale(1.2);
+  transform: scale(1.55);
   cursor: pointer;
   border: 2px double yellow;
   border-radius: 1px;
@@ -24,9 +23,9 @@ const TalismanImg = styled.img<StyledProps>`
 
 const TalismanItem = () => {
   const data = useRecoilValue(atomCharacterFlag);
-  const { TalismanLocation } = useTalismanLocation();
-  const setTalismanInfo = useSetRecoilState(atomtalismanInfo);
-  const [x, y] = TalismanLocation(1);
+  const { FlagLocation } = useTalismanLocation();
+  const setFlagInfo = useSetRecoilState(atomFlagInfo);
+  const [x, y] = FlagLocation();
   return (
     <StyledBox>
       <TalismanImg
@@ -35,9 +34,9 @@ const TalismanItem = () => {
         $top={x}
         $left={y}
         onClick={() => {
-          // console.log(`탈리스만:${idx}`);
-          // console.log(value);
-          // setTalismanInfo(value);
+          console.log("휘장");
+          console.log(data);
+          setFlagInfo(data);
         }}
       ></TalismanImg>
     </StyledBox>
