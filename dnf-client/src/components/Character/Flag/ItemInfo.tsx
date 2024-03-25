@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { atomFlagInfo, atomtalismanInfo } from "../../../atoms/ItemInfoState";
+import { atomFlagInfo } from "../../../atoms/ItemInfoState";
 import ItemInfoExplain from "./ItemInfoExplain";
-import {
-  ITEM_TYPE_COLOR,
-  TCharacterFlag,
-  TCharacterFlagGem,
-} from "../../../@types/CharacterTypes";
+import { ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
 
 interface StyledProps {
   $rarityColor: string;
@@ -66,8 +62,6 @@ const ItemBox = styled.div`
 const ItemInfo = () => {
   const data = useRecoilValue(atomFlagInfo);
   const rarityColor = ITEM_TYPE_COLOR[data.detail?.itemRarity!];
-  console.log(data);
-
   return (
     <StyledBox>
       {data.itemId === undefined ? (

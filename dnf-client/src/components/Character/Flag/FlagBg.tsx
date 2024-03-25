@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { atomCharacterFlag } from "../../../atoms/characterState";
 import FlagItem from "./FlagItem";
 import GemItem from "./GemItem";
-import React from "react";
 
 const StyledBox = styled.div`
   position: relative;

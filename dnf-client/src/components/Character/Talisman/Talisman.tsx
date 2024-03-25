@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import TalismanBg from "./TalismanBg";
 import ItemInfo from "./ItemInfo";
+import { useRecoilValue } from "recoil";
+import { atomCharacterTalismans } from "../../../atoms/characterState";
+import Loading from "../../common/Loading";
 
 const StyledBox = styled.div`
   position: relative;
@@ -14,10 +17,18 @@ const StyledBox = styled.div`
 `;
 
 const Talisman = () => {
+  const data = useRecoilValue(atomCharacterTalismans);
   return (
     <StyledBox>
-      <TalismanBg />
-      <ItemInfo />
+      {data ? (
+        <>
+          {" "}
+          <TalismanBg />
+          <ItemInfo />
+        </>
+      ) : (
+        <Loading text={"장착된 탈리스만이 없습니다."} play={false} />
+      )}
     </StyledBox>
   );
 };

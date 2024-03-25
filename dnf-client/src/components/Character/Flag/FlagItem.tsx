@@ -21,19 +21,28 @@ const TalismanImg = styled.img<StyledProps>`
   margin-left: 46%;
 `;
 
+const FlagName = styled.div<StyledProps>`
+  position: absolute;
+  color: ${(props) => props.$rarityColor};
+  margin-top: 5%;
+  justify-content: center;
+  margin-left: 25%;
+`;
+
 const TalismanItem = () => {
   const data = useRecoilValue(atomCharacterFlag);
   const setFlagInfo = useSetRecoilState(atomFlagInfo);
   const rarityColor = ITEM_TYPE_COLOR[data.itemRarity!];
   return (
     <StyledBox>
+      <FlagName $rarityColor={rarityColor}>{data.itemName}</FlagName>
       <TalismanImg
         src={data.itemImage}
         alt={"talisman Image"}
         $rarityColor={rarityColor}
         onClick={() => {
           // console.log("휘장");
-          console.log(data);
+          // console.log(data);
           setFlagInfo(data);
         }}
       ></TalismanImg>

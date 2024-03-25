@@ -62,12 +62,7 @@ const ItemBox = styled.div`
 const ItemInfo = () => {
   const data = useRecoilValue(atomtalismanInfo);
   const rarityColor = ITEM_TYPE_COLOR[data.detail?.itemRarity!];
-  // const [rarity, setRarity] = useState<boolean>(true);
-  // useEffect(() => {
-  //   if (data.detail?.itemRarity === "유니크") {
-  //     setRarity(false);
-  //   }
-  // }, [data]);
+
   return (
     <StyledBox>
       {data.itemId === undefined ? (
