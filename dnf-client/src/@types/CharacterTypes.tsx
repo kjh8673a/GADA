@@ -446,6 +446,10 @@ export type TCharacterItemDetail = {
   itemTypeDetailId: string;
   itemTypeId: string;
   mythologyInfo: string;
+  talismanInfo: {
+    explain: string;
+    skillId: string;
+  };
   obtainInfo: {
     dungeon: string;
     shop: {

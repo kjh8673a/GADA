@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 interface Props {
   value: String | undefined;
+  add: boolean;
 }
 
 const StyledBox = styled.div`
@@ -12,8 +13,11 @@ const StyledBox = styled.div`
   color: #999685;
 `;
 
-const TalismanItem: React.FC<Props> = ({ value }) => {
-  const valueSplit = value?.split("\n");
+const TalismanItem: React.FC<Props> = ({ value, add }) => {
+  let valueSplit = value?.split("\n");
+  if (add) {
+    valueSplit![0] = "[탈리스만 추가효과]";
+  }
   return (
     <StyledBox>
       {valueSplit?.map((value, idx) => (
