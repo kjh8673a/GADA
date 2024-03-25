@@ -44,8 +44,6 @@ const TalismanItem: React.FC<Props> = ({ value, idx }) => {
         $left={y}
         $rarityColor={rarityColor}
         onClick={() => {
-          // console.log(`탈리스만:${idx}`);
-          // console.log(value);
           setTalismanInfo(value);
         }}
       ></TalismanImg>

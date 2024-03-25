@@ -1,7 +1,6 @@
 import React from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { atomCharacterTalismans } from "../../../atoms/characterState";
 import {
   ITEM_TYPE_COLOR,
   TCharacterRune,
@@ -50,8 +49,6 @@ const RuneItem: React.FC<Props> = ({ value, idx }) => {
           $left={location[index][1]}
           $rarityColor={rarityColorList[idx]}
           onClick={() => {
-            // console.log(`룬: ${idx} ${index}`);
-            // console.log(obj);
             setTalismanInfo(obj);
           }}
         ></RuneImg>

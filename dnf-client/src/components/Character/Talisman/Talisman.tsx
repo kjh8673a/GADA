@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import TalismanBg from "./TalismanBg";
 import ItemInfo from "./ItemInfo";

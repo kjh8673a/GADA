@@ -1,10 +1,8 @@
-import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { atomCharacterFlag } from "../../../atoms/characterState";
-import useTalismanLocation from "../../../hooks/useItemImageLocation";
 import { atomFlagInfo } from "../../../atoms/ItemInfoState";
-import { ITEM_RARITY, ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
+import { ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
 
 interface StyledProps {
   $rarityColor: string;

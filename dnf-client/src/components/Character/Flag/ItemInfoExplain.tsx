@@ -14,7 +14,6 @@ const StyledBox = styled.div`
 `;
 
 const TalismanItem: React.FC<Props> = ({ value }) => {
-  // console.log(value);
   return (
     <StyledBox>
       {value?.itemStatus.map((obj, idx) => (

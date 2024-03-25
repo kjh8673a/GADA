@@ -45,8 +45,6 @@ const RuneItem: React.FC<Props> = ({ value, idx }) => {
         $left={location[idx][1]}
         $rarityColor={rarityColor}
         onClick={() => {
-          // console.log(`젬: ${idx}`);
-          // console.log(value);
           setGemInfo(value);
         }}
       ></RuneImg>
