@@ -436,7 +436,7 @@ export type TCharacterItemDetail = {
   itemFlavorText: string;
   itemId: string;
   itemName: string;
-  itemRarity: string;
+  itemRarity: ITEM_RARITY;
   itemStatus: {
     name: string;
     value: string;

@@ -23,9 +23,7 @@ const TalismanImg = styled.img<StyledProps>`
 
 const TalismanItem = () => {
   const data = useRecoilValue(atomCharacterFlag);
-  // const { FlagLocation } = useTalismanLocation();
   const setFlagInfo = useSetRecoilState(atomFlagInfo);
-  // const [x, y] = FlagLocation();
   const rarityColor = ITEM_TYPE_COLOR[data.itemRarity!];
   return (
     <StyledBox>

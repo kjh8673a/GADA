@@ -3,9 +3,10 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { atomtalismanInfo } from "../../../atoms/ItemInfoState";
 import ItemInfoExplain from "./ItemInfoExplain";
+import { ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
 
 interface StyledProps {
-  $rarityColor: boolean;
+  $rarityColor: string;
 }
 
 const StyledBox = styled.div`
@@ -28,22 +29,21 @@ const NameBox = styled.div`
   height: 12%;
   border-bottom: 1px solid #455a64;
 `;
-const ItemImg = styled.img`
+const ItemImg = styled.img<StyledProps>`
   position: relative;
   transform: scale(0.8);
-  border: 2px solid #b727ba;
+  border: 2px solid ${(props) => props.$rarityColor};
 
   border-radius: 1px;
 `;
 const NameDiv = styled.div<StyledProps>`
   margin-left: 2%;
   margin-top: 1%;
-
-  color: ${(props) => (props.$rarityColor ? "white" : "#b727ba")};
+  color: ${(props) => props.$rarityColor};
 `;
 const RarityDiv = styled.div<StyledProps>`
   text-align: right;
-  color: ${(props) => (props.$rarityColor ? "white" : "#b727ba")};
+  color: ${(props) => props.$rarityColor};
 `;
 const RarityBox = styled.div`
   margin-left: 1%;
@@ -61,12 +61,13 @@ const ItemBox = styled.div`
 
 const ItemInfo = () => {
   const data = useRecoilValue(atomtalismanInfo);
-  const [rarity, setRarity] = useState<boolean>(true);
-  useEffect(() => {
-    if (data.detail?.itemRarity === "유니크") {
-      setRarity(false);
-    }
-  }, [data]);
+  const rarityColor = ITEM_TYPE_COLOR[data.detail?.itemRarity!];
+  // const [rarity, setRarity] = useState<boolean>(true);
+  // useEffect(() => {
+  //   if (data.detail?.itemRarity === "유니크") {
+  //     setRarity(false);
+  //   }
+  // }, [data]);
   return (
     <StyledBox>
       {data.itemId === undefined ? (
@@ -74,11 +75,11 @@ const ItemInfo = () => {
       ) : (
         <>
           <NameBox>
-            <ItemImg src={data.itemImage}></ItemImg>
-            <NameDiv $rarityColor={rarity}>{data.itemName}</NameDiv>
+            <ItemImg src={data.itemImage} $rarityColor={rarityColor}></ItemImg>
+            <NameDiv $rarityColor={rarityColor}>{data.itemName}</NameDiv>
           </NameBox>
           <RarityBox>
-            <RarityDiv $rarityColor={rarity}>
+            <RarityDiv $rarityColor={rarityColor}>
               {data.detail?.itemRarity}
             </RarityDiv>
             <ItemBox>레벨제한 {data.detail?.itemAvailableLevel}</ItemBox>

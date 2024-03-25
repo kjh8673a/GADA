@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { TCharacterItemDetail } from "../../../@types/CharacterTypes";
 
 interface Props {
-  value: String | undefined;
+  value: TCharacterItemDetail | undefined;
 }
 
 const StyledBox = styled.div`
@@ -13,11 +14,13 @@ const StyledBox = styled.div`
 `;
 
 const TalismanItem: React.FC<Props> = ({ value }) => {
-  const valueSplit = value?.split("\n");
+  // console.log(value);
   return (
     <StyledBox>
-      {valueSplit?.map((value, idx) => (
-        <StyledBox key={idx}>{value}</StyledBox>
+      {value?.itemStatus.map((obj, idx) => (
+        <StyledBox key={idx}>
+          {obj.name} {obj.value}
+        </StyledBox>
       ))}
     </StyledBox>
   );

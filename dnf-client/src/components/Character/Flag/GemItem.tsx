@@ -1,7 +1,6 @@
 import React from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { atomCharacterTalismans } from "../../../atoms/characterState";
 import {
   ITEM_TYPE_COLOR,
   TCharacterFlagGem,
@@ -37,9 +36,6 @@ const RuneItem: React.FC<Props> = ({ value, idx }) => {
   const setGemInfo = useSetRecoilState(atomFlagInfo);
   const location = [0, 1, 2, 3].map((x) => GemLocation(idx));
   const rarityColor = ITEM_TYPE_COLOR[value.itemRarity!];
-  // console.log(c, idx);
-  // value.map((x) => console.log(x.itemImage));
-  // console.log(value);
   return (
     <StyledBox>
       <RuneImg
