@@ -9,6 +9,7 @@ import {
   TCharacterStat,
   TCharacterTalismans,
 } from "../@types/CharacterTypes";
+import { TAvatar } from "../@types/Character/CharacterAvatarType";
 
 export const atomCharacterBasic = atom<TCharacterBasic>({
   key: "atomCharacterBasic",
@@ -58,4 +59,9 @@ export const atomUpdate = atom<boolean>({
 export const atomLoading = atom<boolean>({
   key: "atomLoading",
   default: false,
+});
+
+export const atomCharacterAvatar = atom<TAvatar[]>({
+  key: "atomCharacterAvatar",
+  default: [],
 });
