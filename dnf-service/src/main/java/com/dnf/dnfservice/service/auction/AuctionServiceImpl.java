@@ -1,27 +1,38 @@
 package com.dnf.dnfservice.service.auction;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import com.dnf.dnfservice.dto.feign.auction.AuctionSearchDto;
 import com.dnf.dnfservice.dto.feign.auction.AuctionSoldDto;
+import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
 import com.dnf.dnfservice.dto.feign.item.ItemSearchDto;
 import com.dnf.dnfservice.dto.model.auction.AuctionSearchItem;
 import com.dnf.dnfservice.dto.model.auction.AuctionSearchItemInfo;
 import com.dnf.dnfservice.dto.model.auction.AuctionSoldInfo;
+import com.dnf.dnfservice.dto.model.auction.AuctionViewRanking;
 import com.dnf.dnfservice.dto.response.auction.AuctionItemDetailResponseDto;
 import com.dnf.dnfservice.dto.response.auction.AuctionSearchResponseDto;
+import com.dnf.dnfservice.dto.response.auction.AuctionViewRankingResponseDto;
 import com.dnf.dnfservice.exception.CustomException;
 import com.dnf.dnfservice.exception.ErrorCode;
 import com.dnf.dnfservice.service.item.ItemApiService;
+import com.dnf.dnfservice.util.cache.RedisCacheable;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +41,8 @@ import lombok.RequiredArgsConstructor;
 public class AuctionServiceImpl implements AuctionService {
 	private final AuctionApiService auctionApiService;
 	private final ItemApiService itemApiService;
+
+	private final RedisTemplate redisTemplate;
 
 	@Override
 	public AuctionSearchResponseDto searchAuctionItems(String itemName) {
@@ -76,6 +89,32 @@ public class AuctionServiceImpl implements AuctionService {
 
 		return AuctionItemDetailResponseDto.of(searchDto.getRows().get(0), maxPriceItem.getUnitPrice(),
 			minPriceItem.getUnitPrice(), searchDto.getRows().size(), totalVolume, list);
+	}
+
+	@Override
+	public void addAuctionItemViewCount(String itemId) {
+		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
+		String key = "auctionItemViewCount::" + itemId;
+		setOperations.add(key, LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusHours(3).toString());
+	}
+
+	@Override
+	@RedisCacheable(value = "auction-view-ranking", expire = 600)
+	public AuctionViewRankingResponseDto getPopularItems() {
+		List<AuctionViewRanking> rankings = new ArrayList<>();
+		Set<ZSetOperations.TypedTuple<String>> ranking = redisTemplate.opsForZSet()
+			.reverseRangeWithScores("auctionItemViewRank", 0, 9);
+
+		int rank = 1;
+		for(ZSetOperations.TypedTuple<String> item : ranking) {
+			String itemId = item.getValue();
+			ItemDetailDto itemDetailDto = itemApiService.getItemDetail(itemId);
+
+			AuctionViewRanking viewRanking = AuctionViewRanking.of(rank++, itemDetailDto);
+			rankings.add(viewRanking);
+		}
+
+		return AuctionViewRankingResponseDto.builder().ranking(rankings).build();
 	}
 
 	private static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {

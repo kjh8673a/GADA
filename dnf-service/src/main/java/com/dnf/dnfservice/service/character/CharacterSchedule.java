@@ -70,14 +70,14 @@ public class CharacterSchedule {
 	@Transactional
 	@Scheduled(cron = "0 0/30 * * * ?")
 	public void addToZSetCharacterViewRank() {
-		log.info("검색기록 zset에 삽입");
+		log.info("캐릭터 검색기록 zset에 삽입");
 
 		Set<String> redisKeys = redisTemplate.keys("characterViewCount*");
 		Objects.requireNonNull(redisKeys).forEach(
 			data -> {
-				String ocid = data.split("::")[1];
+				String serverAndCharacterName = data.split("::")[1];
 				Long size = redisTemplate.opsForSet().size(data);
-				redisTemplate.opsForZSet().add("characterViewRank", ocid, size);
+				redisTemplate.opsForZSet().add("characterViewRank", serverAndCharacterName, size);
 			}
 		);
 	}
