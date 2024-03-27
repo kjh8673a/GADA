@@ -10,7 +10,7 @@ const StyledBox = styled.div`
   box-sizing: border-box;
   border-radius: 10px;
   padding: 20px;
-  background-color: var(--primary-bg-color);
+  background-color: rgb(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -30,11 +30,11 @@ const StyledBtn = styled.div`
   display: flex;
   justify-content: center;
   border-radius: 5px;
-  color: gray;
+  color: #FFFFFF;
   &:hover {
-    transition: 0.2s linear;
+    transition: 0.1s linear;
     cursor: pointer;
-    color: #d9d9d9;
+    background-color: #5f7883;
   }
 `;
 
