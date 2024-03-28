@@ -37,6 +37,10 @@ const FlagName = styled.div<StyledProps>`
   margin-left: 25%;
 `;
 
+const StyledContentItem = styled.div`
+  margin-bottom: 1.5%;
+`;
+
 const TalismanItem = () => {
   const data = useRecoilValue(atomCharacterFlag);
   const flagState = useRecoilValue(atomFlagState);
@@ -57,9 +61,21 @@ const TalismanItem = () => {
         }}
       ></TalismanImg>
       <Content>
-        <ContentItem title={"모험가 명성"} value={"+" + flagState["모험가 명성"]} />
-        <ContentItem title={"피해 증가"} value={"+" + flagState["공격력 증가"]} />
-        <ContentItem title={"버프력"} value={"+" + flagState["버프력"]} />
+        <StyledContentItem>
+          <ContentItem
+            title={"모험가 명성"}
+            value={"+" + flagState["모험가 명성"]}
+          />
+        </StyledContentItem>
+        <StyledContentItem>
+          <ContentItem
+            title={"피해 증가"}
+            value={"+" + flagState["공격력 증가"]}
+          />
+        </StyledContentItem>
+        <StyledContentItem>
+          <ContentItem title={"버프력"} value={"+" + flagState["버프력"]} />
+        </StyledContentItem>
       </Content>
     </StyledBox>
   );
