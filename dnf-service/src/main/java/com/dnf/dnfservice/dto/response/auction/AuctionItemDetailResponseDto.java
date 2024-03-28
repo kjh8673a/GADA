@@ -21,17 +21,14 @@ public class AuctionItemDetailResponseDto {
 	String itemType;
 	String itemTypeDetail;
 	String itemImage;
-
-	Long upperPrice;
-	Long lowerPrice;
 	Long averagePrice;
 
-	Integer registeredNumber;
+	Long registeredNumber;
 	Long totalItemCount;
 
 	List<AuctionSoldInfo> history;
 
-	public static AuctionItemDetailResponseDto of(AuctionSearchItem item, Long upperPrice, Long lowerPrice,
+	public static AuctionItemDetailResponseDto of(AuctionSearchItem item,
 		int registeredNumber, Long totalItemCount, List<AuctionSoldInfo> history) {
 		return AuctionItemDetailResponseDto.builder()
 			.itemId(item.getItemId())
@@ -41,9 +38,7 @@ public class AuctionItemDetailResponseDto {
 			.itemTypeDetail(item.getItemTypeDetail())
 			.itemImage("https://img-api.neople.co.kr/df/items/" + item.getItemId())
 			.averagePrice(item.getAveragePrice())
-			.upperPrice(upperPrice)
-			.lowerPrice(lowerPrice)
-			.registeredNumber(registeredNumber)
+			.registeredNumber(Long.valueOf(registeredNumber))
 			.totalItemCount(totalItemCount)
 			.history(history)
 			.build();
