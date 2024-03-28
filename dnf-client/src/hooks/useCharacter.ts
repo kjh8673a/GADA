@@ -10,8 +10,10 @@ import {
 } from "../api/Character/getCharacterInfo";
 import { useSetRecoilState } from "recoil";
 import {
+  atomCharacterAvatar,
   atomCharacterBasic,
   atomCharacterBuffEquip,
+  atomCharacterCreature,
   atomCharacterEquip,
   atomCharacterEquipTrait,
   atomCharacterSetItem,
@@ -31,6 +33,8 @@ const useCharacter = () => {
   const setBuff = useSetRecoilState(atomCharacterBuffEquip);
   const setSkill = useSetRecoilState(atomCharacterSkill);
   const setTalismans = useSetRecoilState(atomCharacterTalismans);
+  const setAvatar = useSetRecoilState(atomCharacterAvatar);
+  const setCreature = useSetRecoilState(atomCharacterCreature);
 
   const fetchCharacterInfo = useCallback(
     (serverName: string, characterName: string, update?: boolean) => {
@@ -72,6 +76,8 @@ const useCharacter = () => {
     setBuff(data.data?.buff!);
     setSkill(data.data?.skill!);
     setTalismans(data.data?.talisman!);
+    setAvatar(data.data?.avatar!);
+    setCreature(data.data?.creature!);
   };
 
   const isValid = (server: any, character: any): boolean => {

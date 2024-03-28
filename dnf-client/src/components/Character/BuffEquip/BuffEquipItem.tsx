@@ -10,7 +10,7 @@ interface Props {
 const StyledBox = styled.div`
   box-sizing: border-box;
   width: 100%;
-  background-color: rgb(0, 0, 0, 0.7);
+  background-color: rgb(0, 0, 0, 1);
   border-radius: 10px;
   padding: 1rem;
   gap: 10px;

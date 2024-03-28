@@ -5,7 +5,7 @@ export const StatBox = styled.div<{ width: number }>`
   display: flex;
   flex-wrap: wrap;
   width: ${(props) => props.width}%;
-  background-color: rgb(0, 0, 0, 0.6);
+  background-color: rgb(0, 0, 0, 1);
   font-size: 1.05rem;
   border-radius: 10px;
 `;
