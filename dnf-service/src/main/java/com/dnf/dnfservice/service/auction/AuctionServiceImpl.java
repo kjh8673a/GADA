@@ -108,6 +108,9 @@ public class AuctionServiceImpl implements AuctionService {
 		int rank = 1;
 		for(ZSetOperations.TypedTuple<String> item : ranking) {
 			String itemId = item.getValue();
+			if(item.getScore() == 0) {
+				break;
+			}
 			ItemDetailDto itemDetailDto = itemApiService.getItemDetail(itemId);
 
 			AuctionViewRanking viewRanking = AuctionViewRanking.of(rank++, itemDetailDto);
