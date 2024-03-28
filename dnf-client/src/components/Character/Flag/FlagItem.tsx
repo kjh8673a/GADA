@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { atomCharacterFlag } from "../../../atoms/characterState";
 import { atomFlagInfo } from "../../../atoms/ItemInfoState";
 import { ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
+import ContentItem from "../Summary/ContentItem";
+import useFlag from "../../../hooks/useFlag";
+import { atomFlagState } from "../../../atoms/flagState";
 
 interface StyledProps {
   $rarityColor: string;
@@ -19,6 +22,13 @@ const TalismanImg = styled.img<StyledProps>`
   margin-left: 46%;
 `;
 
+const Content = styled.div`
+  position: absolute;
+  margin-top: 140%;
+  margin-left: 17%;
+  width: 100%;
+`;
+
 const FlagName = styled.div<StyledProps>`
   position: absolute;
   color: ${(props) => props.$rarityColor};
@@ -29,6 +39,8 @@ const FlagName = styled.div<StyledProps>`
 
 const TalismanItem = () => {
   const data = useRecoilValue(atomCharacterFlag);
+  const flagState = useRecoilValue(atomFlagState);
+  useFlag(data);
   const setFlagInfo = useSetRecoilState(atomFlagInfo);
   const rarityColor = ITEM_TYPE_COLOR[data.itemRarity!];
   return (
@@ -44,6 +56,11 @@ const TalismanItem = () => {
           setFlagInfo(data);
         }}
       ></TalismanImg>
+      <Content>
+        <ContentItem title={"모험가 명성"} value={"+" + flagState["모험가 명성"]} />
+        <ContentItem title={"피해 증가"} value={"+" + flagState["공격력 증가"]} />
+        <ContentItem title={"버프력"} value={"+" + flagState["버프력"]} />
+      </Content>
     </StyledBox>
   );
 };
