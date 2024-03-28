@@ -68,16 +68,6 @@ public class AuctionServiceImpl implements AuctionService {
 			throw new CustomException(ErrorCode.ITEM_NOT_FOUND);
 		}
 
-		AuctionSearchItem maxPriceItem = searchDto.getRows()
-			.stream()
-			.max(Comparator.comparing(AuctionSearchItem::getUnitPrice))
-			.orElseThrow(NoSuchElementException::new);
-
-		AuctionSearchItem minPriceItem = searchDto.getRows()
-			.stream()
-			.min(Comparator.comparing(AuctionSearchItem::getUnitPrice))
-			.orElseThrow(NoSuchElementException::new);
-
 		Long totalVolume = searchDto.getRows().stream().mapToLong(AuctionSearchItem::getCount).sum();
 
 		AuctionSoldDto soldDto = auctionApiService.getSoldHistory(itemId);
@@ -87,8 +77,7 @@ public class AuctionServiceImpl implements AuctionService {
 			.map(data -> AuctionSoldInfo.of(data))
 			.collect(Collectors.toList());
 
-		return AuctionItemDetailResponseDto.of(searchDto.getRows().get(0), maxPriceItem.getUnitPrice(),
-			minPriceItem.getUnitPrice(), searchDto.getRows().size(), totalVolume, list);
+		return AuctionItemDetailResponseDto.of(searchDto.getRows().get(0), searchDto.getRows().size(), totalVolume, list);
 	}
 
 	@Override
