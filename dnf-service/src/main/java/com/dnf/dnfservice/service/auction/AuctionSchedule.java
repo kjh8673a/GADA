@@ -20,7 +20,7 @@ public class AuctionSchedule {
 	private final RedisTemplate redisTemplate;
 
 	@Transactional
-	@Scheduled(cron = "0 0/30 * * * ?")
+	@Scheduled(cron = "0 0/10 * * * ?")
 	public void addToZSetAuctionItemViewCount() {
 		log.info("경매장 검색기록 zset에 삽입 / 기간 만료된 기록 삭제");
 
