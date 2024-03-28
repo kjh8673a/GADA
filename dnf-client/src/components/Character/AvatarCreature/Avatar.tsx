@@ -3,11 +3,12 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { atomCharacterAvatar } from "../../../atoms/characterState";
 import AvatarSlots from "./AvatarSlots";
-import { AVATAR_SLOT_LIST } from "../../../@types/Character/CharacterAvatarType";
+import { AVATAR_SLOT_LIST } from "../../../@types/Character/AvatarTypes";
 import { Line } from "../../../style/dnfContainer";
 
 const StyledBox = styled.div`
   box-sizing: border-box;
+  min-height: 270px;
   border-radius: 10px;
   padding: 20px;
   background-color: rgb(0, 0, 0, 0.7);
@@ -62,7 +63,7 @@ const Avatar = () => {
         isEffective={isEffective}
       />
       <StyledBtn onClick={() => setIsEffective((prev) => !prev)}>
-        {"아바타 체인지"}
+        {isEffective ? "스킨 아바타" : "효과 적용 아바타"}
       </StyledBtn>
     </StyledBox>
   );

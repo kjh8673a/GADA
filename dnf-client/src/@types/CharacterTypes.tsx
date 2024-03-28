@@ -1,4 +1,5 @@
-import { TAvatar } from "./Character/CharacterAvatarType";
+import { TAvatar } from "./Character/AvatarTypes";
+import { TCreature } from "./Character/CreatureTypes";
 
 export const SERVER_LIST = [
   "힐더",
@@ -493,6 +494,7 @@ export type TCharacterData = {
     skill: TCharacterSkill;
     talisman: TCharacterTalismans;
     avatar: TAvatar[] | null;
+    creature: TCreature | null;
   };
 };
 

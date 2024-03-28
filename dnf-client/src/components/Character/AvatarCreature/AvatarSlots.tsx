@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TAvatar } from "../../../@types/Character/CharacterAvatarType";
+import { TAvatar } from "../../../@types/Character/AvatarTypes";
 import AvatarItem from "./AvatarItem";
 
 interface Props {

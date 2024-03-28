@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
   EMBLEMS_COLOR,
   TAvatarEmblem,
-} from "../../../@types/Character/CharacterAvatarType";
+} from "../../../@types/Character/AvatarTypes";
 
 interface Props {
   data: TAvatarEmblem[];

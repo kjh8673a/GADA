@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { TAvatar } from "../../../@types/Character/CharacterAvatarType";
+import { TAvatar } from "../../../@types/Character/AvatarTypes";
 import Emblems from "./Emblems";
 import AvatarHoverItem from "./AvatarHoverItem";
 

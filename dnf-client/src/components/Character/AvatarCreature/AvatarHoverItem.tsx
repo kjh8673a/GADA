@@ -7,7 +7,7 @@ import {
   EMBLEMS_COLOR,
   TAvatar,
   TAvatarDetail,
-} from "../../../@types/Character/CharacterAvatarType";
+} from "../../../@types/Character/AvatarTypes";
 
 interface Props {
   itemName?: string;
