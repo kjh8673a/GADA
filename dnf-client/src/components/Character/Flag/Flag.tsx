@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import TalismanBg from "./TalismanBg";
+import FlagBg from "./FlagBg";
 import ItemInfo from "./ItemInfo";
 import { useRecoilValue } from "recoil";
-import { atomCharacterTalismans } from "../../../atoms/characterState";
+import { atomCharacterFlag } from "../../../atoms/characterState";
 import Loading from "../../common/Loading";
 
 const StyledBox = styled.div`
@@ -15,21 +15,20 @@ const StyledBox = styled.div`
   background-color: var(--secondary-bg-color);
 `;
 
-const Talisman = () => {
-  const data = useRecoilValue(atomCharacterTalismans);
+const Flag = () => {
+  const data = useRecoilValue(atomCharacterFlag);
   return (
     <StyledBox>
       {data ? (
         <>
-          {" "}
-          <TalismanBg />
+          <FlagBg />
           <ItemInfo />
         </>
       ) : (
-        <Loading text={"장착된 탈리스만이 없습니다."} play={false} />
+        <Loading text={"장착된 휘장이 없습니다."} play={false} />
       )}
     </StyledBox>
   );
 };
 
-export default Talisman;
+export default Flag;

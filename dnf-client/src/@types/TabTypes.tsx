@@ -5,7 +5,7 @@ export const TAB_LIST = {
   BUFF: "버프 강화 장비",
   // SKILL: "스킬",
   AVATAR: "아바타&크리쳐",
-  INSIGNIA: "휘장",
+  FLAG: "휘장",
   TALISMAN: "탈리스만",
 } as const;
 

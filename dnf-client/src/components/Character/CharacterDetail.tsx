@@ -2,6 +2,7 @@ import useCharacterTab from "../../hooks/useCharacterTab";
 import AvatarCreature from "./AvatarCreature/AvatarCreature";
 import BuffEquip from "./BuffEquip/BuffEquip";
 import Equipment from "./Equipment/Equipment";
+import Flag from "./Flag/Flag";
 import Stat from "./Stat/Stat";
 import CharacterTalisman from "./Talisman/Talisman";
 const CharacterDetail = () => {
@@ -12,7 +13,7 @@ const CharacterDetail = () => {
   if (tabName === "BUFF") return <BuffEquip />;
   // if (tabName === "SKILL") return < />;
   if (tabName === "AVATAR") return <AvatarCreature />;
-  // if (tabName === "INSIGNIA") return < />;
+  if (tabName === "FLAG") return <Flag />;
   if (tabName === "TALISMAN") return <CharacterTalisman />;
 
   return <span>현재 탭 : {tabName}</span>;

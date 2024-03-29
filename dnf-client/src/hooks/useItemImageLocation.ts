@@ -3,7 +3,7 @@ const location = {
   y: 0,
 };
 
-const useTalismanLocation = () => {
+const useItemImageLocation = () => {
   const TalismanLocation = (idx: number): number[] => {
     if (idx === 0) {
       location.x = 34.1;
@@ -77,10 +77,35 @@ const useTalismanLocation = () => {
     return [location.x, location.y];
   };
 
+  const GemLocation = (idx: number): number[] => {
+    if (idx === 0) {
+      location.x = 76.2;
+      location.y = 20.9;
+      return [location.x, location.y];
+    }
+    if (idx === 1) {
+      location.x = 88;
+      location.y = 36.4;
+      return [location.x, location.y];
+    }
+    if (idx === 2) {
+      location.x = 88;
+      location.y = 55.9;
+      return [location.x, location.y];
+    }
+    if (idx === 3) {
+      location.x = 76.2;
+      location.y = 71.4;
+      return [location.x, location.y];
+    }
+    return [location.x, location.y];
+  };
+
   return {
     TalismanLocation,
     RuneLocation,
+    GemLocation,
   };
 };
 
-export default useTalismanLocation;
+export default useItemImageLocation;

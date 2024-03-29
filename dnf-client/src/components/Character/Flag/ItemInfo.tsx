@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { atomtalismanInfo } from "../../../atoms/ItemInfoState";
+import { atomFlagInfo } from "../../../atoms/ItemInfoState";
 import ItemInfoExplain from "./ItemInfoExplain";
 import { ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
 
@@ -53,20 +53,13 @@ const RarityBox = styled.div`
   border-bottom: 1px solid #455a64;
 `;
 
-const AddTalisman = styled.div`
-  margin-left: 1%;
-  margin-right: 1%;
-  margin-top: 3%;
-  border-top: 1px solid #455a64;
-`;
-
 const ItemBox = styled.div`
   text-align: right;
   color: #70694c;
 `;
 
 const ItemInfo = () => {
-  const data = useRecoilValue(atomtalismanInfo);
+  const data = useRecoilValue(atomFlagInfo);
   const rarityColor = ITEM_TYPE_COLOR[data.detail?.itemRarity!];
   return (
     <StyledBox>
@@ -76,7 +69,10 @@ const ItemInfo = () => {
         <>
           <NameBox>
             <ItemImg src={data.itemImage} $rarityColor={rarityColor}></ItemImg>
-            <NameDiv $rarityColor={rarityColor}>{data.itemName}</NameDiv>
+            <NameDiv $rarityColor={rarityColor}>
+              {"reinforce" in data ? `+${data.reinforce} ` : ""}
+              {data.itemName}
+            </NameDiv>
           </NameBox>
           <RarityBox>
             <RarityDiv $rarityColor={rarityColor}>
@@ -84,20 +80,7 @@ const ItemInfo = () => {
             </RarityDiv>
             <ItemBox>레벨제한 {data.detail?.itemAvailableLevel}</ItemBox>
           </RarityBox>
-          <ItemInfoExplain
-            value={data.detail?.itemExplainDetail}
-            add={false}
-          ></ItemInfoExplain>
-          {data.detail?.talismanInfo! != null ? (
-            <AddTalisman>
-              <ItemInfoExplain
-                value={data.detail?.talismanInfo.explain}
-                add={true}
-              ></ItemInfoExplain>
-            </AddTalisman>
-          ) : (
-            ""
-          )}
+          <ItemInfoExplain value={data.detail}></ItemInfoExplain>
         </>
       )}
     </StyledBox>

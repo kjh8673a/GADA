@@ -4,6 +4,7 @@ import {
   TCharacterBuffEquip,
   TCharacterEquip,
   TCharacterEquipTrait,
+  TCharacterFlag,
   TCharacterSetItem,
   TCharacterSkill,
   TCharacterStat,
@@ -44,6 +45,11 @@ export const atomCharacterBuffEquip = atom<TCharacterBuffEquip>({
 
 export const atomCharacterSkill = atom<TCharacterSkill>({
   key: "atomCharacterSkill",
+  default: {},
+});
+
+export const atomCharacterFlag = atom<TCharacterFlag>({
+  key: "atomCharacterFlag",
   default: {},
 });
 
