@@ -22,6 +22,7 @@ import com.dnf.dnfservice.dto.feign.auction.AuctionSearchDto;
 import com.dnf.dnfservice.dto.feign.auction.AuctionSoldDto;
 import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
 import com.dnf.dnfservice.dto.feign.item.ItemSearchDto;
+import com.dnf.dnfservice.dto.model.auction.AuctionGraphInfo;
 import com.dnf.dnfservice.dto.model.auction.AuctionSearchItem;
 import com.dnf.dnfservice.dto.model.auction.AuctionSearchItemInfo;
 import com.dnf.dnfservice.dto.model.auction.AuctionSoldInfo;
@@ -29,8 +30,10 @@ import com.dnf.dnfservice.dto.model.auction.AuctionViewRanking;
 import com.dnf.dnfservice.dto.response.auction.AuctionItemDetailResponseDto;
 import com.dnf.dnfservice.dto.response.auction.AuctionSearchResponseDto;
 import com.dnf.dnfservice.dto.response.auction.AuctionViewRankingResponseDto;
+import com.dnf.dnfservice.entity.AuctionItemHistory;
 import com.dnf.dnfservice.exception.CustomException;
 import com.dnf.dnfservice.exception.ErrorCode;
+import com.dnf.dnfservice.repository.auctionItemHistory.AuctionItemHistoryRepository;
 import com.dnf.dnfservice.service.item.ItemApiService;
 import com.dnf.dnfservice.util.cache.RedisCacheable;
 
@@ -41,6 +44,8 @@ import lombok.RequiredArgsConstructor;
 public class AuctionServiceImpl implements AuctionService {
 	private final AuctionApiService auctionApiService;
 	private final ItemApiService itemApiService;
+
+	private final AuctionItemHistoryRepository auctionItemHistoryRepository;
 
 	private final RedisTemplate redisTemplate;
 
@@ -74,10 +79,16 @@ public class AuctionServiceImpl implements AuctionService {
 
 		List<AuctionSoldInfo> list = soldDto.getRows()
 			.stream()
-			.map(data -> AuctionSoldInfo.of(data))
-			.collect(Collectors.toList());
+			.map(AuctionSoldInfo::of)
+			.toList();
 
-		return AuctionItemDetailResponseDto.of(searchDto.getRows().get(0), searchDto.getRows().size(), totalVolume, list);
+		List<AuctionGraphInfo> graph = auctionItemHistoryRepository.getAuctionItemHistory(itemId)
+			.stream()
+			.map(AuctionGraphInfo::of)
+			.toList();
+
+		return AuctionItemDetailResponseDto.of(searchDto.getRows().get(0), searchDto.getRows().size(), totalVolume,
+			list, graph);
 	}
 
 	@Override
@@ -95,9 +106,9 @@ public class AuctionServiceImpl implements AuctionService {
 			.reverseRangeWithScores("auctionItemViewRank", 0, 9);
 
 		int rank = 1;
-		for(ZSetOperations.TypedTuple<String> item : ranking) {
+		for (ZSetOperations.TypedTuple<String> item : ranking) {
 			String itemId = item.getValue();
-			if(item.getScore() == 0) {
+			if (item.getScore() == 0) {
 				break;
 			}
 			ItemDetailDto itemDetailDto = itemApiService.getItemDetail(itemId);
