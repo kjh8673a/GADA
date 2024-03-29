@@ -19,9 +19,7 @@ interface StyledProps {
 const StyldBox = styled.div<StyledProps>`
   box-sizing: border-box;
   width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: var(--secondary-bg-color);
+  min-height: 600px;
   display: flex;
   ${(props) =>
     props.$flexDirection ? `flex-direction: ${props.$flexDirection};` : ""}

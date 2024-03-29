@@ -12,7 +12,7 @@ const StyledBox = styled.div`
   flex-direction: row;
   gap: 1rem;
   box-sizing: border-box;
-  background-color: rgb(0, 0, 0, 0.7);
+  background-color: rgb(0, 0, 0, 1);
   border-radius: 10px;
   padding: 1rem;
   width: 100%;

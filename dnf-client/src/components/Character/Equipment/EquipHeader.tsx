@@ -50,7 +50,7 @@ const EquipHeader: React.FC<Props> = ({
   const refineNumber = refine ? `(${refine})` : "";
   return (
     <StyledBox>
-      <ColorText color={"#FFFFFF"} style={{ width: "15%" }}>
+      <ColorText color={"#c9c9c9"} style={{ width: "15%" }}>
         {slotName}
       </ColorText>
       <EquipmentImg

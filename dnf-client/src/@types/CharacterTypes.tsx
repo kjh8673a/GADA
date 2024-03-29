@@ -1,3 +1,6 @@
+import { TAvatar } from "./Character/AvatarTypes";
+import { TCreature } from "./Character/CreatureTypes";
+
 export const SERVER_LIST = [
   "힐더",
   "카인",
@@ -496,6 +499,8 @@ export type TCharacterData = {
     buff?: TCharacterBuffEquip;
     skill: TCharacterSkill;
     talisman: TCharacterTalismans;
+    avatar: TAvatar[] | null;
+    creature: TCreature | null;
     flag: TCharacterFlag;
   };
 };
