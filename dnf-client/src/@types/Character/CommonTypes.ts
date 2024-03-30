@@ -25,3 +25,4 @@ export type TDetail = {
   hashtag: null;
   talismanInfo: null;
 }
+
