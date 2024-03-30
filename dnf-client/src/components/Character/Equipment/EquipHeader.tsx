@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { ITEM_RARITY, ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
+import {
+  ITEM_RARITY,
+  ITEM_TYPE_COLOR,
+} from "../../../@types/Character/CommonTypes";
 import { ColorText } from "../../../style/CharacterStat";
 
 interface Props {

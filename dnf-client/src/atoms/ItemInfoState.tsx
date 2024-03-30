@@ -1,10 +1,10 @@
 import { atom } from "recoil";
+import { TCharacterRune, TCharacterTalisman } from "../@types/Character/TalismanTypes";
+
 import {
   TCharacterFlag,
   TCharacterFlagGem,
-  TCharacterRune,
-  TCharacterTalisman,
-} from "../@types/CharacterTypes";
+} from "../@types/Character/FlagTypes";
 
 export const atomtalismanInfo = atom<TCharacterTalisman | TCharacterRune>({
   key: "atomtalismanInfo",

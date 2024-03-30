@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { TCharacterItemDetail } from "../../../@types/CharacterTypes";
+import { TDetail } from "../../../@types/Character/CommonTypes";
 
 interface Props {
-  value: TCharacterItemDetail | undefined;
+  value: TDetail | undefined;
 }
 
 const StyledBox = styled.div`
@@ -16,7 +16,7 @@ const StyledBox = styled.div`
 const TalismanItem: React.FC<Props> = ({ value }) => {
   return (
     <StyledBox>
-      {value?.itemStatus.map((obj, idx) => (
+      {value?.itemStatus!.map((obj, idx) => (
         <StyledBox key={idx}>
           {obj.name} {obj.value}
         </StyledBox>

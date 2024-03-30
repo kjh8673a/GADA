@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TCharacterBuff } from "../../../@types/CharacterTypes";
+import { TCharacterBuff } from "../../../@types/Character/StatTypes";
 import { ColorText } from "../../../style/CharacterStat";
 
 interface Props {

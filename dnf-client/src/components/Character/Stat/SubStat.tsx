@@ -1,7 +1,7 @@
 import React from "react";
 import { Line } from "../../../style/dnfContainer";
 import SubStatItem from "./SubStatItem";
-import { TCharacterStat } from "../../../@types/CharacterTypes";
+import { TCharacterStat } from "../../../@types/Character/StatTypes";
 import { StatBox, StatHeader } from "../../../style/CharacterStat";
 
 interface Props {

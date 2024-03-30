@@ -15,7 +15,7 @@ export const Container = styled.div`
 const OutletPositioner = styled.div`
   width: 100%;
   min-height: calc(100vh - 64px - 40px - 120px);
-  padding: 15px 0;
+  // padding: 15px 0;
   box-sizing: border-box;
 `;
 

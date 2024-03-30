@@ -4,7 +4,7 @@ import { Line } from "../../../style/dnfContainer";
 import { useRecoilValue } from "recoil";
 import { atomCharacterCreature } from "../../../atoms/characterState";
 import ArtifactItem from "./CreatureItem";
-import { ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
+import { ITEM_TYPE_COLOR } from "../../../@types/Character/CommonTypes";
 import { ColorText } from "../../../style/CharacterStat";
 
 const StyledBox = styled.div`
@@ -18,6 +18,10 @@ const StyledBox = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const Header = styled.div`

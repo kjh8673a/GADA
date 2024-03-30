@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TBuffEquip } from "../../../@types/CharacterTypes";
+import { TBuffEquip } from "../../../@types/Character/BuffEquipTypes";
 import EquipHeader from "../Equipment/EquipHeader";
 
 interface Props {

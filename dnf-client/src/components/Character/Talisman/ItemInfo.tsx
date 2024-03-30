@@ -2,7 +2,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { atomtalismanInfo } from "../../../atoms/ItemInfoState";
 import ItemInfoExplain from "./ItemInfoExplain";
-import { ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
+import { ITEM_TYPE_COLOR } from "../../../@types/Character/CommonTypes";
 
 interface StyledProps {
   $rarityColor: string;
@@ -16,6 +16,11 @@ const StyledBox = styled.div`
   border-radius: 5px;
   margin-top: 3%;
   margin-bottom: 3%;
+
+  @media (max-width: 768px) {
+    margin: 0px;
+    width: 100%;
+  }
 `;
 const NameBox = styled.div`
   position: relative;

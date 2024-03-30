@@ -2,10 +2,11 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { atomCharacterFlag } from "../../../atoms/characterState";
 import { atomFlagInfo } from "../../../atoms/ItemInfoState";
-import { ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
 import ContentItem from "../Summary/ContentItem";
 import useFlag from "../../../hooks/useFlag";
 import { atomFlagState } from "../../../atoms/flagState";
+import { ITEM_TYPE_COLOR } from "../../../@types/Character/CommonTypes";
+import { MOBILE_FLAG_LOCATION } from "../../../@types/Character/FlagTypes";
 
 interface StyledProps {
   $rarityColor: string;
@@ -20,6 +21,13 @@ const TalismanImg = styled.img<StyledProps>`
   border-radius: 1px;
   margin-top: 56.8%;
   margin-left: 46%;
+
+  @media (max-width: 768px) {
+    margin: 0px;
+    top: ${MOBILE_FLAG_LOCATION[0]}%;
+    left: ${MOBILE_FLAG_LOCATION[1]}%;
+    transform: translate(-50%, -50%) scale(1.55);
+  }
 `;
 
 const Content = styled.div`
@@ -27,6 +35,14 @@ const Content = styled.div`
   margin-top: 140%;
   margin-left: 17%;
   width: 100%;
+
+  @media (max-width: 768px) {
+    width: 70%;
+    bottom: 5px;
+    left: 60%;
+    transform: translateX(-50%);
+    margin: 0px;
+  }
 `;
 
 const FlagName = styled.div<StyledProps>`
@@ -56,8 +72,6 @@ const TalismanItem = () => {
         alt={"talisman Image"}
         $rarityColor={rarityColor}
         onClick={() => {
-          // console.log("휘장");
-          // console.log(data);
           setFlagInfo(data);
         }}
       ></TalismanImg>

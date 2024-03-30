@@ -6,7 +6,7 @@ import {
   SUB_ATTACK_STAT_LIST,
   SUB_DEFENSE_STAT_LIST,
   SUB_EXTRA_STAT_LIST,
-} from "../../../@types/CharacterTypes";
+} from "../../../@types/Character/StatTypes";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { atomCharacterStat } from "../../../atoms/characterState";
@@ -18,6 +18,10 @@ const Wrapper = styled.div<{ width: number }>`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const Stat = () => {

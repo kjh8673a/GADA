@@ -18,7 +18,7 @@ const StyledBox = styled.div<StyledProps>`
   display: flex;
   justify-content: ${(props) =>
     props.$justifyContent ? props.$justifyContent : "flex-start"};
-  gap: 8px;
+  gap: 10px;
 `;
 
 const AvatarSlots: React.FC<Props> = ({

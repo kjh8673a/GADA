@@ -18,6 +18,10 @@ const CenteredDiv = styled.div<CenteredDivProps>`
   align-items: center;
   flex-direction: ${(props) => props.$direction};
   gap: 15px;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
 `;
 
 const CenteredBox: React.FC<Props> = ({

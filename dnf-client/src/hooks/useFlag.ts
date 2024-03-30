@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { TCharacterFlag } from "../@types/CharacterTypes";
+import { TCharacterFlag } from "../@types/Character/FlagTypes";
 import { useSetRecoilState } from "recoil";
 import { atomFlagState } from "../atoms/flagState";
 
@@ -26,9 +26,9 @@ const useFlag = (data: TCharacterFlag): Dic => {
   };
 
   useEffect(() => {
-    data.detail?.itemStatus.map((x) => findStat(x.name, x.value));
+    data.detail?.itemStatus!.map((x) => findStat(x.name, x.value));
     data.gems?.map((x) =>
-      x.detail?.itemStatus.map((x) => findStat(x.name, x.value))
+      x.detail?.itemStatus!.map((x) => findStat(x.name, x.value))
     );
     setState(getFlagStat);
   }, []);

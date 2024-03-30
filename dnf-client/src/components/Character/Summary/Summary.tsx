@@ -8,6 +8,7 @@ const StyledBox = styled.div`
   position: relative;
   width: 1140px;
   min-height: 320px;
+  margin-top: 15px;
   background-image: url("${process.env.PUBLIC_URL}/assets/test_bg.webp");
   background-repeat: no-repeat;
   background-size: cover;
@@ -16,6 +17,20 @@ const StyledBox = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  @media (max-width: 768px) {
+    box-sizing: border-box;
+    padding: 15px 0px;
+    margin-top: 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 320px;
+    background-image: none;
+    background-color: var(--secondary-bg-color);
+    gap: 15px;
+  }
 `;
 
 const StyledBgBox = styled.div`
@@ -33,6 +48,10 @@ const StyledBgBox = styled.div`
     #283338 63%,
     #000000 100%
   );
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Summary = () => {

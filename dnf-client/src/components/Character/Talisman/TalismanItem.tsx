@@ -1,10 +1,8 @@
 import React from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import {
-  ITEM_TYPE_COLOR,
-  TCharacterTalisman,
-} from "../../../@types/CharacterTypes";
+import { TCharacterTalisman } from "../../../@types/Character/TalismanTypes";
+import { ITEM_TYPE_COLOR } from "../../../@types/Character/CommonTypes";
 import useTalismanLocation from "../../../hooks/useItemImageLocation";
 import { atomtalismanInfo } from "../../../atoms/ItemInfoState";
 

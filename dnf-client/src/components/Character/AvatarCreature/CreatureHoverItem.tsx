@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { TDetail } from "../../../@types/Character/CommonTypes";
 import { ColorText } from "../../../style/CharacterStat";
-import { ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
+import { ITEM_TYPE_COLOR } from "../../../@types/Character/CommonTypes";
 import { Line } from "../../../style/dnfContainer";
 
 const StyledBox = styled.div`
@@ -17,6 +17,13 @@ const StyledBox = styled.div`
   font-size: 0.9rem;
   left: 120%;
   gap: 5px;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const CreatureHoverItem = ({

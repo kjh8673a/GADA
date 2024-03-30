@@ -10,7 +10,7 @@ import { ColorText } from "../../../style/CharacterStat";
 import EquipBuff from "./EquipBuff";
 import EquipFixed from "./EquipFixed";
 import EquipBakal from "./EquipBakal";
-import { TCharacterEquip } from "../../../@types/CharacterTypes";
+import { TCharacterEquip } from "../../../@types/Character/EquipmentTypes";
 
 interface Props {
   data: TCharacterEquip;

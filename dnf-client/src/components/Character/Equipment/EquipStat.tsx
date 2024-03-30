@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  ITEM_BASIC_STAT,
-  TCharacterEquip,
-} from "../../../@types/CharacterTypes";
+import { TCharacterEquip } from "../../../@types/Character/EquipmentTypes";
+import { ITEM_BASIC_STAT } from "../../../@types/Character/EquipmentTypes";
 import { ColorText } from "../../../style/CharacterStat";
 
 interface Props {

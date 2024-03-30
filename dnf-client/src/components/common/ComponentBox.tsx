@@ -31,6 +31,10 @@ const StyldBox = styled.div<StyledProps>`
     `align-items: ${props.$alignItems ? props.$alignItems : "flex-start"};`}
   ${(props) => `flex-wrap: ${props.$flexWrap ? props.$flexWrap : "nowrap"};`}
   gap: 10px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const ComponentBox: React.FC<Props> = ({

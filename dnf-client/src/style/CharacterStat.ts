@@ -8,6 +8,10 @@ export const StatBox = styled.div<{ width: number }>`
   background-color: rgb(0, 0, 0, 1);
   font-size: 1.05rem;
   border-radius: 10px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const StatHeader = styled.div`

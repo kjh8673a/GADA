@@ -1,9 +1,5 @@
 import React, { useCallback } from "react";
-import {
-  SERVER_LIST,
-  TCharacterData,
-  TPopularCharacters,
-} from "../@types/CharacterTypes";
+import { TCharacterData, TPopularCharacters } from "../@types/Character/CommonTypes";
 import {
   getCharacterInfo,
   getPopularCharacters,
@@ -18,11 +14,11 @@ import {
   atomCharacterEquipTrait,
   atomCharacterFlag,
   atomCharacterSetItem,
-  atomCharacterSkill,
   atomCharacterStat,
   atomCharacterTalismans,
   atomLoading,
 } from "../atoms/characterState";
+import { SERVER_LIST } from "../@types/Character/CommonTypes";
 
 const useCharacter = () => {
   const setBasic = useSetRecoilState(atomCharacterBasic);
@@ -32,7 +28,6 @@ const useCharacter = () => {
   const setItem = useSetRecoilState(atomCharacterSetItem);
   const setIsLoading = useSetRecoilState(atomLoading);
   const setBuff = useSetRecoilState(atomCharacterBuffEquip);
-  const setSkill = useSetRecoilState(atomCharacterSkill);
   const setTalismans = useSetRecoilState(atomCharacterTalismans);
   const setAvatar = useSetRecoilState(atomCharacterAvatar);
   const setCreature = useSetRecoilState(atomCharacterCreature);
@@ -76,7 +71,6 @@ const useCharacter = () => {
     setEquipTrait(data.data?.equipment.equipmentTrait!);
     setItem(data.data?.equipment.setItemInfo!);
     setBuff(data.data?.buff!);
-    setSkill(data.data?.skill!);
     setTalismans(data.data?.talisman!);
     setAvatar(data.data?.avatar!);
     setCreature(data.data?.creature!);
