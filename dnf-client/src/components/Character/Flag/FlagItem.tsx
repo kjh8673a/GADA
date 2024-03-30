@@ -34,7 +34,8 @@ const FlagName = styled.div<StyledProps>`
   color: ${(props) => props.$rarityColor};
   margin-top: 5%;
   justify-content: center;
-  margin-left: 25%;
+  margin-left: 50%;
+  transform: translate(-50%, 0%);
 `;
 
 const StyledContentItem = styled.div`

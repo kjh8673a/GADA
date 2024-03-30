@@ -12,7 +12,6 @@ const StyledBox = styled.div`
   border-radius: 10px;
   display: flex;
   justify-content: center;
-  background-color: var(--secondary-bg-color);
 `;
 
 const Flag = () => {

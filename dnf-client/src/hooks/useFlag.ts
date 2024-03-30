@@ -16,7 +16,6 @@ const useFlag = (data: TCharacterFlag): Dic => {
   };
   const findStat = (name: string, value: string) => {
     if (name in getFlagStat) {
-      // console.log(name);
       if (name === "공격력 증가") {
         const num = Number(value.slice(0, value.length - 1)) * 10;
         getFlagStat[name] += num;
