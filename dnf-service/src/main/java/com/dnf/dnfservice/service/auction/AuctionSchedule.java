@@ -60,7 +60,16 @@ public class AuctionSchedule {
 		Set<String> ranking = redisTemplate.opsForZSet().reverseRange("auctionItemViewRank", 0, -1);
 
 		List<AuctionItemDetailResponseDto> list = ranking.stream()
-			.map(auctionService::getAuctionItemInformation)
+			.map(data -> {
+				AuctionItemDetailResponseDto tmp = null;
+				try {
+					tmp = auctionService.getAuctionItemInformation(data);
+				}catch (Exception e) {
+					log.info(e.getMessage());
+				}
+				return tmp;
+			})
+			.filter(data -> data != null)
 			.toList();
 
 		String sql =
