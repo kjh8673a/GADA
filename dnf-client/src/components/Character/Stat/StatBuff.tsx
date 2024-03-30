@@ -1,6 +1,6 @@
 import React from "react";
 import { StatBox, StatHeader } from "../../../style/CharacterStat";
-import { TCharacterStat } from "../../../@types/CharacterTypes";
+import { TCharacterStat } from "../../../@types/Character/StatTypes";
 import { Line } from "../../../style/dnfContainer";
 import StatBuffItem from "./StatBuffItem";
 

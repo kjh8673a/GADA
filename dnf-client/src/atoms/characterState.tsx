@@ -1,17 +1,16 @@
 import { atom } from "recoil";
+import { TCharacterTalismans } from "../@types/Character/TalismanTypes";
+import { TCharacterBasic } from "../@types/Character/BasicTypes";
+import { TCharacterStat } from "../@types/Character/StatTypes";
 import {
-  TCharacterBasic,
-  TCharacterBuffEquip,
   TCharacterEquip,
   TCharacterEquipTrait,
-  TCharacterFlag,
   TCharacterSetItem,
-  TCharacterSkill,
-  TCharacterStat,
-  TCharacterTalismans,
-} from "../@types/CharacterTypes";
+} from "../@types/Character/EquipmentTypes";
 import { TAvatar } from "../@types/Character/AvatarTypes";
 import { TCreature } from "../@types/Character/CreatureTypes";
+import { TCharacterBuffEquip } from "../@types/Character/BuffEquipTypes";
+import { TCharacterFlag } from "../@types/Character/FlagTypes";
 
 export const atomCharacterBasic = atom<TCharacterBasic>({
   key: "atomCharacterBasic",
@@ -43,8 +42,13 @@ export const atomCharacterBuffEquip = atom<TCharacterBuffEquip>({
   default: {},
 });
 
-export const atomCharacterSkill = atom<TCharacterSkill>({
-  key: "atomCharacterSkill",
+export const atomCharacterAvatar = atom<TAvatar[]>({
+  key: "atomCharacterAvatar",
+  default: [],
+});
+
+export const atomCharacterCreature = atom<TCreature>({
+  key: "atomCharacterCreature",
   default: {},
 });
 
@@ -67,13 +71,3 @@ export const atomLoading = atom<boolean>({
   key: "atomLoading",
   default: false,
 });
-
-export const atomCharacterAvatar = atom<TAvatar[]>({
-  key: "atomCharacterAvatar",
-  default: [],
-});
-
-export const atomCharacterCreature = atom<TCreature>({
-  key: "atomCharacterCreature",
-  default: {},
-})

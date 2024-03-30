@@ -1,5 +1,4 @@
-import { ITEM_RARITY } from "../CharacterTypes";
-import { TDetail } from "./CommonTypes";
+import { ITEM_RARITY, TDetail } from "./CommonTypes";
 
 export type TCreature = {
   itemId?: string;

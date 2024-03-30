@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { ITEM_RARITY, ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
+import {
+  ITEM_RARITY,
+  ITEM_TYPE_COLOR,
+} from "../../../@types/Character/CommonTypes";
 import { ColorText } from "../../../style/CharacterStat";
 
 interface Props {
@@ -23,11 +26,15 @@ const EquipType: React.FC<Props> = ({
   itemAvailablelevel,
   itemTypeDetail,
 }) => {
-  return <StyledBox>
-    <ColorText color={ITEM_TYPE_COLOR[itemRarity]}>{itemRarity}</ColorText>
-    <ColorText color={"#FFFFFF"}>{itemTypeDetail}</ColorText>
-    <ColorText color={"#FFFFFF"}>{"레벨 제한 " + itemAvailablelevel}</ColorText>
-  </StyledBox>;
+  return (
+    <StyledBox>
+      <ColorText color={ITEM_TYPE_COLOR[itemRarity]}>{itemRarity}</ColorText>
+      <ColorText color={"#FFFFFF"}>{itemTypeDetail}</ColorText>
+      <ColorText color={"#FFFFFF"}>
+        {"레벨 제한 " + itemAvailablelevel}
+      </ColorText>
+    </StyledBox>
+  );
 };
 
 export default EquipType;

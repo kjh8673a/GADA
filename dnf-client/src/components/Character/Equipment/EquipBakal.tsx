@@ -1,5 +1,5 @@
 import React from "react";
-import { TCharacterEquip } from "../../../@types/CharacterTypes";
+import { TCharacterEquip } from "../../../@types/Character/EquipmentTypes";
 import { ColorText } from "../../../style/CharacterStat";
 import styled from "styled-components";
 

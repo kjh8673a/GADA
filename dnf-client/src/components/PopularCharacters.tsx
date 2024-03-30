@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TPopularCharacters } from "../@types/CharacterTypes";
+import { TPopularCharacters } from "../@types/Character/CommonTypes";
 import { ColorText } from "../style/CharacterStat";
 import useSearch from "../hooks/useSearch";
 import { useNavigate } from "react-router-dom";

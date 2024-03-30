@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { ITEM_RARITY, ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
+import { ITEM_RARITY, ITEM_TYPE_COLOR } from "../../../@types/Character/CommonTypes";
 import { ColorText } from "../../../style/CharacterStat";
 import { Line } from "../../../style/dnfContainer";
 import {
   EMBLEMS_COLOR,
   TAvatar,
-  TAvatarDetail,
 } from "../../../@types/Character/AvatarTypes";
+import { TDetail } from "../../../@types/Character/CommonTypes";
 
 interface Props {
   itemName?: string;
@@ -15,21 +15,28 @@ interface Props {
   optionAbility?: string | null;
   itemExplain?: string;
   emblems?: TAvatar["emblems"];
-  itemStatus?: TAvatarDetail["itemStatus"];
+  itemStatus?: TDetail["itemStatus"];
 }
 
 const StyledBox = styled.div`
   z-index: 6;
   padding: 10px;
   position: absolute;
+  left: 120%;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   width: 250px;
   font-size: 0.9rem;
-  left: 120%;
   gap: 5px;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const AvatarHoverItem: React.FC<Props> = ({

@@ -8,10 +8,17 @@ import Loading from "../../common/Loading";
 const StyledBox = styled.div`
   position: relative;
   width: 1140px;
-  min-height: 400px;
+  min-height: 600px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
+  gap: 10px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Flag = () => {

@@ -14,7 +14,12 @@ const StyledBox = styled.div`
   background-color: rgb(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const Header = styled.div`
@@ -25,18 +30,27 @@ const Header = styled.div`
 
 const StyledBtn = styled.div`
   box-sizing: border-box;
+  width: 100%;
   margin-top: 10px;
   padding: 5px;
   background-color: var(--secondary-bg-color);
   display: flex;
   justify-content: center;
   border-radius: 5px;
-  color: #FFFFFF;
+  color: #ffffff;
   &:hover {
     transition: 0.1s linear;
     cursor: pointer;
     background-color: #5f7883;
   }
+`;
+
+const Wrapper = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  width: 210px;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const Avatar = () => {
@@ -46,22 +60,24 @@ const Avatar = () => {
     <StyledBox>
       <Header>{`${isEffective ? "효과 적용 " : "스킨 "}아바타`}</Header>
       <Line />
-      <AvatarSlots
-        slotList={AVATAR_SLOT_LIST[0]}
-        data={data}
-        isEffective={isEffective}
-      />
-      <AvatarSlots
-        slotList={AVATAR_SLOT_LIST[isEffective ? 1 : 2]}
-        data={data}
-        isEffective={isEffective}
-      />
-      <AvatarSlots
-        slotList={AVATAR_SLOT_LIST[3]}
-        $justifyContent={"flex-end"}
-        data={data}
-        isEffective={isEffective}
-      />
+      <Wrapper>
+        <AvatarSlots
+          slotList={AVATAR_SLOT_LIST[0]}
+          data={data}
+          isEffective={isEffective}
+        />
+        <AvatarSlots
+          slotList={AVATAR_SLOT_LIST[isEffective ? 1 : 2]}
+          data={data}
+          isEffective={isEffective}
+        />
+        <AvatarSlots
+          slotList={AVATAR_SLOT_LIST[3]}
+          $justifyContent={"flex-end"}
+          data={data}
+          isEffective={isEffective}
+        />
+      </Wrapper>
       <StyledBtn onClick={() => setIsEffective((prev) => !prev)}>
         {isEffective ? "스킨 아바타" : "효과 적용 아바타"}
       </StyledBtn>

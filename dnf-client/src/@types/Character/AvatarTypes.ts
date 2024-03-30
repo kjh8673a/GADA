@@ -1,4 +1,4 @@
-import { ITEM_RARITY } from "../CharacterTypes";
+import { ITEM_RARITY, TDetail } from "./CommonTypes";
 
 export const AVATAR_SLOT_LIST = [
   ["무기 아바타", "머리 아바타", "모자 아바타", "얼굴 아바타"],
@@ -29,14 +29,14 @@ export type TAvatar = {
   clone: TAvatarClone;
   optionAbility: string | null;
   emblems: TAvatarEmblem[];
-  detail: TAvatarDetail;
+  detail: TDetail;
 };
 
 export type TAvatarClone = {
   itemId: string | null;
   itemName: string | null;
   itemImage: string | null;
-  detail: TAvatarDetail | null;
+  detail: TDetail | null;
 };
 
 export type TAvatarEmblem = {
@@ -44,30 +44,4 @@ export type TAvatarEmblem = {
   slotColor: string;
   itemName: string;
   itemRarity: ITEM_RARITY;
-};
-
-export type TAvatarDetail = {
-  itemId: string;
-  itemName: string;
-  itemRarity: ITEM_RARITY;
-  itemTypeId: string;
-  itemType: string;
-  itemTypeDetailId: string;
-  itemTypeDetail: string;
-  itemAvailableLevel: number;
-  itemExplain: string;
-  itemExplainDetail: string;
-  itemFlavorText: string;
-  obtainInfo: string | null;
-  setItemId: string | null;
-  setItemName: string | null;
-  itemStatus: {
-    name: string;
-    value: string;
-  }[];
-  fixedOption: null;
-  mythologyInfo: null;
-  itemBuff: null;
-  hashtag: null;
-  talismanInfo: null;
 };

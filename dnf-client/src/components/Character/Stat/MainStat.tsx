@@ -1,6 +1,7 @@
 import React from "react";
 import MainStatItem from "./MainStatItem";
-import { MAIN_STAT_LIST, TCharacterStat } from "../../../@types/CharacterTypes";
+import { TCharacterStat } from "../../../@types/Character/StatTypes";
+import { MAIN_STAT_LIST } from "../../../@types/Character/StatTypes";
 import { Line } from "../../../style/dnfContainer";
 import MainStatElement from "./MainStatElement";
 import { StatBox, StatHeader } from "../../../style/CharacterStat";

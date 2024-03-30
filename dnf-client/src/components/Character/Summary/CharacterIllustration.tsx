@@ -8,11 +8,14 @@ const StyledImg = styled.img`
   height: 100%;
   object-fit: contain;
   z-index: 2;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const CharacterIllustration = () => {
   const data = useRecoilValue(atomCharacterBasic);
-  return <StyledImg src={data.jobImage!} alt={"Character Illustration"} />;
+  return <StyledImg src={data.jobImage} alt={"Character Illustration"} />;
 };
 
 export default CharacterIllustration;

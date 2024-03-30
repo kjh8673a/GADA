@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  MAIN_STAT_ELEMENT_LIST,
-  TCharacterStat,
-} from "../../../@types/CharacterTypes";
+import { TCharacterStat } from "../../../@types/Character/StatTypes";
+import { MAIN_STAT_ELEMENT_LIST } from "../../../@types/Character/StatTypes";
 
 interface Props {
   data: TCharacterStat;

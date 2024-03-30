@@ -2,7 +2,9 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { atomFlagInfo } from "../../../atoms/ItemInfoState";
 import ItemInfoExplain from "./ItemInfoExplain";
-import { ITEM_TYPE_COLOR } from "../../../@types/CharacterTypes";
+import { ITEM_TYPE_COLOR } from "../../../@types/Character/CommonTypes";
+import { ColorText } from "../../../style/CharacterStat";
+import Loading from "../../common/Loading";
 
 interface StyledProps {
   $rarityColor: string;
@@ -13,9 +15,14 @@ const StyledBox = styled.div`
   width: 320px;
   height: 480px;
   background-color: black;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-top: 3%;
   margin-bottom: 3%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 0px;
+  }
 `;
 const NameBox = styled.div`
   position: relative;
@@ -64,7 +71,7 @@ const ItemInfo = () => {
   return (
     <StyledBox>
       {data.itemId === undefined ? (
-        <StyledBox></StyledBox>
+        <Loading text={"아이템을 클릭해주세요."} play={false} />
       ) : (
         <>
           <NameBox>

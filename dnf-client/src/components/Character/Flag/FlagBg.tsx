@@ -12,9 +12,13 @@ const StyledBox = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 10px;
-  // display: flex;
-  justify-content: space-around;
   margin: 3% 1% 3% 3%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    background-position: center;
+    margin: 0px;
+  }
 `;
 
 const FlagBg = () => {

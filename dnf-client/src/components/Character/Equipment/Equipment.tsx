@@ -4,13 +4,16 @@ import { useRecoilValue } from "recoil";
 import { atomCharacterEquip } from "../../../atoms/characterState";
 import EquipmentItem from "./EquipmentItem";
 import styled from "styled-components";
-import { MAIN_EQUIP_LIST } from "../../../@types/CharacterTypes";
-
+import { MAIN_EQUIP_LIST } from "../../../@types/Character/EquipmentTypes";
 const Wrapper = styled.div`
   display: flex;
   width: 49.5%;
   flex-direction: column;
   gap: 5px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const Equipment = () => {

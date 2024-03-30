@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TCharacterEquip } from "../../../@types/CharacterTypes";
+import { TCharacterEquip } from "../../../@types/Character/EquipmentTypes";
 import { ColorText } from "../../../style/CharacterStat";
 import { useRecoilValue } from "recoil";
 import { atomCharacterBasic } from "../../../atoms/characterState";
