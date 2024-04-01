@@ -20,7 +20,7 @@ public class AuctionApiServiceImpl implements AuctionApiService {
 
 	@Override
 	public AuctionSearchDto searchByItemId(String itemId) {
-		return auctionFeignClient.searchByItemId(itemId, 400);
+		return auctionFeignClient.searchByItemId(itemId, 400, "auctionNo:desc");
 	}
 
 	@Override
