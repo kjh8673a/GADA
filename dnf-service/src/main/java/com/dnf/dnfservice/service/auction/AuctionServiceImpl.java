@@ -23,6 +23,7 @@ import com.dnf.dnfservice.dto.feign.auction.AuctionSoldDto;
 import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
 import com.dnf.dnfservice.dto.feign.item.ItemSearchDto;
 import com.dnf.dnfservice.dto.model.auction.AuctionGraphInfo;
+import com.dnf.dnfservice.dto.model.auction.AuctionItemInfo;
 import com.dnf.dnfservice.dto.model.auction.AuctionSearchItem;
 import com.dnf.dnfservice.dto.model.auction.AuctionSearchItemInfo;
 import com.dnf.dnfservice.dto.model.auction.AuctionSoldInfo;
@@ -30,7 +31,6 @@ import com.dnf.dnfservice.dto.model.auction.AuctionViewRanking;
 import com.dnf.dnfservice.dto.response.auction.AuctionItemDetailResponseDto;
 import com.dnf.dnfservice.dto.response.auction.AuctionSearchResponseDto;
 import com.dnf.dnfservice.dto.response.auction.AuctionViewRankingResponseDto;
-import com.dnf.dnfservice.entity.AuctionItemHistory;
 import com.dnf.dnfservice.exception.CustomException;
 import com.dnf.dnfservice.exception.ErrorCode;
 import com.dnf.dnfservice.repository.auctionItemHistory.AuctionItemHistoryRepository;
@@ -53,12 +53,15 @@ public class AuctionServiceImpl implements AuctionService {
 	public AuctionSearchResponseDto searchAuctionItems(String itemName) {
 		AuctionSearchDto searchDto = auctionApiService.searchAuctionItems(itemName);
 		List<String> inAuctionList = searchDto.getRows().stream()
-			.filter(distinctByKey(data -> data.getItemId()))
-			.map(data -> data.getItemId())
-			.collect(Collectors.toList());
+			.filter(distinctByKey(AuctionSearchItem::getItemId))
+			.map(AuctionSearchItem::getItemId)
+			.toList();
+
+		Set<String> ranking = redisTemplate.opsForZSet().reverseRange("auctionItemViewRank", 0, -1);
 
 		ItemSearchDto itemSearchDto = itemApiService.searchItems(itemName);
 		List<AuctionSearchItemInfo> list = itemSearchDto.getRows().stream()
+			.filter(data -> ranking.contains(data.getItemId()) || inAuctionList.contains(data.getItemId()))
 			.map(data -> AuctionSearchItemInfo.of(data, inAuctionList.contains(data.getItemId())))
 			.collect(Collectors.toList());
 
@@ -69,9 +72,13 @@ public class AuctionServiceImpl implements AuctionService {
 	public AuctionItemDetailResponseDto getAuctionItemInformation(String itemId) {
 		AuctionSearchDto searchDto = auctionApiService.searchByItemId(itemId);
 
-		if (searchDto.getRows().size() == 0) {
+		Set<String> ranking = redisTemplate.opsForZSet().reverseRange("auctionItemViewRank", 0, -1);
+
+		if (searchDto.getRows().size() == 0 && !ranking.contains(itemId)) {
 			throw new CustomException(ErrorCode.ITEM_NOT_FOUND);
 		}
+
+		List<AuctionItemInfo> registeredList = searchDto.getRows().stream().limit(20).map(AuctionItemInfo::of).toList();
 
 		Long totalVolume = searchDto.getRows().stream().mapToLong(AuctionSearchItem::getCount).sum();
 
@@ -88,7 +95,7 @@ public class AuctionServiceImpl implements AuctionService {
 			.toList();
 
 		return AuctionItemDetailResponseDto.of(searchDto.getRows().get(0), searchDto.getRows().size(), totalVolume,
-			list, graph);
+			list, graph, registeredList);
 	}
 
 	@Override

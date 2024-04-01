@@ -15,7 +15,7 @@ public interface AuctionFeignClient {
 	AuctionSearchDto searchAuctionItems(@RequestParam String itemName, @RequestParam Integer limit, @RequestParam String wordType);
 
 	@GetMapping("/auction")
-	AuctionSearchDto searchByItemId(@RequestParam String itemId, @RequestParam Integer limit);
+	AuctionSearchDto searchByItemId(@RequestParam String itemId, @RequestParam Integer limit, @RequestParam String sort);
 
 	@GetMapping("/auction-sold")
 	AuctionSoldDto getSoldHistory(@RequestParam String itemId, @RequestParam Integer limit);
