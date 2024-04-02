@@ -28,16 +28,13 @@ const useRanking = () => {
 
   const getCombatPowerRank = useCallback(
     (page: number, world_name?: string, character_class?: string) => {
-      getCombatPowerRanking(page, world_name, character_class)
-        .then(({ data, status }) => {
-          if (status === 200) {
-            setTotalPage(data.data.totalPages);
-            setCombatPowerRanking(data);
-          }
-        })
-        .catch(() => {
-          console.error("Error getCombatPowerRanking");
-        });
+      return getCombatPowerRanking(page, world_name, character_class).then(({ data, status }) => {
+        if (status === 200) {
+          setTotalPage(data.data.totalPages);
+          setCombatPowerRanking(data);
+          return data;
+        }
+      });
     },
     [setCombatPowerRanking, setTotalPage]
   );
