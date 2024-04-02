@@ -17,7 +17,7 @@ type Props = {
 
 const StyledBox = styled.div`
   width: 100%;
-  min-height: 40px;
+  height: 104px;
   display: grid;
   background-color: var(--secondary-bg-color);
   grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;

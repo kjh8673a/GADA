@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import styled from "styled-components";
 import { TabBox } from "../../../../style/Rank";
 import { CLASS_NAME_LIST } from "../../../../@types/maple/RankingTypes";
@@ -6,6 +5,8 @@ import useRanking from "../../../../hooks/maple/useRanking";
 import ClassTabItem from "./ClassTabItem";
 import CombatPowerTable from "./CombatPowerTable";
 import RankTablePageMove from "../RankTablePageMove";
+import { Suspense } from "react";
+import SkeletonCombatPower from "../../../skeleton/SkeletonCombatPower";
 
 const StyledBox = styled.div`
   width: 100%;
@@ -18,8 +19,7 @@ const StyledBox = styled.div`
 `;
 
 const CombatPower = () => {
-  const { rankPage, worldTab, classTab, combatPowerRanking, classTabClickHandler, getCombatPowerRank } = useRanking();
-  useEffect(() => getCombatPowerRank(rankPage, worldTab, classTab), [getCombatPowerRank]);
+  const { combatPowerRanking, classTabClickHandler } = useRanking();
   return (
     <StyledBox>
       <TabBox>
@@ -31,7 +31,9 @@ const CombatPower = () => {
           );
         })}
       </TabBox>
-      <CombatPowerTable />
+      <Suspense fallback={<SkeletonCombatPower />}>
+        <CombatPowerTable />
+      </Suspense>
       {combatPowerRanking.data?.totalPages! > 0 && <RankTablePageMove />}
     </StyledBox>
   );
