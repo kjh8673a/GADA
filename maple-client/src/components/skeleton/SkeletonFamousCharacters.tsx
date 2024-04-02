@@ -1,27 +1,17 @@
 import styled, { keyframes } from "styled-components";
 
 // shimmer 애니메이션 키프레임 정의
-const shimmer = keyframes`
+const ShimmerAnimation = keyframes`
   0% {
-    background-position: -200% 0;
+    transform: translateX(-100%);
   }
   100% {
-    background-position: 200% 0;
+    transform: translateX(100%);
   }
-`;
-
-const ShimmerAnimation = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
-  background-size: 200% 100%;
-  animation: ${shimmer} 6s infinite;
 `;
 
 const StyledBox = styled.ul`
+  position: relative;
   margin: 0;
   padding: 0;
   width: 352px;
@@ -30,6 +20,16 @@ const StyledBox = styled.ul`
   list-style: none;
   font-size: 0.8rem;
   border-radius: 4px;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    animation: ${ShimmerAnimation} 1s infinite;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.6) 60%, transparent);
+  }
 `;
 
 const StyledHeader = styled.li`
@@ -72,46 +72,28 @@ const StyledVoid = styled.div`
 const SkeletonFamousCharacter = () => {
   return (
     <StyledBox>
-      <StyledHeader>주간 인기 검색 캐릭터</StyledHeader>
+      <StyledHeader>
+        <StyledVoid />
+      </StyledHeader>
       <StyledLi>
-        <StyledRank>
-          <ShimmerAnimation />
-        </StyledRank>
-        <StyledVoid>
-          <ShimmerAnimation />
-        </StyledVoid>
+        <StyledRank />
+        <StyledVoid />
       </StyledLi>
       <StyledLi>
-        <StyledRank>
-          <ShimmerAnimation />
-        </StyledRank>
-        <StyledVoid>
-          <ShimmerAnimation />
-        </StyledVoid>
+        <StyledRank />
+        <StyledVoid />
       </StyledLi>
       <StyledLi>
-        <StyledRank>
-          <ShimmerAnimation />
-        </StyledRank>
-        <StyledVoid>
-          <ShimmerAnimation />
-        </StyledVoid>
+        <StyledRank />
+        <StyledVoid />
       </StyledLi>
       <StyledLi>
-        <StyledRank>
-          <ShimmerAnimation />
-        </StyledRank>
-        <StyledVoid>
-          <ShimmerAnimation />
-        </StyledVoid>
+        <StyledRank />
+        <StyledVoid />
       </StyledLi>
       <StyledLi>
-        <StyledRank>
-          <ShimmerAnimation />
-        </StyledRank>
-        <StyledVoid>
-          <ShimmerAnimation />
-        </StyledVoid>
+        <StyledRank />
+        <StyledVoid />
       </StyledLi>
     </StyledBox>
   );

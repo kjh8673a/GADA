@@ -1,10 +1,6 @@
 import { https } from "../Https";
 
-export const getCombatPowerRanking = async (
-  page: number,
-  world_name?: string,
-  character_class?: string
-) => {
+export const getCombatPowerRanking = async (page: number, world_name?: string, character_class?: string) => {
   return await https({
     method: "get",
     url: "/ranking/combatPowerRanking",
@@ -12,10 +8,7 @@ export const getCombatPowerRanking = async (
   });
 };
 
-export const getGuildWaterway = async (
-  page: number,
-  world_name?: string
-) => {
+export const getGuildWaterway = async (page: number, world_name?: string) => {
   return await https({
     method: "get",
     url: "/ranking/guildWaterway",
@@ -23,13 +16,11 @@ export const getGuildWaterway = async (
   });
 };
 
-export const getGuildCombatPower = async (
-  page: number,
-  world_name?: string
-) => {
+export const getGuildCombatPower = async (page: number, world_name?: string) => {
   return await https({
     method: "get",
     url: "/ranking/guildCombatPower",
     params: { page, world_name },
   });
 };
+
