@@ -1,5 +1,4 @@
-import React from 'react';
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const StyledBox = styled.div`
   width: 100%;
@@ -11,10 +10,10 @@ const StyledBox = styled.div`
 
 const TextBox = styled.div`
   color: white;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const GuildWaterwayTableHeader = () => {
   return (
