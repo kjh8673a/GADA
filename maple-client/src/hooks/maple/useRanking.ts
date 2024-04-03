@@ -61,15 +61,17 @@ const useRanking = () => {
 
   const getGuildCombatPowerData = useCallback(
     (page: number, world_name?: string) => {
-      getGuildCombatPower(page, world_name)
+      return getGuildCombatPower(page, world_name)
         .then(({ data, status }) => {
           if (status === 200) {
             setTotalPage(data.data.totalPages);
             setGuildCombatPower(data);
+            return data;
           }
         })
         .catch(() => {
           console.error("Error getGuildCombatPowerRanking");
+          return null;
         });
     },
     [setGuildCombatPower, setTotalPage]
@@ -80,7 +82,6 @@ const useRanking = () => {
     setWorldTab(undefined);
     setClassTab(undefined);
     setRankPage(1);
-    if (params === "길드 전투력 랭킹") getGuildCombatPowerData(1);
   };
 
   const worldTabClickHandler = (world_name: string | undefined) => {
@@ -89,7 +90,6 @@ const useRanking = () => {
     if (rankTab === "길드 수로 랭킹") {
       setTotalPage(9999);
     }
-    if (rankTab === "길드 전투력 랭킹") getGuildCombatPowerData(1, world_name);
   };
 
   const classTabClickHandler = (class_name: string | undefined) => {

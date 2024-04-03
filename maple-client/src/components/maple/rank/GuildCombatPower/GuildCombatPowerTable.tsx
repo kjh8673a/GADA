@@ -4,6 +4,7 @@ import useRanking from "../../../../hooks/maple/useRanking";
 import DashedLine from "../../../common/DashedLine";
 import GuildCombatPowerTableItem from "./GuildCombatPowerTableItem";
 import GuildCombatPowerTableHeader from "./GuildCombatPowerTableHeader";
+import useFetch from "../../../../hooks/useFetch";
 
 const StyledBox = styled.div`
   width: 100%;
@@ -18,7 +19,11 @@ const StyledBox = styled.div`
 `;
 
 const GuildCombatPowerTable = () => {
-  const { guildCombatPower, guildClickHandler } = useRanking();
+  const { guildCombatPower, getGuildCombatPowerData, rankPage, worldTab, guildClickHandler } = useRanking();
+  const result = useFetch(getGuildCombatPowerData, rankPage, worldTab);
+
+  if (!result) return null;
+
   return (
     <StyledBox>
       <GuildCombatPowerTableHeader />

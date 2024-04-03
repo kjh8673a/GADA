@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import { Suspense } from "react";
 import styled from "styled-components";
-import useRanking from "../../../../hooks/maple/useRanking";
 import GuildCombatPowerTable from "./GuildCombatPowerTable";
 import RankTablePageMove from "../RankTablePageMove";
+import SkeletonGuildWaterway from "../../../skeleton/SkeletonGuildWaterway";
 
 const StyledBox = styled.div`
   width: 100%;
@@ -15,11 +15,11 @@ const StyledBox = styled.div`
 `;
 
 const GuildCombatPower = () => {
-  const { rankPage, worldTab, getGuildCombatPowerData } = useRanking();
-  useEffect(() => getGuildCombatPowerData(rankPage, worldTab), [getGuildCombatPowerData]);
   return (
     <StyledBox>
-      <GuildCombatPowerTable />
+      <Suspense fallback={<SkeletonGuildWaterway />}>
+        <GuildCombatPowerTable />
+      </Suspense>
       <RankTablePageMove />
     </StyledBox>
   );
