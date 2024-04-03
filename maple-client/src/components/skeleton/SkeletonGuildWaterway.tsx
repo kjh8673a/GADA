@@ -24,17 +24,25 @@ const TextBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:after {
+    content: "";
+    width: 32px;
+    height: 24px;
+    border-radius: 4px;
+    background-color: var(--primary-bg-color);
+  }
 `;
 
 const GuildWaterwayTableHeader = () => {
   return (
     <StyledHeader>
-      <TextBox>순위</TextBox>
-      <TextBox>길드</TextBox>
-      <TextBox>포인트</TextBox>
-      <TextBox>길드 레벨</TextBox>
-      <TextBox>마스터</TextBox>
-      <TextBox>월드</TextBox>
+      <TextBox></TextBox>
+      <TextBox></TextBox>
+      <TextBox></TextBox>
+      <TextBox></TextBox>
+      <TextBox></TextBox>
+      <TextBox></TextBox>
     </StyledHeader>
   );
 };

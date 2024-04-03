@@ -28,6 +28,7 @@ const ContentBox = styled.div`
     width: 32px;
     height: 24px;
     background-color: var(--primary-bg-color);
+    border-radius: 4px;
   }
 `;
 
@@ -42,6 +43,7 @@ const SubContentBox = styled.div`
     width: 48px;
     height: 24px;
     background-color: var(--primary-bg-color);
+    border-radius: 4px;
   }
 `;
 
