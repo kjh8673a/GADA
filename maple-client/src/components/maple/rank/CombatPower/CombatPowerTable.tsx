@@ -27,9 +27,7 @@ const ErrorBox = styled.div`
 const CombatPowerTable = () => {
   const { combatPowerRanking, rankPage, combatPowerItemClickHandler, worldTab, classTab, getCombatPowerRank } =
     useRanking();
-
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
-
   const result = useFetch(getCombatPowerRank, rankPage, worldTab, classTab);
 
   useEffect(() => {

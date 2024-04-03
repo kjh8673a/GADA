@@ -51,16 +51,9 @@ export type GuildWaterwayType = {
   data?: GuildWaterwayDataType[];
 };
 
-export const RANK_TAB_NAME_LIST: RankTabType[] = [
-  "개인 전투력 랭킹",
-  "길드 수로 랭킹",
-  "길드 전투력 랭킹",
-];
+export const RANK_TAB_NAME_LIST: RankTabType[] = ["개인 전투력 랭킹", "길드 수로 랭킹", "길드 전투력 랭킹"];
 
-export type RankTabType =
-  | "개인 전투력 랭킹"
-  | "길드 수로 랭킹"
-  | "길드 전투력 랭킹";
+export type RankTabType = "개인 전투력 랭킹" | "길드 수로 랭킹" | "길드 전투력 랭킹";
 
 export const WORLD_NAME_LIST = [
   undefined,
@@ -78,9 +71,6 @@ export const WORLD_NAME_LIST = [
   "노바",
   "리부트",
   "리부트2",
-  "버닝",
-  "버닝2",
-  "버닝3",
 ];
 
 export const CLASS_NAME_LIST = [
