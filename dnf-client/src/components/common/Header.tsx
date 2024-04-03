@@ -15,7 +15,8 @@ const Header = () => {
         </Domain>
       </UpContainer>
       <DownConatiner>
-        <PageHeader href="/">메인</PageHeader>
+        <PageHeader href="/">캐릭터 검색</PageHeader>
+        <PageHeader href="/auction">경매장</PageHeader>
       </DownConatiner>
     </>
   );
