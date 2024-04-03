@@ -1,14 +1,5 @@
 import { ITEM_RARITY, TDetail } from "./CommonTypes";
 
-export const MOBILE_FLAG_LOCATION = [36.5, 50.5];
-
-export const MOBILE_GEM_LOCATIONS = [
-  [49.8, 25.5],
-  [57.8, 40.9],
-  [57.8, 60.3],
-  [49.8, 76],
-];
-
 export type TCharacterFlagGem = {
   detail?: TDetail;
   itemId: string;

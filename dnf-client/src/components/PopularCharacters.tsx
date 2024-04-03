@@ -20,6 +20,10 @@ const StyledBox = styled.div`
   flex-direction: column;
   align-items: flex-start;
   font-size: 0.8rem;
+
+  @media(max-width: 400px) {
+    width: 330px;
+  }
 `;
 
 const Header = styled.div`

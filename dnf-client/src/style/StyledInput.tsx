@@ -28,6 +28,10 @@ const StyledBox = styled.input<Props>`
     outline: none; /* 기본 포커스 효과 제거 */
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 그림자 효과 */
   }
+
+  @media (max-width: 400px) {
+    width: 300px;
+  }
 `;
 
 const StyledInput: React.FC<Props> = ({
@@ -41,7 +45,6 @@ const StyledInput: React.FC<Props> = ({
   $align,
   inputRef,
 }) => {
-  // const inputRef = useRef<HTMLInputElement>(null);
   const selectAllText = () => {
     if (inputRef && inputRef.current) {
       inputRef.current.select();

@@ -20,7 +20,7 @@ export const NameSearch = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 400px;
+  max-width: 400px;
 `;
 
 export const NicknameSearch = styled.input`
@@ -43,7 +43,7 @@ export const CheckButton = styled.img`
 
 export const BookmarkBox = styled.div`
   margin: 8px 0;
-  width: 400px;
+  max-width: 400px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
