@@ -1,4 +1,4 @@
-import { https } from "../Https";
+import { https } from "./Https";
 
 export const getCharacterInfo = async (
   serverName: string,
@@ -16,5 +16,13 @@ export const getPopularCharacters = async () => {
   return await https({
     method: "get",
     url: "/character/getPopularCharacters",
+  });
+};
+
+export const getSearchCharacters = async (characterName: string) => {
+  return await https({
+    method: "get",
+    url: "/character/searchCharacters",
+    params: { characterName },
   });
 };

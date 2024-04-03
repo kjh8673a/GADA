@@ -1,32 +1,9 @@
-import { useCallback } from "react";
-import { getSearchCharacters } from "../api/Search/getSearchCharacters";
-import { TSearchCharacters } from "../@types/SearchTypes";
 import { NavigateFunction } from "react-router-dom";
 
 const useSearch = () => {
-  const fetchSearchCharacters = useCallback((characterName: string) => {
-    let status = "pending";
-    let data: TSearchCharacters;
-    const suspender = getSearchCharacters(characterName)
-      .then((response) => {
-        data = response.data;
-        setTimeout(() => (status = "fulfilled"), 500);
-      })
-      .catch((e) => {
-        data = e;
-        status = "reject";
-      });
-    return {
-      read() {
-        if (status === "pending") throw suspender;
-        else if (status === "reject") throw data;
-        else if (status === "fulfilled") return data;
-      },
-    };
-  }, []);
 
   const searchClickName = (navigate: NavigateFunction, nickname: string) => {
-    navigate(`/search?input=${nickname}`);
+    navigate(`/character/search?input=${nickname}`);
   };
 
   const searchEnterName = (
@@ -35,7 +12,7 @@ const useSearch = () => {
     nickname: string
   ) => {
     if (e.key === "Enter") {
-      navigate(`/search?input=${nickname}`);
+      navigate(`/character/search?input=${nickname}`);
     }
   };
 
@@ -61,7 +38,6 @@ const useSearch = () => {
   };
 
   return {
-    fetchSearchCharacters,
     searchClickName,
     searchEnterName,
     changeHandler,

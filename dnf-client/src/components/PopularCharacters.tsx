@@ -22,7 +22,7 @@ const StyledBox = styled.div`
   font-size: 0.8rem;
 
   @media(max-width: 400px) {
-    width: 330px;
+    width: 300px;
   }
 `;
 

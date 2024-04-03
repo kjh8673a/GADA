@@ -5,6 +5,9 @@ import RootLayout from "./components/common/RootLayout";
 import Error from "./components/common/Error";
 import Search from "./components/Search/Search";
 import Character from "./components/Character/Character";
+import Auction from "./components/Auction/Auction";
+import AuctionSearch from "./components/Auction/Search/AuctionSearch";
+import AuctionItem from "./components/Auction/Item/AuctionItem";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -14,13 +17,28 @@ const App = () => {
       children: [
         { index: true, element: <Dnf /> },
         {
-          path: "/search",
+          path: "/character/search",
           element: <Search />,
           errorElement: <Error />,
         },
         {
           path: "/character",
           element: <Character />,
+          errorElement: <Error />,
+        },
+        {
+          path: "/auction",
+          element: <Auction />,
+          errorElement: <Error />,
+        },
+        {
+          path: "/auction/search",
+          element: <AuctionSearch />,
+          errorElement: <Error />,
+        },
+        {
+          path: "/auction/item",
+          element: <AuctionItem />,
           errorElement: <Error />,
         },
       ],

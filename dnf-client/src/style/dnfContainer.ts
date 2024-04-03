@@ -31,11 +31,12 @@ export const NicknameSearch = styled.input`
   width: 240px;
 `;
 
-export const CheckButton = styled.img`
+export const CheckButton = styled.img<{ $marginTop?: number }>`
   width: 16px;
   margin: 0;
   position: absolute;
   right: 36px;
+  ${props => props.$marginTop ? `margin-top: ${props.$marginTop}px;`:""}
   &:hover {
     cursor: pointer;
   }

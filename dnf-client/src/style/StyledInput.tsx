@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -7,15 +6,18 @@ interface Props {
   $height?: number;
   value?: string;
   type?: string;
+  defaultValue?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
   $align?: "center" | "left";
+  $marginTop?: number;
 }
 
 const StyledBox = styled.input<Props>`
   width: ${(props) => props.$width}px;
   margin: 0 24px;
+  ${(props) => props.$marginTop? `margin-top: ${props.$marginTop}px;`:""}
   padding: ${(props) => (props.$height ? props.$height : "10")}px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -44,6 +46,8 @@ const StyledInput: React.FC<Props> = ({
   placeholder,
   $align,
   inputRef,
+  defaultValue,
+  $marginTop,
 }) => {
   const selectAllText = () => {
     if (inputRef && inputRef.current) {
@@ -57,6 +61,7 @@ const StyledInput: React.FC<Props> = ({
         $width={$width}
         $height={$height}
         value={value}
+        defaultValue={defaultValue}
         type={type}
         onChange={onChange}
         onKeyDown={onKeyDown}
@@ -64,6 +69,7 @@ const StyledInput: React.FC<Props> = ({
         placeholder={placeholder}
         $align={$align}
         ref={inputRef}
+        $marginTop={$marginTop}
       />
     </>
   );
