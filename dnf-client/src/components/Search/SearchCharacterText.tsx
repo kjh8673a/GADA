@@ -17,6 +17,11 @@ const StyledBox = styled.div`
   bottom: 0px;
   width: 100%;
   font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0px 0px 10px 10px;
+  }
 `;
 
 const ServerText = styled.div`

@@ -79,22 +79,22 @@ const useItemImageLocation = () => {
 
   const GemLocation = (idx: number): number[] => {
     if (idx === 0) {
-      location.x = 76.2;
+      location.x = 47;
       location.y = 20.9;
       return [location.x, location.y];
     }
     if (idx === 1) {
-      location.x = 88;
-      location.y = 36.4;
+      location.x = 54.3;
+      location.y = 36.5;
       return [location.x, location.y];
     }
     if (idx === 2) {
-      location.x = 88;
+      location.x = 54.3;
       location.y = 55.9;
       return [location.x, location.y];
     }
     if (idx === 3) {
-      location.x = 76.2;
+      location.x = 47;
       location.y = 71.4;
       return [location.x, location.y];
     }

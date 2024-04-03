@@ -10,15 +10,8 @@ const StyledBox = styled.div`
   height: 565px;
   background-image: url("${process.env.PUBLIC_URL}/assets/flag_bg.svg");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   border-radius: 10px;
-  margin: 3% 1% 3% 3%;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    background-position: center;
-    margin: 0px;
-  }
 `;
 
 const FlagBg = () => {

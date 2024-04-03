@@ -2,7 +2,6 @@ import React from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
-  MOBILE_GEM_LOCATIONS,
   TCharacterFlagGem,
 } from "../../../@types/Character/FlagTypes";
 import { ITEM_TYPE_COLOR } from "../../../@types/Character/CommonTypes";
@@ -29,15 +28,8 @@ const RuneImg = styled.img<StyledProps>`
   cursor: pointer;
   border: 1.5px solid ${(props) => props.$rarityColor};
   border-radius: 1px;
-  margin-top: ${(props) => props.$top}%;
-  margin-left: ${(props) => props.$left}%;
-
-  @media (max-width: 768px) {
-    margin: 0px;
-    top: ${(props) => MOBILE_GEM_LOCATIONS[props.$idx][0]}%;
-    left: ${(props) => MOBILE_GEM_LOCATIONS[props.$idx][1]}%;
-    transform: translate(-50%, -50%) scale(1.3);
-  }
+  top: ${(props) => props.$top}%;
+  left: ${(props) => props.$left}%;
 `;
 
 const GemItem: React.FC<Props> = ({ value, idx }) => {
