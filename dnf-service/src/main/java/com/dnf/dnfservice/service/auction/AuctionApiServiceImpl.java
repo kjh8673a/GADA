@@ -15,7 +15,7 @@ public class AuctionApiServiceImpl implements AuctionApiService {
 
 	@Override
 	public AuctionSearchDto searchAuctionItems(String itemName) {
-		return auctionFeignClient.searchAuctionItems(itemName, 400, "front");
+		return auctionFeignClient.searchAuctionItems(itemName, 400, "full");
 	}
 
 	@Override

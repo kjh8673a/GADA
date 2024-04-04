@@ -38,7 +38,9 @@ import com.dnf.dnfservice.service.item.ItemApiService;
 import com.dnf.dnfservice.util.cache.RedisCacheable;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuctionServiceImpl implements AuctionService {
@@ -63,6 +65,7 @@ public class AuctionServiceImpl implements AuctionService {
 		List<AuctionSearchItemInfo> list = itemSearchDto.getRows().stream()
 			.filter(data -> ranking.contains(data.getItemId()) || inAuctionList.contains(data.getItemId()))
 			.map(data -> AuctionSearchItemInfo.of(data, inAuctionList.contains(data.getItemId())))
+			.limit(30)
 			.collect(Collectors.toList());
 
 		return AuctionSearchResponseDto.of(list);
@@ -115,9 +118,9 @@ public class AuctionServiceImpl implements AuctionService {
 		int rank = 1;
 		for (ZSetOperations.TypedTuple<String> item : ranking) {
 			String itemId = item.getValue();
-			if (item.getScore() == 0) {
-				break;
-			}
+			// if (item.getScore() == 0) {
+			// 	break;
+			// }
 			ItemDetailDto itemDetailDto = itemApiService.getItemDetail(itemId);
 
 			AuctionViewRanking viewRanking = AuctionViewRanking.of(rank++, itemDetailDto);
