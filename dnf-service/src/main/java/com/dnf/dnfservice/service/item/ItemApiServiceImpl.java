@@ -20,6 +20,6 @@ public class ItemApiServiceImpl implements ItemApiService {
 
 	@Override
 	public ItemSearchDto searchItems(String itemName) {
-		return itemFeignClient.searchItems(itemName, 30, "front");
+		return itemFeignClient.searchItems(itemName, 400, "full");
 	}
 }
