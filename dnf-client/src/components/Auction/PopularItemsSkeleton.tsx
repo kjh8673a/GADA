@@ -52,7 +52,7 @@ const PopularItemsSkeleton = () => {
   return (
     <StyledBox>
       <Header>최근 3시간 인기 검색 아이템</Header>
-      {Array.from({length: 5}, () => null).map((_, i) => {
+      {Array.from({length: 10}, () => null).map((_, i) => {
         return (<PopularCharacter key={i}>
           <Rank />
           <SkeletonBox />

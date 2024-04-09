@@ -1,29 +1,29 @@
 import { ITEM_RARITY } from "../Character/CommonTypes";
 
 export type TRegisteredItem = {
-  regDate: Date;
-  expireDate: Date;
+  regDate: string;
+  expireDate: string;
   count: number;
   currentPrice: number;
   unitPrice: number;
 };
 
 export type THistoryItem = {
-  soldDate: Date;
+  soldDate: string;
   count: string; // 물량
   price: string; // 거래액
   unitPrice: string; // 개당 가격
 };
 
 export type TGraphData = {
-  datetime: Date;
+  datetime: string;
   averagePrice: string | number;
   registeredNumber: string | number;
   totalItemCount: string | number;
 };
 
 export type TAuctionItem = {
-  timestamp: Date;
+  timestamp: string;
   data: {
     itemId: string;
     itemName: string;
