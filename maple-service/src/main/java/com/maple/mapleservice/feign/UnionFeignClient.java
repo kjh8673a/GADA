@@ -14,13 +14,13 @@ public interface UnionFeignClient {
 
 	// 유니온 정보 조회
 	@GetMapping("/union")
-	UnionDto getUnionDto(@RequestParam String ocid, @RequestParam String date);
+	UnionDto getUnionDto(@RequestParam String ocid);
 
 	// 유니온 공격대 정보 조회
 	@GetMapping("/union-raider")
-	UnionRaiderDto getUnionRaiderDto(@RequestParam String ocid, @RequestParam String date);
+	UnionRaiderDto getUnionRaiderDto(@RequestParam String ocid);
 
 	// 유니온 공격대 정보 조회
 	@GetMapping("/union-artifact")
-	UnionArtifactDto getUnionArtifactDto(@RequestParam String ocid, @RequestParam String date);
+	UnionArtifactDto getUnionArtifactDto(@RequestParam String ocid);
 }

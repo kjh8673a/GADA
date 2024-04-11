@@ -1,5 +1,7 @@
 package com.maple.mapleservice.dto.response.Character;
 
+import java.time.LocalDateTime;
+
 import com.maple.mapleservice.dto.feign.character.CharacterBasicDto;
 
 import lombok.AllArgsConstructor;
@@ -12,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CharacterBasicInfoResponseDto {
+	LocalDateTime updatedTime;
 	String ocid;
 	String character_name;
 	String world_name;
@@ -30,6 +33,7 @@ public class CharacterBasicInfoResponseDto {
 	public static CharacterBasicInfoResponseDto of(String ocid, CharacterBasicDto characterBasicDto, Integer popularity,
 		String combat_power, String prev_name, String oguild_id) {
 		return CharacterBasicInfoResponseDto.builder()
+			.updatedTime(LocalDateTime.now())
 			.ocid(ocid)
 			.character_name(characterBasicDto.getCharacter_name())
 			.world_name(characterBasicDto.getWorld_name())

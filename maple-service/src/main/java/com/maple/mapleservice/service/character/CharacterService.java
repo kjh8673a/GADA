@@ -12,6 +12,7 @@ import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 
 import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterStatsResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterUpdateResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterViewRankingResponseDto;
 
@@ -50,4 +51,14 @@ public interface CharacterService {
 	void addCharacterViewCount(String ocid);
 
 	CharacterViewRankingResponseDto getPopularCharacters();
+
+	void deleteCharacterBasicInfo(String characterName);
+	void deleteCharacterItem(String characterName);
+	void deleteCharacterStats(String characterName);
+	void deleteCharacterVMatrix(String characterName);
+	void deleteCharacterHyperPassive(String characterName);
+	void deleteCharacterLinkSkill(String characterName);
+	void deleteCharacterHexaMatrix(String characterName);
+
+	CharacterUpdateResponseDto getUpdatedCharacterInfo(String characterName, Integer tab);
 }

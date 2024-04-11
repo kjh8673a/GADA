@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 import com.maple.mapleservice.dto.model.character.HyperStat;
 
 import com.maple.mapleservice.dto.model.character.ViewRanking;
+import com.maple.mapleservice.dto.request.PartySynergyRequestDto;
+import com.maple.mapleservice.dto.response.Character.CharacterUpdateResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterViewRankingResponseDto;
 import com.maple.mapleservice.service.guild.GuildService;
 
@@ -39,6 +41,8 @@ import com.maple.mapleservice.dto.model.character.skill.HexaStatCore;
 import com.maple.mapleservice.dto.response.Character.CharacterCompareEachCharacterResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterCompareResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
+import com.maple.mapleservice.service.synergy.SynergyService;
+import com.maple.mapleservice.service.union.UnionService;
 import com.maple.mapleservice.util.HexaCoreTable;
 import com.maple.mapleservice.dto.model.character.Symbol;
 import com.maple.mapleservice.dto.model.character.skill.HexaMatrix;
@@ -68,6 +72,8 @@ public class CharacterServiceImpl implements CharacterService {
 	private final GuildApiService guildApiService;
 	private final CharacterRepository characterRepository;
 	private final CharacterExpHistoryRepository characterExpHistoryRepository;
+	private final UnionService unionService;
+	private final SynergyService synergyService;
 
 	private HexaCoreTable hexaCoreTable = new HexaCoreTable();
 	private CommonUtil commonUtil = new CommonUtil();
@@ -438,6 +444,90 @@ public class CharacterServiceImpl implements CharacterService {
 		}
 
 		return CharacterViewRankingResponseDto.builder().ranking(rankings).build();
+	}
+
+	@Override
+	@RedisCacheEvict(value = "character-basic-info", key = "#characterName")
+	public void deleteCharacterBasicInfo(String characterName) {
+
+	}
+
+	@Override
+	@RedisCacheEvict(value = "character-item", key = "#characterName")
+	public void deleteCharacterItem(String characterName) {
+
+	}
+
+	@Override
+	@RedisCacheEvict(value = "character-stats", key = "#characterName")
+	public void deleteCharacterStats(String characterName) {
+
+	}
+
+	@Override
+	@RedisCacheEvict(value = "character-v-matrix", key = "#characterName")
+	public void deleteCharacterVMatrix(String characterName) {
+
+	}
+
+	@Override
+	@RedisCacheEvict(value = "character-hyper-passive", key = "#characterName")
+	public void deleteCharacterHyperPassive(String characterName) {
+
+	}
+
+	@Override
+	@RedisCacheEvict(value = "character-link-skill", key = "#characterName")
+	public void deleteCharacterLinkSkill(String characterName) {
+
+	}
+
+	@Override
+	@RedisCacheEvict(value = "character-hexa-matrix", key = "#characterName")
+	public void deleteCharacterHexaMatrix(String characterName) {
+
+	}
+
+	@Override
+	public CharacterUpdateResponseDto getUpdatedCharacterInfo(String characterName, Integer tab) {
+		CharacterUpdateResponseDto responseDto = new CharacterUpdateResponseDto();
+
+		responseDto.setBasicInfo(getCharacterBasicInfo(characterName));
+		String ocid = characterApiService.getOcidKey(characterName);
+		responseDto.setExpHistory(getCharacterExpHistory(ocid));
+
+		switch (tab) {
+			case 1:
+				responseDto.setItem(getCharacterItem(characterName));
+				responseDto.setStats(getCharacterStats(characterName));
+				break;
+
+			case 2:
+				responseDto.setUnionInfo(unionService.getUnionInfoResponseDto(characterName));
+				responseDto.setUnionArtifact(unionService.getUnionArtifactResponseDto(characterName));
+				break;
+
+			case 3:
+				responseDto.setVMatrix(getCharacterVMatrix(characterName));
+				responseDto.setHyperPassive(getCharacterHyperPassive(characterName));
+				responseDto.setLinkSkill(getCharacterLinkSkill(characterName));
+				responseDto.setHexaMatrix(getCharacterHexaMatrix(characterName));
+				break;
+
+			case 4:
+				String parent_ocid = getParentOcidByCharacterName(characterName);
+				responseDto.setFindMainCharacter(findMainCharacter(parent_ocid));
+				break;
+
+			case 5:
+				PartySynergyRequestDto partySynergyRequestDto = PartySynergyRequestDto.builder()
+					.characterName(characterName)
+					.build();
+				responseDto.setSynergy(synergyService.partySynergy(partySynergyRequestDto));
+				break;
+		}
+
+		return responseDto;
 	}
 
 	public CharacterCompareEachCharacterResponseDto getCharacterForCompare(String characterName) {
