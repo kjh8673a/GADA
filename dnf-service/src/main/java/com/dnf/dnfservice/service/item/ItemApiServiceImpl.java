@@ -19,7 +19,7 @@ public class ItemApiServiceImpl implements ItemApiService {
 	}
 
 	@Override
-	public ItemSearchDto searchItems(String itemName) {
-		return itemFeignClient.searchItems(itemName, 400, "full");
+	public ItemSearchDto searchItems(String itemName, String wordType) {
+		return itemFeignClient.searchItems(itemName, 400, wordType);
 	}
 }
