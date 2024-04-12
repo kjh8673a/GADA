@@ -2,6 +2,7 @@ package com.dnf.dnfservice.dto.response.auction;
 
 import java.util.List;
 
+import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
 import com.dnf.dnfservice.dto.model.auction.AuctionGraphInfo;
 import com.dnf.dnfservice.dto.model.auction.AuctionItemInfo;
 import com.dnf.dnfservice.dto.model.auction.AuctionSearchItem;
@@ -34,9 +35,9 @@ public class AuctionItemDetailResponseDto {
 
 	List<AuctionGraphInfo> graph;
 
-	public static AuctionItemDetailResponseDto of(AuctionSearchItem item,
+	public static AuctionItemDetailResponseDto of(ItemDetailDto item,
 		int registeredNumber, Long totalItemCount, List<AuctionSoldInfo> history, List<AuctionGraphInfo> graph,
-		List<AuctionItemInfo> registeredList) {
+		List<AuctionItemInfo> registeredList, Long averagePrice) {
 		return AuctionItemDetailResponseDto.builder()
 			.itemId(item.getItemId())
 			.itemName(item.getItemName())
@@ -44,7 +45,7 @@ public class AuctionItemDetailResponseDto {
 			.itemType(item.getItemType())
 			.itemTypeDetail(item.getItemTypeDetail())
 			.itemImage("https://img-api.neople.co.kr/df/items/" + item.getItemId())
-			.averagePrice(item.getAveragePrice())
+			.averagePrice(averagePrice)
 			.registeredNumber(Long.valueOf(registeredNumber))
 			.totalItemCount(totalItemCount)
 			.history(history)
