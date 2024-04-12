@@ -53,7 +53,7 @@ public class AuctionServiceImpl implements AuctionService {
 
 	@Override
 	public AuctionSearchResponseDto searchAuctionItems(String itemName) {
-		AuctionSearchDto searchDto = auctionApiService.searchAuctionItems(itemName);
+		AuctionSearchDto searchDto = auctionApiService.searchAuctionItems(itemName, "front");
 		List<String> inAuctionList = searchDto.getRows().stream()
 			.filter(distinctByKey(AuctionSearchItem::getItemId))
 			.map(AuctionSearchItem::getItemId)
@@ -61,12 +61,35 @@ public class AuctionServiceImpl implements AuctionService {
 
 		Set<String> ranking = redisTemplate.opsForZSet().reverseRange("auctionItemViewRank", 0, -1);
 
-		ItemSearchDto itemSearchDto = itemApiService.searchItems(itemName);
+		ItemSearchDto itemSearchDto = itemApiService.searchItems(itemName, "front");
 		List<AuctionSearchItemInfo> list = itemSearchDto.getRows().stream()
 			.filter(data -> ranking.contains(data.getItemId()) || inAuctionList.contains(data.getItemId()))
 			.map(data -> AuctionSearchItemInfo.of(data, inAuctionList.contains(data.getItemId())))
 			.limit(30)
 			.collect(Collectors.toList());
+
+		List<String> itemIdStream = list.stream().map(data-> data.getItemId())
+			.collect(Collectors.toList());
+
+		try {
+			AuctionSearchDto searchDtoFull = auctionApiService.searchAuctionItems(itemName, "full");
+			List<String> inAuctionListFull = searchDtoFull.getRows().stream()
+				.filter(distinctByKey(AuctionSearchItem::getItemId))
+				.map(AuctionSearchItem::getItemId)
+				.toList();
+
+			ItemSearchDto itemSearchDtoFull = itemApiService.searchItems(itemName, "full");
+			List<AuctionSearchItemInfo> listFull = itemSearchDtoFull.getRows().stream()
+				.filter(data -> ranking.contains(data.getItemId()) || inAuctionListFull.contains(data.getItemId()))
+				.filter(data -> !itemIdStream.contains(data.getItemId()))
+				.map(data -> AuctionSearchItemInfo.of(data, inAuctionList.contains(data.getItemId())))
+				.limit(30)
+				.collect(Collectors.toList());
+
+			list.addAll(listFull);
+		}catch (Exception e) {
+			log.error(e.getMessage());
+		}
 
 		return AuctionSearchResponseDto.of(list);
 	}
@@ -97,8 +120,15 @@ public class AuctionServiceImpl implements AuctionService {
 			.map(AuctionGraphInfo::of)
 			.toList();
 
-		return AuctionItemDetailResponseDto.of(searchDto.getRows().get(0), searchDto.getRows().size(), totalVolume,
-			list, graph, registeredList);
+		ItemDetailDto itemDetailDto = itemApiService.getItemDetail(itemId);
+
+		Long averagePrice = 0L;
+		if(searchDto.getRows().size() > 0) {
+			averagePrice = searchDto.getRows().get(0).getAveragePrice();
+		}
+
+		return AuctionItemDetailResponseDto.of(itemDetailDto, searchDto.getRows().size(), totalVolume,
+			list, graph, registeredList, averagePrice);
 	}
 
 	@Override

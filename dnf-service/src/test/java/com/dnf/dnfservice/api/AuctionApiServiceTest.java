@@ -20,7 +20,7 @@ class AuctionApiServiceTest {
 
 	@Test
 	void 경매장_아이템_검색() {
-		AuctionSearchDto auctionSearchDto = auctionApiService.searchAuctionItems("무색");
+		AuctionSearchDto auctionSearchDto = auctionApiService.searchAuctionItems("무색", "front");
 		// auctionSearchDto.getRows().stream().forEach(data -> System.out.println(data.getItemId() + " : " + data.getItemName()));
 
 		auctionSearchDto.getRows().stream()
