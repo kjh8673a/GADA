@@ -43,7 +43,7 @@ const ItemImg = styled.img<{ $color: string }>`
 
 const Tag = styled.div<{ $color: string }>`
   box-sizing: border-box;
-  padding: 5px 20px;
+  padding: 5px 10px;
   border-radius: 5px;
   background-color: ${(props) => props.$color};
   text-align: center;
@@ -71,7 +71,7 @@ const AuctionSearchItem: React.FC<Props> = ({ data }) => {
         </Wrapper>
       </>
     );
-  }, []);
+  }, [data]);
 
   return (
     <StyledBox onClick={() => navigate(`/auction/item?itemId=${data.itemId}`)}>

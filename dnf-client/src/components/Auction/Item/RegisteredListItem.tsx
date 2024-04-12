@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { THistoryItem } from "../../../@types/Auction/AuctionItemTypes";
+import { TRegisteredItem } from "../../../@types/Auction/AuctionItemTypes";
 
 interface Props {
-  data: THistoryItem;
+  data: TRegisteredItem;
   $borderTop: string;
 }
 
@@ -20,15 +20,15 @@ const StyledBox = styled.div<{ $borderTop: string }>`
   }
 `;
 
-const HistoryItem: React.FC<Props> = ({ data, $borderTop }) => {
+const RegisteredListItem: React.FC<Props> = ({ data, $borderTop }) => {
   return (
     <StyledBox $borderTop={$borderTop}>
-      <div>{data.soldDate.slice(2,)}</div>
+      <div>{data.regDate.slice(2,)}</div>
       <div>{Number(data.count).toLocaleString("ko-kr")}</div>
       <div>{Number(data.unitPrice).toLocaleString("ko-kr")}</div>
-      <div>{Number(data.price).toLocaleString("ko-kr")}</div>
+      <div>{Number(data.currentPrice).toLocaleString("ko-kr")}</div>
     </StyledBox>
   );
 };
 
-export default HistoryItem;
+export default RegisteredListItem;

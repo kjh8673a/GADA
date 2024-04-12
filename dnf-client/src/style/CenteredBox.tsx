@@ -17,6 +17,7 @@ const CenteredDiv = styled.div<CenteredDivProps>`
   display: flex;
   align-items: center;
   flex-direction: ${(props) => props.$direction};
+  padding: 10px 0px;
   gap: 15px;
 
   @media (max-width: 768px) {
