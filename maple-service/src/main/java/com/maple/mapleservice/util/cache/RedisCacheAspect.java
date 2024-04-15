@@ -50,9 +50,10 @@ public class RedisCacheAspect {
 
 		// 넣을 value 가져오기
 		final Object methodReturnValue = joinPoint.proceed();
-		
+
 		// 만료시간 설정
 		final long cacheTTL = commonUtil.setTtl();
+		// final long cacheTTL = 600L;
 
 		// value가 있을 때만 캐시에 저장한다
 		if(methodReturnValue != null && String.valueOf(methodReturnValue).length() > 0) {

@@ -7,4 +7,8 @@ public interface UnionService {
 	UnionInfoResponseDto getUnionInfoResponseDto(String characterName);
 
 	UnionArtifactResponseDto getUnionArtifactResponseDto(String characterName);
+
+	void deleteUnionInfoResponseDto(String characterName);
+
+	void deleteUnionArtifactResponseDto(String characterName);
 }
