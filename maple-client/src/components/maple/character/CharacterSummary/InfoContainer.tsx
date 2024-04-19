@@ -9,9 +9,14 @@ import {
   InfoBoxHeader,
   InfoBoxHeaderTitle,
 } from "../../../../style/characterSummaryInfo";
-import { BASIC_LEFT, BASIC_RIGHT, BasicPropsType } from "../../../../@types/maple/CharacterBasicTypes";
+import {
+  BASIC_LEFT,
+  BASIC_RIGHT,
+  BasicPropsType,
+} from "../../../../@types/maple/CharacterBasicTypes";
 import useLocalStorage from "../../../../hooks/maple/useLocalStorage";
 import { useForwarding } from "../../../../hooks/maple/useForwarding";
+import UpdateBtn from "./UpdateBtn";
 
 const InfoContainer = () => {
   const { moveToGuildPage } = useForwarding();
@@ -35,7 +40,9 @@ const InfoContainer = () => {
         values: [
           characterBasic.data?.character_level,
           characterBasic.data?.popularity,
-          parseInt(characterBasic.data?.combat_power as string).toLocaleString("ko-kr"),
+          parseInt(characterBasic.data?.combat_power as string).toLocaleString(
+            "ko-kr"
+          ),
         ],
       };
     });
@@ -52,7 +59,10 @@ const InfoContainer = () => {
   }, [characterBasic]);
 
   const guildForwardHandler = () => {
-    moveToGuildPage(characterBasic.data?.world_name, characterBasic.data?.character_guild_name);
+    moveToGuildPage(
+      characterBasic.data?.world_name,
+      characterBasic.data?.character_guild_name
+    );
   };
 
   return (
@@ -64,29 +74,53 @@ const InfoContainer = () => {
             style={{
               display: "flex",
               justifyContent: "space-between",
+              alignItems: "center",
               marginRight: "2%",
             }}
           >
             <CharacterName>{characterBasic.data?.character_name}</CharacterName>
             <BookmarkButton
               onClick={() => {
-                clickBookmarkHandler(characterBasic.data?.character_name as string);
+                clickBookmarkHandler(
+                  characterBasic.data?.character_name as string
+                );
               }}
             >
               <img
                 src={`/assets/star${
-                  bookmark.includes(characterBasic.data?.character_name as string) ? "" : "_blank"
+                  bookmark.includes(
+                    characterBasic.data?.character_name as string
+                  )
+                    ? ""
+                    : "_blank"
                 }.png`}
                 width={"105%"}
                 alt="bookmark btn"
               />
             </BookmarkButton>
           </div>
-          {/* <CompareButton>Compare</CompareButton> */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              margin: "0% 4%",
+            }}
+          >
+            <div style={{ color: "gray", fontSize: "0.8rem"}}>
+              <div>최근 업데이트한 날짜</div>
+              <div>{characterBasic.data?.updatedTime.slice(2, 10)}</div>
+            </div>
+            <UpdateBtn />
+          </div>
         </div>
       </InfoBoxHeader>
       <InfoBoxBody>
-        <InfoContainerItem id={props1.id} titles={props1.titles} values={props1.values} />
+        <InfoContainerItem
+          id={props1.id}
+          titles={props1.titles}
+          values={props1.values}
+        />
         <InfoContainerItem
           id={props2.id}
           titles={props2.titles}
@@ -99,4 +133,3 @@ const InfoContainer = () => {
 };
 
 export default InfoContainer;
-
