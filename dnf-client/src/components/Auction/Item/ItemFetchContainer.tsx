@@ -5,6 +5,7 @@ import History from "./History";
 import RegisteredList from "./RegisteredList";
 import styled from "styled-components";
 import ItemHeader from "./ItemHeader";
+import GraphContainer from "./GraphContainer";
 
 interface Props {
   data: { read(): TAuctionItem | undefined };
@@ -21,7 +22,6 @@ const Wrapper = styled.div`
     flex-direction: column;
   }
 `;
-
 const ItemFetchContainer: React.FC<Props> = ({ data }) => {
   const [auctionData, setAuctionData] = useState<TAuctionItem>();
   useEffect(() => setAuctionData(data.read()), [data.read(), setAuctionData]);
@@ -30,7 +30,12 @@ const ItemFetchContainer: React.FC<Props> = ({ data }) => {
   }
   return (
     <>
-      <ItemHeader itemName={auctionData?.data.itemName!} itemImage={auctionData?.data.itemImage!} itemRarity={auctionData?.data.itemRarity!}/>
+      <ItemHeader
+        itemName={auctionData?.data.itemName!}
+        itemImage={auctionData?.data.itemImage!}
+        itemRarity={auctionData?.data.itemRarity!}
+      />
+      <GraphContainer data={auctionData?.data.graph!} />
       <Wrapper>
         <History data={auctionData?.data.history!} />
         <RegisteredList data={auctionData?.data.registeredList!} />
