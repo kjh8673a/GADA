@@ -23,12 +23,16 @@ interface Props {
 
 const StyledBox = styled.div`
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
+  // border: 1px solid white;
   gap: 15px;
   width: 100%;
+  height: 50%;
   color: #e2e0e0;
   cursor: context-menu;
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
 `;
 
 const Header = styled.div`
@@ -56,6 +60,11 @@ const History: React.FC<Props> = ({
 }) => {
   const options = {
     responsive: true,
+    interaction: {
+      mode: "index" as const, // - 같은 선상(index) 에 있는 값들 툴팁 다 보여줌
+      // mode: 'point' as const,// - 특정 지점에 마우스를 호버하였을 때, 해당 툴팁 보여줌
+      axis: "x" as const, // mode 가 index 일 때, 같은 선상이 x축인지 y축인지
+    },
     plugins: {
       legend: {
         position: "top" as const,

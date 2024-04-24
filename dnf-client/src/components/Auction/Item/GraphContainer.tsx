@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import RegisteredListItem from "./RegisteredListItem";
 import { TGraphData } from "../../../@types/Auction/AuctionItemTypes";
 import Graph from "./Graph";
 
@@ -16,7 +15,7 @@ const StyledBox = styled.div`
 const StyledBtn = styled.button`
   background-color: var(--secondary-bg-color);
   border: 1px solid #999999;
-  color: #BFBFBF;
+  color: #bfbfbf;
   border-radius: 2px;
   &:hover {
     background-color: black;
