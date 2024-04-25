@@ -17,6 +17,7 @@ import {
 import useLocalStorage from "../../../../hooks/maple/useLocalStorage";
 import { useForwarding } from "../../../../hooks/maple/useForwarding";
 import UpdateBtn from "./UpdateBtn";
+import UpdatedTime from "./UpdatedTime";
 
 const InfoContainer = () => {
   const { moveToGuildPage } = useForwarding();
@@ -107,9 +108,9 @@ const InfoContainer = () => {
               margin: "0% 4%",
             }}
           >
-            <div style={{ color: "gray", fontSize: "0.8rem"}}>
-              <div>최근 업데이트한 날짜</div>
-              <div>{characterBasic.data?.updatedTime.slice(2, 10)}</div>
+            <div style={{ color: "gray", fontSize: "0.8rem" }}>
+              <div>최근 업데이트</div>
+              <UpdatedTime />
             </div>
             <UpdateBtn />
           </div>
