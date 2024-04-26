@@ -29,7 +29,7 @@ public class CommonUtil {
     }
 
     private LocalDate getNextDate() {
-        return LocalDateTime.now().atZone(zoneId).plusDays(1).toLocalDate();
+        return LocalDateTime.now().atZone(zoneId).plusDays(7).toLocalDate();
         // if(LocalDateTime.now(zoneId).toLocalTime().isBefore(LocalTime.of(1, 0, 0))) {
         //     return LocalDateTime.now().atZone(zoneId).toLocalDate();
         // }else {
