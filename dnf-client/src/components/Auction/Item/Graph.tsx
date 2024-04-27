@@ -26,17 +26,19 @@ const StyledBox = styled.div`
   // border: 1px solid white;
   gap: 15px;
   width: 100%;
-  height: 50%;
+  height: 70vh;
   color: #e2e0e0;
   cursor: context-menu;
-  canvas {
-    width: 100% !important;
-    height: 100% !important;
-  }
-`;
 
-const Header = styled.div`
-  font-size: 1.2rem;
+  @media (max-width: 770px) {
+    width: 100%;
+    height: 50vh;
+  }
+
+  @media (max-width: 450px) {
+    width: 100%;
+    height: 40vh;
+  }
 `;
 
 ChartJS.register(
@@ -60,6 +62,7 @@ const History: React.FC<Props> = ({
 }) => {
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     interaction: {
       mode: "index" as const, // - 같은 선상(index) 에 있는 값들 툴팁 다 보여줌
       // mode: 'point' as const,// - 특정 지점에 마우스를 호버하였을 때, 해당 툴팁 보여줌
@@ -67,19 +70,39 @@ const History: React.FC<Props> = ({
     },
     plugins: {
       legend: {
-        position: "top" as const,
+        position: "top" as const, //범례를 어디에 보여줄 것인지
       },
     },
     scales: {
+      x: {
+        // display: false //x 축값 표시 default: true
+        reverse: true,
+      },
       y: {
+        title: { //y축 값
+          display: true,
+          text: "평균가",
+          font: {
+            size: 12,
+          },
+        },
         type: "linear" as const,
         display: true,
+        beginAtZero: true, // 항상 0부터 시작. (값이 없으면 -값부터 시작해서)
         position: "left" as const,
       },
       y1: {
         type: "linear" as const,
+        title: {
+          display: true,
+          text: "등록건수",
+          font: {
+            size: 12,
+          },
+        },
         display: true,
         position: "right" as const,
+        beginAtZero: true,
         grid: {
           drawOnChartArea: false,
         },
@@ -87,7 +110,7 @@ const History: React.FC<Props> = ({
     },
   };
 
-  const labels = graphDataDate?.reverse();
+  const labels = graphDataDate; // x축 데이타
 
   const data = {
     labels,
@@ -95,15 +118,18 @@ const History: React.FC<Props> = ({
       {
         type: "line" as const,
         label: "평균가",
-        data: graphDataAvgPrice?.reverse(),
+        data: graphDataAvgPrice,
+        pointStyle: "circle", //포인터 스타일 변경
+        // pointBorderWidth: 2, //포인터 보더사이즈
+        pointRadius: 1,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         yAxisID: "y",
       },
       {
-        type: "bar" as const,
+        type: "bar" as const, //등록건수는 추세가 있는 값이 아니기 때문에 bar차트로 설정.
         label: "등록건수",
-        data: graphDataRegNum?.reverse(),
+        data: graphDataRegNum,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
         yAxisID: "y1",
