@@ -17,9 +17,9 @@ export type THistoryItem = {
 
 export type TGraphData = {
   datetime: string;
-  averagePrice: string | number;
-  registeredNumber: string | number;
-  totalItemCount: string | number;
+  averagePrice: number;
+  registeredNumber: number;
+  totalItemCount: number;
 };
 
 export type TAuctionItem = {
