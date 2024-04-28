@@ -172,13 +172,13 @@ const useCharacterUpdate = () => {
   );
 
   const tabName = useRecoilValue(atomTabName);
-  const _isUpdated = useSetRecoilState(isUpdated);
 
   const onClickHandler = (characterName: string) => {
     fetchUpdateCharacter(characterName, TAB_INDEX[tabName]);
   };
 
   const detailDate = (updatedTime: string) => {
+    if (updatedTime === undefined) return "1초전";
     const updatedDate = new Date(updatedTime);
     const milliSeconds = +new Date() - +updatedDate;
     const seconds = milliSeconds / 1000;
