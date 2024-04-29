@@ -88,7 +88,7 @@ const CGsearch = () => {
     // throw _error;
   }
 
-  if (guildList.length === 0) return null;
+  // if (guildList.length === 0) return null;
 
   return (
     <BigContainer>
