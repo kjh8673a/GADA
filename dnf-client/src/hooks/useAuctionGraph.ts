@@ -12,6 +12,7 @@ import {
   BarController,
 } from "chart.js";
 import { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -74,6 +75,10 @@ const useAuctionGraph = () => {
   };
 
   //Graph
+  const isWeb = useMediaQuery({
+    query: "(min-width:770px)",
+  });
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -85,6 +90,11 @@ const useAuctionGraph = () => {
     plugins: {
       legend: {
         position: "top" as const, //범례를 어디에 보여줄 것인지
+        labels: {
+          font: {
+            size: isWeb ? 12 : 9,
+          },
+        },
       },
     },
     scales: {
@@ -110,7 +120,7 @@ const useAuctionGraph = () => {
         type: "linear" as const,
         title: {
           display: true,
-          text: "등록건수",
+          text: "등록물량",
           font: {
             size: 12,
           },
@@ -127,8 +137,10 @@ const useAuctionGraph = () => {
 
   const chartJSData = (
     labels: (string | number)[],
-    yData: (string | number)[],
-    y1Data: (string | number)[]
+    avgData: (string | number)[],
+    totalCountData: (string | number)[],
+    UpperData: (string | number)[],
+    LowerData: (string | number)[]
   ) => {
     const data = {
       labels,
@@ -136,7 +148,7 @@ const useAuctionGraph = () => {
         {
           type: "line" as const,
           label: "평균가",
-          data: yData,
+          data: avgData,
           pointStyle: "circle", //포인터 스타일 변경
           // pointBorderWidth: 2, //포인터 보더사이즈
           pointRadius: 1,
@@ -145,9 +157,34 @@ const useAuctionGraph = () => {
           yAxisID: "y",
         },
         {
+          type: "line" as const,
+          label: "최저가",
+          data: LowerData,
+          pointStyle: "circle", //포인터 스타일 변경
+          // pointBorderWidth: 2, //포인터 보더사이즈
+          pointRadius: 1,
+          borderDash: [5, 5],
+          borderColor: "rgb(255, 129, 56)",
+          backgroundColor: "rgba(255, 129, 56, 0.5)",
+          yAxisID: "y",
+        },
+        {
+          type: "line" as const,
+          label: "최고가",
+          data: UpperData,
+          pointStyle: "circle", //포인터 스타일 변경
+          // pointBorderWidth: 2, //포인터 보더사이즈
+          pointRadius: 1,
+          borderDash: [5, 5],
+          borderColor: "rgb(255, 129, 56)",
+          backgroundColor: "rgba(255, 129, 56, 0.5)",
+          yAxisID: "y",
+        },
+
+        {
           type: "bar" as const, //등록건수는 추세가 있는 값이 아니기 때문에 bar차트로 설정.
-          label: "등록건수",
-          data: y1Data,
+          label: "등록물량",
+          data: totalCountData,
           borderColor: "rgb(53, 162, 235)",
           backgroundColor: "rgba(53, 162, 235, 0.5)",
           yAxisID: "y1",

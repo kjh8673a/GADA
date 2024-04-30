@@ -20,6 +20,8 @@ export type TGraphData = {
   averagePrice: number;
   registeredNumber: number;
   totalItemCount: number;
+  upperPrice: number;
+  lowerPrice: number;
 };
 
 export type TAuctionItem = {
