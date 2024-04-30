@@ -13,12 +13,16 @@ import org.springframework.data.redis.core.ZSetOperations;
 
 import com.dnf.dnfservice.dto.feign.item.ItemDetailDto;
 import com.dnf.dnfservice.dto.model.auction.AuctionViewRanking;
+import com.dnf.dnfservice.service.auction.AuctionSchedule;
 import com.dnf.dnfservice.service.auction.AuctionService;
 
 @SpringBootTest
 public class AuctionServiceTest {
 	@Autowired
 	AuctionService auctionService;
+
+	@Autowired
+	AuctionSchedule auctionSchedule;
 
 	@Autowired
 	RedisTemplate redisTemplate;
@@ -41,6 +45,11 @@ public class AuctionServiceTest {
 		ranking.stream().forEach(System.out::println);
 
 		System.out.println(LocalDateTime.now().toString().substring(0, 14) + "00");
+	}
+
+	@Test
+	void 스케쥴_테스트() {
+		auctionSchedule.addToDBAuctionItem();
 	}
 
 }

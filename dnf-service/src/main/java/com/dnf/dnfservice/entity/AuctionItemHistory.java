@@ -35,4 +35,10 @@ public class AuctionItemHistory {
 
 	@Column
 	private String datetime;
+
+	@Column(name = "lower_price")
+	private Long lowerPrice;
+
+	@Column(name = "upper_price")
+	private Long UpperPrice;
 }

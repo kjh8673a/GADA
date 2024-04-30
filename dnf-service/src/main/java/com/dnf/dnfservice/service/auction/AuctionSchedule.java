@@ -4,7 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -18,7 +20,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dnf.dnfservice.dto.feign.auction.AuctionSearchDto;
+import com.dnf.dnfservice.dto.model.auction.AuctionSearchItem;
 import com.dnf.dnfservice.dto.response.auction.AuctionItemDetailResponseDto;
+import com.dnf.dnfservice.exception.CustomException;
+import com.dnf.dnfservice.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +36,7 @@ public class AuctionSchedule {
 	private final RedisTemplate redisTemplate;
 	private final JdbcTemplate jdbcTemplate;
 	private final AuctionService auctionService;
+	private final AuctionApiService auctionApiService;
 
 	@Transactional
 	@Scheduled(cron = "0 0/10 * * * ?")
@@ -73,19 +80,41 @@ public class AuctionSchedule {
 			.toList();
 
 		String sql =
-			"INSERT INTO auction_item_history (datetime, item_id, average_price, registered_number, total_item_count)"
-				+ "VALUES (?, ?, ?, ?, ?)";
+			"INSERT INTO auction_item_history (datetime, item_id, average_price, registered_number, total_item_count, lower_price, upper_price)"
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
 			@Override
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
 				AuctionItemDetailResponseDto item = list.get(i);
 
+				AuctionSearchDto searchDto = auctionApiService.searchByItemId(item.getItemId());
+
+				Long lowerPrice = 0L;
+				Long upperPrice = 0L;
+
+				if (searchDto.getRows().size() != 0) {
+					AuctionSearchItem minPriceItem = searchDto.getRows()
+						.stream()
+						.min(Comparator.comparing(AuctionSearchItem::getUnitPrice))
+						.orElseThrow(NoSuchElementException::new);
+
+					AuctionSearchItem maxPriceItem = searchDto.getRows()
+						.stream()
+						.max(Comparator.comparing(AuctionSearchItem::getUnitPrice))
+						.orElseThrow(NoSuchElementException::new);
+
+					lowerPrice = Long.valueOf(Optional.ofNullable(minPriceItem.getUnitPrice()).orElseGet(() -> 0L));
+					upperPrice = Long.valueOf(Optional.ofNullable(maxPriceItem.getUnitPrice()).orElseGet(() -> 0L));
+				}
+
 				ps.setString(1, now);
 				ps.setString(2, item.getItemId());
 				ps.setLong(3, Long.valueOf(Optional.ofNullable(item.getAveragePrice()).orElseGet(() -> 0L)));
 				ps.setLong(4, Long.valueOf(Optional.ofNullable(item.getRegisteredNumber()).orElseGet(() -> 0L)));
 				ps.setLong(5, Long.valueOf(Optional.ofNullable(item.getTotalItemCount()).orElseGet(() -> 0L)));
+				ps.setLong(6, lowerPrice);
+				ps.setLong(7, upperPrice);
 			}
 
 			@Override
