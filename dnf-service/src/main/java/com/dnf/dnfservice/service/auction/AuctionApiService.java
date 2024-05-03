@@ -9,4 +9,6 @@ public interface AuctionApiService {
 	AuctionSearchDto searchByItemId(String itemId);
 
 	AuctionSoldDto getSoldHistory(String itemId);
+
+	AuctionSoldDto getSoldMaxHistory(String itemId);
 }

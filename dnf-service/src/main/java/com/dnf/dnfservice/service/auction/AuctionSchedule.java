@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -21,7 +22,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dnf.dnfservice.dto.feign.auction.AuctionSearchDto;
+import com.dnf.dnfservice.dto.feign.auction.AuctionSoldDto;
 import com.dnf.dnfservice.dto.model.auction.AuctionSearchItem;
+import com.dnf.dnfservice.dto.model.auction.AuctionSoldItem;
 import com.dnf.dnfservice.dto.response.auction.AuctionItemDetailResponseDto;
 import com.dnf.dnfservice.exception.CustomException;
 import com.dnf.dnfservice.exception.ErrorCode;
@@ -80,8 +83,8 @@ public class AuctionSchedule {
 			.toList();
 
 		String sql =
-			"INSERT INTO auction_item_history (datetime, item_id, average_price, registered_number, total_item_count, lower_price, upper_price)"
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO auction_item_history (datetime, item_id, average_price, registered_number, total_item_count, lower_price, upper_price, sold_lower_price, sold_upper_price, sold_count)"
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
 			@Override
@@ -108,6 +111,35 @@ public class AuctionSchedule {
 					upperPrice = Long.valueOf(Optional.ofNullable(maxPriceItem.getUnitPrice()).orElseGet(() -> 0L));
 				}
 
+				AuctionSoldDto dto = auctionApiService.getSoldMaxHistory(item.getItemId());
+
+				String searchDateTime = LocalDateTime.now().minusHours(1).format(
+					DateTimeFormatter.ofPattern("yyyy-MM-dd HH:")
+				);
+				List<AuctionSoldItem> oneHourList = dto.getRows()
+					.stream()
+					.filter(t -> t.getSoldDate().startsWith(searchDateTime))
+					.collect(Collectors.toList());
+
+				Long soldLowerPrice = 0L;
+				Long soldUpperPrice = 0L;
+				Long soldCount = 0L;
+
+				if(oneHourList.size() > 0) {
+					AuctionSoldItem min = oneHourList.stream()
+						.min(Comparator.comparing(AuctionSoldItem::getUnitPrice))
+						.orElseThrow(NoSuchElementException::new);
+
+					AuctionSoldItem max = oneHourList.stream()
+						.max(Comparator.comparing(AuctionSoldItem::getUnitPrice))
+						.orElseThrow(NoSuchElementException::new);
+
+					soldLowerPrice = Long.valueOf(Optional.ofNullable(min.getUnitPrice()).orElseGet(() -> String.valueOf(0)));
+					soldUpperPrice = Long.valueOf(Optional.ofNullable(max.getUnitPrice()).orElseGet(() -> String.valueOf(0)));
+
+					soldCount = oneHourList.stream().mapToLong(t -> Long.parseLong(t.getCount())).sum();
+				}
+
 				ps.setString(1, now);
 				ps.setString(2, item.getItemId());
 				ps.setLong(3, Long.valueOf(Optional.ofNullable(item.getAveragePrice()).orElseGet(() -> 0L)));
@@ -115,6 +147,9 @@ public class AuctionSchedule {
 				ps.setLong(5, Long.valueOf(Optional.ofNullable(item.getTotalItemCount()).orElseGet(() -> 0L)));
 				ps.setLong(6, lowerPrice);
 				ps.setLong(7, upperPrice);
+				ps.setLong(8, soldLowerPrice);
+				ps.setLong(9, soldUpperPrice);
+				ps.setLong(10, soldCount);
 			}
 
 			@Override
