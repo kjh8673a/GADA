@@ -41,4 +41,14 @@ public class AuctionItemHistory {
 
 	@Column(name = "upper_price")
 	private Long UpperPrice;
+
+	@Column(name = "sold_lower_price")
+	private Long soldLowerPrice;
+
+	@Column(name = "sold_upper_price")
+	private Long soldUpperPrice;
+
+	@Column(name = "sold_count")
+	private Long soldCount;
+
 }
