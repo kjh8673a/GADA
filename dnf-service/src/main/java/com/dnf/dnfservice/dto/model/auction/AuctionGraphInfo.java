@@ -18,6 +18,9 @@ public class AuctionGraphInfo {
 	Long totalItemCount;
 	Long lowerPrice;
 	Long upperPrice;
+	Long soldLowerPrice;
+	Long soldUpperPrice;
+	Long soldCount;
 
 	public static AuctionGraphInfo of(AuctionItemHistory item) {
 		return AuctionGraphInfo.builder()
@@ -27,6 +30,9 @@ public class AuctionGraphInfo {
 			.totalItemCount(item.getTotalItemCount())
 			.lowerPrice(item.getLowerPrice() == -1 ? item.getAveragePrice() : item.getLowerPrice())
 			.upperPrice(item.getUpperPrice() == -1 ? item.getAveragePrice() : item.getUpperPrice())
+			.soldLowerPrice(item.getSoldLowerPrice())
+			.soldUpperPrice(item.getSoldUpperPrice())
+			.soldCount(item.getSoldCount())
 			.build();
 	}
 }

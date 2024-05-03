@@ -27,4 +27,9 @@ public class AuctionApiServiceImpl implements AuctionApiService {
 	public AuctionSoldDto getSoldHistory(String itemId) {
 		return auctionFeignClient.getSoldHistory(itemId, 20);
 	}
+
+	@Override
+	public AuctionSoldDto getSoldMaxHistory(String itemId) {
+		return auctionFeignClient.getSoldHistory(itemId, 400);
+	}
 }

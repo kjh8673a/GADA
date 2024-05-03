@@ -26,7 +26,7 @@ class AuctionApiServiceTest {
 		auctionSearchDto.getRows().stream()
 			.filter(distinctByKey(data -> data.getItemId()))
 			.collect(Collectors.toList())
-			.forEach(data -> System.out.println(data.getItemName()));
+			.forEach(data -> System.out.println(data.getItemName() + " " + data.getItemId()));
 	}
 
 	private static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
