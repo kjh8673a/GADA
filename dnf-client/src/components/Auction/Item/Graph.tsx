@@ -7,6 +7,10 @@ interface Props {
   graphDataDate: (string | number)[];
   graphDataAvgPrice: (string | number)[];
   graphDataRegNum: (string | number)[];
+  graphDataUpper: (string | number)[];
+  graphDataLower: (string | number)[];
+  graphDataSoldUpper: (string | number)[];
+  graphDataSoldLower: (string | number)[];
 }
 
 const StyledBox = styled.div`
@@ -33,6 +37,10 @@ const Graph: React.FC<Props> = ({
   graphDataDate,
   graphDataAvgPrice,
   graphDataRegNum,
+  graphDataUpper,
+  graphDataLower,
+  graphDataSoldUpper,
+  graphDataSoldLower,
 }) => {
   const { options, chartJSData } = useAuctionGraph();
 
@@ -41,7 +49,15 @@ const Graph: React.FC<Props> = ({
       <Chart
         type="line"
         options={options}
-        data={chartJSData(graphDataDate, graphDataAvgPrice, graphDataRegNum)}
+        data={chartJSData(
+          graphDataDate,
+          graphDataAvgPrice,
+          graphDataRegNum,
+          graphDataUpper,
+          graphDataLower,
+          graphDataSoldUpper,
+          graphDataSoldLower
+        )}
       />
     </StyledBox>
   );

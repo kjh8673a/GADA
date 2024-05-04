@@ -16,10 +16,15 @@ export type THistoryItem = {
 };
 
 export type TGraphData = {
-  datetime: string;
   averagePrice: number;
+  datetime: string;
+  lowerPrice: number;
   registeredNumber: number;
+  soldCount: number;
+  soldLowerPrice: number;
+  soldUpperPrice: number;
   totalItemCount: number;
+  upperPrice: number;
 };
 
 export type TAuctionItem = {

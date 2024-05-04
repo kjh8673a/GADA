@@ -40,12 +40,15 @@ const GraphContainer: React.FC<Props> = ({ data }) => {
   });
 
   //최근 7일 1시간마다 날짜, 평균값, 등록건수
-  const DateList = data?.map(
+  const dateList = data?.map(
     (x) => x.datetime.slice(5, 10) + " " + x.datetime.slice(11, 13) + "시"
   );
-  const AvgPriceList = data?.map((x) => x.averagePrice);
-  const RegNumList = data?.map((x) => x.registeredNumber);
-
+  const avgPriceList = data?.map((x) => x.averagePrice);
+  const totalCountList = data?.map((x) => x.totalItemCount);
+  const lowerPriceList = data?.map((x) => x.lowerPrice);
+  const upperPriceList = data?.map((x) => x.upperPrice);
+  const soldLowerPriceList = data?.map((x) => x.soldLowerPrice);
+  const soldUpperPriceList = data?.map((x) => x.soldUpperPrice);
   return (
     <>
       <StyledBox>
@@ -57,24 +60,36 @@ const GraphContainer: React.FC<Props> = ({ data }) => {
           isWeb ? (
             //최근 7일 1시간마다 날짜, 평균값, 등록건수
             <Graph
-              graphDataDate={DateList}
-              graphDataAvgPrice={AvgPriceList}
-              graphDataRegNum={RegNumList}
+              graphDataDate={dateList}
+              graphDataAvgPrice={avgPriceList}
+              graphDataRegNum={totalCountList}
+              graphDataUpper={upperPriceList}
+              graphDataLower={lowerPriceList}
+              graphDataSoldUpper={soldUpperPriceList}
+              graphDataSoldLower={soldLowerPriceList}
             />
           ) : (
             //모바일 화면 일시, 6시간마다의 값
             <Graph
-              graphDataDate={mobileWeekData(DateList)}
-              graphDataAvgPrice={mobileWeekData(AvgPriceList)}
-              graphDataRegNum={mobileWeekData(RegNumList)}
+              graphDataDate={mobileWeekData(dateList)}
+              graphDataAvgPrice={mobileWeekData(avgPriceList)}
+              graphDataRegNum={mobileWeekData(totalCountList)}
+              graphDataUpper={mobileWeekData(upperPriceList)}
+              graphDataLower={mobileWeekData(lowerPriceList)}
+              graphDataSoldUpper={mobileWeekData(soldUpperPriceList)}
+              graphDataSoldLower={mobileWeekData(soldLowerPriceList)}
             />
           )
         ) : (
           //최근 24시간 날짜, 평균값, 등록건수
           <Graph
-            graphDataDate={filterData(DateList, 24, 1)}
-            graphDataAvgPrice={filterData(AvgPriceList, 24, 1)}
-            graphDataRegNum={filterData(RegNumList, 24, 1)}
+            graphDataDate={filterData(dateList, 24, 1)}
+            graphDataAvgPrice={filterData(avgPriceList, 24, 1)}
+            graphDataRegNum={filterData(totalCountList, 24, 1)}
+            graphDataUpper={filterData(upperPriceList, 24, 1)}
+            graphDataLower={filterData(lowerPriceList, 24, 1)}
+            graphDataSoldUpper={filterData(soldUpperPriceList, 24, 1)}
+            graphDataSoldLower={filterData(soldLowerPriceList, 24, 1)}
           />
         )}
       </>
