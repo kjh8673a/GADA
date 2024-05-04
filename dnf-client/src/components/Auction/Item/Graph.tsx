@@ -9,6 +9,8 @@ interface Props {
   graphDataRegNum: (string | number)[];
   graphDataUpper: (string | number)[];
   graphDataLower: (string | number)[];
+  graphDataSoldUpper: (string | number)[];
+  graphDataSoldLower: (string | number)[];
 }
 
 const StyledBox = styled.div`
@@ -37,6 +39,8 @@ const Graph: React.FC<Props> = ({
   graphDataRegNum,
   graphDataUpper,
   graphDataLower,
+  graphDataSoldUpper,
+  graphDataSoldLower,
 }) => {
   const { options, chartJSData } = useAuctionGraph();
 
@@ -50,7 +54,9 @@ const Graph: React.FC<Props> = ({
           graphDataAvgPrice,
           graphDataRegNum,
           graphDataUpper,
-          graphDataLower
+          graphDataLower,
+          graphDataSoldUpper,
+          graphDataSoldLower
         )}
       />
     </StyledBox>
