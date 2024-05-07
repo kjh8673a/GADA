@@ -10,7 +10,7 @@ const AuctionItem = () => {
   const [searchParams] = useSearchParams();
   const { fetchWrapper } = useFetch();
   return (
-    <CenteredBox>
+    <CenteredBox gap={15}>
       <Suspense fallback={<Loading text="로딩중입니다" play={true} />}>
         <ItemFetchContainer
           data={fetchWrapper(getAuctionItem, searchParams.get("itemId"))}

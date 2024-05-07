@@ -24,7 +24,7 @@ const Dnf = () => {
   const { fetchWrapper } = useFetch();
 
   return (
-    <CenteredBox>
+    <CenteredBox gap={0}>
       <MainImg src="/assets/danzin.png" alt="Danzin" />
       <NameSearch>
         <StyledInput

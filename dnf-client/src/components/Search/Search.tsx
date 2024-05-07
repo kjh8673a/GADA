@@ -14,7 +14,7 @@ const Search = () => {
   const { isValidInput } = useSearch();
   const { fetchWrapper } = useFetch();
   return (
-    <CenteredBox>
+    <CenteredBox gap={15}>
       <SearchInput />
       <RecentSearch />
       {isValidInput(searchParams.get("input")) ? (
