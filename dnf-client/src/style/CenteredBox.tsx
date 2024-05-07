@@ -4,10 +4,12 @@ interface Props {
   children: React.ReactNode;
   direction?: "column" | "row";
   clickHandler?: () => void;
+  gap: number;
 }
 
 interface CenteredDivProps {
   $direction: "column" | "row";
+  $gap: number;
 }
 
 const CenteredDiv = styled.div<CenteredDivProps>`
@@ -18,7 +20,7 @@ const CenteredDiv = styled.div<CenteredDivProps>`
   align-items: center;
   flex-direction: ${(props) => props.$direction};
   padding: 10px 0px;
-  gap: 15px;
+  gap: ${(props) => props.$gap}px;
 
   @media (max-width: 768px) {
     padding: 15px;
@@ -29,16 +31,21 @@ const CenteredBox: React.FC<Props> = ({
   children,
   direction = "column",
   clickHandler,
+  gap,
 }) => {
   if (clickHandler) {
     return (
-      <CenteredDiv $direction={direction} onClick={clickHandler}>
+      <CenteredDiv $direction={direction} onClick={clickHandler} $gap={gap}>
         {children}
       </CenteredDiv>
     );
   }
 
-  return <CenteredDiv $direction={direction}>{children}</CenteredDiv>;
+  return (
+    <CenteredDiv $direction={direction} $gap={gap}>
+      {children}
+    </CenteredDiv>
+  );
 };
 
 export default CenteredBox;

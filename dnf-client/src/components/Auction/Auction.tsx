@@ -15,7 +15,7 @@ const Auction = () => {
   const { searchKeyDownHandler, searchClickHandler } = useAuction();
   const { fetchWrapper } = useFetch();
   return (
-    <CenteredBox>
+    <CenteredBox gap={15}>
       <MainImg src="/assets/danzin.png" alt="Danzin" />
       <NameSearch>
         <StyledInput

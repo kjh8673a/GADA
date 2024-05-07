@@ -9,7 +9,7 @@ const Character = () => {
   const [searchParams] = useSearchParams();
   const { fetchCharacterInfo, isValid } = useCharacter();
   return (
-    <CenteredBox>
+    <CenteredBox gap={15}>
       {isValid(searchParams.get("server"), searchParams.get("character")) ? (
         <Suspense fallback={<Loading text="로딩중 입니다" play={true} />}>
           <CharacterFetchContainer

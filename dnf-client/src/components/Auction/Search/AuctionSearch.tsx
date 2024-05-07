@@ -21,7 +21,7 @@ const AuctionSearch = () => {
   const { fetchWrapper } = useFetch();
 
   return (
-    <CenteredBox>
+    <CenteredBox gap={15}>
       <NameSearch>
         <StyledInput
           $width={400}
