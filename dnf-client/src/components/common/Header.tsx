@@ -36,12 +36,7 @@ const Header = () => {
   return (
     <>
       <UpContainer>
-        <Domain
-          href="/"
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-        >
+        <Domain href="https://dnf.gada.app">
           <DomainLogo
             src={`${process.env.PUBLIC_URL}/assets/gadalogo.webp`}
             alt="site logo"
