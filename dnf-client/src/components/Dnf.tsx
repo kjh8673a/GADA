@@ -25,7 +25,7 @@ const Dnf = () => {
 
   return (
     <CenteredBox gap={0}>
-      <MainImg src="/assets/danzin.png" alt="Danzin" />
+      <MainImg src="/assets/goast_knight_image.png" alt="goast knight img" $width={300}/>
       <NameSearch>
         <StyledInput
           inputRef={inputRef}
