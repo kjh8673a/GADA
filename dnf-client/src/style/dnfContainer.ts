@@ -9,10 +9,9 @@ export const DnfContainer = styled.div`
   min-height: calc(100vh - 64px - 40px - 120px);
 `;
 
-export const MainImg = styled.img`
+export const MainImg = styled.img<{ $width: number }>`
   position: relative;
-  width: 150px;
-  margin-bottom: 24px;
+  width: ${props => props.$width}px;
 `;
 
 export const NameSearch = styled.div`

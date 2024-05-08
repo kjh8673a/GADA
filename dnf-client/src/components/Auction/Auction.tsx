@@ -16,7 +16,7 @@ const Auction = () => {
   const { fetchWrapper } = useFetch();
   return (
     <CenteredBox gap={15}>
-      <MainImg src="/assets/danzin.png" alt="Danzin" />
+      <MainImg src="/assets/kana_image.png" alt="kana img" $width={200}/>
       <NameSearch>
         <StyledInput
           inputRef={inputRef}
