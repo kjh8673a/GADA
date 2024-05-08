@@ -39,7 +39,7 @@ const MainStatItem: React.FC<Props> = ({
   return (
     <StyledBox>
       <TitleWrapper>
-        <StatIcon src={icon} alt={"stat icon"} width={18} />
+        <StatIcon src={icon} alt={"stat icon"} width={18} height={18} />
         <ColorText color={"#a0844b"}>{title}</ColorText>
       </TitleWrapper>
       <ColorText color={"#78C82F"}>

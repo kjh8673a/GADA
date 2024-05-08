@@ -8,6 +8,7 @@ const FooterContainer = styled.div`
   font-size: 12px;
   height: 120px;
   padding: 32px;
+  margin-top: 10px;
   width: 100%;
   box-sizing: border-box;
   background-color: var(--secondary-bg-color);

@@ -1,3 +1,5 @@
+import { ITEM_RARITY } from "./Character/CommonTypes";
+
 export type TSearchCharacter = {
   serverName: string;
   characterName: string;
@@ -19,3 +21,20 @@ export type TBookmark = {
 };
 
 export type TRecentSearch = string[];
+
+export type TSearchAuctionItem = {
+  itemId: string;
+  itemName: string;
+  itemRarity: ITEM_RARITY;
+  itemType: string;
+  itemTypeDetail: string;
+  itemImage: string;
+  inAuction: boolean;
+};
+
+export type TSearchAuction = {
+  timestamp?: string;
+  data?: {
+    items: TSearchAuctionItem[];
+  };
+};

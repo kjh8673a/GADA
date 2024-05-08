@@ -3,29 +3,29 @@ import {
   CheckButton,
   MainImg,
   NameSearch,
-  DnfContainer,
 } from "../style/dnfContainer";
 import { useNavigate } from "react-router-dom";
 import StyledInput from "../style/StyledInput";
 import useSearch from "../hooks/useSearch";
 import useLocalStorage from "../hooks/useLocalStorage";
-import useCharacter from "../hooks/useCharacter";
 import PopularCharacters from "./PopularCharacters";
 import PopularCharactersSkeleton from "./PopularCharactersSkeleton";
 import Bookmark from "./Bookmark";
+import useFetch from "../hooks/useFetch";
+import { getPopularCharacters } from "../api/Character";
+import CenteredBox from "../style/CenteredBox";
 
 const Dnf = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  const { fetchPopularCharacters } = useCharacter();
   const { searchClickName, searchEnterName } = useSearch();
   const { addRecentSearch } =
     useLocalStorage();
-  const popularCharactersData = fetchPopularCharacters();
+  const { fetchWrapper } = useFetch();
 
   return (
-    <DnfContainer>
-      <MainImg src="/assets/danzin.png" alt="Danzin" />
+    <CenteredBox gap={0}>
+      <MainImg src="/assets/goast_knight_image.png" alt="goast knight img" $width={300}/>
       <NameSearch>
         <StyledInput
           inputRef={inputRef}
@@ -50,9 +50,9 @@ const Dnf = () => {
       </NameSearch>
       <Bookmark />
       <Suspense fallback={<PopularCharactersSkeleton />}>
-        <PopularCharacters data={popularCharactersData} />
+        <PopularCharacters data={fetchWrapper(getPopularCharacters)} />
       </Suspense>
-    </DnfContainer>
+    </CenteredBox>
   );
 };
 

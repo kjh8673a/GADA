@@ -9,10 +9,9 @@ export const DnfContainer = styled.div`
   min-height: calc(100vh - 64px - 40px - 120px);
 `;
 
-export const MainImg = styled.img`
+export const MainImg = styled.img<{ $width: number }>`
   position: relative;
-  width: 150px;
-  margin-bottom: 24px;
+  width: ${props => props.$width}px;
 `;
 
 export const NameSearch = styled.div`
@@ -20,7 +19,7 @@ export const NameSearch = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 400px;
+  max-width: 400px;
 `;
 
 export const NicknameSearch = styled.input`
@@ -31,11 +30,12 @@ export const NicknameSearch = styled.input`
   width: 240px;
 `;
 
-export const CheckButton = styled.img`
+export const CheckButton = styled.img<{ $marginTop?: number }>`
   width: 16px;
   margin: 0;
   position: absolute;
   right: 36px;
+  ${props => props.$marginTop ? `margin-top: ${props.$marginTop}px;`:""}
   &:hover {
     cursor: pointer;
   }
@@ -43,7 +43,7 @@ export const CheckButton = styled.img`
 
 export const BookmarkBox = styled.div`
   margin: 8px 0;
-  width: 400px;
+  max-width: 400px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;

@@ -48,6 +48,7 @@ const Container = styled.div`
 
 const Creature = () => {
   const data = useRecoilValue(atomCharacterCreature);
+  if (Object.keys(data).length < 1) return <StyledBox>장착중인 크리처가 없습니다.</StyledBox>
   return (
     <StyledBox>
       <Header>크리처</Header>

@@ -28,8 +28,9 @@ export const InputHeaderName = styled.input`
 export const UpContainer = styled.div`
   padding: 0 10%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  gap: 10px;
   background-color: var(--primary-bg-color);
   height: 64px;
 `;

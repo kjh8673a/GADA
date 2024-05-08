@@ -5,6 +5,7 @@ import { atomCharacterAvatar } from "../../../atoms/characterState";
 import AvatarSlots from "./AvatarSlots";
 import { AVATAR_SLOT_LIST } from "../../../@types/Character/AvatarTypes";
 import { Line } from "../../../style/dnfContainer";
+import Loading from "../../common/Loading";
 
 const StyledBox = styled.div`
   box-sizing: border-box;
@@ -56,6 +57,7 @@ const Wrapper = styled.div`
 const Avatar = () => {
   const data = useRecoilValue(atomCharacterAvatar);
   const [isEffective, setIsEffective] = useState<boolean>(true);
+  if (data.length < 1) return <StyledBox>착용중인 아바타가 없습니다.</StyledBox>
   return (
     <StyledBox>
       <Header>{`${isEffective ? "효과 적용 " : "스킨 "}아바타`}</Header>

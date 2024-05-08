@@ -48,32 +48,18 @@ const SkeletonBox = styled.div`
   height: 20px;
 `;
 
-const PopularCharactersSkeleton = () => {
+const PopularItemsSkeleton = () => {
   return (
     <StyledBox>
-      <Header>주간 인기 검색 캐릭터</Header>
-      <PopularCharacter>
-        <Rank />
-        <SkeletonBox />
-      </PopularCharacter>
-      <PopularCharacter>
-        <Rank />
-        <SkeletonBox />
-      </PopularCharacter>
-      <PopularCharacter>
-        <Rank />
-        <SkeletonBox />
-      </PopularCharacter>
-      <PopularCharacter>
-        <Rank />
-        <SkeletonBox />
-      </PopularCharacter>
-      <PopularCharacter>
-        <Rank />
-        <SkeletonBox />
-      </PopularCharacter>
+      <Header>최근 3시간 인기 검색 아이템</Header>
+      {Array.from({length: 10}, () => null).map((_, i) => {
+        return (<PopularCharacter key={i}>
+          <Rank />
+          <SkeletonBox />
+        </PopularCharacter>)
+      })}
     </StyledBox>
   );
 };
 
-export default PopularCharactersSkeleton;
+export default PopularItemsSkeleton;

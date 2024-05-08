@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { atomtalismanInfo } from "../../../atoms/ItemInfoState";
 import ItemInfoExplain from "./ItemInfoExplain";
 import { ITEM_TYPE_COLOR } from "../../../@types/Character/CommonTypes";
+import Loading from "../../common/Loading";
 
 interface StyledProps {
   $rarityColor: string;
@@ -76,7 +77,7 @@ const ItemInfo = () => {
   return (
     <StyledBox>
       {data.itemId === undefined ? (
-        <StyledBox></StyledBox>
+        <Loading text={"아이템을 클릭해주세요."} play={false} />
       ) : (
         <>
           <NameBox>
