@@ -12,6 +12,7 @@ interface CenteredDivProps {
 
 const CenteredDiv = styled.div<CenteredDivProps>`
   max-width: 1140px;
+  width: 100%;
   display: flex;
   align-items: center;
   flex-direction: ${(props) => props.$direction};

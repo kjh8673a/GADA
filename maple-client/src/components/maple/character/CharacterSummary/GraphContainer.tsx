@@ -12,6 +12,10 @@ const GraphBox = styled.div`
   background-color: var(--secondary-bg-color);
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const GraphBoxTitle = styled.div`

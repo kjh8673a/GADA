@@ -8,6 +8,12 @@ const StyledBox = styled.div`
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    gap: 16px;
+  }
 `;
 
 const PageMoveBox = styled.div`
@@ -17,6 +23,12 @@ const PageMoveBox = styled.div`
   border-radius: 10px;
   padding: 4px 8px;
   box-shadow: var(--custom-shadow);
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    gap: 16px;
+  }
 `;
 
 const RankTablePageMove = () => {

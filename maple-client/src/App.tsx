@@ -1,13 +1,17 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import Maple from "./components/maple/Maple";
 import RootLayout from "./components/common/RootLayout";
-import Character from "./components/maple/character/Character";
-import Error from "./components/common/Error";
-import CGsearch from "./components/maple/search/CGsearch";
-import Comparison from "./components/maple/comparison/Comparison";
-import Rank from "./components/maple/rank/Rank";
-import UserAgentBoundary from "./components/common/UserAgentBoundary";
-import Guild from "./components/maple/guild/Guild";
+import DeferredComponent from "./components/common/DeferredComponent";
+import Loading from "./components/common/Loading";
+// import UserAgentBoundary from "./components/common/UserAgentBoundary";
+
+const Character = lazy(() => import("./components/maple/character/Character"));
+const Comparison = lazy(() => import("./components/maple/comparison/Comparison"));
+const Rank = lazy(() => import("./components/maple/rank/Rank"));
+const Guild = lazy(() => import("./components/maple/guild/Guild"));
+const CGsearch = lazy(() => import("./components/maple/search/CGsearch"));
+const Error = lazy(() => import("./components/common/Error"));
 
 function App() {
   const router = createBrowserRouter([
@@ -19,19 +23,49 @@ function App() {
         //캐릭터 정보 조회 페이지
         {
           path: "/Character/:Charactername",
-          element: <Character />,
+          element: (
+            <Suspense
+              fallback={
+                <DeferredComponent>
+                  <Loading text="캐릭터 정보를 조회 중 입니다" />
+                </DeferredComponent>
+              }
+            >
+              <Character />
+            </Suspense>
+          ),
           errorElement: <Error />,
         },
         //캐릭터/길드 조회 페이지
         {
           path: "/Search/:name",
-          element: <CGsearch />,
+          element: (
+            <Suspense
+              fallback={
+                <DeferredComponent>
+                  <Loading text="캐릭터 및 길드 정보를 조회 중 입니다" />
+                </DeferredComponent>
+              }
+            >
+              <CGsearch />
+            </Suspense>
+          ),
           errorElement: <Error />,
         },
         //길드 페이지
         {
           path: "/Search/Guild/:worldName/:name",
-          element: <Guild />,
+          element: (
+            <Suspense
+              fallback={
+                <DeferredComponent>
+                  <Loading text="캐릭터 및 길드 정보를 조회 중 입니다" />
+                </DeferredComponent>
+              }
+            >
+              <Guild />
+            </Suspense>
+          ),
           errorElement: <Error />,
         },
         //랭킹 페이지
@@ -51,9 +85,9 @@ function App() {
   ]);
 
   return (
-    <UserAgentBoundary>
-      <RouterProvider router={router} />
-    </UserAgentBoundary>
+    // <UserAgentBoundary>
+    <RouterProvider router={router} />
+    // </UserAgentBoundary>
   );
 }
 

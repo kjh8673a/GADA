@@ -6,5 +6,5 @@ import lombok.Getter;
 public class UnionDto {
 	int union_level;
 	String union_grade;
-	int artifact_level;
+	int union_artifact_level;
 }

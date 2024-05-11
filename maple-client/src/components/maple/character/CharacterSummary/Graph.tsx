@@ -27,6 +27,12 @@ const Graph = () => {
   const [m] = useState(20);
   const [props, setProps] = useState({ character_level: 0, exp: 0, date: "" });
   const [isHover, setIsHover] = useState(false);
+  const [offsetW, setOffsetW] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => setOffsetW(window.innerWidth));
+    setOffsetW(window.innerWidth);
+  }, [window.innerWidth]);
 
   // 히스토리 조회
   useEffect(() => {
@@ -35,15 +41,13 @@ const Graph = () => {
         if (res.status === 200) {
           setData({
             ...res.data,
-            data: res.data.data.filter(
-              (v: CharacterExpItemType) => v.character_level > 0
-            ),
+            data: res.data.data.filter((v: CharacterExpItemType) => v.character_level > 0),
           });
         }
       })
       .catch((res) => {
         if (res.response.status === 500) {
-          console.log("Error getExpHistory");
+          console.error("Error getExpHistory");
         }
       });
   }, [setData, params.Charactername]);
@@ -58,7 +62,7 @@ const Graph = () => {
     const xCoords = getXCoords(w, m, data.data.length);
 
     const expArr = data.data.map((v) => +v.character_exp_rate);
-    const barWidth = 24;
+    const barWidth = offsetW > 1024 ? 24 : 18;
     drawExpBar(ctx, xCoords, h, m, barWidth, expArr, "#B4CB32");
 
     const levelArr = data.data.map((v) => v.character_level);
@@ -66,16 +70,14 @@ const Graph = () => {
     const radius = 4;
     drawLevelLine(ctx, xCoords, h, m, lineWidth, radius, levelArr, "orange");
 
-    const dateArr = data.data.map((v) =>
-      v.character_level > 0 ? v.date.slice(8, 10) + "일" : ""
-    );
-    const fontSize = 14;
+    const dateArr = data.data.map((v) => (v.character_level > 0 ? v.date.slice(8, 10) + "일" : ""));
+    const fontSize = offsetW >= 1024 ? 14 : 10;
     drawXScale(ctx, w, h, m, xCoords, lineWidth, fontSize, dateArr, "#666a7a");
 
     return () => {
       ctx.clearRect(0, 0, w, h);
     };
-  }, [data, m]);
+  }, [data, m, offsetW]);
 
   // hover 기능
   useEffect(() => {
@@ -83,14 +85,8 @@ const Graph = () => {
       const canvas = canvasRef.current as HTMLCanvasElement;
       const len = data.data.length;
       if (len < 1) return false;
-      if (
-        canvas.offsetLeft + 10 < xy.x &&
-        canvas.offsetLeft + canvas.offsetWidth - 10 > xy.x
-      ) {
-        if (
-          canvas.offsetTop + 10 < xy.y &&
-          canvas.offsetTop + canvas.offsetHeight - 10 > xy.y
-        ) {
+      if (canvas.offsetLeft + 10 < xy.x && canvas.offsetLeft + canvas.offsetWidth - 10 > xy.x) {
+        if (canvas.offsetTop + 10 < xy.y && canvas.offsetTop + canvas.offsetHeight - 10 > xy.y) {
           const width = canvas.offsetWidth - 2 * m;
           const intervalX = width / 8;
           let x = canvas.offsetLeft + m + intervalX * 0.5;
@@ -120,16 +116,11 @@ const Graph = () => {
         onMouseOut={() => setIsHover(false)}
       ></GraphCanvas>
       {isHover && (
-        <GraphHoverItem
-          x={xy.x}
-          y={xy.y}
-          character_level={props.character_level}
-          exp={props.exp}
-          date={props.date}
-        />
+        <GraphHoverItem x={xy.x} y={xy.y} character_level={props.character_level} exp={props.exp} date={props.date} />
       )}
     </>
   );
 };
 
 export default Graph;
+

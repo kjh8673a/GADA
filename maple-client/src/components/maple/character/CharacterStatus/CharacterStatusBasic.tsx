@@ -12,6 +12,10 @@ const StyledBox01 = styled.div`
   flex-wrap: wrap;
   margin-top: 4px;
   border-radius: 8px;
+
+  @media (max-width: 768px) {
+    padding: 8px;
+  }
 `;
 
 const StyledBox02 = styled.div`
@@ -24,6 +28,10 @@ const StyledBox02 = styled.div`
   flex-wrap: wrap;
   margin-top: 4px;
   border-radius: 8px;
+
+  @media (max-width: 768px) {
+    padding: 8px;
+  }
 `;
 
 interface Props {

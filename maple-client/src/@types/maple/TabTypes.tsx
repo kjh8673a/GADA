@@ -8,5 +8,14 @@ export const TAB_LIST = {
 } as const;
 
 export type TabNameType = keyof typeof TAB_LIST;
-export const TAB_ID_LIST = Object.keys(TAB_LIST) as Array<keyof typeof TAB_LIST>;
+export const TAB_ID_LIST = Object.keys(TAB_LIST) as Array<
+  keyof typeof TAB_LIST
+>;
 
+export const TAB_INDEX = {
+  CHARACTER: 1,
+  UNION: 2,
+  SKILL: 3,
+  ORG_CHARACTER: 4,
+  SYNERGY: 5,
+} as const;

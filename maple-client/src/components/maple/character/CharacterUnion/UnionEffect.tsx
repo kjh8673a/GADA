@@ -5,9 +5,10 @@ import DashedLine from "../../../common/DashedLine";
 import useCharacterUnion from "../../../../hooks/maple/useCharacterUnion";
 
 const StyledBox = styled.div`
-  width: 35%;
-  padding: 1%;
-  display: flex;
+  width: 420px;
+  max-width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
   flex-direction: column;
   align-items: start;
   gap: 5px;

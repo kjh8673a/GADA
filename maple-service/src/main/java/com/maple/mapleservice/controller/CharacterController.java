@@ -11,12 +11,14 @@ import com.maple.mapleservice.dto.response.Character.CharacterItemResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterBasicInfoResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterStatsResponseDto;
+import com.maple.mapleservice.dto.response.Character.CharacterUpdateResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterVMatrixResponseDto;
 import com.maple.mapleservice.dto.response.Character.CharacterViewRankingResponseDto;
 import com.maple.mapleservice.dto.response.SuccessResponse;
 import com.maple.mapleservice.dto.response.union.UnionArtifactResponseDto;
 import com.maple.mapleservice.dto.response.union.UnionInfoResponseDto;
 import com.maple.mapleservice.service.character.CharacterApiService;
+import com.maple.mapleservice.service.character.CharacterCacheService;
 import com.maple.mapleservice.service.character.CharacterService;
 import com.maple.mapleservice.service.union.UnionService;
 
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +38,7 @@ public class CharacterController {
 	private final CharacterService characterService;
 	private final CharacterApiService characterApiService;
 	private final UnionService unionService;
+	private final CharacterCacheService characterCacheService;
 
 	@RequestMapping("/findMyCharacter")
 	public ResponseEntity<SuccessResponse> findMyCharacter(@RequestParam String characterName) {
@@ -57,9 +61,23 @@ public class CharacterController {
 			.body(SuccessResponse.of(characterExpHistoryResponseDtoList));
 	}
 
+	@RequestMapping("/updateCharacterInfo")
+	public ResponseEntity<SuccessResponse> updateCharacterInfo(@RequestParam String characterName, @RequestParam Integer tab) {
+		characterCacheService.deleteCharacterCache(characterName);
+		characterCacheService.updateCharacterCache(characterName);
+
+		CharacterUpdateResponseDto characterUpdateResponseDto = characterService.getUpdatedCharacterInfo(characterName, tab);
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(characterUpdateResponseDto));
+	}
+
 	@RequestMapping("/getCharacterBasicInfo")
 	public ResponseEntity<SuccessResponse> getCharacterBasicInfo(@RequestParam String characterName) {
+		characterCacheService.updateCharacterCache(characterName);
 		CharacterBasicInfoResponseDto characterBasicInfoDto = characterService.getCharacterBasicInfo(characterName);
+
 		characterService.addCharacterViewCount(characterBasicInfoDto.getOcid());
 
 		return ResponseEntity

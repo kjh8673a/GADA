@@ -5,9 +5,15 @@ import { atomCharacterWeapon } from "../../../../atoms/maple/characterWeaponStat
 import PetItem from "./PetItem";
 
 const StyledUl = styled.ul`
+  width: 320px;
   list-style: none;
   padding: 0;
   margin: 0;
+
+  @media (max-width: 1140px) {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 const PetList = () => {
@@ -38,3 +44,4 @@ const PetList = () => {
 };
 
 export default PetList;
+

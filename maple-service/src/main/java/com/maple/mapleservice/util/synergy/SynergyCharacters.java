@@ -8,8 +8,8 @@ import com.maple.mapleservice.dto.model.synergy.SynergyCharacter;
 import com.maple.mapleservice.util.synergy.characters.나이트로드;
 import com.maple.mapleservice.util.synergy.characters.나이트워커;
 import com.maple.mapleservice.util.synergy.characters.다크나이트;
-import com.maple.mapleservice.util.synergy.characters.데몬_슬레이어;
-import com.maple.mapleservice.util.synergy.characters.데몬_어벤져;
+import com.maple.mapleservice.util.synergy.characters.데몬슬레이어;
+import com.maple.mapleservice.util.synergy.characters.데몬어벤져;
 import com.maple.mapleservice.util.synergy.characters.듀얼블레이더;
 import com.maple.mapleservice.util.synergy.characters.라라;
 import com.maple.mapleservice.util.synergy.characters.루미너스;
@@ -59,8 +59,8 @@ public class SynergyCharacters {
 	나이트로드 나이트로드 = new 나이트로드();
 	나이트워커 나이트워커 = new 나이트워커();
 	다크나이트 다크나이트 = new 다크나이트();
-	데몬_슬레이어 데몬_슬레이어 = new 데몬_슬레이어();
-	데몬_어벤져 데몬_어벤져 = new 데몬_어벤져();
+	데몬슬레이어 데몬슬레이어 = new 데몬슬레이어();
+	데몬어벤져 데몬어벤져 = new 데몬어벤져();
 	듀얼블레이더 듀얼블레이더 = new 듀얼블레이더();
 	라라 라라 = new 라라();
 	루미너스 루미너스 = new 루미너스();
@@ -139,24 +139,24 @@ public class SynergyCharacters {
 					다크나이트.getStatWeightForCalculate()
 				)
 			);
-			put(CharacterClassName.데몬_슬레이어.name(),
+			put(CharacterClassName.데몬슬레이어.name(),
 				new SynergyCharacter(
-					데몬_슬레이어.getCharacter_class(),
-					데몬_슬레이어.getCycle(),
-					데몬_슬레이어.getSkill_type(),
-					데몬_슬레이어.getSkill_desc(),
-					데몬_슬레이어.getIncreaseVolume(),
-					데몬_슬레이어.getStatWeightForCalculate()
+					데몬슬레이어.getCharacter_class(),
+					데몬슬레이어.getCycle(),
+					데몬슬레이어.getSkill_type(),
+					데몬슬레이어.getSkill_desc(),
+					데몬슬레이어.getIncreaseVolume(),
+					데몬슬레이어.getStatWeightForCalculate()
 				)
 			);
-			put(CharacterClassName.데몬_어벤져.name(),
+			put(CharacterClassName.데몬어벤져.name(),
 				new SynergyCharacter(
-					데몬_어벤져.getCharacter_class(),
-					데몬_어벤져.getCycle(),
-					데몬_어벤져.getSkill_type(),
-					데몬_어벤져.getSkill_desc(),
-					데몬_어벤져.getIncreaseVolume(),
-					데몬_어벤져.getStatWeightForCalculate()
+					데몬어벤져.getCharacter_class(),
+					데몬어벤져.getCycle(),
+					데몬어벤져.getSkill_type(),
+					데몬어벤져.getSkill_desc(),
+					데몬어벤져.getIncreaseVolume(),
+					데몬어벤져.getStatWeightForCalculate()
 				)
 			);
 			put(CharacterClassName.듀얼블레이더.name(),

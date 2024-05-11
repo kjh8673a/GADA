@@ -7,7 +7,7 @@ export type CharacterExpItemType = {
 }
 
 export type CharacterExpType = {
-  timestamp: string;
+  timestamp?: string;
   data: CharacterExpItemType[];
 };
 

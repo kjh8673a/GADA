@@ -2,19 +2,26 @@ import React from "react";
 import styled from "styled-components";
 import UnionGridRow from "./UnionGridRow";
 import useCharacterUnion from "../../../../hooks/maple/useCharacterUnion";
-import {
-  UNION_GRID_INNER,
-  UNION_GRID_OUTER,
-} from "../../../../@types/maple/CharacterUnionTypes";
+import { UNION_GRID_INNER, UNION_GRID_OUTER } from "../../../../@types/maple/CharacterUnionTypes";
 
 // 가로 : 세로 = 22 : 20 의 비율을 유지해야함
 const StyledBox = styled.div`
   position: relative;
-  width: 704px;
-  min-height: 640px;
+  width: 706px;
+  height: 640px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+
+  @media (max-width: 768px) {
+    width: 529px;
+    height: 480px;
+  }
+
+  @media (max-width: 480px) {
+    width: 360px;
+    height: 327.5px;
+  }
 `;
 
 const ImgBox = styled.img.attrs({
@@ -23,7 +30,6 @@ const ImgBox = styled.img.attrs({
 })`
   z-index: 1;
   position: absolute;
-  height: 100%;
   width: 100%;
   inset: 0px;
   object-position: center center;
@@ -72,3 +78,4 @@ const UnionGrid = () => {
 };
 
 export default UnionGrid;
+

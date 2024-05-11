@@ -1,10 +1,20 @@
-import React, { useState } from "react";
-import { Domain, DownConatiner, UpContainer, PageHeader, DomainLogo } from "../../style/header";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Domain,
+  DownConatiner,
+  UpContainer,
+  PageHeader,
+  DomainLogo,
+  Wrapper,
+} from "../../style/header";
 import { useNavigate } from "react-router-dom";
 import StyledInput from "../../style/StyledInput";
 import { useRecoilState } from "recoil";
 import { TabNameType } from "../../@types/maple/TabTypes";
 import { atomTabName } from "../../atoms/maple/characterTabState";
+import { DropDownBtn } from "../../style/DropDown";
+import ArrowSvg from "../../style/ArrowSvg";
+import DropDownList from "./DropDownList";
 
 const Header = () => {
   const [headerName, setHeaderName] = useState<string>("");
@@ -25,17 +35,46 @@ const Header = () => {
     }
   };
 
+  const [isClick, setIsClick] = useState<boolean>(false);
+  const buttonRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node) &&
+        !buttonRef.current?.contains(e.target as Node)
+      ) {
+        setIsClick(false);
+      }
+    };
+    window.addEventListener("mousedown", handleClick);
+    return () => window.removeEventListener("mousedown", handleClick);
+  }, [dropdownRef, buttonRef, setIsClick]);
+
+  const dropDownClickHandler = () => {
+    setIsClick((prev) => !prev);
+  };
+
   return (
     <>
       <UpContainer>
-        <Domain
-          href="/"
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <DomainLogo src={`${process.env.PUBLIC_URL}/assets/gadalogo.webp`} alt="site logo" />
-        </Domain>
+        <Wrapper>
+          <Domain href="https://maple.gada.app">
+            <DomainLogo
+              src={`${process.env.PUBLIC_URL}/assets/gadalogo.webp`}
+              alt="site logo"
+            />
+          </Domain>
+          <div style={{ position: "relative" }}>
+            <DropDownBtn onClick={dropDownClickHandler} ref={buttonRef}>
+              <img src={"/assets/maple_logo.svg"} alt="dnf logo" width={35} />
+              <ArrowSvg isClick={isClick} />
+            </DropDownBtn>
+            {isClick && <DropDownList ref={dropdownRef} />}
+          </div>
+        </Wrapper>
         <StyledInput
           $width={180}
           $height={6}
@@ -56,4 +95,3 @@ const Header = () => {
 };
 
 export default Header;
-

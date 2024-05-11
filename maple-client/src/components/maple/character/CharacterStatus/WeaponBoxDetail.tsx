@@ -5,7 +5,7 @@ import WeaponSummaryBox from "./WeaponSummaryBox";
 import WeaponPotentialOptionBox from "./WeaponPotentialOptionBox";
 import WeaponStarforce from "./WeaponStarforce";
 
-const StyledBox = styled.div`
+const StyledBox = styled.div<{ $offsetX: number }>`
   position: absolute;
   box-sizing: border-box;
   width: 340px;
@@ -17,16 +17,22 @@ const StyledBox = styled.div`
   border: 2px solid #777;
   padding-bottom: 8px;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    left: calc(100% - ${(props) => props.$offsetX}px - 80%);
+    bottom: 100%;
+  }
 `;
 
 interface Props {
   data?: IWeaponDataType | null | undefined;
   title?: ITitleDataType | null | undefined;
+  offsetX: number;
 }
 
-const WeaponBoxDetail: React.FC<Props> = ({ data, title }) => {
+const WeaponBoxDetail: React.FC<Props> = ({ data, title, offsetX }) => {
   return (
-    <StyledBox>
+    <StyledBox $offsetX={offsetX}>
       <WeaponStarforce starforce={data ? +data?.starforce : null} scrollFlag={data?.starforce_scroll_flag === "사용"} />
       <WeaponSummaryBox data={data} title={title} />
       <WeaponOptionBox
@@ -59,3 +65,4 @@ const WeaponBoxDetail: React.FC<Props> = ({ data, title }) => {
 };
 
 export default WeaponBoxDetail;
+

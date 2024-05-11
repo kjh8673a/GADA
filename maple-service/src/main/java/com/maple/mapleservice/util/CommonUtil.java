@@ -23,16 +23,17 @@ public class CommonUtil {
 
     public Long setTtl() {
         LocalDateTime now = LocalDateTime.now(zoneId);
-        LocalDateTime end = LocalDateTime.of(getNextDate(), ZonedDateTime.of(getNextDate(), LocalTime.of(1, 0, 0), zoneId).toLocalTime());
+        LocalDateTime end = LocalDateTime.of(getNextDate(), ZonedDateTime.of(getNextDate(), LocalTime.of(0, 0, 0), zoneId).toLocalTime());
 
         return now.until(end, ChronoUnit.SECONDS);
     }
 
     private LocalDate getNextDate() {
-        if(LocalDateTime.now(zoneId).toLocalTime().isBefore(LocalTime.of(1, 0, 0))) {
-            return LocalDateTime.now().atZone(zoneId).toLocalDate();
-        }else {
-            return LocalDateTime.now().atZone(zoneId).plusDays(1).toLocalDate();
-        }
+        return LocalDateTime.now().atZone(zoneId).plusDays(7).toLocalDate();
+        // if(LocalDateTime.now(zoneId).toLocalTime().isBefore(LocalTime.of(1, 0, 0))) {
+        //     return LocalDateTime.now().atZone(zoneId).toLocalDate();
+        // }else {
+        //     return LocalDateTime.now().atZone(zoneId).plusDays(1).toLocalDate();
+        // }
     }
 }

@@ -10,7 +10,7 @@ const GraphHoverBox = styled.div`
     "data3 data3 data3 data3 data3 data3"
     "color1 data1 data1 data1 data1 data1"
     "color2 data2 data2 data2 data2 data2";
-  width: 150px;
+  width: 160px;
   height: 6%;
   padding: 0.5%;
   background-color: #3d444c;

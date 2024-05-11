@@ -9,8 +9,8 @@ import com.maple.mapleservice.dto.model.synergy.IncreaseVolume;
 import lombok.Getter;
 
 @Getter
-public class 데몬_슬레이어 {
-	String character_class = "데몬 슬레이어";
+public class 데몬슬레이어 {
+	String character_class = "데몬슬레이어";
 	Integer cycle = 2;
 	List<String> skill_type = List.of("드롭률", "바인드", "힐");
 	List<SynergySkill> skill_desc = List.of(

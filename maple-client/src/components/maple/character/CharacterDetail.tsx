@@ -1,9 +1,10 @@
+import { lazy } from "react";
 import useCharacterTab from "../../../hooks/maple/useCharacterTab";
-import CharacterOwn from "./CharacterOwn/CharacterOwn";
-import CharacterSkill from "./CharacterSkill/CharacterSkill";
-import CharacterStatus from "./CharacterStatus/CharacterStatus";
-import CharacterSynergy from "./CharacterSynergy/CharacterSynergy";
-import CharacterUnion from "./CharacterUnion/CharacterUnion";
+const CharacterStatus = lazy(() => import("./CharacterStatus/CharacterStatus"));
+const CharacterUnion = lazy(() => import("./CharacterUnion/CharacterUnion"));
+const CharacterSkill = lazy(() => import("./CharacterSkill/CharacterSkill"));
+const CharacterSynergy = lazy(() => import("./CharacterSynergy/CharacterSynergy"));
+const CharacterOwn = lazy(() => import("./CharacterOwn/CharacterOwn"));
 
 const CharacterDetail = () => {
   const { tabName } = useCharacterTab();

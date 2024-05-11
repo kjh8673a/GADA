@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import SkillBox from "./SkillBox";
 import SkillSquare from "./SkillSquare";
 import { erda, skillType } from "../../../../@types/maple/CharacterSkillType";
@@ -50,3 +50,4 @@ const SixSkill: React.FC<Props> = ({ skillList, erda, haveSixSkill }) => {
 };
 
 export default SixSkill;
+

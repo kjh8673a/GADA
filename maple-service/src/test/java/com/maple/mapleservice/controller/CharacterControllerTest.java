@@ -24,6 +24,12 @@ class CharacterControllerTest {
 	}
 
 	@Test
+	void 캐릭터_정보_업데이트_테스트() {
+		String characterName = "나로펫팔라딘";
+		characterController.updateCharacterInfo(characterName, 1);
+	}
+
+	@Test
 	void 본캐_찾기_통합_테스트() {
 		String characterName = "아델";
 		ResponseEntity<SuccessResponse> response = characterController.findMyCharacter(characterName);
