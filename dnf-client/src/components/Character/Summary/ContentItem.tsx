@@ -22,7 +22,7 @@ const StyledBox = styled.div<StyledProps>`
 const ContentItem: React.FC<Props> = ({ title, value }) => {
   return (
     <Wrapper>
-      <StyledBox color={"#FFFFFF"}>{title}</StyledBox>
+      <StyledBox color={"#dbc68d"}>{title}</StyledBox>
       <StyledBox color={"#78C82F"}>{value}</StyledBox>
     </Wrapper>
   );

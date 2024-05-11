@@ -10,7 +10,6 @@ interface Props {
 }
 
 const StyledBox = styled.div`
-  margin-top: 20px;
   width: 100%;
   display: flex;
   flex-direction: row;

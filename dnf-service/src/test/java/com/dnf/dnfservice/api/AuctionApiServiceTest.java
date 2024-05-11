@@ -20,13 +20,13 @@ class AuctionApiServiceTest {
 
 	@Test
 	void 경매장_아이템_검색() {
-		AuctionSearchDto auctionSearchDto = auctionApiService.searchAuctionItems("무색");
+		AuctionSearchDto auctionSearchDto = auctionApiService.searchAuctionItems("무색", "front");
 		// auctionSearchDto.getRows().stream().forEach(data -> System.out.println(data.getItemId() + " : " + data.getItemName()));
 
 		auctionSearchDto.getRows().stream()
 			.filter(distinctByKey(data -> data.getItemId()))
 			.collect(Collectors.toList())
-			.forEach(data -> System.out.println(data.getItemName()));
+			.forEach(data -> System.out.println(data.getItemName() + " " + data.getItemId()));
 	}
 
 	private static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {

@@ -1,15 +1,23 @@
 import { atom } from "recoil";
+import { TCharacterTalismans } from "../@types/Character/TalismanTypes";
+import { TCharacterBasic } from "../@types/Character/BasicTypes";
+import { TCharacterStat } from "../@types/Character/StatTypes";
 import {
-  TBookmark,
-  TCharacterBasic,
-  TCharacterData,
   TCharacterEquip,
   TCharacterEquipTrait,
   TCharacterSetItem,
+<<<<<<< HEAD
   TCharacterSkill,
   TCharacterStat,
   TCharacterTalismans,
 } from "../@types/CharacterTypes";
+=======
+} from "../@types/Character/EquipmentTypes";
+import { TAvatar } from "../@types/Character/AvatarTypes";
+import { TCreature } from "../@types/Character/CreatureTypes";
+import { TCharacterBuffEquip } from "../@types/Character/BuffEquipTypes";
+import { TCharacterFlag } from "../@types/Character/FlagTypes";
+>>>>>>> dnf/release
 
 export const atomCharacterBasic = atom<TCharacterBasic>({
   key: "atomCharacterBasic",
@@ -36,8 +44,28 @@ export const atomCharacterEquipTrait = atom<TCharacterEquipTrait>({
   default: {},
 });
 
+<<<<<<< HEAD
 export const atomCharacterSkill = atom<TCharacterSkill>({
   key: "atomCharacterSkill",
+=======
+export const atomCharacterBuffEquip = atom<TCharacterBuffEquip>({
+  key: "atomCharacterBuffEquip",
+  default: {},
+});
+
+export const atomCharacterAvatar = atom<TAvatar[]>({
+  key: "atomCharacterAvatar",
+  default: [],
+});
+
+export const atomCharacterCreature = atom<TCreature>({
+  key: "atomCharacterCreature",
+  default: {},
+});
+
+export const atomCharacterFlag = atom<TCharacterFlag>({
+  key: "atomCharacterFlag",
+>>>>>>> dnf/release
   default: {},
 });
 
@@ -54,9 +82,4 @@ export const atomUpdate = atom<boolean>({
 export const atomLoading = atom<boolean>({
   key: "atomLoading",
   default: false,
-});
-
-export const atomCharacterBookmark = atom<TBookmark[]>({
-  key: "atomCharacterBookmark",
-  default: JSON.parse(window.localStorage.getItem("DnfBookmark")!) || [],
 });

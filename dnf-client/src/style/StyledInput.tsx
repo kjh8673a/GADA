@@ -1,20 +1,23 @@
-import { useRef } from "react";
 import styled from "styled-components";
 
 interface Props {
+  inputRef?: React.RefObject<HTMLInputElement>;
   $width: number;
   $height?: number;
   value?: string;
   type?: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  defaultValue?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
   $align?: "center" | "left";
+  $marginTop?: number;
 }
 
 const StyledBox = styled.input<Props>`
   width: ${(props) => props.$width}px;
   margin: 0 24px;
+  ${(props) => props.$marginTop? `margin-top: ${props.$marginTop}px;`:""}
   padding: ${(props) => (props.$height ? props.$height : "10")}px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -27,10 +30,25 @@ const StyledBox = styled.input<Props>`
     outline: none; /* 기본 포커스 효과 제거 */
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 그림자 효과 */
   }
+
+  @media (max-width: 400px) {
+    width: 300px;
+  }
 `;
 
-const StyledInput: React.FC<Props> = ({ $width, $height, value, type, onChange, onKeyDown, placeholder, $align }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+const StyledInput: React.FC<Props> = ({
+  $width,
+  $height,
+  value,
+  type,
+  onChange,
+  onKeyDown,
+  placeholder,
+  $align,
+  inputRef,
+  defaultValue,
+  $marginTop,
+}) => {
   const selectAllText = () => {
     if (inputRef && inputRef.current) {
       inputRef.current.select();
@@ -43,6 +61,7 @@ const StyledInput: React.FC<Props> = ({ $width, $height, value, type, onChange, 
         $width={$width}
         $height={$height}
         value={value}
+        defaultValue={defaultValue}
         type={type}
         onChange={onChange}
         onKeyDown={onKeyDown}
@@ -50,6 +69,7 @@ const StyledInput: React.FC<Props> = ({ $width, $height, value, type, onChange, 
         placeholder={placeholder}
         $align={$align}
         ref={inputRef}
+        $marginTop={$marginTop}
       />
     </>
   );

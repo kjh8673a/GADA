@@ -14,17 +14,22 @@ public class AuctionApiServiceImpl implements AuctionApiService {
 	private final AuctionFeignClient auctionFeignClient;
 
 	@Override
-	public AuctionSearchDto searchAuctionItems(String itemName) {
-		return auctionFeignClient.searchAuctionItems(itemName, 400, "front");
+	public AuctionSearchDto searchAuctionItems(String itemName, String wordType) {
+		return auctionFeignClient.searchAuctionItems(itemName, 400, wordType);
 	}
 
 	@Override
 	public AuctionSearchDto searchByItemId(String itemId) {
-		return auctionFeignClient.searchByItemId(itemId, 400);
+		return auctionFeignClient.searchByItemId(itemId, 400, "auctionNo:desc");
 	}
 
 	@Override
 	public AuctionSoldDto getSoldHistory(String itemId) {
 		return auctionFeignClient.getSoldHistory(itemId, 20);
+	}
+
+	@Override
+	public AuctionSoldDto getSoldMaxHistory(String itemId) {
+		return auctionFeignClient.getSoldHistory(itemId, 400);
 	}
 }

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { useRecoilValue } from "recoil";
-import { atomCharacterBookmark } from "../../../atoms/characterState";
 import { useSearchParams } from "react-router-dom";
+import { atomCharacterBookmark } from "../../../atoms/localStorageState";
 
 interface StyledProps {
   value: string;
@@ -33,7 +33,7 @@ const BookmarkBtn = () => {
     } else {
       setValue("empty_");
     }
-  }, [bookmark]);
+  }, [bookmark, isBookmark]);
   return (
     <StyledBox
       value={value}

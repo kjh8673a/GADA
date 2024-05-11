@@ -1,17 +1,22 @@
 import React, { useCallback } from "react";
-import { SERVER_LIST, TCharacterData } from "../@types/CharacterTypes";
-import { getCharacterInfo } from "../api/Character/getCharacterInfo";
+import { TCharacterData } from "../@types/Character/CommonTypes";
+import { getCharacterInfo } from "../api/Character";
 import { useSetRecoilState } from "recoil";
 import {
+  atomCharacterAvatar,
   atomCharacterBasic,
+  atomCharacterBuffEquip,
+  atomCharacterCreature,
   atomCharacterEquip,
   atomCharacterEquipTrait,
+  atomCharacterFlag,
   atomCharacterSetItem,
   atomCharacterSkill,
   atomCharacterStat,
   atomCharacterTalismans,
   atomLoading,
 } from "../atoms/characterState";
+import { SERVER_LIST } from "../@types/Character/CommonTypes";
 
 const useCharacter = () => {
   const setBasic = useSetRecoilState(atomCharacterBasic);
@@ -20,12 +25,19 @@ const useCharacter = () => {
   const setEquipTrait = useSetRecoilState(atomCharacterEquipTrait);
   const setItem = useSetRecoilState(atomCharacterSetItem);
   const setIsLoading = useSetRecoilState(atomLoading);
+<<<<<<< HEAD
   const setSkill = useSetRecoilState(atomCharacterSkill);
   const setTalismans = useSetRecoilState(atomCharacterTalismans);
+=======
+  const setBuff = useSetRecoilState(atomCharacterBuffEquip);
+  const setTalismans = useSetRecoilState(atomCharacterTalismans);
+  const setAvatar = useSetRecoilState(atomCharacterAvatar);
+  const setCreature = useSetRecoilState(atomCharacterCreature);
+  const setFlag = useSetRecoilState(atomCharacterFlag);
+>>>>>>> dnf/release
 
   const fetchCharacterInfo = useCallback(
     (serverName: string, characterName: string, update?: boolean) => {
-      console.log("fetchCharacterInfo");
       let status = "pending";
       let data: TCharacterData;
       const suspender = getCharacterInfo(serverName, characterName, update)
@@ -61,8 +73,16 @@ const useCharacter = () => {
     setEquip(data.data?.equipment.equipment!);
     setEquipTrait(data.data?.equipment.equipmentTrait!);
     setItem(data.data?.equipment.setItemInfo!);
+<<<<<<< HEAD
     setSkill(data.data?.skill!);
     setTalismans(data.data?.talisman!);
+=======
+    setBuff(data.data?.buff!);
+    setTalismans(data.data?.talisman!);
+    setAvatar(data.data?.avatar!);
+    setCreature(data.data?.creature!);
+    setFlag(data.data?.flag!);
+>>>>>>> dnf/release
   };
 
   const isValid = (server: any, character: any): boolean => {

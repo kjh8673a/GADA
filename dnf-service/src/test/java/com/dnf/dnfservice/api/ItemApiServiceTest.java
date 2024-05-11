@@ -29,7 +29,7 @@ public class ItemApiServiceTest {
 
 	@Test
 	void 아이템_목록_검색() {
-		ItemSearchDto itemSearchDto = itemApiService.searchItems("무색");
+		ItemSearchDto itemSearchDto = itemApiService.searchItems("무색", "front");
 
 		itemSearchDto.getRows().stream().forEach(data -> System.out.println(data.getItemName()));
 	}
