@@ -46,7 +46,7 @@ const Maple = () => {
       <MainImg src="/assets/pinkbin.gif" alt="pinkbin" />
       <NameSearch>
         <StyledInput
-          $width={400}
+          $width={352}
           type="text"
           placeholder="닉네임 입력"
           onChange={searchName}

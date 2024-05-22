@@ -41,6 +41,7 @@
 body {
   margin: 0;
   font-family: "Maplestory_Light", "Maplestory_OTF_Light", -apple-system, "Segoe UI", "Roboto", sans-serif;
+  font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--primary-bg-color);

@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import styled from "styled-components";
 import GuildWaterwayTable from "./GuildWaterwayTable";
 import RankTablePageMove from "../RankTablePageMove";
 import useRanking from "../../../../hooks/maple/useRanking";
+import SkeletonGuildWaterway from "../../../skeleton/SkeletonGuildWaterway";
 
 const StyledBox = styled.div`
   width: 100%;
@@ -19,10 +20,13 @@ const GuildWaterway = () => {
   useEffect(() => setTotalPage(9999), [setTotalPage]);
   return (
     <StyledBox>
-      <GuildWaterwayTable />
+      <Suspense fallback={<SkeletonGuildWaterway />}>
+        <GuildWaterwayTable />
+      </Suspense>
       <RankTablePageMove />
     </StyledBox>
   );
 };
 
 export default GuildWaterway;
+

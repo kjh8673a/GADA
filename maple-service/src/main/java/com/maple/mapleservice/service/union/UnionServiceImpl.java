@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.maple.mapleservice.dto.feign.union.UnionArtifactDto;
@@ -18,6 +17,7 @@ import com.maple.mapleservice.dto.response.union.UnionArtifactResponseDto;
 import com.maple.mapleservice.dto.response.union.UnionInfoResponseDto;
 import com.maple.mapleservice.service.character.CharacterApiService;
 import com.maple.mapleservice.util.UnionRaidarStatTable;
+import com.maple.mapleservice.util.cache.RedisCacheEvict;
 import com.maple.mapleservice.util.cache.RedisCacheable;
 
 import lombok.RequiredArgsConstructor;
@@ -66,8 +66,20 @@ public class UnionServiceImpl implements UnionService {
 			union_artifact_crystal.add(UnionArtifactCrystalWithImage.of(u, cloudfrontUrl))
 		);
 
-		return UnionArtifactResponseDto.of(unionDto.getArtifact_level(),
+		return UnionArtifactResponseDto.of(unionDto.getUnion_artifact_level(),
 			unionArtifactDto.getUnion_artifact_effect(), union_artifact_crystal);
+	}
+
+	@Override
+	@RedisCacheEvict(value = "union-info", key="#characterName")
+	public void deleteUnionInfoResponseDto(String characterName) {
+
+	}
+
+	@Override
+	@RedisCacheEvict(value = "union-artifact", key="#characterName")
+	public void deleteUnionArtifactResponseDto(String characterName) {
+
 	}
 
 	/**

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SkillBox from "./SkillBox";
 import SkillSquare from "./SkillSquare";
 import { skillType } from "../../../../@types/maple/CharacterSkillType";
@@ -30,3 +30,4 @@ const HiperPassiveSkill: React.FC<Props> = ({ skillList, haveHiperSkill }) => {
 };
 
 export default HiperPassiveSkill;
+

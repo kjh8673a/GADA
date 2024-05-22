@@ -5,5 +5,5 @@ import com.dnf.dnfservice.dto.feign.item.ItemSearchDto;
 
 public interface ItemApiService {
 	ItemDetailDto getItemDetail(String itemId);
-	ItemSearchDto searchItems(String itemName);
+	ItemSearchDto searchItems(String itemName, String wordType);
 }

@@ -10,44 +10,47 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface CharacterFeignClient {
 
     @GetMapping("/basic")
-    CharacterBasicDto getCharacterBasicDto(@RequestParam String ocid, @RequestParam String date);
+    CharacterBasicDto getCharacterBasicDto(@RequestParam String ocid);
+
+    @GetMapping("/basic")
+    CharacterBasicDto getCharacterBasicDateDto(@RequestParam String ocid, @RequestParam String date);
 
     @GetMapping("/popularity")
-    CharacterPopularityDto getCharacterPopularityDto(@RequestParam String ocid, @RequestParam String date);
+    CharacterPopularityDto getCharacterPopularityDto(@RequestParam String ocid);
 
     @GetMapping("/stat")
-    CharacterStatDto getCharacterStatDto(@RequestParam String ocid, @RequestParam String date);
+    CharacterStatDto getCharacterStatDto(@RequestParam String ocid);
 
     @GetMapping("/hyper-stat")
-    CharacterHyperStatDto getCharacterHyperStatDto(@RequestParam String ocid, @RequestParam String date);
+    CharacterHyperStatDto getCharacterHyperStatDto(@RequestParam String ocid);
 
     @GetMapping("/ability")
-    CharacterAbilityDto getCharacterAbilityDto(@RequestParam String ocid, @RequestParam String date);
+    CharacterAbilityDto getCharacterAbilityDto(@RequestParam String ocid);
 
     @GetMapping("/item-equipment")
-    CharacterItemDto getCharacterItemDto(@RequestParam String ocid, @RequestParam String date);
+    CharacterItemDto getCharacterItemDto(@RequestParam String ocid);
 
     @GetMapping("/cashitem-equipment")
-    CharacterCashItemDto getCharacterCashItemDto(@RequestParam String ocid, @RequestParam String date);
+    CharacterCashItemDto getCharacterCashItemDto(@RequestParam String ocid);
 
     @GetMapping("/symbol-equipment")
-    CharacterSymbolDto getCharacterSymbolDto(@RequestParam String ocid, @RequestParam String date);
+    CharacterSymbolDto getCharacterSymbolDto(@RequestParam String ocid);
 
     @GetMapping("/pet-equipment")
-    CharacterPetDto getCharacterPetDto(@RequestParam String ocid, @RequestParam String date);
+    CharacterPetDto getCharacterPetDto(@RequestParam String ocid);
 
     @GetMapping("/vmatrix")
-    CharacterVMatrixDto getCharacterVMatrixDto(@RequestParam String ocid, @RequestParam String date);
+    CharacterVMatrixDto getCharacterVMatrixDto(@RequestParam String ocid);
 
     @GetMapping("/skill")
-    CharacterSkillDto getCharacterSkillDto(@RequestParam String ocid, @RequestParam String date, @RequestParam String character_skill_grade);
+    CharacterSkillDto getCharacterSkillDto(@RequestParam String ocid, @RequestParam String character_skill_grade);
 
     @GetMapping("/link-skill")
-    CharacterLinkSkillDto getCharacterLinkSkillDto(@RequestParam String ocid, @RequestParam String date);
+    CharacterLinkSkillDto getCharacterLinkSkillDto(@RequestParam String ocid);
 
     @GetMapping("/hexamatrix")
-    CharacterHexaMatrixDto getCharacterHexaMatrixDto(@RequestParam String ocid, @RequestParam String date);
+    CharacterHexaMatrixDto getCharacterHexaMatrixDto(@RequestParam String ocid);
 
     @GetMapping("/hexamatrix-stat")
-    CharacterHexaMatrixStatDto getCharacterHexamatrixStatDto(@RequestParam String ocid, @RequestParam String date);
+    CharacterHexaMatrixStatDto getCharacterHexamatrixStatDto(@RequestParam String ocid);
 }

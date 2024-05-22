@@ -19,10 +19,18 @@ const StyledSlotName = styled.div`
   font-size: 0.9rem;
   margin: 2px;
   text-align: center;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const StyledConnectLine = styled.div`
   width: 30px;
+
+  @media (max-width: 768px) {
+    width: 12px;
+  }
 `;
 
 interface Props {

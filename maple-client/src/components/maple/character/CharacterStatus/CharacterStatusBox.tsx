@@ -16,6 +16,10 @@ const StyledBox = styled.div`
   box-shadow: var(--custom-shadow);
   border-radius: 4px;
   position: relative;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const StyledController = styled.div`
@@ -52,6 +56,10 @@ const StyledTitle = styled.h3`
   font-weight: 700;
   color: #fff;
   text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const CharacterStatusBox = () => {

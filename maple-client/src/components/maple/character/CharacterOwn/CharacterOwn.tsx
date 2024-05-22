@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import CharacterBox from "./CharacterBox";
-import { getMyCharacter } from "../../../../api/Character/Character";
 import { useRecoilState } from "recoil";
 import { userNickName } from "../../../../atoms/maple/characterName";
 import { useParams } from "react-router-dom";
 import { useCharacterSearch } from "../../../../hooks/maple/useCharacterSearch";
-import { CharacterType } from "../../../../@types/maple/CharacterSearch";
 import { userOwnCharacter } from "../../../../atoms/maple/characterOwn";
 
 const CharacterContainer = styled.div`
@@ -45,3 +43,4 @@ const CharacterOwn = () => {
 };
 
 export default CharacterOwn;
+

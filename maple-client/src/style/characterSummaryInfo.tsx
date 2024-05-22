@@ -7,13 +7,17 @@ export const InfoBox = styled.div`
   grid-template-rows: 3fr 7.5fr;
   border-radius: 0.625rem;
   background-color: var(--secondary-bg-color);
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const InfoBoxHeader = styled.div`
   margin: 2%;
   margin-bottom: 0%;
   display: grid;
-  grid-template-area
+  grid-template-area;
 `;
 
 export const InfoBoxHeaderTitle = styled.div`
@@ -34,8 +38,8 @@ export const CharacterName = styled.div`
 
 export const BookmarkButton = styled.button`
   border: none;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 32px;
+  height: 32px;
   color: #fff;
   border-radius: 0.5rem;
   display: flex;
@@ -59,8 +63,7 @@ export const CompareButton = styled.button`
 `;
 
 export const InfoBoxBody = styled.div`
-  margin: 1%;
-  margin-bottom: 2%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  display: flex;
 `;
+

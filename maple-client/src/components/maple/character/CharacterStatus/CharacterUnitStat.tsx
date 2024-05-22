@@ -8,6 +8,10 @@ const StyledBox = styled.div<{ $nodata: boolean }>`
   font-size: 0.8rem;
   color: ${(props) => (props.$nodata ? "#bcbcbc" : "#fff")};
   margin: 4px 0;
+
+  @media (max-width: 768px) {
+    width: 48%;
+  }
 `;
 
 const BoldText = styled.span`
@@ -49,3 +53,4 @@ const CharacterUnitStat: React.FC<Props> = ({ statKey, statVal, statVal2, increa
 };
 
 export default CharacterUnitStat;
+

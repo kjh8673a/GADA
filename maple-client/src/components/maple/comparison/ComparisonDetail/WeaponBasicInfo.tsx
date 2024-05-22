@@ -5,6 +5,12 @@ const StyledBox = styled.div`
   align-items: center;
   width: 100%;
   padding: 12px 12px 0 12px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 12px;
+  }
 `;
 
 const StyledImg = styled.img`

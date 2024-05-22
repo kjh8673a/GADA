@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dnf.dnfservice.dto.response.SuccessResponse;
+import com.dnf.dnfservice.dto.response.auction.AuctionItemDetailResponseDto;
 import com.dnf.dnfservice.service.auction.AuctionService;
 
 import jakarta.validation.constraints.Size;
@@ -29,8 +30,19 @@ public class AuctionController {
 	@RequestMapping("/getAuctionItem")
 	public ResponseEntity<SuccessResponse> getAuctionItemInformation(@RequestParam String itemId) {
 
+		AuctionItemDetailResponseDto auctionItemDetailResponseDto = auctionService.getAuctionItemInformation(itemId);
+		auctionService.addAuctionItemViewCount(itemId);
+
 		return ResponseEntity
 			.status(HttpStatus.OK)
-			.body(SuccessResponse.of(auctionService.getAuctionItemInformation(itemId)));
+			.body(SuccessResponse.of(auctionItemDetailResponseDto));
+	}
+
+	@RequestMapping("/getPopularItems")
+	public ResponseEntity<SuccessResponse> getPopularItems() {
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(SuccessResponse.of(auctionService.getPopularItems()));
 	}
 }

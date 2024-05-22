@@ -5,8 +5,11 @@ export const TabBox = styled.div`
   flex-wrap: wrap;
   margin: 5px 0px;
   padding: 10px 0px;
+  box-sizing: border-box;
   align-items: center;
   width: 100%;
+  max-height: 200px;
+  overflow-y: scroll;
   background-color: var(--secondary-bg-color);
   border-radius: 10px;
   box-shadow: var(--custom-shadow);

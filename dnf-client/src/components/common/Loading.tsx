@@ -7,7 +7,7 @@ interface Props {
 }
 
 const StyledBox = styled.div`
-  width: 1140px;
+  width: 100%;
   min-height: 50vh;
   display: flex;
   flex-direction: column;
@@ -15,6 +15,12 @@ const StyledBox = styled.div`
   align-items: center;
   gap: 20px;
   font-size: 1.3rem;
+  line-height: normal;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    text-align: center;
+  }
 `;
 
 const DnfLogo = styled.img`

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ITitleDataType, IWeaponDataType, MATCH_BGCOLOR, MATCH_COLOR } from "../../../../@types/maple/WeaponTypes";
 import WeaponBoxDetail from "./WeaponBoxDetail";
@@ -81,6 +81,14 @@ const ItemBox = styled.div<StylesProps>`
 
 const WeaponBox: React.FC<Props> = ({ data, title }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [posX, setPosX] = useState<number>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef && containerRef.current) {
+      setPosX(containerRef.current?.offsetLeft);
+    }
+  }, []);
 
   const hoverInHandler = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -94,15 +102,16 @@ const WeaponBox: React.FC<Props> = ({ data, title }) => {
 
   if (data === undefined && (title === undefined || title === null)) return <VoidBox />;
   return (
-    <BoxContainer>
+    <BoxContainer ref={containerRef}>
       <HoverBox onMouseEnter={hoverInHandler} onMouseLeave={hoverOutHandler}>
         {data && <ItemBox $img={data.item_icon} $grade={data.potential_option_grade} />}
         {data === null && <ItemBox $nodata={true} $img={`${process.env.PUBLIC_URL}/assets/question-mark.png`} />}
         {title && <ItemBox $img={title.title_icon} $grade="" />}
       </HoverBox>
-      {isHovered && <WeaponBoxDetail data={data} title={title} />}
+      {isHovered && data && <WeaponBoxDetail data={data} title={title} offsetX={posX} />}
     </BoxContainer>
   );
 };
 
 export default WeaponBox;
+

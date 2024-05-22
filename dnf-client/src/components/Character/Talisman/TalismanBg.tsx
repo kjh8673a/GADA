@@ -20,7 +20,10 @@ const StyledBox = styled.div`
 
 const TalismanBg = () => {
   const data = useRecoilValue(atomCharacterTalismans);
+<<<<<<< HEAD
   // console.log(data);
+=======
+>>>>>>> dnf/release
   return (
     <StyledBox>
       {data.talismans?.map((obj, idx) => (

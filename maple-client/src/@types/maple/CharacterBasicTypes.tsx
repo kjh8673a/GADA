@@ -1,4 +1,5 @@
 export interface ICharacterBasic {
+  updatedTime: string;
   ocid: string;
   character_name: string;
   world_name: string;

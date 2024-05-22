@@ -11,7 +11,6 @@ const StyledTab = styled.div`
   border-radius: 10px;
   overflow: hidden;
   display: flex;
-  margin: 12px 0;
   background-color: var(--secondary-bg-color);
   font-weight: 600;
 
