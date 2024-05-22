@@ -20,14 +20,18 @@ NEXON Open API의 데이터들을 이용해 재가공하여 캐릭터 정보, �
   - 해당 캐릭터에 대해 같은 월드 내 본캐/부캐 정보를 제공합니다.
   - 파티 구성에 관련된 지표를 제시하며, 시뮬레이션을 해볼 수 있습니다.
 
-  <img src="DOCS/gif/maple1.gif" width="80%" />
+<p align="center">
+    <img src="DOCS/gif/maple1.gif" width="80%" />
+</p>
 
 - **길드 정보 조회**
 
   - 길드 노블 스킬 정보를 조회할 수 있습니다.
   - 길드원 목록을 조회할 수 있습니다.
 
-  <img src="DOCS/gif/maple2.gif" width="80%" />
+<p align="center">
+    <img src="DOCS/gif/maple2.gif" width="80%" />
+</p>
 
 - **랭킹**
 
@@ -36,13 +40,17 @@ NEXON Open API의 데이터들을 이용해 재가공하여 캐릭터 정보, �
   - 월드 별 길드 전투력 랭킹을 제공합니다.
   - 주기적인 갱신을 통해 데이터를 최신화하고 있습니다.
 
-  <img src="DOCS/gif/maple3.gif" width="80%" />
+<p align="center">
+    <img src="DOCS/gif/maple3.gif" width="80%" />
+</p>
 
 - **캐릭터 비교**
 
   - 두 캐릭터의 스탯, 장비 정보를 비교할 수 있습니다.
 
-  <img src="DOCS/gif/maple4.gif" width="80%" />
+<p align="center">
+    <img src="DOCS/gif/maple4.gif" width="80%" />
+</p>
 
 ### ⚱️ GADA for 던전앤파이터
 
@@ -52,7 +60,9 @@ NEXON Open API의 데이터들을 이용해 재가공하여 캐릭터 정보, �
 
   - 스탯, 장비, 버프, 아바타, 휘장, 탈리스만에 대한 정보를 조회할 수 있습니다.
 
-  <img src="DOCS/gif/dnf1.gif" width="80%" />
+<p align="center">
+    <img src="DOCS/gif/dnf1.gif" width="80%" />
+</p>
 
 - **경매장**
 
@@ -60,7 +70,9 @@ NEXON Open API의 데이터들을 이용해 재가공하여 캐릭터 정보, �
   - 최근 거래 내역을 조회할 수 있습니다.
   - 최근 7일, 24시간 동안의 해당 아이템에 대한 정보를 그래프를 통해 시각적으로 제공합니다.
 
-  <img src="DOCS/gif/dnf2.gif" width="80%" />
+<p align="center">
+    <img src="DOCS/gif/dnf2.gif" width="80%" />
+</p>
 
 ## 🔨 Server Architecture
 
