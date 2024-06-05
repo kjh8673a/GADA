@@ -21,7 +21,7 @@ NEXON Open API의 데이터들을 이용해 재가공하여 캐릭터 정보, �
   - 파티 구성에 관련된 지표를 제시하며, 시뮬레이션을 해볼 수 있습니다.
 
 <p align="center">
-    <img src="./docs/gif/maple1.gif" width="80%" />
+    <img src="./docs/gif/maple1.gif" width="60%" />
 </p>
 
 <br/>
@@ -32,7 +32,7 @@ NEXON Open API의 데이터들을 이용해 재가공하여 캐릭터 정보, �
   - 길드원 목록을 조회할 수 있습니다.
 
 <p align="center">
-    <img src="./docs/gif/maple2.gif" width="80%" />
+    <img src="./docs/gif/maple2.gif" width="60%" />
 </p>
 
 <br/>
@@ -45,7 +45,7 @@ NEXON Open API의 데이터들을 이용해 재가공하여 캐릭터 정보, �
   - 주기적인 갱신을 통해 데이터를 최신화하고 있습니다.
 
 <p align="center">
-    <img src="./docs/gif/maple3.gif" width="80%" />
+    <img src="./docs/gif/maple3.gif" width="60%" />
 </p>
 
 <br/>
@@ -55,7 +55,7 @@ NEXON Open API의 데이터들을 이용해 재가공하여 캐릭터 정보, �
   - 두 캐릭터의 스탯, 장비 정보를 비교할 수 있습니다.
 
 <p align="center">
-    <img src="./docs/gif/maple4.gif" width="80%" />
+    <img src="./docs/gif/maple4.gif" width="60%" />
 </p>
 
 <br/>
@@ -69,7 +69,7 @@ NEXON Open API의 데이터들을 이용해 재가공하여 캐릭터 정보, �
   - 스탯, 장비, 버프, 아바타, 휘장, 탈리스만에 대한 정보를 조회할 수 있습니다.
 
 <p align="center">
-    <img src="./docs/gif/dnf1.gif" width="80%" />
+    <img src="./docs/gif/dnf1.gif" width="60%" />
 </p>
 
 <br/>
@@ -81,7 +81,7 @@ NEXON Open API의 데이터들을 이용해 재가공하여 캐릭터 정보, �
   - 최근 7일, 24시간 동안의 해당 아이템에 대한 정보를 그래프를 통해 시각적으로 제공합니다.
 
 <p align="center">
-    <img src="./docs/gif/dnf2.gif" width="80%" />
+    <img src="./docs/gif/dnf2.gif" width="60%" />
 </p>
 
 <br/>
